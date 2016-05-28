@@ -159,7 +159,7 @@ Geometry* ShapeGenerator::readScene(string File,string ObjName)
 	
 	Scene* scene = scenereader.ReadSceneFile(File);
 
-	geoArray[numGeos].texturePath = SaveLogger::getTextureWithKey(ObjName);
+	//geoArray[numGeos].texturePath = SaveLogger::getTextureWithKey(ObjName);
 	geoArray[numGeos].objName = " ";
 	geoArray[numGeos].m_vertexCount = scene->numVertices;
 	geoArray[numGeos].vertices = scene->vertices;

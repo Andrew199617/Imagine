@@ -1,0 +1,7 @@
+0. Save Logger file loaded
+1. Entity Manager Initialized
+2. No value found for key: PlaneVertexShader
+3. No value found for key: PlaneVertexShader
+4. No value found for key: AIWorldVertexShader
+5. No value found for key: AIWorldFragmentShader
+6. Original Game initialized

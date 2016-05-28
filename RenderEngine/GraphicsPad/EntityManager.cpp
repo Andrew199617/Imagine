@@ -4,6 +4,7 @@
 #include "CollisionInfo.h"
 #include "ConfigReader.h"
 #include "GameLogger.h"
+#include "SaveLogger.h"
 
 
 EntityManager::EntityManager()
@@ -33,30 +34,22 @@ bool EntityManager::Initialize()
 	}
 	playerShoot.Disable();
 
-	/*AIWorld.SetName("AIWorld");
-	AIWorldSpatial.position = glm::vec3(0.0f, 0.0f, 0.0f);
-	AIWorld.AddComponent(&AIWorldSpatial, "AIWorldSpatialComponent");
-	AIWorldMesh.vertexShaderLocation = "..\\Graphicspad\\Shader\\VertexShaderCode.glsl";
-	AIWorldMesh.fragmentShaderLocation = "..\\Graphicspad\\Shader\\fErosion.glsl";
-	AIWorld.AddComponent(&AIWorldMesh, "AIWorldMeshComponent");
-	if (!AIWorld.Initialize())
+	num_Objs = SaveLogger::GetNumObjs();
+	for (int i = 0; i < num_Objs; i++)
 	{
-		string s = ": did not initialize";
-		GameLogger::log(AIWorld.GetName() + s);
-		return false;
-	}*/
-
-	noisePlane.SetName("noisePlane");
-	noisePlaneSpatial.position = glm::vec3(0.0f, 0.0f, 0.0f);
-	noisePlane.AddComponent(&noisePlaneSpatial, "noisePlaneSpatialComponent");
-	noisePlane.AddComponent(&noisePlaneMesh, "noisePlaneMeshComponent");
-	if (!noisePlane.Initialize())
-	{
-		string s = ": did not initialize";
-		GameLogger::log(noisePlane.GetName() + s);
-		return false;
+		entities[i].SetName(SaveLogger::GetName(i));
+		entitieSpatials[i].position = SaveLogger::GetPosition(entities[i].GetName());
+		string componentType = "SpatialComponent";
+		entities[i].AddComponent(&entitieSpatials[i], entities[i].GetName() + componentType);
+		componentType = "MeshComponent";
+		entities[i].AddComponent(&entitieMeshs[i], entities[i].GetName() + componentType);
+		if (!entities[i].Initialize())
+		{
+			string s = ": did not initialize";
+			GameLogger::log(entities[i].GetName() + s);
+			return false;
+		}
 	}
-	
 
 	GameLogger::log("Entity Manager Initialized");
 	return true;
@@ -69,10 +62,11 @@ void EntityManager::Update(float dt)
 	m_dt += dt;	
 	
 	player.Update(dt);
-	lightBulbSpatial.position = VertexShaderInfo::lightPosition;
 
-	//AIWorld.Update(dt);
-	noisePlane.Update(dt);
+	for (int i = 0; i < num_Objs; i++)
+	{
+		entities[i].Update(dt);
+	}
 
 }
 
@@ -86,13 +80,16 @@ void EntityManager::ProcessMouse(QMouseEvent* e)
 	playerMouse.ProcessMouse(e);
 }
 
-void EntityManager::sendDataToOpenGL()
+void EntityManager::SendDataToOpenGL()
 {
 	TransformInfo::WorldToViewMatrix = playerCamera.getWorldToViewMatrix();
 	/*AIWorldMesh.setRenderInfo("AIWorld");
 	RenderEngine::AddRenderInfo(&AIWorldMesh.renderinfo);*/
-	noisePlaneMesh.setRenderInfo("Plane");
-	RenderEngine::AddRenderInfo(&noisePlaneMesh.renderinfo);
+	for (int i = 0; i < num_Objs; i++)
+	{
+		entitieMeshs[i].setRenderInfo(SaveLogger::GetObj(entities[i].GetName()));
+		RenderEngine::AddRenderInfo(&entitieMeshs[i].renderinfo);
+	}
 	//playerGravity.DansMesh = &AIWorldMesh.renderinfo;
 	
 }

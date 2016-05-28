@@ -1,6 +1,7 @@
 #include "OriginalGame.h"
 #include "MeGlWindow.h"
 #include "GameLogger.h"
+#include "SaveLogger.h"
 
 float dt;
 GameTime gametime;
@@ -18,19 +19,19 @@ OriginalGame::~OriginalGame()
 	
 }
 
-void OriginalGame::sendDataToOpenGL()
+void OriginalGame::SendDataToOpenGL()
 {
 	mat4 projectionMatrix = perspective(60.0f, ((float)meGl->width()) / meGl->height(), 1.0f, 180.0f);
 	TransformInfo::projectionMatrix = projectionMatrix;
 
-	entityManager.sendDataToOpenGL();
+	entityManager.SendDataToOpenGL();
 }
 
 bool OriginalGame::Initialize(MeGlWindow* meGlWindow)
 {
 	glewInit();
 	meGl = meGlWindow;
-
+	SaveLogger::intialize();
 
 	glClearDepth(10.0f);
 	glEnable(GL_DEPTH_TEST);
@@ -44,7 +45,7 @@ bool OriginalGame::Initialize(MeGlWindow* meGlWindow)
 		meGl->shutdown();
 		return false;
 	}
-	sendDataToOpenGL();
+	SendDataToOpenGL();
 
 	GameLogger::log("Original Game initialized");
 	return true;

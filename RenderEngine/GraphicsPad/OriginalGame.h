@@ -7,7 +7,7 @@ class OriginalGame
 public:
 	OriginalGame();
 	~OriginalGame();
-	void sendDataToOpenGL();
+	void SendDataToOpenGL();
 	bool Initialize(MeGlWindow* meGlWindow);
 	bool Shutdown();
 	void Update();

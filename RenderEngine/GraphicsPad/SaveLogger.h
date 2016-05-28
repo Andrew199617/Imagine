@@ -17,14 +17,19 @@ class SaveLogger
 public:
 	SaveLogger();
 	~SaveLogger();
-	static void intialize(const char* filename = "..\\..\\StaticData\\SaveLogger.txt");
+	static bool intialize(const char* filename = "..\\Data\\SaveLogger.txt");
+	static bool isComment(string word);
 	static void log(std::string objName, std::string textureLocation, string, glm::vec3 position);
-	static string getTextureWithKey(string key);
-	static string getSceneWithKey(string key);
 	static void shutdownLog();
 	static std::ofstream out;
 	static int index;
 	static const int LENGTHOFVALUE = 50000;
-	static std::string value[LENGTHOFVALUE][6];
+	static std::string value[LENGTHOFVALUE][5];
+	static int GetNumObjs();
+	static string GetName(int);
+	static string GetObj(string);
+	static glm::vec3 GetPosition(string);
 
+private:
+	static bool alreadyInitialized;
 };

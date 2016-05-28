@@ -1,9 +1,12 @@
 #include "SaveLogger.h"
 #include <sstream>
+#include "ConfigReader.h"
+#include "GameLogger.h"
 
 int SaveLogger::index = 0;
 ofstream SaveLogger::out = ofstream();
-string SaveLogger::value[LENGTHOFVALUE][6] = { { " ", " ", " ", " ", " ", " " } };
+string SaveLogger::value[LENGTHOFVALUE][5] = { { " ", " ", " ", " ", " " } };
+bool SaveLogger::alreadyInitialized = false;
 
 SaveLogger::SaveLogger()
 {
@@ -15,66 +18,100 @@ SaveLogger::~SaveLogger()
 {
 }
 
-void SaveLogger::intialize(const char* filename)
+bool SaveLogger::intialize(const char* filename)
 {
+	if (alreadyInitialized) return true;
 	stringstream buffer;
 	ifstream meInput(filename);
-	int index1 = 0;
+
 	if (!meInput.good())
 	{
 		cout << "file failed to load..." << filename;
+		exit(1);
 	}
-	else
+	buffer << meInput.rdbuf();
+	string configFile = buffer.str();
+
+	buffer = stringstream(configFile);
+	string word;
+	int i = 0;
+	int i2 = 0;
+	string s;
+	bool inQuotes = false;
+	while (buffer.good())
 	{
-		buffer << meInput.rdbuf();
-		string word;
-		string temp;
-		int need2 = 0;
-		
-		int index2 = 0;
-		while (buffer.good())
+
+		buffer >> word;
+		if (!isComment(word))
 		{
+
+			value[i][i2] = word;
 			buffer >> word;
-			for (int i = 0; i < (int) word.length(); i++)
+			i2++;
+
+			if (word[0] == '"')
 			{
-				if (need2 == 2)
+				word[0] = ' ';
+				inQuotes = true;
+				while (inQuotes)
 				{
-					break;
-				}
-				if (word[i] == '"')
-				{
-					
-					need2++;
-				}
-				else
-				{
-					temp += word[i];
+					for (unsigned int j = 0; j < word.length(); j++)
+					{
+						if (word[j] == '"')
+						{
+							inQuotes = false;
+							word[j] = ' ';
+							break;
+						}
+						else if (word[j] == ',')
+						{
+							value[i][i2] = s;
+							s = "";
+							i2++;
+						}
+						else
+						{
+							s += word[j];
+						}
+
+					}
+					value[i][i2] = s;
+					i2++;
+					s = "";
 				}
 			}
-			if (need2 == 2)
+			else
 			{
-				need2 = 0;
-				value[index1][index2] = temp;
-				temp = string();
-				index2++;
-				if (index2 == 6)
-				{
-					index2 = 0; index1++;
-				}
-			}
-			else if (need2 == 1)
-			{
-				temp += ' ';
+				value[i][i2] = word;
 			}
 
 
+			if (i > LENGTHOFVALUE)
+			{
+
+				cout << "To many Keys In Save Logger File" << endl;
+				return false;
+			}
+			i++;
+			i2 = 0;
 		}
 	}
-	
 
-	index = index1;
-	out.open(filename, ios::out | ios::trunc);
-	out.seekp(0);
+	GameLogger::log("Save Logger file loaded");
+	alreadyInitialized = true;
+	return true;
+}
+
+bool SaveLogger::isComment(string word)
+{
+	for (unsigned int i = 0; i < word.length(); i++)
+	{
+		if (word[i] == '/' && word[i + 1] == '/')
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 void SaveLogger::log(std::string objName, std::string textureLocation, std::string sceneLocation,glm::vec3 position)
@@ -105,30 +142,6 @@ void SaveLogger::log(std::string objName, std::string textureLocation, std::stri
 	}
 }
 
-string SaveLogger::getTextureWithKey(string key)
-{
-	for (int i = 0; i < index; i++)
-	{
-		if (value[i][0] == key)
-		{
-			return value[i][1];
-		}
-	}
-	return 0;
-}
-
-string SaveLogger::getSceneWithKey(string key)
-{
-	for (int i = 0; i < index; i++)
-	{
-		if (value[i][0] == key)
-		{
-			return value[i][2];
-		}
-	}
-	return 0;
-}
-
 void SaveLogger::shutdownLog()
 {
 
@@ -138,4 +151,68 @@ void SaveLogger::shutdownLog()
 			" " << '"' + value[i][5] + '"' << endl;
 	}
 	out.close();
+}
+
+int SaveLogger::GetNumObjs()
+{
+	int numObjs = 0;
+	for (int i = 0; i < LENGTHOFVALUE; i++)
+	{
+		if (value[i][0] == "name")
+		{
+			numObjs++;
+		}
+		if (value[i][0] == "")
+		{
+			break;
+		}
+	}
+	return numObjs;
+}
+
+string SaveLogger::GetName(int objId)
+{
+	int currentObjId = -1;
+	for (int i = 0; i < LENGTHOFVALUE; i++)
+	{
+		if (value[i][0] == "name")
+		{
+			currentObjId++;
+			if(currentObjId == objId)
+			return value[i][1];
+		}
+	}
+	GameLogger::log("could not find Name for Obj:" + objId);
+	cout << "check log" << endl;
+	return "0";
+}
+
+string SaveLogger::GetObj(string objName)
+{
+	for (int i = 0; i < LENGTHOFVALUE; i++)
+	{
+		if (value[i][1] == objName)
+		{
+			return value[i + 1][1];
+		}
+	}
+	GameLogger::log("could not find Obj Type for Obj:" + objName);
+	cout << "check log" << endl;
+	return "0";
+}
+
+glm::vec3 SaveLogger::GetPosition(string objName)
+{
+	for (int i = 0; i < LENGTHOFVALUE; i++)
+	{
+		if (value[i][1] == objName)
+		{
+			//GameLogger::log("key: " + pKey + " Value: " + value[i][1]);
+			return glm::vec3(ConfigReader::GetFloatFromString(value[i+2][1]), ConfigReader::GetFloatFromString(value[i + 2][2]), ConfigReader::GetFloatFromString(value[i + 2][3]));
+		}
+
+	}
+	GameLogger::log("could not find Position for Obj:" + objName);
+	cout << "check log" << endl;
+	return glm::vec3();
 }

@@ -30,7 +30,7 @@
 #include "ShootingComponent.h"
 #include "Throwables.h"
 #include "NoiseGenerator.h"
-
+#define MAX_OBJS 500
 
 namespace
 {
@@ -46,14 +46,6 @@ namespace
 	/*SceneryEntity AIWorld;
 	SpatialComponent AIWorldSpatial;
 	MeshComponent AIWorldMesh;*/
-
-	SceneryEntity noisePlane;
-	SpatialComponent noisePlaneSpatial;
-	MeshComponent noisePlaneMesh;
-
-	SceneryEntity lightBulb;
-	SpatialComponent lightBulbSpatial;
-	MeshComponent lightBulbMesh;
 }
 
 
@@ -67,16 +59,21 @@ public:
 	bool Initialize();
 
 public:
-	bool DestinationsBeenReached();
 	void Update(float dt);
 	void ProcessKeys(float m_dt);
 	void ProcessMouse(QMouseEvent* e);
 
 public:
-	void sendDataToOpenGL();
+	void SendDataToOpenGL();
 
 private:
 	NoiseGenerator noiseGenerator;
 	NodeMap nodeMap[4];
+
+	int num_Objs;
+
+	SceneryEntity entities[MAX_OBJS];
+	SpatialComponent entitieSpatials[MAX_OBJS];
+	MeshComponent entitieMeshs[MAX_OBJS];
 };
 

@@ -48,6 +48,7 @@ const void BufferInfo::pop()
 	if (top)
 	{
 		RenderInfo* nextTop = top->Next();
+		
 		//delete top;
 		top = nextTop;
 	}

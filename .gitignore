@@ -26,15 +26,15 @@
 *.out
 *.app
 
-.vs 
 bin 
-obj  
-Debug 
-*.opendb 
+obj
 *.docx 
 *.exe 
-*.sdf 
 *.log 
 *.ilk 
 *.idb 
 *.tlog
+Debug
+.vs
+*.sdf
+*.opendb
