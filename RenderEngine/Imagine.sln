@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GraphicsPad", "GraphicsPad\GraphicsPad.vcxproj", "{CDD3A3DA-E86F-401F-B6C2-69185E496A1F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ObjConverter", "ObjConverter\ObjConverter.vcxproj", "{B0D7115B-90A3-4A41-B95F-784441E2D6B2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CDD3A3DA-E86F-401F-B6C2-69185E496A1F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CDD3A3DA-E86F-401F-B6C2-69185E496A1F}.Debug|Win32.Build.0 = Debug|Win32
+		{CDD3A3DA-E86F-401F-B6C2-69185E496A1F}.Release|Win32.ActiveCfg = Release|Win32
+		{CDD3A3DA-E86F-401F-B6C2-69185E496A1F}.Release|Win32.Build.0 = Release|Win32
+		{B0D7115B-90A3-4A41-B95F-784441E2D6B2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B0D7115B-90A3-4A41-B95F-784441E2D6B2}.Debug|Win32.Build.0 = Debug|Win32
+		{B0D7115B-90A3-4A41-B95F-784441E2D6B2}.Release|Win32.ActiveCfg = Release|Win32
+		{B0D7115B-90A3-4A41-B95F-784441E2D6B2}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

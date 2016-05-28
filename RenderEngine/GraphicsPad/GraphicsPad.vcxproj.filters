@@ -1,0 +1,482 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="RenderEngine">
+      <UniqueIdentifier>{24bb7142-cbbf-4de2-a8bb-92283c89bdc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RenderEngine\RenderEngine">
+      <UniqueIdentifier>{319e075a-60de-422d-9f8d-e7c071eacc6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{19306187-c42b-442a-8760-d5d3f0a0b21a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities">
+      <UniqueIdentifier>{4618d1f3-fd7c-4c96-bed4-3978556e29af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Steering Behaviors">
+      <UniqueIdentifier>{eefad245-c00f-4c86-8f15-4a4c6c4ad517}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="glsl">
+      <UniqueIdentifier>{448e68d6-d360-4a28-98a9-24f68cb58370}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="structs">
+      <UniqueIdentifier>{81c8ad52-4506-4427-9772-6e7d3a9e5e13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\moc">
+      <UniqueIdentifier>{f3b6b85b-a1af-4a8a-b9ae-d1ac04d0881d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pathing">
+      <UniqueIdentifier>{80761bb0-ab1d-4a13-8a3d-1e415ae8df87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States">
+      <UniqueIdentifier>{70437223-44a5-4c66-9b16-815aca1c8c2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="glsl\Vertex">
+      <UniqueIdentifier>{497ffa0a-dcc9-4ebe-a803-e8273a8576c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="glsl\Fragment">
+      <UniqueIdentifier>{b3261d9b-487d-490f-900f-dc54e568f1aa}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MeGlWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameTime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShapeGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Slider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MeWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConfigReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OriginalGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderEngine\VertexShaderInfo.cpp">
+      <Filter>RenderEngine\RenderEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderEngine\TransformInfo.cpp">
+      <Filter>RenderEngine\RenderEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderEngine\TextureInfo.cpp">
+      <Filter>RenderEngine\RenderEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderEngine\FragmentShaderInfo.cpp">
+      <Filter>RenderEngine\RenderEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderEngine\RenderInfo.cpp">
+      <Filter>RenderEngine\RenderEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLogger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderEngine\BufferInfo.cpp">
+      <Filter>RenderEngine\RenderEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderEngine\BufferManager.cpp">
+      <Filter>RenderEngine\RenderEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderEngine\Geometry.cpp">
+      <Filter>RenderEngine\RenderEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderEngine\RenderEngine.cpp">
+      <Filter>RenderEngine\RenderEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenFileDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMaker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryOutput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveLogger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SpatialComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityManager.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerEntity.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneryEntity.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionTester.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GravityComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SeekBehaviorComponent.cpp">
+      <Filter>Steering Behaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="SteeringBehaviors.cpp">
+      <Filter>Steering Behaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="FleeBehaviorComponent.cpp">
+      <Filter>Steering Behaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="FlockingComponent.cpp">
+      <Filter>Steering Behaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="EvasionComponent.cpp">
+      <Filter>Steering Behaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="PursuitComponent.cpp">
+      <Filter>Steering Behaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="ArrivalComponent.cpp">
+      <Filter>Steering Behaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="MeGLWindow_moc.cpp">
+      <Filter>Source Files\moc</Filter>
+    </ClCompile>
+    <ClCompile Include="Slider_moc.cpp">
+      <Filter>Source Files\moc</Filter>
+    </ClCompile>
+    <ClCompile Include="MeWidget_moc.cpp">
+      <Filter>Source Files\moc</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeMap.cpp">
+      <Filter>Pathing</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="StateMachine\StateComponent.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="WanderingComponent.cpp">
+      <Filter>Steering Behaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="AIEntity.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="PathFollowerComponent.cpp">
+      <Filter>Pathing</Filter>
+    </ClCompile>
+    <ClCompile Include="PathFinding.cpp">
+      <Filter>Pathing</Filter>
+    </ClCompile>
+    <ClCompile Include="ShootingComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Throwables.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="SeekState.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="NoiseGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="noiseutils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MeGlWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShapeGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Slider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MeWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MeModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConfigReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>structs</Filter>
+    </ClInclude>
+    <ClInclude Include="OriginalGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OriginalGameIncludes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderEngine\TextureInfo.h">
+      <Filter>RenderEngine\RenderEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderEngine\VertexShaderInfo.h">
+      <Filter>RenderEngine\RenderEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderEngine\TransformInfo.h">
+      <Filter>RenderEngine\RenderEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderEngine\RenderInfo.h">
+      <Filter>RenderEngine\RenderEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderEngine\FragmentShaderInfo.h">
+      <Filter>RenderEngine\RenderEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLogger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderEngine\BufferManager.h">
+      <Filter>RenderEngine\RenderEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderEngine\BufferInfo.h">
+      <Filter>RenderEngine\RenderEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderEngine\Geometry.h">
+      <Filter>RenderEngine\RenderEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderEngine\RenderEngine.h">
+      <Filter>RenderEngine\RenderEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexFormats.h">
+      <Filter>structs</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenFileDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneMaker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryOutput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveLogger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SpatialComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityManager.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerEntity.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneryEntity.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionTester.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GravityComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionInfo.h">
+      <Filter>structs</Filter>
+    </ClInclude>
+    <ClInclude Include="SeekBehaviorComponent.h">
+      <Filter>Steering Behaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="SteeringBehaviors.h">
+      <Filter>Steering Behaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="FleeBehaviorComponent.h">
+      <Filter>Steering Behaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="FlockingComponent.h">
+      <Filter>Steering Behaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="EvasionComponent.h">
+      <Filter>Steering Behaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="PursuitComponent.h">
+      <Filter>Steering Behaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="WanderingComponent.h">
+      <Filter>Steering Behaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="ArrivalComponent.h">
+      <Filter>Steering Behaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>Pathing</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeLink.h">
+      <Filter>Pathing</Filter>
+    </ClInclude>
+    <ClInclude Include="PathingNodes.h">
+      <Filter>Pathing</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeMap.h">
+      <Filter>Pathing</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine\State.h">
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine\StateComponent.h">
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="StateManager.h">
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="Area.h">
+      <Filter>structs</Filter>
+    </ClInclude>
+    <ClInclude Include="AIEntity.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="PathFollowerComponent.h">
+      <Filter>Pathing</Filter>
+    </ClInclude>
+    <ClInclude Include="PathFinding.h">
+      <Filter>Pathing</Filter>
+    </ClInclude>
+    <ClInclude Include="SearchNode.h">
+      <Filter>Pathing</Filter>
+    </ClInclude>
+    <ClInclude Include="ShootingComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Throwables.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponEntity.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="SeekState.h">
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthEntity.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="NoiseGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\vRippledSurfaceShader.glsl">
+      <Filter>glsl\Vertex</Filter>
+    </None>
+    <None Include="Shader\vPixelDiscarderShader.glsl">
+      <Filter>glsl\Vertex</Filter>
+    </None>
+    <None Include="Shader\VertexShaderCode.glsl">
+      <Filter>glsl\Vertex</Filter>
+    </None>
+    <None Include="Shader\specularVertexShaderCode.glsl">
+      <Filter>glsl\Vertex</Filter>
+    </None>
+    <None Include="Shader\ctFragmentShaderCode.glsl">
+      <Filter>glsl\Fragment</Filter>
+    </None>
+    <None Include="Shader\fPixelDiscarderShader.glsl">
+      <Filter>glsl\Fragment</Filter>
+    </None>
+    <None Include="Shader\specularFragmentShaderCode.glsl">
+      <Filter>glsl\Fragment</Filter>
+    </None>
+    <None Include="Shader\fragmentShaderCode.glsl">
+      <Filter>glsl\Fragment</Filter>
+    </None>
+    <None Include="Shader\tFragmentShaderCode.glsl">
+      <Filter>glsl\Fragment</Filter>
+    </None>
+    <None Include="Shader\vMakeACube.glsl">
+      <Filter>glsl\Vertex</Filter>
+    </None>
+    <None Include="Shader\vMakePyramid.glsl">
+      <Filter>glsl\Vertex</Filter>
+    </None>
+    <None Include="Shader\vLightBulb.glsl">
+      <Filter>glsl\Vertex</Filter>
+    </None>
+    <None Include="Shader\fErosion.glsl">
+      <Filter>glsl\Fragment</Filter>
+    </None>
+    <None Include="Shader\vTerrainGenerator.glsl">
+      <Filter>glsl\Vertex</Filter>
+    </None>
+    <None Include="Shader\fImageWarping.glsl">
+      <Filter>glsl\Fragment</Filter>
+    </None>
+  </ItemGroup>
+</Project>

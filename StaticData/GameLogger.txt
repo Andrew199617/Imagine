@@ -1,0 +1,5 @@
+0. Config file loaded
+1. key: PyramidScene Value: ..\\..\\GAT160Middleware\\Data\\Scenes\\Pyramid.scene
+2. shader compiled
+3. OriginalGame Initialized
+4. Intialize Gl Complete

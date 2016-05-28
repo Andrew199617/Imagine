@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{CDD3A3DA-E86F-401F-B6C2-69185E496A1F}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>GraphicsPad</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\MiddleWare\glm\glm;$(Projectdir)..\..\MiddleWare\glew\include;$(Projectdir)..\..\MiddleWare\qt\include;$(Projectdir)..\..\MiddleWare\libnoise\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\MiddleWare\glew\lib;$(ProjectDir)..\..\MiddleWare\qt\lib;$(ProjectDir)..\..\MiddleWare\libnoise\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libnoise.lib;opengl32.lib;glew32d.lib;qtcored4.lib;qtguid4.lib;QtOpenGLd4.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="AIEntity.cpp" />
+    <ClCompile Include="ArrivalComponent.cpp" />
+    <ClCompile Include="BinaryOutput.cpp" />
+    <ClCompile Include="CameraComponent.cpp" />
+    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="ConfigReader.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EntityManager.cpp" />
+    <ClCompile Include="EvasionComponent.cpp" />
+    <ClCompile Include="FleeBehaviorComponent.cpp" />
+    <ClCompile Include="FlockingComponent.cpp" />
+    <ClCompile Include="GameLogger.cpp" />
+    <ClCompile Include="GravityComponent.cpp" />
+    <ClCompile Include="KeyboardComponent.cpp" />
+    <ClCompile Include="MeGLWindow_moc.cpp" />
+    <ClCompile Include="MeshComponent.cpp" />
+    <ClCompile Include="MeWidget_moc.cpp" />
+    <ClCompile Include="MouseComponent.cpp" />
+    <ClCompile Include="MoveComponent.cpp" />
+    <ClCompile Include="MovementComponent.cpp" />
+    <ClCompile Include="NodeMap.cpp" />
+    <ClCompile Include="NoiseGenerator.cpp" />
+    <ClCompile Include="noiseutils.cpp" />
+    <ClCompile Include="OpenFileDialog.cpp" />
+    <ClCompile Include="PathFinding.cpp" />
+    <ClCompile Include="PathFollowerComponent.cpp" />
+    <ClCompile Include="PlayerEntity.cpp" />
+    <ClCompile Include="CollisionTester.cpp" />
+    <ClCompile Include="PursuitComponent.cpp" />
+    <ClCompile Include="RenderEngine\BufferInfo.cpp" />
+    <ClCompile Include="RenderEngine\BufferManager.cpp" />
+    <ClCompile Include="RenderEngine\FragmentShaderInfo.cpp" />
+    <ClCompile Include="GameTime.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MeGlWindow.cpp" />
+    <ClCompile Include="MeWidget.cpp" />
+    <ClCompile Include="OriginalGame.cpp" />
+    <ClCompile Include="RenderEngine\Geometry.cpp" />
+    <ClCompile Include="RenderEngine\RenderEngine.cpp" />
+    <ClCompile Include="RenderEngine\RenderInfo.cpp" />
+    <ClCompile Include="SaveLogger.cpp" />
+    <ClCompile Include="SceneMaker.cpp" />
+    <ClCompile Include="SceneReader.cpp" />
+    <ClCompile Include="SceneryEntity.cpp" />
+    <ClCompile Include="SeekBehaviorComponent.cpp" />
+    <ClCompile Include="SeekState.cpp" />
+    <ClCompile Include="ShapeGenerator.cpp" />
+    <ClCompile Include="ShootingComponent.cpp" />
+    <ClCompile Include="Slider.cpp" />
+    <ClCompile Include="Slider_moc.cpp" />
+    <ClCompile Include="RenderEngine\TextureInfo.cpp" />
+    <ClCompile Include="RenderEngine\TransformInfo.cpp" />
+    <ClCompile Include="RenderEngine\VertexShaderInfo.cpp" />
+    <ClCompile Include="SpatialComponent.cpp" />
+    <ClCompile Include="StateMachine\StateComponent.cpp" />
+    <ClCompile Include="SteeringBehaviors.cpp" />
+    <ClCompile Include="Throwables.cpp" />
+    <ClCompile Include="WanderingComponent.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AIEntity.h" />
+    <ClInclude Include="Area.h" />
+    <ClInclude Include="ArrivalComponent.h" />
+    <ClInclude Include="BinaryOutput.h" />
+    <ClInclude Include="CameraComponent.h" />
+    <ClInclude Include="CollisionInfo.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="ConfigReader.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="EvasionComponent.h" />
+    <ClInclude Include="FleeBehaviorComponent.h" />
+    <ClInclude Include="FlockingComponent.h" />
+    <ClInclude Include="GameLogger.h" />
+    <ClInclude Include="GravityComponent.h" />
+    <ClInclude Include="HealthEntity.h" />
+    <ClInclude Include="KeyboardComponent.h" />
+    <ClInclude Include="MeshComponent.h" />
+    <ClInclude Include="MouseComponent.h" />
+    <ClInclude Include="MoveComponent.h" />
+    <ClInclude Include="MovementComponent.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="NodeLink.h" />
+    <ClInclude Include="NodeMap.h" />
+    <ClInclude Include="NoiseGenerator.h" />
+    <ClInclude Include="OpenFileDialog.h" />
+    <ClInclude Include="PathFinding.h" />
+    <ClInclude Include="PathFollowerComponent.h" />
+    <ClInclude Include="PathingNodes.h" />
+    <ClInclude Include="PlayerEntity.h" />
+    <ClInclude Include="CollisionTester.h" />
+    <ClInclude Include="PursuitComponent.h" />
+    <ClInclude Include="RenderEngine\BufferInfo.h" />
+    <ClInclude Include="RenderEngine\BufferManager.h" />
+    <ClInclude Include="RenderEngine\FragmentShaderInfo.h" />
+    <ClInclude Include="GameTime.h" />
+    <ClInclude Include="MeGlWindow.h" />
+    <ClInclude Include="MeModel.h" />
+    <ClInclude Include="MeWidget.h" />
+    <ClInclude Include="OriginalGame.h" />
+    <ClInclude Include="OriginalGameIncludes.h" />
+    <ClInclude Include="RenderEngine\Geometry.h" />
+    <ClInclude Include="RenderEngine\RenderEngine.h" />
+    <ClInclude Include="RenderEngine\RenderInfo.h" />
+    <ClInclude Include="SaveLogger.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneMaker.h" />
+    <ClInclude Include="SceneReader.h" />
+    <ClInclude Include="SceneryEntity.h" />
+    <ClInclude Include="SearchNode.h" />
+    <ClInclude Include="SeekBehaviorComponent.h" />
+    <ClInclude Include="SeekState.h" />
+    <ClInclude Include="ShapeGenerator.h" />
+    <ClInclude Include="ShootingComponent.h" />
+    <ClInclude Include="Slider.h" />
+    <ClInclude Include="RenderEngine\TextureInfo.h" />
+    <ClInclude Include="RenderEngine\TransformInfo.h" />
+    <ClInclude Include="SpatialComponent.h" />
+    <ClInclude Include="StateMachine\StateComponent.h" />
+    <ClInclude Include="StateMachine\State.h" />
+    <ClInclude Include="StateManager.h" />
+    <ClInclude Include="SteeringBehaviors.h" />
+    <ClInclude Include="Throwables.h" />
+    <ClInclude Include="Vertex.h" />
+    <ClInclude Include="RenderEngine\VertexShaderInfo.h" />
+    <ClInclude Include="VertexFormats.h" />
+    <ClInclude Include="WanderingComponent.h" />
+    <ClInclude Include="WeaponEntity.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\ctFragmentShaderCode.glsl" />
+    <None Include="Shader\fErosion.glsl" />
+    <None Include="Shader\fImageWarping.glsl" />
+    <None Include="Shader\fPixelDiscarderShader.glsl" />
+    <None Include="Shader\fragmentShaderCode.glsl" />
+    <None Include="Shader\specularFragmentShaderCode.glsl" />
+    <None Include="Shader\specularVertexShaderCode.glsl" />
+    <None Include="Shader\tFragmentShaderCode.glsl" />
+    <None Include="Shader\VertexShaderCode.glsl" />
+    <None Include="Shader\vLightBulb.glsl" />
+    <None Include="Shader\vMakeACube.glsl" />
+    <None Include="Shader\vMakePyramid.glsl" />
+    <None Include="Shader\vPixelDiscarderShader.glsl" />
+    <None Include="Shader\vRippledSurfaceShader.glsl" />
+    <None Include="Shader\vTerrainGenerator.glsl" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

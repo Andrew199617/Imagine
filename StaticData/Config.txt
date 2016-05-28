@@ -1,0 +1,112 @@
+OutputColor			random
+OutputTexture			random
+OutputNormal			generate
+
+bedObj				..\\..\\GAT160Middleware\\Data\\OBJs\\bed.obj
+bedSceneOutputFormat		15
+bedScene			..\\..\\GAT160Middleware\\Data\\Scenes\\bed.scene
+bedTexture			..\\..\\GAT160Middleware\\Data\\Texture\\bed.bmp
+bedIndicies			2388
+bedCollectNormals		true
+
+cubepObj			..\\..\\GAT160Middleware\\Data\\OBJs\\Specialcube.obj
+cubepSceneOutputFormat		1
+cubepScene			..\\..\\GAT160Middleware\\Data\\Scenes\\Specialcube.p.scene
+cubepIndicies			468
+cubepCollectNormals		true
+
+cubepcObj			..\\..\\GAT160Middleware\\Data\\OBJs\\Specialcube.obj
+cubepcSceneOutputFormat		3
+cubepcScene			..\\..\\GAT160Middleware\\Data\\Scenes\\Specialcube.pc.scene
+cubepcIndicies			468
+cubepcCollectNormals		true
+
+cubepcrObj			..\\..\\GAT160Middleware\\Data\\OBJs\\Specialcube.obj
+cubepcrSceneOutputFormat	3
+cubepcrScene			..\\..\\GAT160Middleware\\Data\\Scenes\\Specialcube.pc.random.scene
+cubepcrIndicies			468
+cubepcrCollectNormals		true
+
+cubeptObj			..\\..\\GAT160Middleware\\Data\\OBJs\\Specialcube.obj
+cubeptSceneOutputFormat		5
+cubeptScene			..\\..\\GAT160Middleware\\Data\\Scenes\\Specialcube.pt.scene
+cubeptTexture			..\\..\\GAT160Middleware\\Data\\Texture\\water.bmp
+cubeptIndicies			468
+cubeptCollectNormals		false
+
+cubepctObj			..\\..\\GAT160Middleware\\Data\\OBJs\\Specialcube.obj
+cubepctSceneOutputFormat	7
+cubepctScene			..\\..\\GAT160Middleware\\Data\\Scenes\\Specialcube.pct.scene
+cubepctTexture			..\\..\\GAT160Middleware\\Data\\Texture\\water.bmp
+cubepctIndicies			468
+cubepctCollectNormals		false
+ 
+cubepctnObj			..\\..\\GAT160Middleware\\Data\\OBJs\\Specialcube.obj
+cubepctnSceneOutputFormat	15
+cubepctnScene			..\\..\\GAT160Middleware\\Data\\Scenes\\Specialcube.pctn.scene
+cubepctnIndicies		468
+cubepctnCollectNormals		true
+
+AIWorldObj			..\\..\\StaticData\\OBJs\\AIWorld.obj
+AIWorldSceneOutputFormat	13
+AIWorldScene			..\\..\\StaticData\\Scenes\\AIWorld.scene
+AIWorldTexture			..\\..\\StaticData\\Texture\\brick.bmp
+AIWorldIndicies			8718
+AIWorldCollectNormals		true
+
+teddyObj			..\\..\\StaticData\\OBJs\\teddy.obj
+teddySceneOutputFormat		13
+teddyScene			..\\..\\StaticData\\Scenes\\teddy.scene
+teddyTexture			..\\..\\StaticData\\Texture\\teddyfur.bmp
+teddyCollectNormals		true
+
+PyramidObj			..\\..\\GAT160Middleware\\Data\\OBJs\\Pyramid.obj
+PyramidSceneOutputFormat	11
+PyramidScene			..\\..\\GAT160Middleware\\Data\\Scenes\\Pyramid.scene
+PyramidIndicies			18
+PyramidCollectNormals		true
+
+PyramidptObj			..\\..\\GAT160Middleware\\Data\\OBJs\\Pyramid.obj
+PyramidptSceneOutputFormat	5
+PyramidptScene			..\\..\\GAT160Middleware\\Data\\Scenes\\Pyramid.pt.scene
+PyramidptTexture		..\\..\\GAT160Middleware\\Data\\Texture\\fur.bmp
+PyramidptIndicies		18
+PyramidptCollectNormals		true
+
+PyramidpcrObj			..\\..\\GAT160Middleware\\Data\\OBJs\\Pyramid.obj
+PyramidpcrSceneOutputFormat	3
+PyramidpcrScene			..\\..\\GAT160Middleware\\Data\\Scenes\\Pyramid.pc.random.scene
+PyramidpcrIndicies		18
+PyramidpcrCollectNormals	true
+
+batmanObj			..\\..\\StaticData\\OBJs\\Batman.obj
+batmanSceneOutputFormat		13
+batmanScene			..\\..\\StaticData\\Scenes\\batman.scene
+batmanTexture			..\\..\\StaticData\\Texture\\fur.bmp
+batmanIndicies			48603
+batmanCollectNormals		true
+
+regularcubepctObj		..\\..\\GAT160Middleware\\Data\\OBJs\\cube.obj
+regularcubepctSceneOutputFormat	7
+regularcubepctScene		..\\..\\GAT160Middleware\\Data\\Scenes\\cube.pct.scene
+regularcubepctTexture		..\\..\\GAT160Middleware\\Data\\Texture\\brick.bmp
+regularcubepctIndicies		36
+regularcubepctCollectNormals	false
+
+regularcubeptObj		..\\..\\GAT160Middleware\\Data\\OBJs\\cube.obj
+regularcubeptSceneOutputFormat	5
+regularcubeptScene		..\\..\\GAT160Middleware\\Data\\Scenes\\cube.pt.scene
+regularcubeptTexture		..\\..\\GAT160Middleware\\Data\\Texture\\brick.bmp
+regularcubeptIndicies		36
+regularcubeptCollectNormals	false
+
+regularcubeptObj		..\\..\\GAT160Middleware\\Data\\OBJs\\Plane.obj
+regularcubeptSceneOutputFormat	3
+regularcubeptScene		..\\..\\GAT160Middleware\\Data\\Scenes\\Plane.pc.scene
+regularcubeptIndicies		36
+regularcubeptCollectNormals	false
+
+CameraRotateSpeed		1.0		
+CameraStrafeSpeed		15.3301
+CameraPosition			"1.00,1.00,1.00"		
+CameraViewDirection		"0.55,-0.68,-0.75"		
