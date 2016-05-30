@@ -6,7 +6,8 @@
 int SaveLogger::index = 0;
 ofstream SaveLogger::out = ofstream();
 string SaveLogger::value[LENGTHOFVALUE][5] = { { " ", " ", " ", " ", " " } };
-bool SaveLogger::alreadyInitialized = false;
+string SaveLogger::currentFilename = "";
+bool SaveLogger::reInitialized = false;
 
 SaveLogger::SaveLogger()
 {
@@ -20,7 +21,21 @@ SaveLogger::~SaveLogger()
 
 bool SaveLogger::intialize(const char* filename)
 {
-	if (alreadyInitialized) return true;
+	if (currentFilename == filename) return true;
+	else
+	{
+		if (currentFilename != "")
+		{
+			for (int i = 0; i < LENGTHOFVALUE; i++)
+			{
+				for (int i2 = 0; i2 < 5; i2++)
+				{
+					value[i][i2] = "";
+				}
+			}
+		}
+		currentFilename = filename;
+	}
 	stringstream buffer;
 	ifstream meInput(filename);
 
@@ -98,7 +113,7 @@ bool SaveLogger::intialize(const char* filename)
 	}
 
 	GameLogger::log("Save Logger file loaded");
-	alreadyInitialized = true;
+	reInitialized = true;
 	return true;
 }
 
@@ -215,4 +230,11 @@ glm::vec3 SaveLogger::GetPosition(string objName)
 	GameLogger::log("could not find Position for Obj:" + objName);
 	cout << "check log" << endl;
 	return glm::vec3();
+}
+
+bool SaveLogger::ValueChanged()
+{
+	bool result = reInitialized;
+	reInitialized = false;
+	return result;
 }

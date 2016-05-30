@@ -13,11 +13,12 @@
 #include <QtGui\qwidget.h>
 #include "MeModel.h"
 #include "Slider.h"
+#include <Qt\qmainwindow.h>
 
 class MeGlWindow;
 class QApplication;
 
-class MeWidget : public QWidget
+class MeWidget : public QMainWindow
 {
 	Q_OBJECT
 
@@ -37,6 +38,9 @@ class MeWidget : public QWidget
 	DebugSlider* uD;
 	DebugSlider* uR;
 
+	QMenu *fileMenu;
+	QAction *openAct;
+
 	MeGlWindow* meGlWindow;
 	MeModel* theModel;
 public:
@@ -46,6 +50,10 @@ public:
 	void openingFile();
 	void openingTexture();
 	void checkBoxChanged();
+
+private:
+	void createActions();
+	void createMenus();
 };
 
 #pragma warning(pop)

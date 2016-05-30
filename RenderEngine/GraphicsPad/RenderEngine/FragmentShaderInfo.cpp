@@ -4,6 +4,7 @@
 #include <sstream>
 #include <fstream>
 #include <windows.h>
+#include "..\GameLogger.h"
 
 using namespace std;
 
@@ -28,10 +29,12 @@ string FragmentShaderInfo::readShaderCode(const char* filename)
 {
 	stringstream buffer;
 	ifstream meInput(filename);
+
 	if (!meInput.good())
 	{
-		cout << "my directory is " << ExePath() << "\n";
-		cout << "file failed to load..." << filename;
+		string s = "file failed to load: ";
+		GameLogger::log(s + filename);
+		GameLogger::shutdownLog();
 		exit(1);
 	}
 	buffer << meInput.rdbuf();

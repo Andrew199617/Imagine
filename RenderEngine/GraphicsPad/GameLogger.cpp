@@ -36,6 +36,7 @@ void GameLogger::log(std::string msg)
 		string s = to_string(index) + ". " + msg;
 		value[index] = s;
 		index++;
+		
 	}
 }
 

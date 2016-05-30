@@ -38,11 +38,11 @@ void MeshComponent::makeShaderInfo(int vertexFormat, string objname)
 		break;
 	case PositionColorTexture:
 		vertexShaderInfo = VertexShaderInfo();
-		fragmentShaderInfo = FragmentShaderInfo("Shader\\ctFragmentShaderCode.glsl");
+		fragmentShaderInfo = FragmentShaderInfo("..\\GraphicsPad\\Shader\\ctFragmentShaderCode.glsl");
 		break;
 	case PositionTexture:
 		vertexShaderInfo = VertexShaderInfo();
-		fragmentShaderInfo = FragmentShaderInfo("Shader\\tFragmentShaderCode.glsl");
+		fragmentShaderInfo = FragmentShaderInfo("..\\GraphicsPad\\Shader\\tFragmentShaderCode.glsl");
 		break;
 	case PositionNormal:
 		vertexShaderInfo = VertexShaderInfo();
@@ -54,7 +54,7 @@ void MeshComponent::makeShaderInfo(int vertexFormat, string objname)
 		break;
 	case PositionColorTextureNormal:
 		vertexShaderInfo = VertexShaderInfo();
-		fragmentShaderInfo = FragmentShaderInfo("Shader\\ctFragmentShaderCode.glsl");
+		fragmentShaderInfo = FragmentShaderInfo("..\\GraphicsPad\\Shader\\ctFragmentShaderCode.glsl");
 		break;
 	}
 	if (vertexShaderLocation == "")

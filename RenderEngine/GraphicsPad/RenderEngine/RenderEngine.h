@@ -13,6 +13,7 @@ public:
 	static void AddGeometry(void* vertices, unsigned vertexCount, unsigned vertexSize, void* indices
 		, unsigned indexCount, unsigned indexSize, Geometry& mesh);
 	static void AddRenderInfo(RenderInfo* info);
+	static void RemoveRenderInfo();
 	static void Draw();
 private:
 	RenderEngine();

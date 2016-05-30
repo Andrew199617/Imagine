@@ -15,6 +15,8 @@
 #include <iostream>
 #include "OpenFileDialog.h"
 #include "SaveLogger.h"
+#include <Qt\qmenu.h>
+#include <Qt\qmenubar.h>
 
 
 
@@ -23,21 +25,18 @@ MeWidget::MeWidget(MeGlWindow* meGl, MeModel* model)
 	SaveLogger::intialize();
 	theModel = model;
 	this->meGlWindow = meGl;
+
+	QWidget *widget = new QWidget;
+	setCentralWidget(widget);
 	QVBoxLayout* mainLayout;
-	setLayout(mainLayout = new QVBoxLayout);
+	widget->setLayout(mainLayout = new QVBoxLayout);
 	mainLayout->addLayout(controlsLayout = new QVBoxLayout);
 	mainLayout->addWidget(meGlWindow);
-	controlsLayout->addWidget(uD = new DebugSlider("Rotation: ", 0.0f, 360.0f, true, 36));
-	controlsLayout->addWidget(uR = new DebugSlider("Offset From Mid: ", 0.0f, 1.0f, true, 10));
-	uD->setFixedHeight(50);
-	uD->setValue(10.f);
-	uR->setFixedHeight(50);
-	uR->setValue(1.f);
-	theModel->uD = uD->value();
-	theModel->uR = uR->value();
 
-	connect(uD, SIGNAL(valueChanged(float)), this, SLOT(sliderValueChanged()));
-	connect(uR, SIGNAL(valueChanged(float)), this, SLOT(sliderValueChanged()));
+	createActions();
+	createMenus();
+
+	setWindowTitle(tr("Imagine Engine"));
 }
 
 string getStringFromQstring(QString qstr)
@@ -57,8 +56,7 @@ void MeWidget::openingFile()
 	OpenFileDialog openFileDialog1;
 
 	string str = openFileDialog1.getFile();
-	QString obj = QString::fromStdString(str);
-	getFileLocationLabel->setText(obj);
+	SaveLogger::intialize(str.c_str());
 }
 
 void MeWidget::openingTexture()
@@ -116,4 +114,21 @@ void MeWidget::checkBoxChanged()
 		save->setText("Done");
 		
 	}
+}
+
+void MeWidget::createActions()
+{
+	openAct = new QAction(tr("&Open"), this);
+	openAct->setShortcuts(QKeySequence::New);
+	openAct->setStatusTip(tr("Open a new Obj"));
+	connect(openAct, SIGNAL(triggered()), this, SLOT(openingFile()));
+
+}
+
+void MeWidget::createMenus()
+{
+	fileMenu = menuBar()->addMenu(tr("&File"));
+	fileMenu->addAction(openAct);
+	fileMenu->addSeparator();
+
 }

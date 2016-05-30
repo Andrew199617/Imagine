@@ -57,6 +57,7 @@ public:
 
 public:
 	bool Initialize();
+	bool InitializeSaveLoggerObjects();
 
 public:
 	void Update(float dt);

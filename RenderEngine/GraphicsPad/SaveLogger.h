@@ -29,7 +29,9 @@ public:
 	static string GetName(int);
 	static string GetObj(string);
 	static glm::vec3 GetPosition(string);
-
+	static bool ValueChanged();
 private:
-	static bool alreadyInitialized;
+	static string currentFilename;
+	static bool reInitialized;
+	
 };

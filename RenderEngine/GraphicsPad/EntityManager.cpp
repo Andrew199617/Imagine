@@ -34,7 +34,24 @@ bool EntityManager::Initialize()
 	}
 	playerShoot.Disable();
 
+	if (!InitializeSaveLoggerObjects())
+	{
+		string s = "Save Logger Objects did not initialize";
+		GameLogger::log(s);
+		return false;
+	}
+	
+	GameLogger::log("Entity Manager Initialized");
+	return true;
+}
+
+bool EntityManager::InitializeSaveLoggerObjects()
+{
 	num_Objs = SaveLogger::GetNumObjs();
+	for (int i = 0; i < num_Objs; i++)
+	{
+		entities[i] = SceneryEntity();
+	}
 	for (int i = 0; i < num_Objs; i++)
 	{
 		entities[i].SetName(SaveLogger::GetName(i));
@@ -51,7 +68,6 @@ bool EntityManager::Initialize()
 		}
 	}
 
-	GameLogger::log("Entity Manager Initialized");
 	return true;
 }
 
@@ -62,6 +78,20 @@ void EntityManager::Update(float dt)
 	m_dt += dt;	
 	
 	player.Update(dt);
+
+	if (SaveLogger::ValueChanged())
+	{
+		RenderEngine::RemoveRenderInfo();
+		
+		if (!InitializeSaveLoggerObjects())
+		{
+			string s = "Save Logger Objects did not initialze";
+			GameLogger::log(s);
+			GameLogger::shutdownLog();
+			exit(1);
+		}
+		SendDataToOpenGL();
+	}
 
 	for (int i = 0; i < num_Objs; i++)
 	{

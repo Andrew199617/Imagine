@@ -44,6 +44,11 @@ void RenderEngine::AddRenderInfo(RenderInfo* info)
 	BufferManager::AddRenderInfo(info);
 }
 
+void RenderEngine::RemoveRenderInfo()
+{
+	BufferManager::RemoveRenderInfo();
+}
+
 void RenderEngine::Draw()
 {
 	for (int i = 0; i <= BufferManager::m_numVertexBuffers; i++)

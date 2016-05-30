@@ -11,11 +11,11 @@
 #include "MeGlWindow.h"
 #include "ConfigReader.h"
 #include "GameLogger.h"
+#include <Windows.h>
 #include "NoiseGenerator.h"
 
 int main(int argc, char* argv[])
 {
-
 	QApplication app(argc, argv);
 
 	GameLogger::intialize();

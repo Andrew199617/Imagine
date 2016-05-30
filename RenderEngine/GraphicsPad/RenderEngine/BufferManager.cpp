@@ -119,6 +119,14 @@ void BufferManager::AddRenderInfo(RenderInfo* info)
 	}
 }
 
+void BufferManager::RemoveRenderInfo()
+{
+	for (int i = 0; i <= 7; i++)
+	{
+		m_bufferPool[i] = BufferInfo();
+	}
+}
+
 
 
 
