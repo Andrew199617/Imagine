@@ -46,7 +46,7 @@ void RenderInfo::Draw()
 
 	if (m_mesh->VertexFormat & HasTexture)
 	{
-		m_textureInfo->bindTexture(m_vertexShaderInfo->uTextureUL, m_vertexShaderInfo->uBumpMapUL, m_vertexShaderInfo->uTexCoordOffsetUL);
+		m_textureInfo->bindTexture(m_vertexShaderInfo->uTextureUL, m_vertexShaderInfo->uBumpMapUL);
 	}
 
 	glDrawElements(GL_TRIANGLES, m_mesh->m_indexCount, GL_UNSIGNED_INT, (void*)m_mesh->m_indexByteOffset);

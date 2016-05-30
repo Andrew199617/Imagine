@@ -1,11 +1,3 @@
-name TwistPlane
-Obj Plane
-Position "0.0,20.0,0.0"
-
-name MemePlane
-Obj Plane
-Position "-3.9615326,-1.00,-3.7366638"
-
 name AIWorld
 Obj AIWorld
 Position "0.0,0.0,0.0"

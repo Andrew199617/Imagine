@@ -1,6 +1,6 @@
 #version 430
 
-out vec3 daColor;
+layout(location = 0) out vec3 daColor;
 
 in float vLightIntensity;
 in vec3 theVertexColor;

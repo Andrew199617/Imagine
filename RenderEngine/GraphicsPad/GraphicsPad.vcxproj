@@ -120,6 +120,7 @@
     <ClCompile Include="MeGlWindow.cpp" />
     <ClCompile Include="MeWidget.cpp" />
     <ClCompile Include="OriginalGame.cpp" />
+    <ClCompile Include="RenderEngine\FrameBuffer.cpp" />
     <ClCompile Include="RenderEngine\Geometry.cpp" />
     <ClCompile Include="RenderEngine\RenderEngine.cpp" />
     <ClCompile Include="RenderEngine\RenderInfo.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="MeWidget.h" />
     <ClInclude Include="OriginalGame.h" />
     <ClInclude Include="OriginalGameIncludes.h" />
+    <ClInclude Include="RenderEngine\FrameBuffer.h" />
     <ClInclude Include="RenderEngine\Geometry.h" />
     <ClInclude Include="RenderEngine\RenderEngine.h" />
     <ClInclude Include="RenderEngine\RenderInfo.h" />

@@ -10,10 +10,10 @@ public:
 	TextureInfo(){};
 	TextureInfo(string FileLocation,string BumpLocation);
 	~TextureInfo();
-	void loadBMP_custom(string objName);
 	void loadBMP_customFile(string texpath);
 	void loadBMP_customFileBumpMap(string texpath);
-	void bindTexture(GLint tex,GLint,GLint);
+	void bindTexture(GLint tex,GLint);
+	void SendData(GLint tex, GLint);
 	string objName;
 
 	unsigned char header[54]; // Each BMP file begins by a 54-bytes header

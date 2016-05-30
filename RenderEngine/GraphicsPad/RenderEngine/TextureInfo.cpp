@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "..\ConfigReader.h"
 #include "VertexShaderInfo.h"
+#include "..\GameLogger.h"
 
 TextureInfo::TextureInfo(string FileLocation, string objName)
 {
@@ -14,45 +15,6 @@ TextureInfo::TextureInfo(string FileLocation, string objName)
 
 TextureInfo::~TextureInfo()
 {
-}
-
-void TextureInfo::loadBMP_custom(string m_objName)
-{
-	ConfigReader::Initialize();
-	string texpath = ConfigReader::findValueForKey(m_objName + "Texture");
-	const char* imagepath = texpath.c_str();
-#pragma warning(push)
-#pragma warning (disable:4996)
-	FILE * file = fopen(imagepath, "rb");
-#pragma warning(pop)
-	if (!file)                             
-	{ printf("Image could not be opened\n"); return; }
-
-	if (fread(header, 1, 54, file) != 54){ // If not 54 bytes read : problem
-		printf("Not a correct BMP file\n");
-		return;
-	}
-
-	if (header[0] != 'B' || header[1] != 'M'){
-		printf("Not a correct BMP file\n");
-		return;
-	}
-
-	this->dataPos = *(int*)&(header[0x0A]);
-	this->imageSize = *(int*)&(header[0x22]);
-	this->texWidth = *(int*)&(header[0x12]);
-	this->texHeight = *(int*)&(header[0x16]);
-
-	if (imageSize == 0)    this->imageSize = texWidth*texHeight * 3; // 3 : one byte for each Red, Green and Blue component
-	if (dataPos == 0)      this->dataPos = 54;
-
-	this->texData = new unsigned char[imageSize];
-
-	// Read the actual data from the file into the buffer
-	fread(texData, 1, imageSize, file);
-
-	//Everything is in memory now, the file can be closed
-	fclose(file);
 }
 
 void TextureInfo::loadBMP_customFile(string texpath)
@@ -134,22 +96,23 @@ void TextureInfo::loadBMP_customFileBumpMap(string bumpPath)
 	fclose(file);
 }
 
-void TextureInfo::bindTexture(GLint tex,GLint bumpMap,GLint texCoord)
+void TextureInfo::bindTexture(GLint tex,GLint bumpMap)
 {
-	float xInc = 1.0f / float(texWidth);
-	float yInc = 1.0f / float(texHeight);
-	for (int i = 0; i < 2; i++)
+	glBindTexture(GL_TEXTURE_2D, 1);
+
+	glActiveTexture(GL_TEXTURE0 + 0);
+	glBindTexture(GL_TEXTURE_2D, tex);
+
+	if (bumpMap != -1)
 	{
-		for (int j = 0; j < 2; j++)
-		{
-			texCoordOffsets[(((i * 3) + j) * 2) + 0] = (-1.0f * xInc) + (float(i) * xInc);
-			texCoordOffsets[(((i * 3) + j) * 2) + 1] = (-1.0f * yInc) + (float(j) * yInc);
-		}
+		glActiveTexture(GL_TEXTURE0 + 1);
+		glBindTexture(GL_TEXTURE_2D, bumpMap);
 	}
 
-	glUniform2fv(texCoord, 9, &texCoordOffsets[0]);
+}
 
-	// "Bind" the newly created texture : all future texture functions will modify this texture
+void TextureInfo::SendData(GLint tex, GLint bumpMap)
+{
 	glActiveTexture(GL_TEXTURE0 + 0);
 	glBindTexture(GL_TEXTURE_2D, tex);
 

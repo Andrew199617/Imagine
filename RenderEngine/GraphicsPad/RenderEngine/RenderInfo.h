@@ -15,6 +15,8 @@ public:
 	void Draw();
 	void SendAttributeData();
 	void SendUniformData();
+
+public:
 	void setGeometry(Geometry* geo)
 	{
 		m_mesh = geo;
@@ -29,11 +31,19 @@ public:
 	{
 		m_vertexShaderInfo = vertexShaderInfo;
 	}
+	VertexShaderInfo* getVertexShaderInfo()
+	{
+		return m_vertexShaderInfo;
+	}
 	void setTextureInfo(TextureInfo* textureInfo)
 	{
 		if (!m_textureInfo)
 			delete m_textureInfo;
 		m_textureInfo = textureInfo;
+	}
+	TextureInfo* getTextureInfo()
+	{
+		return m_textureInfo;
 	}
 	RenderInfo* Next() const { return next; }
 	void Next(RenderInfo* val) { next = val; }

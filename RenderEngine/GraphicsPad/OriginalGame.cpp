@@ -2,11 +2,13 @@
 #include "MeGlWindow.h"
 #include "GameLogger.h"
 #include "SaveLogger.h"
+#include "RenderEngine\FrameBuffer.h"
 
 float dt;
 GameTime gametime;
 MeGlWindow* meGl;
 EntityManager entityManager;
+FrameBuffer frameBuffer;
 
 OriginalGame::OriginalGame()
 {
@@ -39,6 +41,7 @@ bool OriginalGame::Initialize(MeGlWindow* meGlWindow)
 	glShadeModel(GL_SMOOTH);
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
+
 	if (!entityManager.Initialize())
 	{
 		GameLogger::log("Entity Manager did not Initialize");
@@ -46,6 +49,7 @@ bool OriginalGame::Initialize(MeGlWindow* meGlWindow)
 		return false;
 	}
 	SendDataToOpenGL();
+	//frameBuffer.GenerateFBO(1920, 1080);
 
 	GameLogger::log("Original Game initialized");
 	return true;
@@ -89,6 +93,7 @@ void OriginalGame::ProcessMouse(QMouseEvent* e)
 
 void OriginalGame::Draw()
 {
+	//frameBuffer.Bind();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glViewport(0, 0, 1920, 1080);
 

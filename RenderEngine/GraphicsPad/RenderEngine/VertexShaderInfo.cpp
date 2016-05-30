@@ -4,6 +4,7 @@
 #include <sstream>
 #include <fstream>
 #include <windows.h>
+#include "..\GameLogger.h"
 
 using namespace std;
 
@@ -156,6 +157,7 @@ void VertexShaderInfo::installShader(GLuint fragmentShaderID)
 
 	glUniform1i(uTextureUL, 0);
 	glUniform1i(uBumpMapUL, 1);
+
 }
 
 void VertexShaderInfo::useProgram()

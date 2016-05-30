@@ -50,7 +50,7 @@ void MeshComponent::makeShaderInfo(int vertexFormat, string objname)
 		break;
 	case PositionTextureNormal:
 		vertexShaderInfo = VertexShaderInfo();
-		fragmentShaderInfo = FragmentShaderInfo("Shader\\tFragmentShaderCode.glsl");
+		fragmentShaderInfo = FragmentShaderInfo("..\\GraphicsPad\\Shader\\tFragmentShaderCode.glsl");
 		break;
 	case PositionColorTextureNormal:
 		vertexShaderInfo = VertexShaderInfo();
@@ -99,6 +99,7 @@ void MeshComponent::setRenderInfo(string objname)
 	setUpFragmentVertexShader();
 	renderinfo.setVertexShaderInfo(&vertexShaderInfo);
 	renderinfo.setTextureInfo(new TextureInfo(renderinfo.getGeometry()->texturePath,objname));
+	renderinfo.getTextureInfo()->SendData(renderinfo.getVertexShaderInfo()->uTextureUL, renderinfo.getVertexShaderInfo()->uBumpMapUL);
 }
 
 void MeshComponent::setNodeRenderInfo(string objname, float radius)
