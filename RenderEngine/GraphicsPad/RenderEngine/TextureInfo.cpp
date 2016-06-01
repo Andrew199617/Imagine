@@ -98,8 +98,6 @@ void TextureInfo::loadBMP_customFileBumpMap(string bumpPath)
 
 void TextureInfo::bindTexture(GLint tex,GLint bumpMap)
 {
-	glBindTexture(GL_TEXTURE_2D, 1);
-
 	glActiveTexture(GL_TEXTURE0 + 0);
 	glBindTexture(GL_TEXTURE_2D, tex);
 

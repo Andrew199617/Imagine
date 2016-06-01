@@ -130,6 +130,7 @@
     <ClCompile Include="SceneryEntity.cpp" />
     <ClCompile Include="SeekBehaviorComponent.cpp" />
     <ClCompile Include="SeekState.cpp" />
+    <ClCompile Include="PostProcessingModel.cpp" />
     <ClCompile Include="ShapeGenerator.cpp" />
     <ClCompile Include="ShootingComponent.cpp" />
     <ClCompile Include="Slider.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="SearchNode.h" />
     <ClInclude Include="SeekBehaviorComponent.h" />
     <ClInclude Include="SeekState.h" />
+    <ClInclude Include="PostProcessingModel.h" />
     <ClInclude Include="ShapeGenerator.h" />
     <ClInclude Include="ShootingComponent.h" />
     <ClInclude Include="Slider.h" />
@@ -227,6 +229,7 @@
     <None Include="Shader\vLightBulb.glsl" />
     <None Include="Shader\vMakeACube.glsl" />
     <None Include="Shader\vMakePyramid.glsl" />
+    <None Include="Shader\vPassThrough.glsl" />
     <None Include="Shader\vPixelDiscarderShader.glsl" />
     <None Include="Shader\vRippledSurfaceShader.glsl" />
     <None Include="Shader\vTerrainGenerator.glsl" />

@@ -34,12 +34,12 @@ bool EntityManager::Initialize()
 	}
 	playerShoot.Disable();
 
-	if (!InitializeSaveLoggerObjects())
+	/*if (!InitializeSaveLoggerObjects())
 	{
 		string s = "Save Logger Objects did not initialize";
 		GameLogger::log(s);
 		return false;
-	}
+	}*/
 	
 	GameLogger::log("Entity Manager Initialized");
 	return true;

@@ -22,8 +22,7 @@ void main()
 	vLightIntensity = dot(lightVector,normalize(vec3(uProjectionMatrix * vec4(aNormal,0))));
 	//vLightIntensity = vec4(brightness,brightness,brightness,1.0f);
 
-
-	gl_Position = uModelViewProjectionMatrix * aVertex;
+	gl_Position = uModelViewProjectionMatrix * aVertex; 
 	theVertexColor = aColor.rgb;
 	UV = texture;
 };

@@ -32,11 +32,19 @@ MeWidget::MeWidget(MeGlWindow* meGl, MeModel* model)
 	widget->setLayout(mainLayout = new QVBoxLayout);
 	mainLayout->addLayout(controlsLayout = new QVBoxLayout);
 	mainLayout->addWidget(meGlWindow);
+	controlsLayout->addWidget(discardBasedOnDepth = new QCheckBox("Discard pixels based on depth"));
+	controlsLayout->addWidget(useRegularDepth = new QCheckBox("Regular Depth"));
+	controlsLayout->addWidget(submit = new QPushButton("Submit"));
+	discardBasedOnDepth->setChecked(true);
+	useRegularDepth->setChecked(false);
+	PostProcessingModel::discardBasedOnDepth = discardBasedOnDepth->isChecked();
+	PostProcessingModel::regularDepth = useRegularDepth->isChecked();
 
 	createActions();
 	createMenus();
 
 	setWindowTitle(tr("Imagine Engine"));
+	connect(submit, SIGNAL(released()), this, SLOT(openingTexture()));
 }
 
 string getStringFromQstring(QString qstr)
@@ -61,59 +69,12 @@ void MeWidget::openingFile()
 
 void MeWidget::openingTexture()
 {
-	OpenFileDialog openFileDialog1;
-
-	string str = openFileDialog1.getFile();
-	QString obj = QString::fromStdString(str);
-	getTextureLocationLabel->setText(obj);
+	PostProcessingModel::discardBasedOnDepth = discardBasedOnDepth->isChecked();
+	PostProcessingModel::regularDepth = useRegularDepth->isChecked();
 }
 
 void MeWidget::checkBoxChanged()
 {
-	int svf = 1;
-	if (save->text() == "Done" && svf == 1)
-	{
-		if (checkboxColor->isChecked())
-		{
-			svf += 2;
-		}
-		if (checkboxTexture->isChecked())
-		{
-			svf += 4;
-		}
-		if (checkboxNormals->isChecked())
-		{
-			svf += 8;
-		}
-		checkboxColor->hide();
-		checkboxTexture->hide();
-		checkboxNormals->hide();
-		ObjName->hide();
-		getFileLocation->hide();
-		getFileLocationLabel->hide();
-		getTextureLocation->hide();
-		getTextureLocationLabel->hide();
-		save->setText("Add another obj");
-		string scenpath = "C:\\Users\\Andrew\\Documents\\Neumont\\Neumont Quarter Four\\gat_mvelez\\GAT160Middleware\\Data\\Scenes\\";
-		SaveLogger::log(getStringFromQstring(ObjName->text()), getStringFromQstring(getTextureLocationLabel->text()), scenpath + getStringFromQstring(ObjName->text()) + ".scene", 
-			glm::vec3(theModel->lightPosition.x, theModel->lightPosition.y, theModel->lightPosition.z));
-		SceneMaker::makeScene(getStringFromQstring(getFileLocationLabel->text()), getStringFromQstring(ObjName->text()) + ".scene", svf);
-		theModel->resendData = true;
-	}
-	else
-	{
-		svf = 1;
-		checkboxColor->show();
-		checkboxTexture->show();
-		checkboxNormals->show();
-		ObjName->show();
-		getFileLocation->show();
-		getFileLocationLabel->show();
-		getTextureLocation->show();
-		getTextureLocationLabel->show();
-		save->setText("Done");
-		
-	}
 }
 
 void MeWidget::createActions()

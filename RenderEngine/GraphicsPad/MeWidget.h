@@ -14,6 +14,7 @@
 #include "MeModel.h"
 #include "Slider.h"
 #include <Qt\qmainwindow.h>
+#include "PostProcessingModel.h"
 
 class MeGlWindow;
 class QApplication;
@@ -23,16 +24,15 @@ class MeWidget : public QMainWindow
 	Q_OBJECT
 
 	QVBoxLayout* controlsLayout;
-	QCheckBox* checkboxColor;
-	QCheckBox* checkboxTexture;
+	QCheckBox* discardBasedOnDepth;
+	QCheckBox* useRegularDepth;
 	QCheckBox* checkboxNormals;
 
 	QLineEdit* ObjName;
 	QPushButton* getFileLocation;
 	QLineEdit* getFileLocationLabel;
 	QPushButton* getTextureLocation;
-	QLineEdit* getTextureLocationLabel;
-	QPushButton* save;
+	QPushButton* submit;
 
 	DebugSlider* lightY;
 	DebugSlider* uD;

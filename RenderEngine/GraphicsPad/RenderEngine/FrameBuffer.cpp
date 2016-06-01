@@ -1,9 +1,11 @@
 #include "FrameBuffer.h"
 #include "..\GameLogger.h"
+#include "VertexShaderInfo.h"
 
 
 FrameBuffer::FrameBuffer()
 {
+
 }
 
 
@@ -18,12 +20,10 @@ void FrameBuffer::GenerateFBO(unsigned int width, unsigned int height)
 	glBindFramebuffer(GL_FRAMEBUFFER, frameBufferName);         // and bind it to the pipeline
 
 	GenerateColorTexture(width, height);//generate empty texture
-	//generateDepthTexture(width, height);//generate empty texture
+	GenerateDepthTexture(width, height);//generate empty texture
 
-	unsigned int attachment_index_color_texture = 0;   //to keep track of our textures
-	//bind textures to pipeline. texture_depth is optional .0 is the mipmap level. 0 is the heightest
-	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + attachment_index_color_texture, texture_color, 0);
-	//glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, texture_depth, 0);//optional
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, texture_color, 0);
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthTexture, 0);//optional
 
 
 	GLenum DrawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
@@ -46,15 +46,43 @@ void FrameBuffer::Bind()
 
 void FrameBuffer::GenerateColorTexture(unsigned int width, unsigned int height)
 {
-	glGenTextures(1, &texture_color);
 
+	//glUniform1i(VertexShaderInfo::uRenderedTexUL, 2);
+	glActiveTexture(GL_TEXTURE0 + 2);
+	glGenTextures(1,&texture_color);
 	// "Bind" the newly created texture : all future texture functions will modify this texture
 	glBindTexture(GL_TEXTURE_2D, texture_color);
 
 	// Give an empty image to OpenGL ( the last "0" )
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_FLOAT, 0);
 
 	// Poor filtering. Needed !
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+
+}
+
+void FrameBuffer::GenerateDepthTexture(unsigned int width, unsigned int height)
+{
+	glActiveTexture(GL_TEXTURE0 + 3);
+	glGenTextures(1, &depthTexture);
+	glBindTexture(GL_TEXTURE_2D, depthTexture);
+	glTexImage2D(GL_TEXTURE_2D, 0,GL_DEPTH_COMPONENT24, width, height, 0,GL_DEPTH_COMPONENT, GL_FLOAT, 0);
+	
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); 
+}
+
+void FrameBuffer::BindTexture()
+{
+	if (VertexShaderInfo::uRenderedTexUL > 0)
+	{
+		glActiveTexture(GL_TEXTURE0 + 2);
+		glBindTexture(GL_TEXTURE_2D, texture_color);
+
+	}
+	glActiveTexture(GL_TEXTURE0 + 3);
+	glBindTexture(GL_TEXTURE_2D, depthTexture);
+
 }

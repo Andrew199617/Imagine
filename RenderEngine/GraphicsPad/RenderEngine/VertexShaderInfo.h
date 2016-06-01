@@ -17,6 +17,7 @@ public:
 	bool checkProgStatus(GLuint programID);
 	void installShader(GLuint fragmentShaderID);
 	void useProgram();
+	GLuint getProgramID();
 
 public:
 	//UL = UniformLocation
@@ -33,7 +34,6 @@ public:
 	float percentRippled;
 	float density;
 	static bool isBumped;
-	static float texCoordOffsets[18];
 	static float uMin, uMax;
 
 	static float uR;
@@ -49,5 +49,7 @@ public:
 	GLint uProjectionMatrixUL;
 	GLint uModelViewProjectionMatrixUL;
 	GLint uNormalMatrixUL;
+
+	static GLuint uRenderedTexUL;
 };
 

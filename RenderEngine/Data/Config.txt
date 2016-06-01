@@ -65,6 +65,10 @@ PlaneFragmentShader    		..\Graphicspad\Shader\fImageWarping.glsl
 PlaneTexture			..\\..\\StaticData\\Texture\\brick.bmp
 PlaneBumpMap			..\\..\\StaticData\\Texture\\heart.bmp
 
+RenderedPlaneSceneOutputFormat	13
+RenderedPlaneScene		..\\..\\StaticData\\Scenes\\Plane.pc.scene
+RenderedPlaneFragmentShader    	..\Graphicspad\Shader\fragmentShaderCode.glsl
+
 SphereSceneOutputFormat		15
 SphereScene			..\\..\\StaticData\\Scenes\\Sphere.pc.scene
 SphereTexture			..\\..\\StaticData\\Texture\\fur.bmp
