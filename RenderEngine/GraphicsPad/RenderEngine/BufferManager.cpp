@@ -22,6 +22,14 @@ BufferManager::BufferManager()
 
 BufferManager::~BufferManager()
 {
+	for (int i = 0; i < m_numVertexBuffers; i++)
+	{
+		glDeleteBuffers(1, &m_bufferPool[i].m_vert_ID);
+	}
+	for (int i = 0; i < m_numIndexBuffers; i++)
+	{
+		glDeleteBuffers(1, &m_bufferPool[i].M_index_ID);
+	}
 }
 
 void BufferManager::Initialize()
@@ -123,6 +131,8 @@ void BufferManager::RemoveRenderInfo()
 {
 	for (int i = 0; i <= 7; i++)
 	{
+		glDeleteBuffers(1, &m_bufferPool[i].m_vert_ID);
+		glDeleteBuffers(1, &m_bufferPool[i].M_index_ID);
 		m_bufferPool[i] = BufferInfo();
 	}
 }

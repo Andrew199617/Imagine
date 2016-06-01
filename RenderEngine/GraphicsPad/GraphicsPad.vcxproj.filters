@@ -496,5 +496,6 @@
     <None Include="Shader\vPassThrough.glsl">
       <Filter>glsl\Vertex</Filter>
     </None>
+    <None Include="mewidget.ui" />
   </ItemGroup>
 </Project>

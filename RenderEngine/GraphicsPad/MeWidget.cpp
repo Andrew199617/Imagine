@@ -13,7 +13,6 @@
 #include <QtGui\qhboxlayout>
 #include "MeGlWindow.h"
 #include <iostream>
-#include "OpenFileDialog.h"
 #include "SaveLogger.h"
 #include <Qt\qmenu.h>
 #include <Qt\qmenubar.h>
@@ -31,20 +30,13 @@ MeWidget::MeWidget(MeGlWindow* meGl, MeModel* model)
 	QVBoxLayout* mainLayout;
 	widget->setLayout(mainLayout = new QVBoxLayout);
 	mainLayout->addLayout(controlsLayout = new QVBoxLayout);
+	mainLayout->addLayout(objectDetailsLayout = new QVBoxLayout);
 	mainLayout->addWidget(meGlWindow);
-	controlsLayout->addWidget(discardBasedOnDepth = new QCheckBox("Discard pixels based on depth"));
-	controlsLayout->addWidget(useRegularDepth = new QCheckBox("Regular Depth"));
-	controlsLayout->addWidget(submit = new QPushButton("Submit"));
-	discardBasedOnDepth->setChecked(true);
-	useRegularDepth->setChecked(false);
-	PostProcessingModel::discardBasedOnDepth = discardBasedOnDepth->isChecked();
-	PostProcessingModel::regularDepth = useRegularDepth->isChecked();
 
 	createActions();
 	createMenus();
 
 	setWindowTitle(tr("Imagine Engine"));
-	connect(submit, SIGNAL(released()), this, SLOT(openingTexture()));
 }
 
 string getStringFromQstring(QString qstr)
@@ -61,16 +53,14 @@ void MeWidget::sliderValueChanged()
 
 void MeWidget::openingFile()
 {
-	OpenFileDialog openFileDialog1;
-
-	string str = openFileDialog1.getFile();
+	string str = openFileDialog.getFile();
 	SaveLogger::intialize(str.c_str());
 }
 
 void MeWidget::openingTexture()
 {
-	PostProcessingModel::discardBasedOnDepth = discardBasedOnDepth->isChecked();
-	PostProcessingModel::regularDepth = useRegularDepth->isChecked();
+	string str = openFileDialog.getFile();
+	SaveLogger::AddObj(str);
 }
 
 void MeWidget::checkBoxChanged()
@@ -81,8 +71,13 @@ void MeWidget::createActions()
 {
 	openAct = new QAction(tr("&Open"), this);
 	openAct->setShortcuts(QKeySequence::New);
-	openAct->setStatusTip(tr("Open a new Obj"));
+	openAct->setStatusTip(tr("Open a new Scene"));
 	connect(openAct, SIGNAL(triggered()), this, SLOT(openingFile()));
+
+	addObjectAct = new QAction(tr("&Add Object"), this);
+	addObjectAct->setShortcuts(QKeySequence::AddTab);
+	addObjectAct->setStatusTip(tr("Open a new Obj"));
+	connect(addObjectAct, SIGNAL(triggered()), this, SLOT(openingTexture()));
 
 }
 
@@ -91,5 +86,9 @@ void MeWidget::createMenus()
 	fileMenu = menuBar()->addMenu(tr("&File"));
 	fileMenu->addAction(openAct);
 	fileMenu->addSeparator();
+
+	gameObjectMenu = menuBar()->addMenu(tr("&GameObject"));
+	gameObjectMenu->addAction(addObjectAct);
+	gameObjectMenu->addSeparator();
 
 }

@@ -15,6 +15,7 @@
 #include "Slider.h"
 #include <Qt\qmainwindow.h>
 #include "PostProcessingModel.h"
+#include "OpenFileDialog.h"
 
 class MeGlWindow;
 class QApplication;
@@ -24,6 +25,7 @@ class MeWidget : public QMainWindow
 	Q_OBJECT
 
 	QVBoxLayout* controlsLayout;
+	QVBoxLayout* objectDetailsLayout;
 	QCheckBox* discardBasedOnDepth;
 	QCheckBox* useRegularDepth;
 	QCheckBox* checkboxNormals;
@@ -39,8 +41,11 @@ class MeWidget : public QMainWindow
 	DebugSlider* uR;
 
 	QMenu *fileMenu;
+	QMenu *gameObjectMenu;
 	QAction *openAct;
+	QAction* addObjectAct;
 
+	OpenFileDialog openFileDialog;
 	MeGlWindow* meGlWindow;
 	MeModel* theModel;
 public:
@@ -54,6 +59,7 @@ public:
 private:
 	void createActions();
 	void createMenus();
+
 };
 
 #pragma warning(pop)

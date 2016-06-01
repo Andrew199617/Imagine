@@ -383,5 +383,6 @@ int main()
 
 	GameLogger::shutdownLog();
 	cin.get();
+	return 0;
 }
 

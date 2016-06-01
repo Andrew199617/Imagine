@@ -1,3 +1,7 @@
-name AIWorld
+Name AIWorld
 Obj AIWorld
 Position "0.0,0.0,0.0"
+
+Name DefaultName
+Obj RenderedPlane
+Position "0.0,20.0,0.0"

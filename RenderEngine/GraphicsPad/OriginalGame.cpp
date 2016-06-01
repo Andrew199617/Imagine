@@ -36,7 +36,8 @@ OriginalGame::OriginalGame()
 
 OriginalGame::~OriginalGame()
 {
-	
+	glDeleteVertexArrays(1, &quad_VertexArrayID);
+	glDeleteBuffers(1, &quad_vertexbuffer);
 }
 
 void OriginalGame::SendDataToOpenGL()
@@ -58,6 +59,9 @@ void OriginalGame::SendDataToOpenGL()
 
 	uDiscardBasedOfDepthUL = glGetUniformLocation(vertexShaderInfo.getProgramID(), "discardBasedOfDepth");
 	uRegularDepthUL = glGetUniformLocation(vertexShaderInfo.getProgramID(), "regularDepth");
+
+	glUniform1i(uDiscardBasedOfDepthUL, true);
+	glUniform1i(uRegularDepthUL, false);
 
 	entityManager.SendDataToOpenGL();
 }
@@ -144,12 +148,8 @@ void OriginalGame::Draw()
 
 	frameBuffer.BindTexture();
 
-	glUniform1i(uDiscardBasedOfDepthUL, PostProcessingModel::discardBasedOnDepth);
-	glUniform1i(uRegularDepthUL, PostProcessingModel::regularDepth);
-
 	glViewport(0, 0, 1920, 1080);
 	glEnableVertexAttribArray(0);
-	//glBindVertexArray(quad_VertexArrayID);
 	glBindBuffer(GL_ARRAY_BUFFER, quad_vertexbuffer);
 	glVertexAttribPointer(
 		0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.

@@ -217,6 +217,7 @@
     <ClInclude Include="WeaponEntity.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="mewidget.ui" />
     <None Include="Shader\ctFragmentShaderCode.glsl" />
     <None Include="Shader\fErosion.glsl" />
     <None Include="Shader\fImageWarping.glsl" />
@@ -233,6 +234,11 @@
     <None Include="Shader\vPixelDiscarderShader.glsl" />
     <None Include="Shader\vRippledSurfaceShader.glsl" />
     <None Include="Shader\vTerrainGenerator.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ObjConverter\ObjConverter.vcxproj">
+      <Project>{b0d7115b-90a3-4a41-b95f-784441e2d6b2}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

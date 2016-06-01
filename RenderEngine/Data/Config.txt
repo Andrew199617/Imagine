@@ -61,7 +61,7 @@ CameraViewDirection		"0.754550345,-0.418316317,-0.0249155864"
 PlaneSceneOutputFormat		13
 PlaneScene			..\\..\\StaticData\\Scenes\\Plane.pc.scene
 //PlaneVertexShader    		//..\Graphicspad\Shader\vTerrainGenerator.glsl
-PlaneFragmentShader    		..\Graphicspad\Shader\fImageWarping.glsl
+//PlaneFragmentShader    	//..\Graphicspad\Shader\fImageWarping.glsl
 PlaneTexture			..\\..\\StaticData\\Texture\\brick.bmp
 PlaneBumpMap			..\\..\\StaticData\\Texture\\heart.bmp
 

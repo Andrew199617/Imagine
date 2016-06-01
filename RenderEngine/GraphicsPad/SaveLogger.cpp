@@ -1,11 +1,14 @@
 #include "SaveLogger.h"
 #include <sstream>
+#include <fstream>
 #include "ConfigReader.h"
 #include "GameLogger.h"
+#include <windows.h>
 
 int SaveLogger::index = 0;
+int SaveLogger::numDefaultObjs = 0;
 ofstream SaveLogger::out = ofstream();
-string SaveLogger::value[LENGTHOFVALUE][5] = { { " ", " ", " ", " ", " " } };
+string SaveLogger::value[LENGTHOFVALUE][5] = { { "", "", "", "", "" } };
 string SaveLogger::currentFilename = "";
 bool SaveLogger::reInitialized = false;
 
@@ -30,7 +33,7 @@ bool SaveLogger::intialize(const char* filename)
 			{
 				for (int i2 = 0; i2 < 5; i2++)
 				{
-					value[i][i2] = "";
+					value[i][i2] = " ";
 				}
 			}
 		}
@@ -70,7 +73,7 @@ bool SaveLogger::intialize(const char* filename)
 				inQuotes = true;
 				while (inQuotes)
 				{
-					for (unsigned int j = 0; j < word.length(); j++)
+					for (unsigned int j = 1; j < word.length(); j++)
 					{
 						if (word[j] == '"')
 						{
@@ -108,12 +111,14 @@ bool SaveLogger::intialize(const char* filename)
 				return false;
 			}
 			i++;
+			index++;
 			i2 = 0;
 		}
 	}
 
 	GameLogger::log("Save Logger file loaded");
 	reInitialized = true;
+	out.open(filename, ios::out | ios::app);
 	return true;
 }
 
@@ -159,12 +164,17 @@ void SaveLogger::log(std::string objName, std::string textureLocation, std::stri
 
 void SaveLogger::shutdownLog()
 {
-
-	for (int i = 0; i < index; i++)
-	{
-		out << '"' + value[i][0] + '"' << " " << '"' + value[i][1] + '"' << " " << '"' + value[i][2] + '"' << " " << '"' + value[i][3] + '"' << " " << '"' + value[i][4] + '"' << 
-			" " << '"' + value[i][5] + '"' << endl;
-	}
+	//out.open(currentFilename, ios::out | ios::app);
+	//out.seekp(0);
+	//for (int i = 0; i < index; i++)
+	//{
+	//	if (value[i][2] != "")
+	//		out << value[i][0] << " " << '"' << value[i][1] << "," << value[i][2] << "," << value[i][3] << '"' << endl;
+	//	else if (value[i][0] != "")
+	//		out << value[i][0] << " " << value[i][1] << endl;
+	//	else {
+	//	}
+	//}
 	out.close();
 }
 
@@ -173,7 +183,7 @@ int SaveLogger::GetNumObjs()
 	int numObjs = 0;
 	for (int i = 0; i < LENGTHOFVALUE; i++)
 	{
-		if (value[i][0] == "name")
+		if (value[i][0] == "Name")
 		{
 			numObjs++;
 		}
@@ -190,7 +200,7 @@ string SaveLogger::GetName(int objId)
 	int currentObjId = -1;
 	for (int i = 0; i < LENGTHOFVALUE; i++)
 	{
-		if (value[i][0] == "name")
+		if (value[i][0] == "Name")
 		{
 			currentObjId++;
 			if(currentObjId == objId)
@@ -214,6 +224,29 @@ string SaveLogger::GetObj(string objName)
 	GameLogger::log("could not find Obj Type for Obj:" + objName);
 	cout << "check log" << endl;
 	return "0";
+}
+
+void SaveLogger::AddObj(string ObjName)
+{
+	out << "\n";
+
+	index++;
+	value[index][0] = "Name";
+	value[index][1] = "DefaultObject" + to_string(numDefaultObjs);
+	out << value[index][0] << " " << value[index][1] << "\n";
+
+	index++;
+	value[index][0] = "Obj";
+	value[index][1] = "Plane";
+	out << value[index][0] << " " << value[index][1] << "\n";
+
+	index++;
+	value[index][0] = "Position";
+	value[index][1] = "0.0";
+	value[index][2] = "20.0";
+	value[index][3] = "0.0";
+	out << value[index][0] << " " << '"' << value[index][1] << "," << value[index][2] << "," << value[index][3] << '"' << "\n";
+	numDefaultObjs++;
 }
 
 glm::vec3 SaveLogger::GetPosition(string objName)

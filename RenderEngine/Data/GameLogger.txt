@@ -3,3 +3,6 @@
 2. Original Game initialized
 3. No value found for key: AIWorldVertexShader
 4. No value found for key: AIWorldFragmentShader
+5. No value found for key: RenderedPlaneTexture
+6. No value found for key: RenderedPlaneVertexShader
+7. No value found for key: RenderedPlaneBumpMap

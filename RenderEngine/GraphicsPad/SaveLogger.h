@@ -28,10 +28,12 @@ public:
 	static int GetNumObjs();
 	static string GetName(int);
 	static string GetObj(string);
+	static void AddObj(string);
 	static glm::vec3 GetPosition(string);
 	static bool ValueChanged();
 private:
 	static string currentFilename;
 	static bool reInitialized;
+	static int numDefaultObjs;
 	
 };

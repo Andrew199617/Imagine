@@ -27,6 +27,7 @@ VertexShaderInfo::VertexShaderInfo(const char* path)
 
 VertexShaderInfo::~VertexShaderInfo()
 {
+	glDeleteProgram(programID);
 }
 
 string ExePath2() {
