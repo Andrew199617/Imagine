@@ -16,6 +16,7 @@
 #include "SaveLogger.h"
 #include <Qt\qmenu.h>
 #include <Qt\qmenubar.h>
+#include <QtGui\qtabwidget.h>
 
 
 
@@ -27,11 +28,18 @@ MeWidget::MeWidget(MeGlWindow* meGl, MeModel* model)
 
 	QWidget *widget = new QWidget;
 	setCentralWidget(widget);
-	QVBoxLayout* mainLayout;
-	widget->setLayout(mainLayout = new QVBoxLayout);
-	mainLayout->addLayout(controlsLayout = new QVBoxLayout);
-	mainLayout->addLayout(objectDetailsLayout = new QVBoxLayout);
-	mainLayout->addWidget(meGlWindow);
+	QGridLayout* mainLayout;
+	widget->setLayout(mainLayout = new QGridLayout);
+	mainLayout->addLayout(controlsLayout = new QVBoxLayout,1,1);
+	mainLayout->addLayout(new QVBoxLayout, 1, 2);
+	mainLayout->addLayout(objectDetailsLayout = new QVBoxLayout,2,2);
+	objectDetailsLayout->addWidget(discardBasedOnDepth = new QCheckBox);
+	discardBasedOnDepth->hide();
+	objectDetailsLayout->setMargin(0);
+	mainLayout->addLayout(meGlWindowLayout = new QHBoxLayout,2,1);
+	meGlWindowLayout->addWidget(meGlWindow);
+	controlsLayout->addWidget(ShowDetails = new QPushButton("Show Details"));
+	connect(ShowDetails, SIGNAL(released()), this, SLOT(sliderValueChanged()));
 
 	createActions();
 	createMenus();
@@ -47,8 +55,7 @@ string getStringFromQstring(QString qstr)
 
 void MeWidget::sliderValueChanged()
 {
-	theModel->uD = uD->value();
-	theModel->uR = uR->value();
+	discardBasedOnDepth->setHidden(!discardBasedOnDepth->isHidden());
 }
 
 void MeWidget::openingFile()

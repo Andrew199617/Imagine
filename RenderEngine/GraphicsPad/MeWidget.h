@@ -25,25 +25,19 @@ class MeWidget : public QMainWindow
 	Q_OBJECT
 
 	QVBoxLayout* controlsLayout;
+	//QVBoxLayout* controlsLayout;
 	QVBoxLayout* objectDetailsLayout;
+	QHBoxLayout* meGlWindowLayout;
 	QCheckBox* discardBasedOnDepth;
 	QCheckBox* useRegularDepth;
 	QCheckBox* checkboxNormals;
-
-	QLineEdit* ObjName;
-	QPushButton* getFileLocation;
-	QLineEdit* getFileLocationLabel;
-	QPushButton* getTextureLocation;
-	QPushButton* submit;
-
-	DebugSlider* lightY;
-	DebugSlider* uD;
-	DebugSlider* uR;
+	QPushButton* ShowDetails;
 
 	QMenu *fileMenu;
 	QMenu *gameObjectMenu;
 	QAction *openAct;
 	QAction* addObjectAct;
+
 
 	OpenFileDialog openFileDialog;
 	MeGlWindow* meGlWindow;
