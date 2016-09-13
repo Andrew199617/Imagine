@@ -5,3 +5,6 @@ Position "0.0,0.0,0.0"
 Name DefaultName
 Obj RenderedPlane
 Position "0.0,20.0,0.0"
+Name DefaultObject0
+Obj Plane
+Position "0.0,20.0,0.0"

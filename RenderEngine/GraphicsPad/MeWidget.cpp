@@ -44,7 +44,7 @@ MeWidget::MeWidget(MeGlWindow* meGl, MeModel* model)
 	createActions();
 	createMenus();
 
-	setWindowTitle(tr("Imagine Engine"));
+	setWindowTitle(tr("Imagine"));
 }
 
 string getStringFromQstring(QString qstr)

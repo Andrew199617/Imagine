@@ -93,7 +93,6 @@ string readTextFile(string filename)
 	}
 	m_buffer << meInput.rdbuf();
 	return m_buffer.str();
-
 }
 
 void parseIndicie(int indiciesIndex)
