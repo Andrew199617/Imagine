@@ -1,7 +1,8 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'MeWidget.h'
 **
-** Created by: The Qt Meta Object Compiler version 63 (Qt 4.8.5)
+** Created: Wed Sep 21 14:03:05 2016
+**      by: The Qt Meta Object Compiler version 63 (Qt 4.8.2)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -10,7 +11,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'MeWidget.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 63
-#error "This file was generated using the moc from 4.8.5. It"
+#error "This file was generated using the moc from 4.8.2. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -22,7 +23,7 @@ static const uint qt_meta_data_MeWidget[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -33,15 +34,18 @@ static const uint qt_meta_data_MeWidget[] = {
       10,    9,    9,    9, 0x08,
       31,    9,    9,    9, 0x08,
       45,    9,    9,    9, 0x08,
-      62,    9,    9,    9, 0x08,
+      57,    9,    9,    9, 0x08,
+      67,    9,    9,    9, 0x08,
+      79,    9,    9,    9, 0x08,
+      90,    9,    9,    9, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_MeWidget[] = {
     "MeWidget\0\0sliderValueChanged()\0"
-    "openingFile()\0openingTexture()\0"
-    "checkBoxChanged()\0"
+    "openingFile()\0AddObject()\0AddCube()\0"
+    "AddSphere()\0AddPlane()\0checkBoxChanged()\0"
 };
 
 void MeWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -52,8 +56,11 @@ void MeWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         switch (_id) {
         case 0: _t->sliderValueChanged(); break;
         case 1: _t->openingFile(); break;
-        case 2: _t->openingTexture(); break;
-        case 3: _t->checkBoxChanged(); break;
+        case 2: _t->AddObject(); break;
+        case 3: _t->AddCube(); break;
+        case 4: _t->AddSphere(); break;
+        case 5: _t->AddPlane(); break;
+        case 6: _t->checkBoxChanged(); break;
         default: ;
         }
     }
@@ -65,7 +72,7 @@ const QMetaObjectExtraData MeWidget::staticMetaObjectExtraData = {
 };
 
 const QMetaObject MeWidget::staticMetaObject = {
-    { &QWidget::staticMetaObject, qt_meta_stringdata_MeWidget,
+    { &QMainWindow::staticMetaObject, qt_meta_stringdata_MeWidget,
       qt_meta_data_MeWidget, &staticMetaObjectExtraData }
 };
 
@@ -83,18 +90,18 @@ void *MeWidget::qt_metacast(const char *_clname)
     if (!_clname) return 0;
     if (!strcmp(_clname, qt_meta_stringdata_MeWidget))
         return static_cast<void*>(const_cast< MeWidget*>(this));
-    return QWidget::qt_metacast(_clname);
+    return QMainWindow::qt_metacast(_clname);
 }
 
 int MeWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QWidget::qt_metacall(_c, _id, _a);
+    _id = QMainWindow::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 7;
     }
     return _id;
 }

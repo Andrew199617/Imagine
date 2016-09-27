@@ -1,3 +1,0 @@
-name TwistPlane
-Obj Plane
-Position "0.0,0.0,0.0"

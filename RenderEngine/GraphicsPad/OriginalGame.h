@@ -20,6 +20,7 @@ public:
 	}
 private:
 
+	ObjController objController;
 	MeModel theModel;
 	bool pause;
 	int timebeforeunpause;

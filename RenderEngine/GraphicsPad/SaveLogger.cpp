@@ -6,11 +6,10 @@
 #include <windows.h>
 
 int SaveLogger::index = 0;
-int SaveLogger::numDefaultObjs = 0;
 ofstream SaveLogger::out = ofstream();
 string SaveLogger::value[LENGTHOFVALUE][5] = { { "", "", "", "", "" } };
 string SaveLogger::currentFilename = "";
-bool SaveLogger::reInitialized = false;
+int SaveLogger::curNumObjs = 0;
 
 SaveLogger::SaveLogger()
 {
@@ -116,8 +115,8 @@ bool SaveLogger::intialize(const char* filename)
 		}
 	}
 
+	curNumObjs = GetNumObjs();
 	GameLogger::log("Save Logger file loaded");
-	reInitialized = true;
 	out.open(filename, ios::out | ios::app);
 	return true;
 }
@@ -230,23 +229,24 @@ void SaveLogger::AddObj(string ObjName)
 {
 	out << "\n";
 
-	index++;
 	value[index][0] = "Name";
-	value[index][1] = "DefaultObject" + to_string(numDefaultObjs);
+	int numObjs = (GetNumObjs());
+	ostringstream convert;
+	convert << numObjs;
+	value[index][1] = "DefaultObject" + convert.str();
 	out << value[index][0] << " " << value[index][1] << "\n";
 
 	index++;
 	value[index][0] = "Obj";
-	value[index][1] = "Plane";
+	value[index][1] = ObjName;
 	out << value[index][0] << " " << value[index][1] << "\n";
 
 	index++;
 	value[index][0] = "Position";
 	value[index][1] = "0.0";
-	value[index][2] = "20.0";
+	value[index][2] = "0.0";
 	value[index][3] = "0.0";
 	out << value[index][0] << " " << '"' << value[index][1] << "," << value[index][2] << "," << value[index][3] << '"' << "\n";
-	numDefaultObjs++;
 }
 
 glm::vec3 SaveLogger::GetPosition(string objName)
@@ -267,7 +267,8 @@ glm::vec3 SaveLogger::GetPosition(string objName)
 
 bool SaveLogger::ValueChanged()
 {
-	bool result = reInitialized;
-	reInitialized = false;
+	int newNumObjs = GetNumObjs();
+	bool result = newNumObjs != curNumObjs;
+	curNumObjs = newNumObjs;
 	return result;
 }

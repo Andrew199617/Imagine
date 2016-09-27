@@ -1,4 +1,5 @@
 ﻿#include "OpenFileDialog.h"
+#include <iostream>
 
 OpenFileDialog::OpenFileDialog(void)
 {
@@ -39,9 +40,7 @@ bool OpenFileDialog::ShowDialog()
 
 string OpenFileDialog::getFile()
 {
-
 	this->ShowDialog();
-
 	wchar_t* name = this->FileName;
 	wstring ws(name);
 	string str(ws.begin(), ws.end());

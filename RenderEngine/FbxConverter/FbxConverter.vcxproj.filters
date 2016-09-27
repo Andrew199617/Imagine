@@ -15,15 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FileReader.h">
+    <ClInclude Include="FbxData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FbxData.h">
+    <ClInclude Include="BinaryOutput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FbxFileReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FileReader.cpp">
+    <ClCompile Include="BinaryOutput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FbxFileReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

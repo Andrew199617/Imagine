@@ -28,12 +28,12 @@ string ExePath() {
 string FragmentShaderInfo::readShaderCode(const char* filename)
 {
 	stringstream buffer;
-	ifstream meInput(filename);
+	ifstream meInput(ExePath() + "\\" + filename);
 
 	if (!meInput.good())
 	{
 		string s = "file failed to load: ";
-		GameLogger::log(s + filename);
+		GameLogger::log(s + ExePath() + filename);
 		GameLogger::shutdownLog();
 		exit(1);
 	}

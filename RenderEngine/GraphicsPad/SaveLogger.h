@@ -33,7 +33,6 @@ public:
 	static bool ValueChanged();
 private:
 	static string currentFilename;
-	static bool reInitialized;
-	static int numDefaultObjs;
+	static int curNumObjs;
 	
 };

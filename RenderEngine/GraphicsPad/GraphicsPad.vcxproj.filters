@@ -117,9 +117,6 @@
     <ClCompile Include="SceneMaker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BinaryOutput.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SaveLogger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -186,9 +183,6 @@
     <ClCompile Include="Slider_moc.cpp">
       <Filter>Source Files\moc</Filter>
     </ClCompile>
-    <ClCompile Include="MeWidget_moc.cpp">
-      <Filter>Source Files\moc</Filter>
-    </ClCompile>
     <ClCompile Include="NodeMap.cpp">
       <Filter>Pathing</Filter>
     </ClCompile>
@@ -233,6 +227,12 @@
     </ClCompile>
     <ClCompile Include="PostProcessingModel.cpp">
       <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="MeWidget_moc.cpp">
+      <Filter>Source Files\moc</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjController.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -306,9 +306,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SceneMaker.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BinaryOutput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SaveLogger.h">
@@ -446,6 +443,9 @@
     <ClInclude Include="PostProcessingModel.h">
       <Filter>Models</Filter>
     </ClInclude>
+    <ClInclude Include="ObjController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\vRippledSurfaceShader.glsl">
@@ -496,6 +496,5 @@
     <None Include="Shader\vPassThrough.glsl">
       <Filter>glsl\Vertex</Filter>
     </None>
-    <None Include="mewidget.ui" />
   </ItemGroup>
 </Project>

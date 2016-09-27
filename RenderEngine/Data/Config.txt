@@ -2,28 +2,6 @@ OutputColor			random
 OutputTexture			random
 OutputNormal			generate
 
-cubeGreenSceneOutputFormat	3
-cubeGreenScene			..\\..\\StaticData\\Scenes\\cubeGreen.scene
-
-cubeRedSceneOutputFormat	3
-cubeRedScene			..\\..\\StaticData\\Scenes\\cubeRed.scene
-
-cubeYellowSceneOutputFormat	3
-cubeYellowScene			..\\..\\StaticData\\Scenes\\cubeYellow.scene
-
-cubeOrangeSceneOutputFormat	3
-cubeOrangeScene			..\\..\\StaticData\\Scenes\\cubeOrange.scene
-
-cubePinkSceneOutputFormat	3
-cubePinkScene			..\\..\\StaticData\\Scenes\\cubePink.scene
-
-cubePurpleSceneOutputFormat	3
-cubePurpleScene			..\\..\\StaticData\\Scenes\\cubePurple.scene
-
-JokerSceneOutputFormat		5
-JokerScene			..\\..\\StaticData\\Scenes\\Joker.scene
-JokerTexture			..\\..\\StaticData\\Texture\\fur.bmp
-
 AIWorldObj			..\\..\\StaticData\\OBJs\\AIWorld.obj
 AIWorldSceneOutputFormat	13
 AIWorldScene			..\\..\\StaticData\\Scenes\\AIWorld.scene
@@ -31,50 +9,10 @@ AIWorldScene			..\\..\\StaticData\\Scenes\\AIWorld.scene
 AIWorldTexture			..\\..\\StaticData\\Texture\\brick.bmp
 AIWorldBumpMap			..\\..\\StaticData\\Texture\\brick_bump.bmp
 
-StormTropperOutputFormat	13
-StormTropperScene		..\\..\\StaticData\\Scenes\\StormTropper.scene
-StormTropperTexture		..\\..\\StaticData\\Texture\\StormTropper.bmp
-
-ArrowSceneOutputFormat		13
-ArrowScene			..\\..\\StaticData\\Scenes\\Arrow.scene
-ArrowTexture			..\\..\\StaticData\\Texture\\Arrow.bmp
-
-teddyObj			..\\..\\StaticData\\OBJs\\teddy.obj
-teddySceneOutputFormat		13
-teddyScene			..\\..\\StaticData\\Scenes\\teddy.scene
-teddyTexture			..\\..\\StaticData\\Texture\\teddyfur.bmp
-
-batmanObj			..\\..\\StaticData\\OBJs\\Batman.obj
-batmanSceneOutputFormat		13
-batmanScene			..\\..\\StaticData\\Scenes\\batman.scene
-batmanTexture			..\\..\\StaticData\\Texture\\fur.bmp
-
-bedSceneOutputFormat		5
-bedScene			..\\..\\StaticData\\Scenes\\bed.scene
-bedTexture			..\\..\\StaticData\\Texture\\fur.bmp
-
 CameraRotateSpeed		1.0		
 CameraStrafeSpeed		25.3301
 CameraPosition			"-3.9615326,-1.00,-3.7366638"		
 CameraViewDirection		"0.754550345,-0.418316317,-0.0249155864"
-
-PlaneSceneOutputFormat		13
-PlaneScene			..\\..\\StaticData\\Scenes\\Plane.pc.scene
-//PlaneVertexShader    		//..\Graphicspad\Shader\vTerrainGenerator.glsl
-//PlaneFragmentShader    	//..\Graphicspad\Shader\fImageWarping.glsl
-PlaneTexture			..\\..\\StaticData\\Texture\\brick.bmp
-PlaneBumpMap			..\\..\\StaticData\\Texture\\heart.bmp
-
-RenderedPlaneSceneOutputFormat	13
-RenderedPlaneScene		..\\..\\StaticData\\Scenes\\Plane.pc.scene
-RenderedPlaneFragmentShader    	..\Graphicspad\Shader\fragmentShaderCode.glsl
-
-SphereSceneOutputFormat		15
-SphereScene			..\\..\\StaticData\\Scenes\\Sphere.pc.scene
-SphereTexture			..\\..\\StaticData\\Texture\\fur.bmp
-SphereVertexShader	    	..\Graphicspad\Shader\vMakeACube.glsl
-//SphereFragmentShader   	//..\Graphicspad\Shader\fFireShader.glsl
-
 
 //DH=DanielsHideout		
 DHPathing_9_24			..\\data\\PathingNodes\\Pathing.9.24.nav

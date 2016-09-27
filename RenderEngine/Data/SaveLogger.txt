@@ -1,10 +1,7 @@
 Name AIWorld
 Obj AIWorld
-Position "0.0,0.0,0.0"
+Position "0.0,-1.0,0.0"
 
-Name DefaultName
-Obj RenderedPlane
-Position "0.0,20.0,0.0"
-Name DefaultObject0
-Obj Plane
-Position "0.0,20.0,0.0"
+Name DefaultObject2
+Obj Cube
+Position "0.0,0.0,0.0"

@@ -110,6 +110,7 @@ void OriginalGame::Update()
 	gametime.newFrame();
 	dt = gametime.timeElapsedLastFrame();
 	
+	objController.Update();
 	VertexShaderInfo::uD = theModel.uD;
 	VertexShaderInfo::uR = theModel.uR;
 

@@ -43,9 +43,6 @@ namespace
 	GravityComponent playerGravity;
 	ShootingComponent playerShoot;
 
-	/*SceneryEntity AIWorld;
-	SpatialComponent AIWorldSpatial;
-	MeshComponent AIWorldMesh;*/
 }
 
 
@@ -58,6 +55,7 @@ public:
 public:
 	bool Initialize();
 	bool InitializeSaveLoggerObjects();
+	bool UpdateSaveLoggerObjects();
 
 public:
 	void Update(float dt);
@@ -66,6 +64,7 @@ public:
 
 public:
 	void SendDataToOpenGL();
+	void SendNewDataToOpenGL();
 
 private:
 	NoiseGenerator noiseGenerator;

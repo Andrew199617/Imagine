@@ -41,6 +41,7 @@
 #include "KeyboardComponent.h"
 #include "MouseComponent.h"
 #include "SpatialComponent.h"
+#include "ObjController.h"
 
 class MeGlWindow;
 

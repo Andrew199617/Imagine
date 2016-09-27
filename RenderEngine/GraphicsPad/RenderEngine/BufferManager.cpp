@@ -129,12 +129,18 @@ void BufferManager::AddRenderInfo(RenderInfo* info)
 
 void BufferManager::RemoveRenderInfo()
 {
-	for (int i = 0; i <= 7; i++)
+	for (int i = 0; i < m_numVertexBuffers; i++)
 	{
 		glDeleteBuffers(1, &m_bufferPool[i].m_vert_ID);
+	}
+	for (int i = 0; i < m_numIndexBuffers; i++)
+	{
 		glDeleteBuffers(1, &m_bufferPool[i].M_index_ID);
 		m_bufferPool[i] = BufferInfo();
 	}
+	m_numVertexBuffers = 0;
+	m_numIndexBuffers = 0;
+	//Initialize();
 }
 
 

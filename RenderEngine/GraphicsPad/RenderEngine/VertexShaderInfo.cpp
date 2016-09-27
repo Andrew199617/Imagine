@@ -40,7 +40,7 @@ string ExePath2() {
 string VertexShaderInfo::readShaderCode(const char* filename)
 {
 	stringstream buffer;
-	ifstream meInput(filename);
+	ifstream meInput(ExePath2() + "\\" + filename);
 	if (!meInput.good())
 	{
 		cout << "my directory is " << ExePath2() << "\n";

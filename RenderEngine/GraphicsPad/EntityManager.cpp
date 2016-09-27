@@ -34,12 +34,12 @@ bool EntityManager::Initialize()
 	}
 	playerShoot.Disable();
 
-	/*if (!InitializeSaveLoggerObjects())
+	if (!InitializeSaveLoggerObjects())
 	{
 		string s = "Save Logger Objects did not initialize";
 		GameLogger::log(s);
 		return false;
-	}*/
+	}
 	
 	GameLogger::log("Entity Manager Initialized");
 	return true;
@@ -71,6 +71,33 @@ bool EntityManager::InitializeSaveLoggerObjects()
 	return true;
 }
 
+bool EntityManager::UpdateSaveLoggerObjects()
+{
+	int pastNumObjs = num_Objs;
+	num_Objs = SaveLogger::GetNumObjs();
+	for (int i = pastNumObjs; i < num_Objs; i++)
+	{
+		entities[i] = SceneryEntity();
+	}
+	for (int i = pastNumObjs; i < num_Objs; i++)
+	{
+		entities[i].SetName(SaveLogger::GetName(i));
+		entitieSpatials[i].position = SaveLogger::GetPosition(entities[i].GetName());
+		string componentType = "SpatialComponent";
+		entities[i].AddComponent(&entitieSpatials[i], entities[i].GetName() + componentType);
+		componentType = "MeshComponent";
+		entities[i].AddComponent(&entitieMeshs[i], entities[i].GetName() + componentType);
+		if (!entities[i].Initialize())
+		{
+			string s = ": did not initialize";
+			GameLogger::log(entities[i].GetName() + s);
+			return false;
+		}
+	}
+
+	return true;
+}
+
 void EntityManager::Update(float dt)
 {
 	TransformInfo::WorldToViewMatrix = playerCamera.getWorldToViewMatrix();
@@ -81,23 +108,22 @@ void EntityManager::Update(float dt)
 
 	if (SaveLogger::ValueChanged())
 	{
-		RenderEngine::RemoveRenderInfo();
-		
-		if (!InitializeSaveLoggerObjects())
+
+		if (!UpdateSaveLoggerObjects())
 		{
 			string s = "Save Logger Objects did not initialze";
 			GameLogger::log(s);
 			GameLogger::shutdownLog();
 			exit(1);
 		}
-		SendDataToOpenGL();
+		
+		SendNewDataToOpenGL();
 	}
 
 	for (int i = 0; i < num_Objs; i++)
 	{
 		entities[i].Update(dt);
 	}
-
 }
 
 void EntityManager::ProcessKeys(float m_dt)
@@ -113,15 +139,21 @@ void EntityManager::ProcessMouse(QMouseEvent* e)
 void EntityManager::SendDataToOpenGL()
 {
 	TransformInfo::WorldToViewMatrix = playerCamera.getWorldToViewMatrix();
-	/*AIWorldMesh.setRenderInfo("AIWorld");
-	RenderEngine::AddRenderInfo(&AIWorldMesh.renderinfo);*/
 	for (int i = 0; i < num_Objs; i++)
 	{
 		entitieMeshs[i].setRenderInfo(SaveLogger::GetObj(entities[i].GetName()));
 		RenderEngine::AddRenderInfo(&entitieMeshs[i].renderinfo);
 	}
-	//playerGravity.DansMesh = &AIWorldMesh.renderinfo;
 	
+}
+
+void EntityManager::SendNewDataToOpenGL()
+{
+	for (int i = num_Objs-1; i < num_Objs; i++)
+	{
+		entitieMeshs[i].setRenderInfo(SaveLogger::GetObj(entities[i].GetName()));
+		RenderEngine::AddRenderInfo(&entitieMeshs[i].renderinfo);
+	}
 }
 
 

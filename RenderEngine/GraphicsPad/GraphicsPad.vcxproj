@@ -52,8 +52,8 @@
       </PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\MiddleWare\glm\glm;$(Projectdir)..\..\MiddleWare\glew\include;$(Projectdir)..\..\MiddleWare\qt\include;$(Projectdir)..\..\MiddleWare\libnoise\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>FBXSDK_SHARED;WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\FbxConverter;$(ProjectDir)..\..\MiddleWare\glm\glm;$(Projectdir)..\..\MiddleWare\glew\include;$(Projectdir)..\..\MiddleWare\qt\include;$(Projectdir)..\..\MiddleWare\libnoise\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -61,8 +61,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\MiddleWare\glew\lib;$(ProjectDir)..\..\MiddleWare\qt\lib;$(ProjectDir)..\..\MiddleWare\libnoise\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libnoise.lib;opengl32.lib;glew32d.lib;qtcored4.lib;qtguid4.lib;QtOpenGLd4.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\MiddleWare\FBX SDK\2017.0.1\lib\vs2015\x86\release;$(ProjectDir)..\Debug;$(ProjectDir)..\..\MiddleWare\glew\lib;$(ProjectDir)..\..\MiddleWare\qt\lib;$(ProjectDir)..\..\MiddleWare\libnoise\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libfbxsdk.lib;FbxConverter.lib;libnoise.lib;opengl32.lib;glew32d.lib;qtcored4.lib;qtguid4.lib;QtOpenGLd4.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -85,7 +85,6 @@
   <ItemGroup>
     <ClCompile Include="AIEntity.cpp" />
     <ClCompile Include="ArrivalComponent.cpp" />
-    <ClCompile Include="BinaryOutput.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ConfigReader.cpp" />
@@ -106,6 +105,7 @@
     <ClCompile Include="NodeMap.cpp" />
     <ClCompile Include="NoiseGenerator.cpp" />
     <ClCompile Include="noiseutils.cpp" />
+    <ClCompile Include="ObjController.cpp" />
     <ClCompile Include="OpenFileDialog.cpp" />
     <ClCompile Include="PathFinding.cpp" />
     <ClCompile Include="PathFollowerComponent.cpp" />
@@ -148,7 +148,6 @@
     <ClInclude Include="AIEntity.h" />
     <ClInclude Include="Area.h" />
     <ClInclude Include="ArrivalComponent.h" />
-    <ClInclude Include="BinaryOutput.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="CollisionInfo.h" />
     <ClInclude Include="Component.h" />
@@ -170,6 +169,7 @@
     <ClInclude Include="NodeLink.h" />
     <ClInclude Include="NodeMap.h" />
     <ClInclude Include="NoiseGenerator.h" />
+    <ClInclude Include="ObjController.h" />
     <ClInclude Include="OpenFileDialog.h" />
     <ClInclude Include="PathFinding.h" />
     <ClInclude Include="PathFollowerComponent.h" />
@@ -217,7 +217,6 @@
     <ClInclude Include="WeaponEntity.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="mewidget.ui" />
     <None Include="Shader\ctFragmentShaderCode.glsl" />
     <None Include="Shader\fErosion.glsl" />
     <None Include="Shader\fImageWarping.glsl" />

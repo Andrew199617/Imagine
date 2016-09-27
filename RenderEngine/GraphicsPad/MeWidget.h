@@ -28,15 +28,16 @@ class MeWidget : public QMainWindow
 	//QVBoxLayout* controlsLayout;
 	QVBoxLayout* objectDetailsLayout;
 	QHBoxLayout* meGlWindowLayout;
-	QCheckBox* discardBasedOnDepth;
-	QCheckBox* useRegularDepth;
-	QCheckBox* checkboxNormals;
 	QPushButton* ShowDetails;
+	QCheckBox* discardBasedOnDepth;
 
-	QMenu *fileMenu;
-	QMenu *gameObjectMenu;
-	QAction *openAct;
+	QMenu* fileMenu;
+	QMenu* gameObjectMenu;
+	QAction* openAct;
 	QAction* addObjectAct;
+	QAction* addCubeAct;
+	QAction* addSphereAct;
+	QAction* addPlaneAct;
 
 
 	OpenFileDialog openFileDialog;
@@ -44,16 +45,19 @@ class MeWidget : public QMainWindow
 	MeModel* theModel;
 public:
 	MeWidget(MeGlWindow* meGl, MeModel*);
-	private slots:
-	void sliderValueChanged();
-	void openingFile();
-	void openingTexture();
-	void checkBoxChanged();
 
 private:
 	void createActions();
 	void createMenus();
 
+private slots:
+	void sliderValueChanged();
+	void openingFile();
+	void AddObject();
+	void AddCube();
+	void AddSphere();
+	void AddPlane();
+	void checkBoxChanged();
 };
 
 #pragma warning(pop)

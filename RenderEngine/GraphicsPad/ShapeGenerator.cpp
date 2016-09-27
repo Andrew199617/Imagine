@@ -113,7 +113,17 @@ Geometry* ShapeGenerator::readScene(string ObjName)
 	SceneReader scenereader;
 
 	string key = ObjName + "Scene";
-	Scene* scene = scenereader.ReadSceneFile(ConfigReader::findValueForKey(key));
+	Scene* scene;
+	string sceneName = ConfigReader::findValueForKey(key);
+	if (sceneName != "0")
+	{
+		scene = scenereader.ReadSceneFile(sceneName);
+	}
+	else
+	{
+		sceneName = "..\\..\\StaticData\\Scenes\\" + ObjName + ".scene";
+		scene = scenereader.ReadSceneFile(sceneName);
+	}
 
 	if (!scene)
 	{

@@ -1,0 +1,2 @@
+cd C:\Users\Andrew\Documents\Neumont\Imagine\RenderEngine\GraphicsPad
+c:\moc.exe MeWidget.h > MeWidget_moc.cpp
