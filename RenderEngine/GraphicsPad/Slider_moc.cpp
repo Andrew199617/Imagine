@@ -16,7 +16,7 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-static const uint qt_meta_data_DebugSlider[] = {
+static const qtuint qt_meta_data_DebugSlider[] = {
 
  // content:
        6,       // revision

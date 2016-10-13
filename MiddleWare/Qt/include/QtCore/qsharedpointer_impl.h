@@ -774,9 +774,9 @@ Q_INLINE_TEMPLATE bool operator<(T *ptr1, const QSharedPointer<X> &ptr2)
 //
 // qHash
 //
-template <class T> inline uint qHash(const T *key); // defined in qhash.h
+template <class T> inline qtuint qHash(const T *key); // defined in qhash.h
 template <class T>
-Q_INLINE_TEMPLATE uint qHash(const QSharedPointer<T> &ptr)
+Q_INLINE_TEMPLATE qtuint qHash(const QSharedPointer<T> &ptr)
 {
     return QT_PREPEND_NAMESPACE(qHash)<T>(ptr.data());
 }

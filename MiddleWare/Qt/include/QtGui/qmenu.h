@@ -180,7 +180,7 @@ protected:
     void initStyleOption(QStyleOptionMenuItem *option, const QAction *action) const;
 
 #ifdef Q_WS_WINCE
-    QAction* wceCommands(uint command);
+    QAction* wceCommands(qtuint command);
 #endif
 
 private Q_SLOTS:
@@ -195,7 +195,7 @@ private:
 #ifdef QT3_SUPPORT
 public:
     //menudata
-    inline QT3_SUPPORT uint count() const { return actions().count(); }
+    inline QT3_SUPPORT qtuint count() const { return actions().count(); }
     inline QT3_SUPPORT int insertItem(const QString &text, const QObject *receiver, const char* member,
                                     const QKeySequence& shortcut = 0, int id = -1, int index = -1) {
         return insertAny(0, &text, receiver, member, &shortcut, 0, id, index);
@@ -419,7 +419,7 @@ private:
     friend void qt_mac_trayicon_activate_action(QMenu *, QAction *action);
     friend bool qt_mac_watchingAboutToShow(QMenu *);
     friend OSStatus qt_mac_menu_event(EventHandlerCallRef, EventRef, void *);
-    friend bool qt_mac_activate_action(OSMenuRef, uint, QAction::ActionEvent, bool);
+    friend bool qt_mac_activate_action(OSMenuRef, qtuint, QAction::ActionEvent, bool);
     friend void qt_mac_emit_menuSignals(QMenu *, bool);
     friend void qt_mac_menu_emit_hovered(QMenu *menu, QAction *action);
 #endif

@@ -53,7 +53,7 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>FBXSDK_SHARED;WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\FbxConverter;$(ProjectDir)..\..\MiddleWare\glm\glm;$(Projectdir)..\..\MiddleWare\glew\include;$(Projectdir)..\..\MiddleWare\qt\include;$(Projectdir)..\..\MiddleWare\libnoise\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Projectdir)..\..\MiddleWare\FBX SDK\2017.0.1\include;$(ProjectDir)..\FbxConverter;$(ProjectDir)..\..\MiddleWare\glm\glm;$(Projectdir)..\..\MiddleWare\glew\include;$(Projectdir)..\..\MiddleWare\qt\include;$(Projectdir)..\..\MiddleWare\libnoise\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -88,6 +88,8 @@
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ConfigReader.cpp" />
+    <ClCompile Include="DetailsLayout.cpp" />
+    <ClCompile Include="DetailsLayout_moc.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="EvasionComponent.cpp" />
@@ -95,6 +97,8 @@
     <ClCompile Include="FlockingComponent.cpp" />
     <ClCompile Include="GameLogger.cpp" />
     <ClCompile Include="GravityComponent.cpp" />
+    <ClCompile Include="Hierarchy.cpp" />
+    <ClCompile Include="Hierarchy_moc.cpp" />
     <ClCompile Include="KeyboardComponent.cpp" />
     <ClCompile Include="MeGLWindow_moc.cpp" />
     <ClCompile Include="MeshComponent.cpp" />
@@ -105,13 +109,14 @@
     <ClCompile Include="NodeMap.cpp" />
     <ClCompile Include="NoiseGenerator.cpp" />
     <ClCompile Include="noiseutils.cpp" />
-    <ClCompile Include="ObjController.cpp" />
+    <ClCompile Include="ObjectSelectorComponent.cpp" />
     <ClCompile Include="OpenFileDialog.cpp" />
     <ClCompile Include="PathFinding.cpp" />
     <ClCompile Include="PathFollowerComponent.cpp" />
     <ClCompile Include="PlayerEntity.cpp" />
     <ClCompile Include="CollisionTester.cpp" />
     <ClCompile Include="PursuitComponent.cpp" />
+    <ClCompile Include="RenderEngine\AnimationInfo.cpp" />
     <ClCompile Include="RenderEngine\BufferInfo.cpp" />
     <ClCompile Include="RenderEngine\BufferManager.cpp" />
     <ClCompile Include="RenderEngine\FragmentShaderInfo.cpp" />
@@ -125,7 +130,6 @@
     <ClCompile Include="RenderEngine\RenderEngine.cpp" />
     <ClCompile Include="RenderEngine\RenderInfo.cpp" />
     <ClCompile Include="SaveLogger.cpp" />
-    <ClCompile Include="SceneMaker.cpp" />
     <ClCompile Include="SceneReader.cpp" />
     <ClCompile Include="SceneryEntity.cpp" />
     <ClCompile Include="SeekBehaviorComponent.cpp" />
@@ -142,6 +146,8 @@
     <ClCompile Include="StateMachine\StateComponent.cpp" />
     <ClCompile Include="SteeringBehaviors.cpp" />
     <ClCompile Include="Throwables.cpp" />
+    <ClCompile Include="TransformLayout.cpp" />
+    <ClCompile Include="TransformLayout_moc.cpp" />
     <ClCompile Include="WanderingComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -152,7 +158,9 @@
     <ClInclude Include="CollisionInfo.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ConfigReader.h" />
+    <ClInclude Include="DetailsLayout.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="EntityData.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="EvasionComponent.h" />
     <ClInclude Include="FleeBehaviorComponent.h" />
@@ -160,6 +168,7 @@
     <ClInclude Include="GameLogger.h" />
     <ClInclude Include="GravityComponent.h" />
     <ClInclude Include="HealthEntity.h" />
+    <ClInclude Include="Hierarchy.h" />
     <ClInclude Include="KeyboardComponent.h" />
     <ClInclude Include="MeshComponent.h" />
     <ClInclude Include="MouseComponent.h" />
@@ -169,7 +178,7 @@
     <ClInclude Include="NodeLink.h" />
     <ClInclude Include="NodeMap.h" />
     <ClInclude Include="NoiseGenerator.h" />
-    <ClInclude Include="ObjController.h" />
+    <ClInclude Include="ObjectSelectorComponent.h" />
     <ClInclude Include="OpenFileDialog.h" />
     <ClInclude Include="PathFinding.h" />
     <ClInclude Include="PathFollowerComponent.h" />
@@ -177,6 +186,7 @@
     <ClInclude Include="PlayerEntity.h" />
     <ClInclude Include="CollisionTester.h" />
     <ClInclude Include="PursuitComponent.h" />
+    <ClInclude Include="RenderEngine\AnimationInfo.h" />
     <ClInclude Include="RenderEngine\BufferInfo.h" />
     <ClInclude Include="RenderEngine\BufferManager.h" />
     <ClInclude Include="RenderEngine\FragmentShaderInfo.h" />
@@ -192,7 +202,6 @@
     <ClInclude Include="RenderEngine\RenderInfo.h" />
     <ClInclude Include="SaveLogger.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="SceneMaker.h" />
     <ClInclude Include="SceneReader.h" />
     <ClInclude Include="SceneryEntity.h" />
     <ClInclude Include="SearchNode.h" />
@@ -210,6 +219,7 @@
     <ClInclude Include="StateManager.h" />
     <ClInclude Include="SteeringBehaviors.h" />
     <ClInclude Include="Throwables.h" />
+    <ClInclude Include="TransformLayout.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="RenderEngine\VertexShaderInfo.h" />
     <ClInclude Include="VertexFormats.h" />

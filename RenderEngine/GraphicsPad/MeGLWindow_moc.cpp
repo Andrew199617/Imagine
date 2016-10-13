@@ -16,7 +16,7 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-static const uint qt_meta_data_MeGlWindow[] = {
+static const qtuint qt_meta_data_MeGlWindow[] = {
 
  // content:
        6,       // revision

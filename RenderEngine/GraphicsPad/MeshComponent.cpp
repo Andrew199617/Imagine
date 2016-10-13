@@ -10,7 +10,6 @@ MeshComponent::MeshComponent()
 
 MeshComponent::~MeshComponent()
 {
-	//delete renderinfo;
 }
 
 void MeshComponent::setUpFragmentVertexShader()
@@ -69,32 +68,15 @@ void MeshComponent::makeShaderInfo(int vertexFormat, string objname)
 	
 }
 
+void MeshComponent::setTransformInfo()
+{
+	SpatialComponent* spatial = this->GetSiblingComponent<SpatialComponent>();
+	renderinfo.setTransfromInfo(new TransformInfo(spatial->position, spatial->GetScale(), 0.0f, spatial->GetRotate()));
+}
+
 void MeshComponent::setRenderInfo(string objname)
 {
-	
 	renderinfo.setGeometry(ShapeGenerator::readScene(objname));
-	if (objname == "batman") 
-	{
-		renderinfo.setTransfromInfo(new TransformInfo(this->GetSiblingComponent<SpatialComponent>()->position
-			, glm::vec3(.04f, .04f, .04f), 0.0f, glm::vec3(0.0f, 1.0f, 0.0f)));
-	}
-	else if (objname == "StormTropper")
-	{
-		renderinfo.setTransfromInfo(new TransformInfo(this->GetSiblingComponent<SpatialComponent>()->position
-			, glm::vec3(2.0f, 2.0f, 2.0f), 0.0f, glm::vec3(0.0f, 1.0f, 0.0f)));
-	}
-	else if (objname == "Arrow")
-	{
-		renderinfo.setTransfromInfo(new TransformInfo(this->GetSiblingComponent<SpatialComponent>()->position
-				, glm::vec3(2.5f, 2.5f, 2.5f), 0.0f, glm::vec3(0.0f, 1.0f, 0.0f)));
-	}
-	else if (objname == "cubePurple")
-	{
-		renderinfo.setTransfromInfo(new TransformInfo(this->GetSiblingComponent<SpatialComponent>()->position
-			, glm::vec3(.3f, .3f, .3f), 0.0f, glm::vec3(0.0f, 1.0f, 0.0f)));
-	}
-	else
-		renderinfo.setTransfromInfo(new TransformInfo(this->GetSiblingComponent<SpatialComponent>()->position, glm::vec3(1.0f, 1.0f, 1.0f), 0.0f, glm::vec3(0.0f, 1.0f, 0.0f)));
 	makeShaderInfo(renderinfo.getGeometry()->VertexFormat, objname);
 	setUpFragmentVertexShader();
 	renderinfo.setVertexShaderInfo(&vertexShaderInfo);

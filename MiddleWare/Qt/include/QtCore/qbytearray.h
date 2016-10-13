@@ -76,12 +76,12 @@ QT_MODULE(Core)
 
 Q_CORE_EXPORT char *qstrdup(const char *);
 
-inline uint qstrlen(const char *str)
-{ return str ? uint(strlen(str)) : 0; }
+inline qtuint qstrlen(const char *str)
+{ return str ? qtuint(strlen(str)) : 0; }
 
-inline uint qstrnlen(const char *str, uint maxlen)
+inline qtuint qstrnlen(const char *str, qtuint maxlen)
 {
-    uint length = 0;
+    qtuint length = 0;
     if (str) {
         while (length < maxlen && *str++)
             length++;
@@ -90,7 +90,7 @@ inline uint qstrnlen(const char *str, uint maxlen)
 }
 
 Q_CORE_EXPORT char *qstrcpy(char *dst, const char *src);
-Q_CORE_EXPORT char *qstrncpy(char *dst, const char *src, uint len);
+Q_CORE_EXPORT char *qstrncpy(char *dst, const char *src, qtuint len);
 
 Q_CORE_EXPORT int qstrcmp(const char *str1, const char *str2);
 Q_CORE_EXPORT int qstrcmp(const QByteArray &str1, const QByteArray &str2);
@@ -98,34 +98,34 @@ Q_CORE_EXPORT int qstrcmp(const QByteArray &str1, const char *str2);
 static inline int qstrcmp(const char *str1, const QByteArray &str2)
 { return -qstrcmp(str2, str1); }
 
-inline int qstrncmp(const char *str1, const char *str2, uint len)
+inline int qstrncmp(const char *str1, const char *str2, qtuint len)
 {
     return (str1 && str2) ? strncmp(str1, str2, len)
         : (str1 ? 1 : (str2 ? -1 : 0));
 }
 Q_CORE_EXPORT int qstricmp(const char *, const char *);
-Q_CORE_EXPORT int qstrnicmp(const char *, const char *, uint len);
+Q_CORE_EXPORT int qstrnicmp(const char *, const char *, qtuint len);
 
 // implemented in qvsnprintf.cpp
 Q_CORE_EXPORT int qvsnprintf(char *str, size_t n, const char *fmt, va_list ap);
 Q_CORE_EXPORT int qsnprintf(char *str, size_t n, const char *fmt, ...);
 
 #ifdef QT3_SUPPORT
-inline QT3_SUPPORT void *qmemmove(void *dst, const void *src, uint len)
+inline QT3_SUPPORT void *qmemmove(void *dst, const void *src, qtuint len)
 { return memmove(dst, src, len); }
-inline QT3_SUPPORT uint cstrlen(const char *str)
-{ return uint(strlen(str)); }
+inline QT3_SUPPORT qtuint cstrlen(const char *str)
+{ return qtuint(strlen(str)); }
 inline QT3_SUPPORT char *cstrcpy(char *dst, const char *src)
 { return qstrcpy(dst,src); }
 inline QT3_SUPPORT int cstrcmp(const char *str1, const char *str2)
 { return strcmp(str1,str2); }
-inline QT3_SUPPORT int cstrncmp(const char *str1, const char *str2, uint len)
+inline QT3_SUPPORT int cstrncmp(const char *str1, const char *str2, qtuint len)
 { return strncmp(str1,str2,len); }
 #endif
 
 // qChecksum: Internet checksum
 
-Q_CORE_EXPORT quint16 qChecksum(const char *s, uint len);
+Q_CORE_EXPORT quint16 qChecksum(const char *s, qtuint len);
 
 class QByteRef;
 class QString;
@@ -188,14 +188,14 @@ public:
 #ifdef Q_COMPILER_MANGLES_RETURN_TYPE
     const char at(int i) const;
     const char operator[](int i) const;
-    const char operator[](uint i) const;
+    const char operator[](qtuint i) const;
 #else
     char at(int i) const;
     char operator[](int i) const;
-    char operator[](uint i) const;
+    char operator[](qtuint i) const;
 #endif
     QByteRef operator[](int i);
-    QByteRef operator[](uint i);
+    QByteRef operator[](qtuint i);
 
     int indexOf(char c, int from = 0) const;
     int indexOf(const char *c, int from = 0) const;
@@ -235,9 +235,9 @@ public:
     QByteArray rightJustified(int width, char fill = ' ', bool truncate = false) const;
 
 #ifdef QT3_SUPPORT
-    inline QT3_SUPPORT QByteArray leftJustify(uint width, char aFill = ' ', bool aTruncate = false) const
+    inline QT3_SUPPORT QByteArray leftJustify(qtuint width, char aFill = ' ', bool aTruncate = false) const
     { return leftJustified(int(width), aFill, aTruncate); }
-    inline QT3_SUPPORT QByteArray rightJustify(uint width, char aFill = ' ', bool aTruncate = false) const
+    inline QT3_SUPPORT QByteArray rightJustify(qtuint width, char aFill = ' ', bool aTruncate = false) const
     { return rightJustified(int(width), aFill, aTruncate); }
 #endif
 
@@ -296,7 +296,7 @@ public:
     short toShort(bool *ok = 0, int base = 10) const;
     ushort toUShort(bool *ok = 0, int base = 10) const;
     int toInt(bool *ok = 0, int base = 10) const;
-    uint toUInt(bool *ok = 0, int base = 10) const;
+    qtuint toUInt(bool *ok = 0, int base = 10) const;
     long toLong(bool *ok = 0, int base = 10) const;
     ulong toULong(bool *ok = 0, int base = 10) const;
     qlonglong toLongLong(bool *ok = 0, int base = 10) const;
@@ -312,15 +312,15 @@ public:
     QByteArray &setNum(short, int base = 10);
     QByteArray &setNum(ushort, int base = 10);
     QByteArray &setNum(int, int base = 10);
-    QByteArray &setNum(uint, int base = 10);
+    QByteArray &setNum(qtuint, int base = 10);
     QByteArray &setNum(qlonglong, int base = 10);
     QByteArray &setNum(qulonglong, int base = 10);
     QByteArray &setNum(float, char f = 'g', int prec = 6);
     QByteArray &setNum(double, char f = 'g', int prec = 6);
-    QByteArray &setRawData(const char *a, uint n); // ### Qt 5: use an int
+    QByteArray &setRawData(const char *a, qtuint n); // ### Qt 5: use an int
 
     static QByteArray number(int, int base = 10);
-    static QByteArray number(uint, int base = 10);
+    static QByteArray number(qtuint, int base = 10);
     static QByteArray number(qlonglong, int base = 10);
     static QByteArray number(qulonglong, int base = 10);
     static QByteArray number(double, char f = 'g', int prec = 6);
@@ -360,9 +360,9 @@ public:
 #ifdef QT3_SUPPORT
     QT3_SUPPORT_CONSTRUCTOR QByteArray(int size);
     inline QT3_SUPPORT QByteArray& duplicate(const QByteArray& a) { *this = a; return *this; }
-    inline QT3_SUPPORT QByteArray& duplicate(const char *a, uint n)
+    inline QT3_SUPPORT QByteArray& duplicate(const char *a, qtuint n)
     { *this = QByteArray(a, n); return *this; }
-    inline QT3_SUPPORT void resetRawData(const char *, uint) { clear(); }
+    inline QT3_SUPPORT void resetRawData(const char *, qtuint) { clear(); }
     inline QT3_SUPPORT QByteArray lower() const { return toLower(); }
     inline QT3_SUPPORT QByteArray upper() const { return toUpper(); }
     inline QT3_SUPPORT QByteArray stripWhiteSpace() const { return trimmed(); }
@@ -407,15 +407,15 @@ inline const char QByteArray::at(int i) const
 { Q_ASSERT(i >= 0 && i < size()); return d->data[i]; }
 inline const char QByteArray::operator[](int i) const
 { Q_ASSERT(i >= 0 && i < size()); return d->data[i]; }
-inline const char QByteArray::operator[](uint i) const
-{ Q_ASSERT(i < uint(size())); return d->data[i]; }
+inline const char QByteArray::operator[](qtuint i) const
+{ Q_ASSERT(i < qtuint(size())); return d->data[i]; }
 #else
 inline char QByteArray::at(int i) const
 { Q_ASSERT(i >= 0 && i < size()); return d->data[i]; }
 inline char QByteArray::operator[](int i) const
 { Q_ASSERT(i >= 0 && i < size()); return d->data[i]; }
-inline char QByteArray::operator[](uint i) const
-{ Q_ASSERT(i < uint(size())); return d->data[i]; }
+inline char QByteArray::operator[](qtuint i) const
+{ Q_ASSERT(i < qtuint(size())); return d->data[i]; }
 #endif
 
 inline bool QByteArray::isEmpty() const
@@ -488,7 +488,7 @@ public:
 
 inline QByteRef QByteArray::operator[](int i)
 { Q_ASSERT(i >= 0); return QByteRef(*this, i); }
-inline QByteRef QByteArray::operator[](uint i)
+inline QByteRef QByteArray::operator[](qtuint i)
 { return QByteRef(*this, i); }
 inline QByteArray::iterator QByteArray::begin()
 { detach(); return d->data; }
@@ -587,7 +587,7 @@ inline QByteArray &QByteArray::setNum(ushort n, int base)
 { return setNum(qulonglong(n), base); }
 inline QByteArray &QByteArray::setNum(int n, int base)
 { return setNum(qlonglong(n), base); }
-inline QByteArray &QByteArray::setNum(uint n, int base)
+inline QByteArray &QByteArray::setNum(qtuint n, int base)
 { return setNum(qulonglong(n), base); }
 inline QByteArray &QByteArray::setNum(float n, char f, int prec)
 { return setNum(double(n),f,prec); }

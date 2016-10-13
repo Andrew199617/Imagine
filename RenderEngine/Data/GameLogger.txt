@@ -1,10 +1,10 @@
 0. Save Logger file loaded
 1. Entity Manager Initialized
-2. No value found for key: AIWorldVertexShader
-3. No value found for key: AIWorldFragmentShader
-4. Original Game initialized
-5. No value found for key: CubeScene
-6. No value found for key: CubeTexture
-7. No value found for key: CubeVertexShader
-8. No value found for key: CubeFragmentShader
-9. No value found for key: CubeBumpMap
+2. Original Game initialized
+3. No value found for key: AIWorldVertexShader
+4. No value found for key: AIWorldFragmentShader
+5. No value found for key: TestAnimationScene
+6. No value found for key: TestAnimationTexture
+7. No value found for key: TestAnimationVertexShader
+8. No value found for key: TestAnimationFragmentShader
+9. No value found for key: TestAnimationBumpMap

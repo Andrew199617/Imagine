@@ -11,9 +11,6 @@
 #include "..\VertexFormats.h"
 #include "..\Vertex.h"
 
-
-using namespace glm;
-
 RenderInfo::RenderInfo(RenderInfo* me, RenderInfo* next)
 {
 	this->m_mesh = me->m_mesh;
@@ -25,13 +22,13 @@ RenderInfo::RenderInfo(RenderInfo* me, RenderInfo* next)
 	isEnabled = true;
 }
 
-void RenderInfo::Draw()
+void RenderInfo::Draw(float dt, bool isPlaying)
 {
 	if (!isEnabled)
 	{
 		if (next != 0)
 		{
-			next->Draw();
+			next->Draw(dt,isPlaying);
 		}
 		return;
 	}
@@ -42,7 +39,7 @@ void RenderInfo::Draw()
 	SendAttributeData();
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_mesh->m_indexId);
-	SendUniformData();
+	SendUniformData(dt,isPlaying);
 
 	if (m_mesh->VertexFormat & HasTexture)
 	{
@@ -53,7 +50,7 @@ void RenderInfo::Draw()
 
 	if (next != 0)
 	{
-		next->Draw();
+		next->Draw(dt,isPlaying);
 	}
 	
 }
@@ -110,12 +107,27 @@ void RenderInfo::SendAttributeData()
 	}
 }
 
-void RenderInfo::SendUniformData()
+void RenderInfo::SendUniformData(float dt, bool isPlaying)
 {
 	glm::mat4 mat = m_transformInfo->m_translateTransform * m_transformInfo->m_rotateTransform * m_transformInfo->m_scaleTransform;
+	if (m_mesh->m_animationInfo.hasAnimation && isPlaying)
+	{
+		m_dt += dt;
+		mat *= m_mesh->m_animationInfo.animationData[m_mesh->m_animationInfo.currentFrame];
+		if (m_dt >= 1.0f / 60.0f)
+		{
+			m_mesh->m_animationInfo.IncrementCurrentFrame();
+			m_dt = 0;
+		}
+	}
+	else if (m_mesh->m_animationInfo.hasAnimation)
+	{
+		mat *= m_mesh->m_animationInfo.animationData[m_mesh->m_animationInfo.currentFrame];
+	}
 	glm::mat4 ModelViewProjectionMatrix = TransformInfo::projectionMatrix * TransformInfo::WorldToViewMatrix * mat;
+	m_transformInfo->ModelViewProjectionMatrix = mat;
 	glm::mat4 ModelViewMatrix = TransformInfo::WorldToViewMatrix * mat;
-	glm::mat4 NormalMatrix = transpose(inverse(TransformInfo::WorldToViewMatrix));
+	glm::mat4 NormalMatrix = glm::transpose(glm::inverse(TransformInfo::WorldToViewMatrix));
 
 	glUniformMatrix4fv(m_vertexShaderInfo->uNormalMatrixUL, 1, GL_FALSE, &NormalMatrix[0][0]);
 	glUniformMatrix4fv(m_vertexShaderInfo->uModelViewProjectionMatrixUL, 1, GL_FALSE, &ModelViewProjectionMatrix[0][0]);

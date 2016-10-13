@@ -222,7 +222,7 @@ public:
     inline QT3_SUPPORT void getRgba(int *r, int *g, int *b, int *a) const
     { getRgb(r, g, b, a); }
 
-    QT3_SUPPORT uint pixel(int screen = -1) const;
+    QT3_SUPPORT qtuint pixel(int screen = -1) const;
 #endif
 
     static bool isValidColor(const QString &name);

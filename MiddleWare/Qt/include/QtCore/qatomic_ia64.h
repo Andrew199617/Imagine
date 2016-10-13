@@ -142,7 +142,7 @@ inline bool QBasicAtomicInt::testAndSetRelaxed(int expectedValue, int newValue)
 inline bool QBasicAtomicInt::testAndSetAcquire(int expectedValue, int newValue)
 {
     register int expectedValueCopy = expectedValue;
-    return (static_cast<int>(_InterlockedCompareExchange_acq(reinterpret_cast<volatile uint *>(&_q_value), 
+    return (static_cast<int>(_InterlockedCompareExchange_acq(reinterpret_cast<volatile qtuint *>(&_q_value), 
 							     newValue, 
 							     expectedValueCopy)) 
 	    == expectedValue);
@@ -151,7 +151,7 @@ inline bool QBasicAtomicInt::testAndSetAcquire(int expectedValue, int newValue)
 inline bool QBasicAtomicInt::testAndSetRelease(int expectedValue, int newValue)
 {
     register int expectedValueCopy = expectedValue;
-    return (static_cast<int>(_InterlockedCompareExchange_rel(reinterpret_cast<volatile uint *>(&_q_value), 
+    return (static_cast<int>(_InterlockedCompareExchange_rel(reinterpret_cast<volatile qtuint *>(&_q_value), 
 							     newValue, 
 							     expectedValueCopy)) 
 	    == expectedValue);

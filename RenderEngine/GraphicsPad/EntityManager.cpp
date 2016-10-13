@@ -7,6 +7,7 @@
 #include "SaveLogger.h"
 
 
+
 EntityManager::EntityManager()
 {
 }
@@ -17,6 +18,7 @@ EntityManager::~EntityManager()
 
 bool EntityManager::Initialize()
 {
+	currentlySelectedObject = 0;
 	player.SetName("Player");
 	player.AddComponent(&playerSpatial, "PlayerSpatialComponent");
 	player.AddComponent(&playerCamera, "PlayerCameraComponent");
@@ -24,6 +26,7 @@ bool EntityManager::Initialize()
 	player.AddComponent(&playerMouse, "PlayerMouseComponent");
 	player.AddComponent(&playerMove, "PlayerMovementComponent");
 	player.AddComponent(&playerShoot, "PlayerShootingComponent");
+	player.AddComponent(&objController, "PlayerShootingComponent");
 	//player.AddComponent(&playerGravity, "PlayerGravityComponent");
 	//player.AddComponent(&batmanMesh, "PlayerMesh");
 	if (!player.Initialize())
@@ -48,10 +51,10 @@ bool EntityManager::Initialize()
 bool EntityManager::InitializeSaveLoggerObjects()
 {
 	num_Objs = SaveLogger::GetNumObjs();
-	for (int i = 0; i < num_Objs; i++)
+	/*for (int i = 0; i < num_Objs; i++)
 	{
 		entities[i] = SceneryEntity();
-	}
+	}*/
 	for (int i = 0; i < num_Objs; i++)
 	{
 		entities[i].SetName(SaveLogger::GetName(i));
@@ -60,6 +63,9 @@ bool EntityManager::InitializeSaveLoggerObjects()
 		entities[i].AddComponent(&entitieSpatials[i], entities[i].GetName() + componentType);
 		componentType = "MeshComponent";
 		entities[i].AddComponent(&entitieMeshs[i], entities[i].GetName() + componentType);
+		entitieMeshs[i].setTransformInfo();
+		entitieSpatials[i].SetRotate(SaveLogger::GetRotate(entities[i].GetName()));
+		entitieSpatials[i].SetScale(SaveLogger::GetScale(entities[i].GetName()));
 		if (!entities[i].Initialize())
 		{
 			string s = ": did not initialize";
@@ -75,10 +81,10 @@ bool EntityManager::UpdateSaveLoggerObjects()
 {
 	int pastNumObjs = num_Objs;
 	num_Objs = SaveLogger::GetNumObjs();
-	for (int i = pastNumObjs; i < num_Objs; i++)
+	/*for (int i = pastNumObjs; i < num_Objs; i++)
 	{
 		entities[i] = SceneryEntity();
-	}
+	}*/
 	for (int i = pastNumObjs; i < num_Objs; i++)
 	{
 		entities[i].SetName(SaveLogger::GetName(i));
@@ -87,6 +93,9 @@ bool EntityManager::UpdateSaveLoggerObjects()
 		entities[i].AddComponent(&entitieSpatials[i], entities[i].GetName() + componentType);
 		componentType = "MeshComponent";
 		entities[i].AddComponent(&entitieMeshs[i], entities[i].GetName() + componentType);
+		entitieMeshs[i].setTransformInfo();
+		entitieSpatials[i].SetRotate(SaveLogger::GetRotate(entities[i].GetName()));
+		entitieSpatials[i].SetScale(SaveLogger::GetScale(entities[i].GetName()));
 		if (!entities[i].Initialize())
 		{
 			string s = ": did not initialize";
@@ -97,6 +106,8 @@ bool EntityManager::UpdateSaveLoggerObjects()
 
 	return true;
 }
+
+
 
 void EntityManager::Update(float dt)
 {
@@ -111,7 +122,7 @@ void EntityManager::Update(float dt)
 
 		if (!UpdateSaveLoggerObjects())
 		{
-			string s = "Save Logger Objects did not initialze";
+			string s = "Save Logger Objects did not Update";
 			GameLogger::log(s);
 			GameLogger::shutdownLog();
 			exit(1);
@@ -119,6 +130,9 @@ void EntityManager::Update(float dt)
 		
 		SendNewDataToOpenGL();
 	}
+
+	//objController.Update();
+	objController.SetMeshs(num_Objs, entitieMeshs);
 
 	for (int i = 0; i < num_Objs; i++)
 	{
@@ -129,11 +143,17 @@ void EntityManager::Update(float dt)
 void EntityManager::ProcessKeys(float m_dt)
 {
 	playerKeyboard.ProcessKeys(m_dt);
+	objController.ProcessKeys();
 }
 
-void EntityManager::ProcessMouse(QMouseEvent* e)
+void EntityManager::ProcessMouseMove(QMouseEvent* e)
 {
-	playerMouse.ProcessMouse(e);
+	playerMouse.ProcessMouseMove(e);
+}
+
+void EntityManager::ProcessMousePress(QMouseEvent * e)
+{
+	objController.ProcessMousePress(e, this);
 }
 
 void EntityManager::SendDataToOpenGL()

@@ -30,6 +30,8 @@ public:
 	static string GetObj(string);
 	static void AddObj(string);
 	static glm::vec3 GetPosition(string);
+	static glm::vec3 GetRotate(string);
+	static glm::vec3 GetScale(string);
 	static bool ValueChanged();
 private:
 	static string currentFilename;

@@ -972,7 +972,7 @@ typedef QIntegerForSizeof<void*>::Signed qptrdiff;
 QT_BEGIN_INCLUDE_NAMESPACE
 typedef unsigned char uchar;
 typedef unsigned short ushort;
-typedef unsigned int uint;
+typedef unsigned int qtuint;
 typedef unsigned long ulong;
 QT_END_INCLUDE_NAMESPACE
 
@@ -2190,7 +2190,7 @@ Q_DECLARE_TYPEINFO(uchar, Q_PRIMITIVE_TYPE);
 Q_DECLARE_TYPEINFO(short, Q_PRIMITIVE_TYPE);
 Q_DECLARE_TYPEINFO(ushort, Q_PRIMITIVE_TYPE);
 Q_DECLARE_TYPEINFO(int, Q_PRIMITIVE_TYPE);
-Q_DECLARE_TYPEINFO(uint, Q_PRIMITIVE_TYPE);
+Q_DECLARE_TYPEINFO(qtuint, Q_PRIMITIVE_TYPE);
 Q_DECLARE_TYPEINFO(long, Q_PRIMITIVE_TYPE);
 Q_DECLARE_TYPEINFO(ulong, Q_PRIMITIVE_TYPE);
 Q_DECLARE_TYPEINFO(qint64, Q_PRIMITIVE_TYPE);
@@ -2286,7 +2286,7 @@ public:
 
     inline QFlags &operator=(const QFlags &f) { i = f.i; return *this; }
     inline QFlags &operator&=(int mask) { i &= mask; return *this; }
-    inline QFlags &operator&=(uint mask) { i &= mask; return *this; }
+    inline QFlags &operator&=(qtuint mask) { i &= mask; return *this; }
     inline QFlags &operator|=(QFlags f) { i |= f.i; return *this; }
     inline QFlags &operator|=(Enum f) { i |= f; return *this; }
     inline QFlags &operator^=(QFlags f) { i ^= f.i; return *this; }
@@ -2299,7 +2299,7 @@ public:
     Q_DECL_CONSTEXPR inline QFlags operator^(QFlags f) const { return QFlags(Enum(i ^ f.i)); }
     Q_DECL_CONSTEXPR inline QFlags operator^(Enum f) const { return QFlags(Enum(i ^ f)); }
     Q_DECL_CONSTEXPR inline QFlags operator&(int mask) const { return QFlags(Enum(i & mask)); }
-    Q_DECL_CONSTEXPR inline QFlags operator&(uint mask) const { return QFlags(Enum(i & mask)); }
+    Q_DECL_CONSTEXPR inline QFlags operator&(qtuint mask) const { return QFlags(Enum(i & mask)); }
     Q_DECL_CONSTEXPR inline QFlags operator&(Enum f) const { return QFlags(Enum(i & f)); }
     Q_DECL_CONSTEXPR inline QFlags operator~() const { return QFlags(Enum(~i)); }
 
@@ -2325,7 +2325,7 @@ Q_DECL_CONSTEXPR inline QFlags<Flags::enum_type> operator|(Flags::enum_type f1, 
 #else /* Q_NO_TYPESAFE_FLAGS */
 
 #define Q_DECLARE_FLAGS(Flags, Enum)\
-typedef uint Flags;
+typedef qtuint Flags;
 #define Q_DECLARE_OPERATORS_FOR_FLAGS(Flags)
 
 #endif /* Q_NO_TYPESAFE_FLAGS */
@@ -2497,7 +2497,7 @@ inline int qIntCast(float f) { return int(f); }
 /*
   Reentrant versions of basic rand() functions for random number generation
 */
-Q_CORE_EXPORT void qsrand(uint seed);
+Q_CORE_EXPORT void qsrand(qtuint seed);
 Q_CORE_EXPORT int qrand();
 
 /*

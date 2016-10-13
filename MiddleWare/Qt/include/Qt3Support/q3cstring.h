@@ -64,7 +64,7 @@ public:
     Q3CString(const Q3CString &s) : QByteArray(s) {}
     Q3CString(const QByteArray &ba) : QByteArray(ba) {}
     Q3CString(const char *str) : QByteArray(str) {}
-    Q3CString(const char *str, uint maxlen) : QByteArray(str, qMin(qstrlen(str), maxlen - 1)) {}
+    Q3CString(const char *str, qtuint maxlen) : QByteArray(str, qMin(qstrlen(str), maxlen - 1)) {}
 
     Q3CString    &operator=(const Q3CString &s) {
         QByteArray::operator=(s); return *this;
@@ -79,12 +79,12 @@ public:
     Q3CString        copy()        const { return *this; }
     Q3CString    &sprintf(const char *format, ...);
 
-    Q3CString        left(uint len)  const { return QByteArray::left(len); }
-    Q3CString        right(uint len) const { return QByteArray::right(len); }
-    Q3CString        mid(uint index, uint len=0xffffffff) const { return QByteArray::mid(index, len); }
+    Q3CString        left(qtuint len)  const { return QByteArray::left(len); }
+    Q3CString        right(qtuint len) const { return QByteArray::right(len); }
+    Q3CString        mid(qtuint index, qtuint len=0xffffffff) const { return QByteArray::mid(index, len); }
 
-    Q3CString        leftJustify(uint width, char fill=' ', bool trunc=false)const;
-    Q3CString        rightJustify(uint width, char fill=' ',bool trunc=false)const;
+    Q3CString        leftJustify(qtuint width, char fill=' ', bool trunc=false)const;
+    Q3CString        rightJustify(qtuint width, char fill=' ',bool trunc=false)const;
 
     Q3CString        lower() const { return QByteArray::toLower(); }
     Q3CString        upper() const { return QByteArray::toUpper(); }
@@ -92,12 +92,12 @@ public:
     Q3CString        stripWhiteSpace()        const { return QByteArray::trimmed(); }
     Q3CString        simplifyWhiteSpace()        const { return QByteArray::simplified(); }
 
-    Q3CString    &insert(uint index, const char *c) { QByteArray::insert(index, c); return *this; }
-    Q3CString    &insert(uint index, char c) { QByteArray::insert(index, c); return *this; }
+    Q3CString    &insert(qtuint index, const char *c) { QByteArray::insert(index, c); return *this; }
+    Q3CString    &insert(qtuint index, char c) { QByteArray::insert(index, c); return *this; }
     Q3CString    &append(const char *c) { QByteArray::append(c); return *this; }
     Q3CString    &prepend(const char *c) { QByteArray::prepend(c); return *this; }
-    Q3CString    &remove(uint index, uint len) { QByteArray::remove(index, len); return *this; }
-    Q3CString    &replace(uint index, uint len, const char *c)
+    Q3CString    &remove(qtuint index, qtuint len) { QByteArray::remove(index, len); return *this; }
+    Q3CString    &replace(qtuint index, qtuint len, const char *c)
     { QByteArray::replace(index, len, c); return *this; }
     Q3CString    &replace(char c, const Q3CString &after) { return replace(c, after.constData()); }
     Q3CString    &replace(char c, const char *after) { QByteArray::replace(c, after); return *this; }
@@ -109,7 +109,7 @@ public:
     short        toShort(bool *ok=0)        const;
     ushort        toUShort(bool *ok=0)        const;
     int                toInt(bool *ok=0)        const;
-    uint        toUInt(bool *ok=0)        const;
+    qtuint        toUInt(bool *ok=0)        const;
     long        toLong(bool *ok=0)        const;
     ulong        toULong(bool *ok=0)        const;
     float        toFloat(bool *ok=0)        const;
@@ -119,13 +119,13 @@ public:
     Q3CString    &setNum(short);
     Q3CString    &setNum(ushort);
     Q3CString    &setNum(int);
-    Q3CString    &setNum(uint);
+    Q3CString    &setNum(qtuint);
     Q3CString    &setNum(long);
     Q3CString    &setNum(ulong);
     Q3CString    &setNum(float, char f='g', int prec=6);
     Q3CString    &setNum(double, char f='g', int prec=6);
 
-    bool        setExpand(uint index, char c);
+    bool        setExpand(qtuint index, char c);
 
 };
 
@@ -151,7 +151,7 @@ inline Q3CString &Q3CString::setNum(ushort n)
 inline Q3CString &Q3CString::setNum(int n)
 { return setNum(long(n)); }
 
-inline Q3CString &Q3CString::setNum(uint n)
+inline Q3CString &Q3CString::setNum(qtuint n)
 { return setNum(ulong(n)); }
 
 inline Q3CString &Q3CString::setNum(float n, char f, int prec)

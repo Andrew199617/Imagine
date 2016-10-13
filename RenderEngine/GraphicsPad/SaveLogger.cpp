@@ -150,11 +150,11 @@ void SaveLogger::log(std::string objName, std::string textureLocation, std::stri
 		ss << pos;
 		value[index][3] = ss.str();
 		pos = position.y;
-		ss = stringstream(stringstream::in | stringstream::out);
+		ss.clear();
 		ss << pos;
 		value[index][4] = ss.str();
 		pos = position.z;
-		ss = stringstream(stringstream::in | stringstream::out);
+		ss.clear();
 		ss << pos;
 		value[index][5] = ss.str();
 		index++;
@@ -247,6 +247,20 @@ void SaveLogger::AddObj(string ObjName)
 	value[index][2] = "0.0";
 	value[index][3] = "0.0";
 	out << value[index][0] << " " << '"' << value[index][1] << "," << value[index][2] << "," << value[index][3] << '"' << "\n";
+
+	index++;
+	value[index][0] = "Rotate";
+	value[index][1] = "0.0";
+	value[index][2] = "1.0";
+	value[index][3] = "0.0";
+	out << value[index][0] << " " << '"' << value[index][1] << "," << value[index][2] << "," << value[index][3] << '"' << "\n";
+
+	index++;
+	value[index][0] = "Scale";
+	value[index][1] = "1.0";
+	value[index][2] = "1.0";
+	value[index][3] = "1.0";
+	out << value[index][0] << " " << '"' << value[index][1] << "," << value[index][2] << "," << value[index][3] << '"' << "\n";
 }
 
 glm::vec3 SaveLogger::GetPosition(string objName)
@@ -255,12 +269,38 @@ glm::vec3 SaveLogger::GetPosition(string objName)
 	{
 		if (value[i][1] == objName)
 		{
-			//GameLogger::log("key: " + pKey + " Value: " + value[i][1]);
 			return glm::vec3(ConfigReader::GetFloatFromString(value[i+2][1]), ConfigReader::GetFloatFromString(value[i + 2][2]), ConfigReader::GetFloatFromString(value[i + 2][3]));
 		}
-
 	}
 	GameLogger::log("could not find Position for Obj:" + objName);
+	cout << "check log" << endl;
+	return glm::vec3();
+}
+
+glm::vec3 SaveLogger::GetRotate(string objName)
+{
+	for (int i = 0; i < LENGTHOFVALUE; i++)
+	{
+		if (value[i][1] == objName)
+		{
+			return glm::vec3(ConfigReader::GetFloatFromString(value[i + 3][1]), ConfigReader::GetFloatFromString(value[i + 3][2]), ConfigReader::GetFloatFromString(value[i + 3][3]));
+		}
+	}
+	GameLogger::log("could not find Rotate for Obj:" + objName);
+	cout << "check log" << endl;
+	return glm::vec3();
+}
+
+glm::vec3 SaveLogger::GetScale(string objName)
+{
+	for (int i = 0; i < LENGTHOFVALUE; i++)
+	{
+		if (value[i][1] == objName)
+		{
+			return glm::vec3(ConfigReader::GetFloatFromString(value[i + 4][1]), ConfigReader::GetFloatFromString(value[i + 4][2]), ConfigReader::GetFloatFromString(value[i + 4][3]));
+		}
+	}
+	GameLogger::log("could not find Scale for Obj:" + objName);
 	cout << "check log" << endl;
 	return glm::vec3();
 }

@@ -11,8 +11,8 @@ AIWorldBumpMap			..\\..\\StaticData\\Texture\\brick_bump.bmp
 
 CameraRotateSpeed		1.0		
 CameraStrafeSpeed		25.3301
-CameraPosition			"-3.9615326,-1.00,-3.7366638"		
-CameraViewDirection		"0.754550345,-0.418316317,-0.0249155864"
+CameraPosition			"-4.00,4.00,-4.0"		
+CameraViewDirection		"0.75,-0.5,-0.0"
 
 //DH=DanielsHideout		
 DHPathing_9_24			..\\data\\PathingNodes\\Pathing.9.24.nav

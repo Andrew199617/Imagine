@@ -168,18 +168,18 @@ public:
     QDataStream &operator<<(double f);
     QDataStream &operator<<(const char *str);
 
-    QDataStream &readBytes(char *&, uint &len);
+    QDataStream &readBytes(char *&, qtuint &len);
     int readRawData(char *, int len);
 
-    QDataStream &writeBytes(const char *, uint len);
+    QDataStream &writeBytes(const char *, qtuint len);
     int writeRawData(const char *, int len);
 
     int skipRawData(int len);
 
 #ifdef QT3_SUPPORT
-    inline QT3_SUPPORT QDataStream &readRawBytes(char *str, uint len)
+    inline QT3_SUPPORT QDataStream &readRawBytes(char *str, qtuint len)
         { readRawData(str, static_cast<int>(len)); return *this; }
-    inline QT3_SUPPORT QDataStream &writeRawBytes(const char *str, uint len)
+    inline QT3_SUPPORT QDataStream &writeRawBytes(const char *str, qtuint len)
         { writeRawData(str, static_cast<int>(len)); return *this; }
     inline QT3_SUPPORT bool isPrintableData() const { return false; }
     inline QT3_SUPPORT void setPrintableData(bool) {}

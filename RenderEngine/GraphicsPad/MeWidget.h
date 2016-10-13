@@ -4,6 +4,8 @@
 #pragma warning (disable:4127)
 #include <QtGui\qvboxlayout>
 #include <QtGui\QLineEdit>
+#include "DetailsLayout.h"
+#include "Hierarchy.h"
 #pragma warning(pop)
 #include <QtGui\QPushButton>
 #include <QtGui\QCheckBox>
@@ -17,6 +19,7 @@
 #include "PostProcessingModel.h"
 #include "OpenFileDialog.h"
 
+
 class MeGlWindow;
 class QApplication;
 
@@ -24,21 +27,31 @@ class MeWidget : public QMainWindow
 {
 	Q_OBJECT
 
-	QVBoxLayout* controlsLayout;
-	//QVBoxLayout* controlsLayout;
-	QVBoxLayout* objectDetailsLayout;
+	QGridLayout* mainLayout;
 	QHBoxLayout* meGlWindowLayout;
-	QPushButton* ShowDetails;
-	QCheckBox* discardBasedOnDepth;
+
+	QHBoxLayout* toolsLayout;
+	QPushButton* playButton;
+	QIcon* playIcon;
+	QIcon* pauseIcon;
+
+	QLabel* ObjectName;
+	DetailsLayout* detailsLayout;
+	Hierarchy* hierarchyLayout;
 
 	QMenu* fileMenu;
-	QMenu* gameObjectMenu;
 	QAction* openAct;
+
+	QMenu* gameObjectMenu;
 	QAction* addObjectAct;
 	QAction* addCubeAct;
 	QAction* addSphereAct;
 	QAction* addPlaneAct;
 
+	QMenu* windowMenu;
+	QAction* showDetails;
+	QAction* showTools;
+	QAction* showHierarchy;
 
 	OpenFileDialog openFileDialog;
 	MeGlWindow* meGlWindow;
@@ -47,17 +60,24 @@ public:
 	MeWidget(MeGlWindow* meGl, MeModel*);
 
 private:
-	void createActions();
-	void createMenus();
+	void CreateActions();
+	void CreateMenus();
+	void AddTools();
+	void AddGlWindow();
+	void AddObjectDetails();
+	void AddHierarchy();
+	
+protected:
+	void mousePressEvent(QMouseEvent*);
 
 private slots:
-	void sliderValueChanged();
+	void WindowsShowEvent();
 	void openingFile();
 	void AddObject();
 	void AddCube();
 	void AddSphere();
 	void AddPlane();
-	void checkBoxChanged();
+	void OnPlayButtonPress();
 };
 
 #pragma warning(pop)

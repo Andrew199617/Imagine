@@ -25,6 +25,6 @@ public:
 	void setNewMousePosition(glm::vec2 newMousePos) { newMousePosition = newMousePos; }
 	void setOldMousePosition() { oldMousePosition = newMousePosition; }
 	void setMouseDelta();
-	void ProcessMouse(QMouseEvent* e);
+	void ProcessMouseMove(QMouseEvent* e);
 };
 

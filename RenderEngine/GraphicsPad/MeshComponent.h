@@ -17,6 +17,7 @@ public:
 	~MeshComponent();
 	void setUpFragmentVertexShader();
 	void makeShaderInfo(int vertexFormat, string objname);
+	void setTransformInfo();
 	void setRenderInfo(string objname);
 	void setNodeRenderInfo(string objname, float radius);
 	void setRenderInfo_Line(glm::vec3 point1, glm::vec3 point2);

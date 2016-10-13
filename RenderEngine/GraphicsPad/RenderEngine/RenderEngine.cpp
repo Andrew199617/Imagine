@@ -49,12 +49,12 @@ void RenderEngine::RemoveRenderInfo()
 	BufferManager::RemoveRenderInfo();
 }
 
-void RenderEngine::Draw()
+void RenderEngine::Draw(float dt,bool isPlaying)
 {
 	for (int i = 0; i <= BufferManager::m_numVertexBuffers; i++)
 	{
 		if (!BufferManager::m_bufferPool[i].isEmpty())
-			BufferManager::m_bufferPool[i].top->Draw();
+			BufferManager::m_bufferPool[i].top->Draw(dt,isPlaying);
 	}
 
 }

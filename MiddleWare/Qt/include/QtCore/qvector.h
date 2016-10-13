@@ -70,13 +70,13 @@ struct Q_CORE_EXPORT QVectorData
     int size;
 #if defined(QT_ARCH_SPARC) && defined(Q_CC_GNU) && defined(__LP64__) && defined(QT_BOOTSTRAPPED)
     // workaround for bug in gcc 3.4.2
-    uint sharable;
-    uint capacity;
-    uint reserved;
+    qtuint sharable;
+    qtuint capacity;
+    qtuint reserved;
 #else
-    uint sharable : 1;
-    uint capacity : 1;
-    uint reserved : 30;
+    qtuint sharable : 1;
+    qtuint capacity : 1;
+    qtuint reserved : 30;
 #endif
 
     static QVectorData shared_null;

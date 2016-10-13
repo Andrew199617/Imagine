@@ -112,19 +112,19 @@ class QWidgetData
 {
 public:
     WId winid;
-    uint widget_attributes;
+    qtuint widget_attributes;
     Qt::WindowFlags window_flags;
-    uint window_state : 4;
-    uint focus_policy : 4;
-    uint sizehint_forced :1;
-    uint is_closing :1;
-    uint in_show : 1;
-    uint in_set_window_state : 1;
-    mutable uint fstrut_dirty : 1;
-    uint context_menu_policy : 3;
-    uint window_modality : 2;
-    uint in_destructor : 1;
-    uint unused : 13;
+    qtuint window_state : 4;
+    qtuint focus_policy : 4;
+    qtuint sizehint_forced :1;
+    qtuint is_closing :1;
+    qtuint in_show : 1;
+    qtuint in_set_window_state : 1;
+    mutable qtuint fstrut_dirty : 1;
+    qtuint context_menu_policy : 3;
+    qtuint window_modality : 2;
+    qtuint in_destructor : 1;
+    qtuint unused : 13;
     QRect crect;
     mutable QPalette pal;
     QFont fnt;
@@ -1037,7 +1037,7 @@ inline void QWidget::setSizePolicy(QSizePolicy::Policy hor, QSizePolicy::Policy 
 
 inline bool QWidget::testAttribute(Qt::WidgetAttribute attribute) const
 {
-    if (attribute < int(8*sizeof(uint)))
+    if (attribute < int(8*sizeof(qtuint)))
         return data->widget_attributes & (1<<attribute);
     return testAttribute_helper(attribute);
 }

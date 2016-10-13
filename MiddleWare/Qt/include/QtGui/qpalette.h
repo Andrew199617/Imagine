@@ -163,8 +163,8 @@ public:
     qint64 cacheKey() const;
 
     QPalette resolve(const QPalette &) const;
-    inline uint resolve() const { return resolve_mask; }
-    inline void resolve(uint mask) { resolve_mask = mask; }
+    inline qtuint resolve() const { return resolve_mask; }
+    inline void resolve(qtuint mask) { resolve_mask = mask; }
 
 private:
     void setColorGroup(ColorGroup cr, const QBrush &windowText, const QBrush &button,
@@ -193,8 +193,8 @@ private:
     void detach();
 
     QPalettePrivate *d;
-    uint current_group : 4;
-    uint resolve_mask : 28;
+    qtuint current_group : 4;
+    qtuint resolve_mask : 28;
     friend Q_GUI_EXPORT QDataStream &operator<<(QDataStream &s, const QPalette &p);
 };
 

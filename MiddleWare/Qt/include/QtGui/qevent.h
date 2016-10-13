@@ -268,7 +268,7 @@ protected:
     QString txt;
     int k;
     ushort c;
-    uint autor:1;
+    qtuint autor:1;
 };
 
 
@@ -423,7 +423,7 @@ public:
 protected:
     QPoint p;
     QPoint gp;
-    uint reas : 8;
+    qtuint reas : 8;
 };
 #endif // QT_NO_CONTEXTMENU
 
@@ -667,7 +667,7 @@ public:
 
     inline bool toggle() const { return tog; }
 private:
-    uint tog : 1;
+    qtuint tog : 1;
 };
 #endif
 

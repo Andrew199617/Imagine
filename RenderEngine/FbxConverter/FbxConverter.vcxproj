@@ -22,10 +22,12 @@
     <ClInclude Include="BinaryOutput.h" />
     <ClInclude Include="FbxData.h" />
     <ClInclude Include="FbxFileReader.h" />
+    <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BinaryOutput.cpp" />
     <ClCompile Include="FbxFileReader.cpp" />
+    <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3A60C6C3-E2B5-42E7-BB4F-CB95720443FF}</ProjectGuid>

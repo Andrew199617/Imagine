@@ -1,7 +1,5 @@
 #pragma once
-#include <GL\glew.h>
-#include "Vertex.h"
-
+#include "GL\glew.h"
 
 struct Scene
 {
@@ -12,4 +10,12 @@ struct Scene
 	int SceneOutputFormat;
 	void* vertices;
 	void* indices;
+};
+
+struct AnimationScene
+{
+	int animationLength;
+	//int numKeys;
+	//void* keys;
+	void* animationData;
 };

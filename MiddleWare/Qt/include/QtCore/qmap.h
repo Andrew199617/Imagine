@@ -71,11 +71,11 @@ struct Q_CORE_EXPORT QMapData
     QBasicAtomicInt ref;
     int topLevel;
     int size;
-    uint randomBits;
-    uint insertInOrder : 1;
-    uint sharable : 1;
-    uint strictAlignment : 1;
-    uint reserved : 29;
+    qtuint randomBits;
+    qtuint insertInOrder : 1;
+    qtuint sharable : 1;
+    qtuint strictAlignment : 1;
+    qtuint reserved : 29;
 
     static QMapData *createData(); // ### Qt5 remove me
     static QMapData *createData(int alignment);
@@ -84,7 +84,7 @@ struct Q_CORE_EXPORT QMapData
     Node *node_create(Node *update[], int offset, int alignment);
     void node_delete(Node *update[], int offset, Node *node);
 #ifdef QT_QMAP_DEBUG
-    uint adjust_ptr(Node *node);
+    qtuint adjust_ptr(Node *node);
     void dump();
 #endif
 

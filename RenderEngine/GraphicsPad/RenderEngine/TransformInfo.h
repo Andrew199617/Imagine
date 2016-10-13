@@ -18,6 +18,8 @@ public:
 	glm::mat4 m_scaleTransform;
 	glm::mat4 m_rotateTransform;
 	glm::mat4 m_translateTransform;
+	glm::mat4 ModelViewProjectionMatrix;
+	float angle;
 	
 };
 

@@ -1,15 +1,12 @@
 #pragma once
 #include <typeinfo>
 #include "GameLogger.h"
+#include "EntityData.h"
 
 class Component;
 class Entity
 {
-	enum
-	{
-		MAX_COMPONENTS = 10,
-		MAX_NAME_LEN = 30
-	};
+	
 
 public:
 	Entity();

@@ -143,8 +143,8 @@ public:
 
     int horizontalStretch() const { return data >> 24; }
     int verticalStretch() const { return (data >> 16) & 0xff; }
-    void setHorizontalStretch(uchar stretchFactor) { data = (data&0x00ffffff) | (uint(stretchFactor)<<24); }
-    void setVerticalStretch(uchar stretchFactor) { data = (data&0xff00ffff) | (uint(stretchFactor)<<16); }
+    void setHorizontalStretch(uchar stretchFactor) { data = (data&0x00ffffff) | (qtuint(stretchFactor)<<24); }
+    void setVerticalStretch(uchar stretchFactor) { data = (data&0xff00ffff) | (qtuint(stretchFactor)<<16); }
 
     void transpose();
 
@@ -188,8 +188,8 @@ public:
     inline QT3_SUPPORT void setHorData(Policy d) { setHorizontalPolicy(d); }
     inline QT3_SUPPORT void setVerData(Policy d) { setVerticalPolicy(d); }
 
-    inline QT3_SUPPORT uint horStretch() const { return horizontalStretch(); }
-    inline QT3_SUPPORT uint verStretch() const { return verticalStretch(); }
+    inline QT3_SUPPORT qtuint horStretch() const { return horizontalStretch(); }
+    inline QT3_SUPPORT qtuint verStretch() const { return verticalStretch(); }
     inline QT3_SUPPORT void setHorStretch(uchar sf) { setHorizontalStretch(sf); }
     inline QT3_SUPPORT void setVerStretch(uchar sf) { setVerticalStretch(sf); }
 #endif

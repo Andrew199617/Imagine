@@ -154,7 +154,7 @@ public:
     QKeySequence(StandardKey key);
     ~QKeySequence();
 
-    uint count() const; // ### Qt 5: return 'int'
+    qtuint count() const; // ### Qt 5: return 'int'
     bool isEmpty() const;
 
     enum SequenceMatch {
@@ -177,7 +177,7 @@ public:
     operator QString() const;
     operator QVariant() const;
     operator int() const;
-    int operator[](uint i) const;
+    int operator[](qtuint i) const;
     QKeySequence &operator=(const QKeySequence &other);
 #ifdef Q_COMPILER_RVALUE_REFS
     inline QKeySequence &operator=(QKeySequence &&other)

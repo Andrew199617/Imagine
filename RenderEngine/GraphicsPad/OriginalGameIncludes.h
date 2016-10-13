@@ -29,28 +29,12 @@
 #include "gtx\transform.hpp"
 #include "MeModel.h"
 #include "Vertex.h"
-#include "RenderEngine\RenderInfo.h"
-#include "RenderEngine\RenderEngine.h"
-#include "RenderEngine\TransformInfo.h"
-#include "RenderEngine\VertexShaderInfo.h"
-#include "RenderEngine\FragmentShaderInfo.h"
-#include "RenderEngine\TextureInfo.h"
 #include "VertexFormats.h"
 #include "EntityManager.h"
 #include "PlayerEntity.h"
 #include "KeyboardComponent.h"
 #include "MouseComponent.h"
 #include "SpatialComponent.h"
-#include "ObjController.h"
 
-class MeGlWindow;
-
-using namespace glm;
 using namespace std;
 
-const GLuint VERTEX_BYTE_SIZE = sizeof(float) * 9;
-const int A = 65;
-const int W = 87;
-const int S = 83;
-const int D = 68;
-const int X = 88;

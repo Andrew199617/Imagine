@@ -8,30 +8,64 @@
 #include "OriginalGame.h"
 #include "SaveLogger.h"
 #include "GameLogger.h"
+#include "Qt\qtooltip.h"
 
+
+void MeGlWindow::Initialize()
+{
+	if (!game->Initialize())
+	{
+		SaveLogger::shutdownLog();
+		GameLogger::shutdownLog();
+		app->exit();
+		ShutdownApp = true;
+	}
+}
 
 void MeGlWindow::initializeGL()
 {
-	setMinimumSize(1280, 720);
+	
+	setFocus();
+	game->InitializeGl();
 	setMouseTracking(true);
-	game->Initialize(this);
+	setMinimumSize(1280, 720);
 
 	connect(&myTimer, SIGNAL(timeout()),
 		this, SLOT(myUpdate()));
 	myTimer.start(0);
-
 }
 
 void MeGlWindow::mouseMoveEvent(QMouseEvent* e)
 {
-	game->ProcessMouse(e);
+	QWidget::mouseMoveEvent(e);
+	game->ProcessMouseMove(e);
+}
+
+void MeGlWindow::mousePressEvent(QMouseEvent * e)
+{
+	setFocus();
+	QWidget::mousePressEvent(e);
+	game->ProcessMousePress(e);
+}
+
+void MeGlWindow::resizeGL(int w, int h)
+{
+	float height = 0;
+	float yOffset = 0;
+	height = w * (9.0f / 16.0f);
+	yOffset = ((float)h - height) / 2.0f;
+	QGLWidget::resizeGL(w, height);
+	game->SetWidth(w);
+	game->SetHeight((int)height);
+	game->yOffset = (int)yOffset;
 }
 
 void MeGlWindow::myUpdate()
-{
-	game->Update();
-	if(!ShutdownApp)
-	repaint();
+{	
+	game->Update(hasFocus());
+	shutdown();
+	if (!ShutdownApp)
+		repaint();
 }
 
 MeGlWindow::MeGlWindow()
@@ -44,12 +78,16 @@ MeGlWindow::MeGlWindow(QApplication* app, OriginalGame* ocGame)
 	this->app = app;
 	this->game = ocGame;
 	ShutdownApp = false;
+	Initialize();
 }
 
 void MeGlWindow::shutdown()
 {
-	SaveLogger::shutdownLog();
-	GameLogger::shutdownLog();
-	app->exit();
-	ShutdownApp = true;
+	if (GetAsyncKeyState(88) != 0 || GetAsyncKeyState(27) != 0)
+	{
+		SaveLogger::shutdownLog();
+		GameLogger::shutdownLog();
+		app->exit();
+		ShutdownApp = true;
+	}
 }

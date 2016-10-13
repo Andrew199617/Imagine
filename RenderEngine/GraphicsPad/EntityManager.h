@@ -30,6 +30,7 @@
 #include "ShootingComponent.h"
 #include "Throwables.h"
 #include "NoiseGenerator.h"
+#include "ObjectSelectorComponent.h"
 #define MAX_OBJS 500
 
 namespace
@@ -42,6 +43,7 @@ namespace
 	SpatialComponent playerSpatial;
 	GravityComponent playerGravity;
 	ShootingComponent playerShoot;
+	ObjectSelectorComponent objController;
 
 }
 
@@ -58,15 +60,21 @@ public:
 	bool UpdateSaveLoggerObjects();
 
 public:
+	inline void UpdateObjectPosition(int obj, glm::vec3 Position) { entitieSpatials[obj].SetPosition(Position); }
+	inline void UpdateObjectRotate(int obj, glm::vec3 Rotation) { entitieSpatials[obj].SetRotate(Rotation); }
+	inline void UpdateObjectScale(int obj, glm::vec3 Scale) { entitieSpatials[obj].SetScale(Scale); }
+
+public:
 	void Update(float dt);
 	void ProcessKeys(float m_dt);
-	void ProcessMouse(QMouseEvent* e);
+	void ProcessMouseMove(QMouseEvent* e);
+	void ProcessMousePress(QMouseEvent* e);
 
 public:
 	void SendDataToOpenGL();
 	void SendNewDataToOpenGL();
 
-private:
+public:
 	NoiseGenerator noiseGenerator;
 	NodeMap nodeMap[4];
 
@@ -75,5 +83,6 @@ private:
 	SceneryEntity entities[MAX_OBJS];
 	SpatialComponent entitieSpatials[MAX_OBJS];
 	MeshComponent entitieMeshs[MAX_OBJS];
+	int currentlySelectedObject;
 };
 

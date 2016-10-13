@@ -88,7 +88,7 @@ private:
         int len;
     };
     union {
-        uint q_data[256];
+        qtuint q_data[256];
         Data p;
     };
 #ifdef Q_CC_RVCT

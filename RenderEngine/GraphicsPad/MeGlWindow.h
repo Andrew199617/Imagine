@@ -18,14 +18,17 @@ class MeGlWindow : public QGLWidget
 	Q_OBJECT
 
 	QTimer myTimer;
-	OriginalGame* game;
 protected:
 	void initializeGL();
 	void mouseMoveEvent(QMouseEvent*);
+	void mousePressEvent(QMouseEvent*);
+	void resizeGL(int w, int h);
 public:
+	void Initialize();
 	MeGlWindow(void);
 	MeGlWindow(QApplication*, OriginalGame*);
 	void shutdown();
+	OriginalGame* game;
 
 
 	QApplication* app;

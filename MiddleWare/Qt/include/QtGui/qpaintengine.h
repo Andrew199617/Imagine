@@ -239,9 +239,9 @@ protected:
     QPaintEngineState *state;
     PaintEngineFeatures gccaps;
 
-    uint active : 1;
-    uint selfDestruct : 1;
-    uint extended : 1;
+    qtuint active : 1;
+    qtuint selfDestruct : 1;
+    qtuint extended : 1;
 
     QScopedPointer<QPaintEnginePrivate> d_ptr;
 
@@ -354,7 +354,7 @@ inline void QPaintEngine::setDirty(DirtyFlags df) {
 inline void QPaintEngine::clearDirty(DirtyFlags df)
 {
     Q_ASSERT(state);
-    state->dirtyFlags &= ~static_cast<uint>(df);
+    state->dirtyFlags &= ~static_cast<qtuint>(df);
 }
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(QTextItem::RenderFlags)

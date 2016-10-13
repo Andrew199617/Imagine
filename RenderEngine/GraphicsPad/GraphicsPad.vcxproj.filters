@@ -5,10 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -31,9 +27,6 @@
     <Filter Include="glsl">
       <UniqueIdentifier>{448e68d6-d360-4a28-98a9-24f68cb58370}</UniqueIdentifier>
     </Filter>
-    <Filter Include="structs">
-      <UniqueIdentifier>{81c8ad52-4506-4427-9772-6e7d3a9e5e13}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\moc">
       <UniqueIdentifier>{f3b6b85b-a1af-4a8a-b9ae-d1ac04d0881d}</UniqueIdentifier>
     </Filter>
@@ -52,24 +45,25 @@
     <Filter Include="Models">
       <UniqueIdentifier>{137dd9bc-e6e4-4ea2-8c42-64147351794c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="QT">
+      <UniqueIdentifier>{95377572-4301-41a0-8200-5120606c3e5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="structs/enums">
+      <UniqueIdentifier>{81c8ad52-4506-4427-9772-6e7d3a9e5e13}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MeGlWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameTime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ShapeGenerator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Slider.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MeWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SceneReader.cpp">
@@ -112,9 +106,6 @@
       <Filter>RenderEngine\RenderEngine</Filter>
     </ClCompile>
     <ClCompile Include="OpenFileDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneMaker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SaveLogger.cpp">
@@ -231,24 +222,45 @@
     <ClCompile Include="MeWidget_moc.cpp">
       <Filter>Source Files\moc</Filter>
     </ClCompile>
-    <ClCompile Include="ObjController.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="RenderEngine\AnimationInfo.cpp">
+      <Filter>RenderEngine\RenderEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectSelectorComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformLayout_moc.cpp">
+      <Filter>Source Files\moc</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformLayout.cpp">
+      <Filter>QT</Filter>
+    </ClCompile>
+    <ClCompile Include="Hierarchy.cpp">
+      <Filter>QT</Filter>
+    </ClCompile>
+    <ClCompile Include="MeWidget.cpp">
+      <Filter>QT</Filter>
+    </ClCompile>
+    <ClCompile Include="MeGlWindow.cpp">
+      <Filter>QT</Filter>
+    </ClCompile>
+    <ClCompile Include="Slider.cpp">
+      <Filter>QT</Filter>
+    </ClCompile>
+    <ClCompile Include="Hierarchy_moc.cpp">
+      <Filter>Source Files\moc</Filter>
+    </ClCompile>
+    <ClCompile Include="DetailsLayout.cpp">
+      <Filter>QT</Filter>
+    </ClCompile>
+    <ClCompile Include="DetailsLayout_moc.cpp">
+      <Filter>Source Files\moc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MeGlWindow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameTime.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ShapeGenerator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Slider.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MeWidget.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SceneReader.h">
@@ -258,10 +270,10 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>structs</Filter>
+      <Filter>structs/enums</Filter>
     </ClInclude>
     <ClInclude Include="Vertex.h">
-      <Filter>structs</Filter>
+      <Filter>structs/enums</Filter>
     </ClInclude>
     <ClInclude Include="OriginalGame.h">
       <Filter>Header Files</Filter>
@@ -300,12 +312,9 @@
       <Filter>RenderEngine\RenderEngine</Filter>
     </ClInclude>
     <ClInclude Include="VertexFormats.h">
-      <Filter>structs</Filter>
+      <Filter>structs/enums</Filter>
     </ClInclude>
     <ClInclude Include="OpenFileDialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneMaker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SaveLogger.h">
@@ -345,7 +354,7 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="CollisionInfo.h">
-      <Filter>structs</Filter>
+      <Filter>structs/enums</Filter>
     </ClInclude>
     <ClInclude Include="SeekBehaviorComponent.h">
       <Filter>Steering Behaviors</Filter>
@@ -399,7 +408,7 @@
       <Filter>States</Filter>
     </ClInclude>
     <ClInclude Include="Area.h">
-      <Filter>structs</Filter>
+      <Filter>structs/enums</Filter>
     </ClInclude>
     <ClInclude Include="AIEntity.h">
       <Filter>Entities</Filter>
@@ -443,8 +452,32 @@
     <ClInclude Include="PostProcessingModel.h">
       <Filter>Models</Filter>
     </ClInclude>
-    <ClInclude Include="ObjController.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="RenderEngine\AnimationInfo.h">
+      <Filter>RenderEngine\RenderEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectSelectorComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformLayout.h">
+      <Filter>QT</Filter>
+    </ClInclude>
+    <ClInclude Include="Hierarchy.h">
+      <Filter>QT</Filter>
+    </ClInclude>
+    <ClInclude Include="MeWidget.h">
+      <Filter>QT</Filter>
+    </ClInclude>
+    <ClInclude Include="MeGlWindow.h">
+      <Filter>QT</Filter>
+    </ClInclude>
+    <ClInclude Include="Slider.h">
+      <Filter>QT</Filter>
+    </ClInclude>
+    <ClInclude Include="DetailsLayout.h">
+      <Filter>QT</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityData.h">
+      <Filter>structs/enums</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,7 @@
 #include <assert.h>
 #include "Scene.h"
 #include "VertexFormats.h"
+#include <fbxsdk.h>
 
 SceneReader::SceneReader()
 {
@@ -11,6 +12,38 @@ SceneReader::SceneReader()
 
 SceneReader::~SceneReader()
 {
+}
+
+AnimationScene* SceneReader::ReadAnimationSceneFile(string filename)
+{
+	std::ifstream inputStream(filename, std::ios::binary | std::ios::in);
+	if (!inputStream.good())
+	{
+		printf("ERROR : Unable to open scene file %s.\n", filename.c_str());
+		return 0;
+	}
+
+	int dataLen;
+	inputStream.read(reinterpret_cast<char*> (&dataLen), sizeof(dataLen));
+	printf("Reading %d bytes.\n", dataLen);
+
+	char* data = new char[dataLen];
+	assert(data);
+	std::fill(data, data + dataLen - 1, 0);
+
+	inputStream.read(data, dataLen);
+	inputStream.close();
+
+	AnimationScene* scene = reinterpret_cast<AnimationScene*> (data);
+	char* p = data;
+	p += sizeof(AnimationScene);
+	//scene->keys = reinterpret_cast<FbxTime*>(p);
+	//p += scene->numKeys * sizeof(FbxTime);
+	scene->animationData = p;
+	
+
+	//DisplayScene(scene);
+	return scene;
 }
 
 Scene* SceneReader::ReadSceneFile(string filename)
@@ -39,7 +72,7 @@ Scene* SceneReader::ReadSceneFile(string filename)
 	scene->vertices = p;
 	p += scene->numVertices * scene->sizeVertex;
 	scene->indices = reinterpret_cast<GLuint*> (p);
-
+	
 
 	//DisplayScene(scene);
 	return scene;

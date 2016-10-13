@@ -146,7 +146,7 @@ public:
     static QPixmap fromImageReader(QImageReader *imageReader, Qt::ImageConversionFlags flags = Qt::AutoColor);
 
     bool load(const QString& fileName, const char *format = 0, Qt::ImageConversionFlags flags = Qt::AutoColor);
-    bool loadFromData(const uchar *buf, uint len, const char* format = 0, Qt::ImageConversionFlags flags = Qt::AutoColor);
+    bool loadFromData(const uchar *buf, qtuint len, const char* format = 0, Qt::ImageConversionFlags flags = Qt::AutoColor);
     inline bool loadFromData(const QByteArray &data, const char* format = 0, Qt::ImageConversionFlags flags = Qt::AutoColor);
     bool save(const QString& fileName, const char* format = 0, int quality = -1) const;
     bool save(QIODevice* device, const char* format = 0, int quality = -1) const;
@@ -233,7 +233,7 @@ public:
     enum ColorMode { Auto, Color, Mono };
     QT3_SUPPORT_CONSTRUCTOR QPixmap(const QString& fileName, const char *format, ColorMode mode);
     QT3_SUPPORT bool load(const QString& fileName, const char *format, ColorMode mode);
-    QT3_SUPPORT bool loadFromData(const uchar *buf, uint len, const char* format, ColorMode mode);
+    QT3_SUPPORT bool loadFromData(const uchar *buf, qtuint len, const char* format, ColorMode mode);
     QT3_SUPPORT_CONSTRUCTOR QPixmap(const QImage& image);
     QT3_SUPPORT QPixmap &operator=(const QImage &);
     inline QT3_SUPPORT QImage convertToImage() const { return toImage(); }

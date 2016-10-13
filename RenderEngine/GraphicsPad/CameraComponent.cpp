@@ -71,7 +71,7 @@ bool CameraComponent::Initialize()
 	}
 	spatial->position = ConfigReader::findVec3ForKey("CameraPosition");
 	Zoffset = 0;
-	Yoffset = 5.0;
+	Yoffset = 0.0;
 	return true;
 }
 

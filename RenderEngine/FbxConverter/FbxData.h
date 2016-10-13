@@ -5,6 +5,7 @@
 #include <glm.hpp>
 #pragma warning(pop)
 //#include <GL\glew.h>
+#include "fbxsdk.h"
 
 using namespace std;
 
@@ -14,11 +15,17 @@ struct FbxData
 
 	glm::vec3* verts;
 	glm::vec3* colors;
-	glm::vec2 texture[1000];
+	glm::vec2* texture;
 	glm::vec3* normals;
 
 	int numVerts;
 	int numIndcies;
 	int SceneOutputFormat;
+
+	int animationLength;
+	bool hasAnimation;
+	int numKeys;
+	FbxTime* keys;
+	glm::mat4* animationData;
 };
 

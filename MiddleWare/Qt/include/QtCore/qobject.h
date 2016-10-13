@@ -92,17 +92,17 @@ public:
     QObject *parent;
     QObjectList children;
 
-    uint isWidget : 1;
-    uint pendTimer : 1;
-    uint blockSig : 1;
-    uint wasDeleted : 1;
-    uint ownObjectName : 1;
-    uint sendChildEvents : 1;
-    uint receiveChildEvents : 1;
-    uint inEventHandler : 1; //only used if QT_JAMBI_BUILD
-    uint inThreadChangeEvent : 1;
-    uint hasGuards : 1; //true iff there is one or more QPointer attached to this object
-    uint unused : 22;
+    qtuint isWidget : 1;
+    qtuint pendTimer : 1;
+    qtuint blockSig : 1;
+    qtuint wasDeleted : 1;
+    qtuint ownObjectName : 1;
+    qtuint sendChildEvents : 1;
+    qtuint receiveChildEvents : 1;
+    qtuint inEventHandler : 1; //only used if QT_JAMBI_BUILD
+    qtuint inThreadChangeEvent : 1;
+    qtuint hasGuards : 1; //true iff there is one or more QPointer attached to this object
+    qtuint unused : 22;
     int postedEvents;
     QMetaObject *metaObject; // assert dynamic
 };
@@ -261,9 +261,9 @@ public:
 #endif // QT_NO_PROPERTIES
 
 #ifndef QT_NO_USERDATA
-    static uint registerUserData();
-    void setUserData(uint id, QObjectUserData* data);
-    QObjectUserData* userData(uint id) const;
+    static qtuint registerUserData();
+    void setUserData(qtuint id, QObjectUserData* data);
+    QObjectUserData* userData(qtuint id) const;
 #endif // QT_NO_USERDATA
 
 Q_SIGNALS:

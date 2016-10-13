@@ -6,6 +6,7 @@
 #pragma warning(pop)
 #include "../Vertex.h"
 #include "GL\glew.h"
+#include "AnimationInfo.h"
 
 class Geometry
 {
@@ -27,5 +28,6 @@ public:
 	void* Verts;
 	void* indices;
 	GLuint* indicesShort;
+	AnimationInfo m_animationInfo;
 };
 

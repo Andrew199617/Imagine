@@ -168,7 +168,7 @@ class Q_CORE_EXPORT QVariant
     ~QVariant();
     QVariant(Type type);
     QVariant(int typeOrUserType, const void *copy);
-    QVariant(int typeOrUserType, const void *copy, uint flags);
+    QVariant(int typeOrUserType, const void *copy, qtuint flags);
     QVariant(const QVariant &other);
 
 #ifndef QT_NO_DATASTREAM
@@ -176,7 +176,7 @@ class Q_CORE_EXPORT QVariant
 #endif
 
     QVariant(int i);
-    QVariant(uint ui);
+    QVariant(qtuint ui);
     QVariant(qlonglong ll);
     QVariant(qulonglong ull);
     QVariant(bool b);
@@ -249,7 +249,7 @@ class Q_CORE_EXPORT QVariant
     inline bool isDetached() const;
 
     int toInt(bool *ok = 0) const;
-    uint toUInt(bool *ok = 0) const;
+    qtuint toUInt(bool *ok = 0) const;
     qlonglong toLongLong(bool *ok = 0) const;
     qulonglong toULongLong(bool *ok = 0) const;
     bool toBool() const;
@@ -289,7 +289,7 @@ class Q_CORE_EXPORT QVariant
 
 #ifdef QT3_SUPPORT
     inline QT3_SUPPORT int &asInt();
-    inline QT3_SUPPORT uint &asUInt();
+    inline QT3_SUPPORT qtuint &asUInt();
     inline QT3_SUPPORT qlonglong &asLongLong();
     inline QT3_SUPPORT qulonglong &asULongLong();
     inline QT3_SUPPORT bool &asBool();
@@ -359,7 +359,7 @@ class Q_CORE_EXPORT QVariant
         {
             char c;
             int i;
-            uint u;
+            qtuint u;
             bool b;
             double d;
             float f;
@@ -370,9 +370,9 @@ class Q_CORE_EXPORT QVariant
             void *ptr;
             PrivateShared *shared;
         } data;
-        uint type : 30;
-        uint is_shared : 1;
-        uint is_null : 1;
+        qtuint type : 30;
+        qtuint is_shared : 1;
+        qtuint is_null : 1;
     };
  public:
     typedef void (*f_construct)(Private *, const void *);
@@ -460,9 +460,9 @@ template <typename T>
 inline void qVariantSetValue(QVariant &v, const T &t)
 {
     //if possible we reuse the current QVariant private
-    const uint type = qMetaTypeId<T>(reinterpret_cast<T *>(0));
+    const qtuint type = qMetaTypeId<T>(reinterpret_cast<T *>(0));
     QVariant::Private &d = v.data_ptr();
-    if (v.isDetached() && (type == d.type || (type <= uint(QVariant::Char) && d.type <= uint(QVariant::Char)))) {
+    if (v.isDetached() && (type == d.type || (type <= qtuint(QVariant::Char) && d.type <= qtuint(QVariant::Char)))) {
         d.type = type;
         d.is_null = false;
         T *old = reinterpret_cast<T*>(d.is_shared ? d.data.shared->ptr : &d.data.ptr);
@@ -487,8 +487,8 @@ inline bool QVariant::isValid() const { return d.type != Invalid; }
 #ifdef QT3_SUPPORT
 inline int &QVariant::asInt()
 { return *reinterpret_cast<int *>(castOrDetach(Int)); }
-inline uint &QVariant::asUInt()
-{ return *reinterpret_cast<uint *>(castOrDetach(UInt)); }
+inline qtuint &QVariant::asUInt()
+{ return *reinterpret_cast<qtuint *>(castOrDetach(UInt)); }
 inline qlonglong &QVariant::asLongLong()
 { return *reinterpret_cast<qlonglong *>(castOrDetach(LongLong)); }
 inline qulonglong &QVariant::asULongLong()

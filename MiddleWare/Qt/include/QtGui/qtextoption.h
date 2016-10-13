@@ -133,12 +133,12 @@ public:
     bool useDesignMetrics() const { return design; }
 
 private:
-    uint align : 8;
-    uint wordWrap : 4;
-    uint design : 1;
-    uint direction : 2;
-    uint unused : 18;
-    uint f;
+    qtuint align : 8;
+    qtuint wordWrap : 4;
+    qtuint design : 1;
+    qtuint direction : 2;
+    qtuint unused : 18;
+    qtuint f;
     qreal tab;
     QTextOptionPrivate *d;
 };

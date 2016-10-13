@@ -22,16 +22,19 @@ BinaryOutput::BinaryOutput()
 
 void BinaryOutput::WriteCustomBinaryFile(FbxData data)
 {
+	fbxData = data;
 	GLuint* indcies = new GLuint[data.numIndcies];
 	for (int i = 0; i < data.numIndcies; i++)
 	{
 		indcies[i] = i;
 	}
-	WriteCustomBinaryFile("..\\..\\StaticData\\Scenes\\" + data.name + ".scene", data.numVerts, data.numIndcies, data.verts, data.colors, data.normals, data.texture, indcies, data.SceneOutputFormat);
+	WriteCustomBinaryFile("..\\..\\StaticData\\Scenes\\" + data.name + ".scene", data.numVerts, data.numIndcies, data.verts, data.colors, data.normals, data.texture, indcies, data.SceneOutputFormat,data.animationLength,data.hasAnimation,data.numKeys,data.keys, data.animationData);
 	delete[] indcies;
+	delete[] data.keys;
+	delete[] data.animationData;
 }
 
-void BinaryOutput::WriteCustomBinaryFile(string filename, int numVerts, int numIndices, glm::vec3* vertices, glm::vec3* colors, glm::vec3* normals, glm::vec2* texture, GLuint* indices, int SceneOutputFormat)
+void BinaryOutput::WriteCustomBinaryFile(string filename, int numVerts, int numIndices, glm::vec3* vertices, glm::vec3* colors, glm::vec3* normals, glm::vec2* texture, GLuint* indices, int SceneOutputFormat, int animationLength, bool hasAnimation, int numKeys,FbxTime* keys,glm::mat4* data)
 {
 	int totalBytes = 0;
 	std::ofstream outputStream(filename, std::ios::binary | std::ios::out);
@@ -69,7 +72,25 @@ void BinaryOutput::WriteCustomBinaryFile(string filename, int numVerts, int numI
 	outputStream.seekp(0);
 	WriteInt(outputStream, totalBytes);
 	outputStream.close();
-	printf("Total : wrote %d bytes.\n", totalBytes);
+	printf("Scene : wrote %d bytes.\n", totalBytes);
+
+	totalBytes = 0;
+	std::ofstream out("..\\..\\StaticData\\Scenes\\" + fbxData.name + ".animation", std::ios::binary | std::ios::out);
+	out.seekp(0);
+	WriteInt(out, totalBytes);
+	
+	totalBytes += WriteInt(out, animationLength);
+	//totalBytes += WriteInt(out, numKeys);
+	//totalBytes += WriteBool(out, hasAnimation);
+	totalBytes += WritePointer(out, 1);
+	//totalBytes += WriteKeys(out, numKeys, keys);
+	totalBytes += WriteAnimationData(out, animationLength, data);
+
+	out.seekp(0);
+	WriteInt(out, totalBytes);
+	out.close();
+
+	printf("AnimationScene : wrote %d bytes.\n", totalBytes);
 }
 
 int BinaryOutput::WriteHeader(std::ofstream& out, int numVerts, int numIndices, int sizeVerts, int sizeIndices, int SceneOutputFormat)
@@ -87,6 +108,13 @@ int BinaryOutput::WriteHeader(std::ofstream& out, int numVerts, int numIndices, 
 int BinaryOutput::WriteInt(std::ofstream& out, int value)
 {
 	int size = sizeof(int);
+	out.write(reinterpret_cast<char*> (&value), size);
+	return size;
+}
+
+int BinaryOutput::WriteBool(std::ofstream & out, bool value)
+{
+	int size = sizeof(bool);
 	out.write(reinterpret_cast<char*> (&value), size);
 	return size;
 }
@@ -117,6 +145,40 @@ int BinaryOutput::WriteVertexData(std::ofstream& out, int numVerts, glm::vec3* v
 			totalBytes += WriteVec3(out, normals[j]);
 	}
 	return totalBytes;
+}
+
+int BinaryOutput::WriteKeys(std::ofstream & out, int numKeys, FbxTime* data)
+{
+	int totalBytes = 0;
+	for (int i = 0; i < numKeys; i++)
+	{
+		totalBytes += WriteFbxTime(out, data[i]);
+	}
+	return totalBytes;
+}
+
+int BinaryOutput::WriteAnimationData(std::ofstream& out,int numKeys,glm::mat4* data)
+{
+	int totalBytes = 0;
+	for (int i = 0; i < numKeys; i++)
+	{
+		totalBytes += WriteMat4(out,data[i]);
+	}
+	return totalBytes;
+}
+
+int BinaryOutput::WriteFbxTime(std::ofstream & out, FbxTime time)
+{
+	int size = sizeof(time);
+	out.write(reinterpret_cast<char*> (&time), size);
+	return size;
+}
+
+int BinaryOutput::WriteMat4(std::ofstream & out, glm::mat4 mat)
+{
+	int size = sizeof(mat);
+	out.write(reinterpret_cast<char*> (&mat), size);
+	return size;
 }
 
 int BinaryOutput::WriteVec3(std::ofstream& out, glm::vec3 vec)

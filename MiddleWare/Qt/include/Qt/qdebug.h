@@ -262,7 +262,7 @@ inline QDebug operator<<(QDebug debug, const QFlags<T> &flags)
 {
     debug.nospace() << "QFlags(";
     bool needSeparator = false;
-    for (uint i = 0; i < sizeof(T) * 8; ++i) {
+    for (qtuint i = 0; i < sizeof(T) * 8; ++i) {
         if (flags.testFlag(T(1 << i))) {
             if (needSeparator)
                 debug.nospace() << '|';

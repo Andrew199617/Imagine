@@ -415,7 +415,7 @@ protected:
     void setInitialized(bool on);
     void generateFontDisplayLists(const QFont & fnt, int listBase); // ### Qt 5: remove
 
-    uint colorIndex(const QColor& c) const;
+    qtuint colorIndex(const QColor& c) const;
     void setValid(bool valid);
     void setDevice(QPaintDevice *pDev);
 

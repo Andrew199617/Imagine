@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'MeWidget.h'
 **
-** Created: Wed Sep 21 14:03:05 2016
+** Created: Wed Oct 12 10:26:37 2016
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-static const uint qt_meta_data_MeWidget[] = {
+static const qtuint qt_meta_data_MeWidget[] = {
 
  // content:
        6,       // revision
@@ -32,20 +32,20 @@ static const uint qt_meta_data_MeWidget[] = {
 
  // slots: signature, parameters, type, tag, flags
       10,    9,    9,    9, 0x08,
-      31,    9,    9,    9, 0x08,
-      45,    9,    9,    9, 0x08,
-      57,    9,    9,    9, 0x08,
-      67,    9,    9,    9, 0x08,
-      79,    9,    9,    9, 0x08,
-      90,    9,    9,    9, 0x08,
+      29,    9,    9,    9, 0x08,
+      43,    9,    9,    9, 0x08,
+      55,    9,    9,    9, 0x08,
+      65,    9,    9,    9, 0x08,
+      77,    9,    9,    9, 0x08,
+      88,    9,    9,    9, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_MeWidget[] = {
-    "MeWidget\0\0sliderValueChanged()\0"
-    "openingFile()\0AddObject()\0AddCube()\0"
-    "AddSphere()\0AddPlane()\0checkBoxChanged()\0"
+    "MeWidget\0\0WindowsShowEvent()\0openingFile()\0"
+    "AddObject()\0AddCube()\0AddSphere()\0"
+    "AddPlane()\0OnPlayButtonPress()\0"
 };
 
 void MeWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -54,13 +54,13 @@ void MeWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         Q_ASSERT(staticMetaObject.cast(_o));
         MeWidget *_t = static_cast<MeWidget *>(_o);
         switch (_id) {
-        case 0: _t->sliderValueChanged(); break;
+        case 0: _t->WindowsShowEvent(); break;
         case 1: _t->openingFile(); break;
         case 2: _t->AddObject(); break;
         case 3: _t->AddCube(); break;
         case 4: _t->AddSphere(); break;
         case 5: _t->AddPlane(); break;
-        case 6: _t->checkBoxChanged(); break;
+        case 6: _t->OnPlayButtonPress(); break;
         default: ;
         }
     }

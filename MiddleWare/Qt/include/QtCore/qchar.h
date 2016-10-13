@@ -80,7 +80,7 @@ public:
     QChar(uchar c, uchar r);
     inline QChar(ushort rc) : ucs(rc){}
     QChar(short rc);
-    QChar(uint rc);
+    QChar(qtuint rc);
     QChar(int rc);
     enum SpecialCharacter {
         Null = 0x0000,
@@ -285,58 +285,58 @@ public:
     inline void setCell(uchar cell);
     inline void setRow(uchar row);
 
-    static inline bool isHighSurrogate(uint ucs4) {
+    static inline bool isHighSurrogate(qtuint ucs4) {
         return ((ucs4 & 0xfffffc00) == 0xd800);
     }
-    static inline bool isLowSurrogate(uint ucs4) {
+    static inline bool isLowSurrogate(qtuint ucs4) {
         return ((ucs4 & 0xfffffc00) == 0xdc00);
     }
-    static inline bool requiresSurrogates(uint ucs4) {
+    static inline bool requiresSurrogates(qtuint ucs4) {
         return (ucs4 >= 0x10000);
     }
-    static inline uint surrogateToUcs4(ushort high, ushort low) {
-        return (uint(high)<<10) + low - 0x35fdc00;
+    static inline qtuint surrogateToUcs4(ushort high, ushort low) {
+        return (qtuint(high)<<10) + low - 0x35fdc00;
     }
-    static inline uint surrogateToUcs4(QChar high, QChar low) {
-        return (uint(high.ucs)<<10) + low.ucs - 0x35fdc00;
+    static inline qtuint surrogateToUcs4(QChar high, QChar low) {
+        return (qtuint(high.ucs)<<10) + low.ucs - 0x35fdc00;
     }
-    static inline ushort highSurrogate(uint ucs4) {
+    static inline ushort highSurrogate(qtuint ucs4) {
         return ushort((ucs4>>10) + 0xd7c0);
     }
-    static inline ushort lowSurrogate(uint ucs4) {
+    static inline ushort lowSurrogate(qtuint ucs4) {
         return ushort(ucs4%0x400 + 0xdc00);
     }
 
-    static Category QT_FASTCALL category(uint ucs4);
+    static Category QT_FASTCALL category(qtuint ucs4);
     static Category QT_FASTCALL category(ushort ucs2);
-    static Direction QT_FASTCALL direction(uint ucs4);
+    static Direction QT_FASTCALL direction(qtuint ucs4);
     static Direction QT_FASTCALL direction(ushort ucs2);
-    static Joining QT_FASTCALL joining(uint ucs4);
+    static Joining QT_FASTCALL joining(qtuint ucs4);
     static Joining QT_FASTCALL joining(ushort ucs2);
-    static unsigned char QT_FASTCALL combiningClass(uint ucs4);
+    static unsigned char QT_FASTCALL combiningClass(qtuint ucs4);
     static unsigned char QT_FASTCALL combiningClass(ushort ucs2);
 
-    static uint QT_FASTCALL mirroredChar(uint ucs4);
+    static qtuint QT_FASTCALL mirroredChar(qtuint ucs4);
     static ushort QT_FASTCALL mirroredChar(ushort ucs2);
-    static Decomposition QT_FASTCALL decompositionTag(uint ucs4);
+    static Decomposition QT_FASTCALL decompositionTag(qtuint ucs4);
 
-    static int QT_FASTCALL digitValue(uint ucs4);
+    static int QT_FASTCALL digitValue(qtuint ucs4);
     static int QT_FASTCALL digitValue(ushort ucs2);
-    static uint QT_FASTCALL toLower(uint ucs4);
+    static qtuint QT_FASTCALL toLower(qtuint ucs4);
     static ushort QT_FASTCALL toLower(ushort ucs2);
-    static uint QT_FASTCALL toUpper(uint ucs4);
+    static qtuint QT_FASTCALL toUpper(qtuint ucs4);
     static ushort QT_FASTCALL toUpper(ushort ucs2);
-    static uint QT_FASTCALL toTitleCase(uint ucs4);
+    static qtuint QT_FASTCALL toTitleCase(qtuint ucs4);
     static ushort QT_FASTCALL toTitleCase(ushort ucs2);
-    static uint QT_FASTCALL toCaseFolded(uint ucs4);
+    static qtuint QT_FASTCALL toCaseFolded(qtuint ucs4);
     static ushort QT_FASTCALL toCaseFolded(ushort ucs2);
 
-    static UnicodeVersion QT_FASTCALL unicodeVersion(uint ucs4);
+    static UnicodeVersion QT_FASTCALL unicodeVersion(qtuint ucs4);
     static UnicodeVersion QT_FASTCALL unicodeVersion(ushort ucs2);
 
     static UnicodeVersion QT_FASTCALL currentUnicodeVersion();
 
-    static QString QT_FASTCALL decomposition(uint ucs4);
+    static QString QT_FASTCALL decomposition(qtuint ucs4);
 
 #ifdef QT3_SUPPORT
     inline QT3_SUPPORT bool mirrored() const { return hasMirrored(); }
@@ -375,7 +375,7 @@ inline QChar QChar::fromLatin1(char c) { return QChar(ushort(uchar(c))); }
 
 inline QChar::QChar(uchar c, uchar r) : ucs(ushort((r << 8) | c)){}
 inline QChar::QChar(short rc) : ucs(ushort(rc)){}
-inline QChar::QChar(uint rc) : ucs(ushort(rc & 0xffff)){}
+inline QChar::QChar(qtuint rc) : ucs(ushort(rc & 0xffff)){}
 inline QChar::QChar(int rc) : ucs(ushort(rc & 0xffff)){}
 inline QChar::QChar(SpecialCharacter s) : ucs(ushort(s)) {}
 inline QChar::QChar(QLatin1Char ch) : ucs(ch.unicode()) {}

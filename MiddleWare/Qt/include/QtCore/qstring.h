@@ -126,8 +126,8 @@ public:
     inline const QChar at(int i) const;
     const QChar operator[](int i) const;
     QCharRef operator[](int i);
-    const QChar operator[](uint i) const;
-    QCharRef operator[](uint i);
+    const QChar operator[](qtuint i) const;
+    QCharRef operator[](qtuint i);
 
     QString arg(qlonglong a, int fieldwidth=0, int base=10,
                 const QChar &fillChar = QLatin1Char(' ')) const Q_REQUIRED_RESULT;
@@ -139,7 +139,7 @@ public:
                 const QChar &fillChar = QLatin1Char(' ')) const Q_REQUIRED_RESULT;
     QString arg(int a, int fieldWidth = 0, int base = 10,
                 const QChar &fillChar = QLatin1Char(' ')) const Q_REQUIRED_RESULT;
-    QString arg(uint a, int fieldWidth = 0, int base = 10,
+    QString arg(qtuint a, int fieldWidth = 0, int base = 10,
                 const QChar &fillChar = QLatin1Char(' ')) const Q_REQUIRED_RESULT;
     QString arg(short a, int fieldWidth = 0, int base = 10,
                 const QChar &fillChar = QLatin1Char(' ')) const Q_REQUIRED_RESULT;
@@ -323,14 +323,14 @@ public:
     QByteArray toLatin1() const Q_REQUIRED_RESULT;
     QByteArray toUtf8() const Q_REQUIRED_RESULT;
     QByteArray toLocal8Bit() const Q_REQUIRED_RESULT;
-    QVector<uint> toUcs4() const Q_REQUIRED_RESULT;
+    QVector<qtuint> toUcs4() const Q_REQUIRED_RESULT;
 
     static QString fromAscii(const char *, int size = -1);
     static QString fromLatin1(const char *, int size = -1);
     static QString fromUtf8(const char *, int size = -1);
     static QString fromLocal8Bit(const char *, int size = -1);
     static QString fromUtf16(const ushort *, int size = -1);
-    static QString fromUcs4(const uint *, int size = -1);
+    static QString fromUcs4(const qtuint *, int size = -1);
     static QString fromRawData(const QChar *, int size);
 
     int toWCharArray(wchar_t *array) const;
@@ -373,7 +373,7 @@ public:
     short  toShort(bool *ok=0, int base=10) const;
     ushort toUShort(bool *ok=0, int base=10) const;
     int toInt(bool *ok=0, int base=10) const;
-    uint toUInt(bool *ok=0, int base=10) const;
+    qtuint toUInt(bool *ok=0, int base=10) const;
     long toLong(bool *ok=0, int base=10) const;
     ulong toULong(bool *ok=0, int base=10) const;
     qlonglong toLongLong(bool *ok=0, int base=10) const;
@@ -384,7 +384,7 @@ public:
     QString &setNum(short, int base=10);
     QString &setNum(ushort, int base=10);
     QString &setNum(int, int base=10);
-    QString &setNum(uint, int base=10);
+    QString &setNum(qtuint, int base=10);
     QString &setNum(long, int base=10);
     QString &setNum(ulong, int base=10);
     QString &setNum(qlonglong, int base=10);
@@ -393,7 +393,7 @@ public:
     QString &setNum(double, char f='g', int prec=6);
 
     static QString number(int, int base=10);
-    static QString number(uint, int base=10);
+    static QString number(qtuint, int base=10);
     static QString number(long, int base=10);
     static QString number(ulong, int base=10);
     static QString number(qlonglong, int base=10);
@@ -552,9 +552,9 @@ public:
     { return startsWith(s, cs?Qt::CaseSensitive:Qt::CaseInsensitive); }
     inline QT3_SUPPORT bool endsWith(const QString &s, bool cs) const
     { return endsWith(s, cs?Qt::CaseSensitive:Qt::CaseInsensitive); }
-    inline QT3_SUPPORT QChar constref(uint i) const
+    inline QT3_SUPPORT QChar constref(qtuint i) const
     { return at(i); }
-    QT3_SUPPORT QChar &ref(uint i);
+    QT3_SUPPORT QChar &ref(qtuint i);
     inline QT3_SUPPORT QString leftJustify(int width, QChar aFill = QLatin1Char(' '), bool trunc=false) const
     { return leftJustified(width, aFill, trunc); }
     inline QT3_SUPPORT QString rightJustify(int width, QChar aFill = QLatin1Char(' '), bool trunc=false) const
@@ -637,7 +637,7 @@ private:
                                          const QChar *data2, int length2);
     static Data *fromLatin1_helper(const char *str, int size = -1);
     static Data *fromAscii_helper(const char *str, int size = -1);
-    void replace_helper(uint *indices, int nIndices, int blen, const QChar *after, int alen);
+    void replace_helper(qtuint *indices, int nIndices, int blen, const QChar *after, int alen);
     friend class QCharRef;
     friend class QCFString;
     friend class QTextCodec;
@@ -696,11 +696,11 @@ inline QString::QString(const QLatin1String &aLatin1) : d(fromLatin1_helper(aLat
 inline int QString::length() const
 { return d->size; }
 inline const QChar QString::at(int i) const
-{ Q_ASSERT(uint(i) < uint(size())); return d->data[i]; }
+{ Q_ASSERT(qtuint(i) < qtuint(size())); return d->data[i]; }
 inline const QChar QString::operator[](int i) const
-{ Q_ASSERT(uint(i) < uint(size())); return d->data[i]; }
-inline const QChar QString::operator[](uint i) const
-{ Q_ASSERT(i < uint(size())); return d->data[i]; }
+{ Q_ASSERT(qtuint(i) < qtuint(size())); return d->data[i]; }
+inline const QChar QString::operator[](qtuint i) const
+{ Q_ASSERT(i < qtuint(size())); return d->data[i]; }
 inline bool QString::isEmpty() const
 { return d->size == 0; }
 inline const QChar *QString::unicode() const
@@ -732,7 +732,7 @@ inline QString &QString::setNum(ushort n, int base)
 { return setNum(qulonglong(n), base); }
 inline QString &QString::setNum(int n, int base)
 { return setNum(qlonglong(n), base); }
-inline QString &QString::setNum(uint n, int base)
+inline QString &QString::setNum(qtuint n, int base)
 { return setNum(qulonglong(n), base); }
 inline QString &QString::setNum(long n, int base)
 { return setNum(qlonglong(n), base); }
@@ -742,7 +742,7 @@ inline QString &QString::setNum(float n, char f, int prec)
 { return setNum(double(n),f,prec); }
 inline QString QString::arg(int a, int fieldWidth, int base, const QChar &fillChar) const
 { return arg(qlonglong(a), fieldWidth, base, fillChar); }
-inline QString QString::arg(uint a, int fieldWidth, int base, const QChar &fillChar) const
+inline QString QString::arg(qtuint a, int fieldWidth, int base, const QChar &fillChar) const
 { return arg(qulonglong(a), fieldWidth, base, fillChar); }
 inline QString QString::arg(long a, int fieldWidth, int base, const QChar &fillChar) const
 { return arg(qlonglong(a), fieldWidth, base, fillChar); }
@@ -809,7 +809,7 @@ public:
     inline QCharRef &operator=(const QCharRef &c) { return operator=(QChar(c)); }
     inline QCharRef &operator=(ushort rc) { return operator=(QChar(rc)); }
     inline QCharRef &operator=(short rc) { return operator=(QChar(rc)); }
-    inline QCharRef &operator=(uint rc) { return operator=(QChar(rc)); }
+    inline QCharRef &operator=(qtuint rc) { return operator=(QChar(rc)); }
     inline QCharRef &operator=(int rc) { return operator=(QChar(rc)); }
 
     // each function...
@@ -883,7 +883,7 @@ inline QString &QString::setUtf16(const ushort *autf16, int asize)
 { return setUnicode(reinterpret_cast<const QChar *>(autf16), asize); }
 inline QCharRef QString::operator[](int i)
 { Q_ASSERT(i >= 0); return QCharRef(*this, i); }
-inline QCharRef QString::operator[](uint i)
+inline QCharRef QString::operator[](qtuint i)
 { return QCharRef(*this, i); }
 inline QString::iterator QString::begin()
 { detach(); return reinterpret_cast<QChar*>(d->data); }
@@ -1068,7 +1068,7 @@ inline QString QString::fromStdWString(const QStdWString &s)
 #endif
 
 #ifdef QT3_SUPPORT
-inline QChar &QString::ref(uint i)
+inline QChar &QString::ref(qtuint i)
 {
     if (int(i) > d->size || d->ref != 1)
         resize(qMax(int(i), d->size));
@@ -1162,7 +1162,7 @@ public:
     QByteArray toLatin1() const Q_REQUIRED_RESULT;
     QByteArray toUtf8() const Q_REQUIRED_RESULT;
     QByteArray toLocal8Bit() const Q_REQUIRED_RESULT;
-    QVector<uint> toUcs4() const Q_REQUIRED_RESULT;
+    QVector<qtuint> toUcs4() const Q_REQUIRED_RESULT;
 
     inline void clear() { m_string = 0; m_position = m_size = 0; }
     QString toString() const;

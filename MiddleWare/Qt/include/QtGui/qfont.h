@@ -284,8 +284,8 @@ public:
     QString lastResortFont() const;
 
     QFont resolve(const QFont &) const;
-    inline uint resolve() const { return resolve_mask; }
-    inline void resolve(uint mask) { resolve_mask = mask; }
+    inline qtuint resolve() const { return resolve_mask; }
+    inline void resolve(qtuint mask) { resolve_mask = mask; }
 
 #ifdef QT3_SUPPORT
     static QT3_SUPPORT QFont defaultFont();
@@ -341,7 +341,7 @@ private:
 #endif
 
     QExplicitlySharedDataPointer<QFontPrivate> d;
-    uint resolve_mask;
+    qtuint resolve_mask;
 };
 
 

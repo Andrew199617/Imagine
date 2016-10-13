@@ -26,7 +26,7 @@ void MouseComponent::setMouseDelta()
 	camera->mouseUpdate();
 }
 
-void MouseComponent::ProcessMouse(QMouseEvent* e)
+void MouseComponent::ProcessMouseMove(QMouseEvent* e)
 {
 	if (e->buttons() & Qt::LeftButton)
 	{

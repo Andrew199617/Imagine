@@ -59,42 +59,42 @@ class QByteArray;
 class QString;
 class QStringRef;
 
-inline uint qHash(char key) { return uint(key); }
-inline uint qHash(uchar key) { return uint(key); }
-inline uint qHash(signed char key) { return uint(key); }
-inline uint qHash(ushort key) { return uint(key); }
-inline uint qHash(short key) { return uint(key); }
-inline uint qHash(uint key) { return key; }
-inline uint qHash(int key) { return uint(key); }
-inline uint qHash(ulong key)
+inline qtuint qHash(char key) { return qtuint(key); }
+inline qtuint qHash(uchar key) { return qtuint(key); }
+inline qtuint qHash(signed char key) { return qtuint(key); }
+inline qtuint qHash(ushort key) { return qtuint(key); }
+inline qtuint qHash(short key) { return qtuint(key); }
+inline qtuint qHash(qtuint key) { return key; }
+inline qtuint qHash(int key) { return qtuint(key); }
+inline qtuint qHash(ulong key)
 {
-    if (sizeof(ulong) > sizeof(uint)) {
-        return uint(((key >> (8 * sizeof(uint) - 1)) ^ key) & (~0U));
+    if (sizeof(ulong) > sizeof(qtuint)) {
+        return qtuint(((key >> (8 * sizeof(qtuint) - 1)) ^ key) & (~0U));
     } else {
-        return uint(key & (~0U));
+        return qtuint(key & (~0U));
     }
 }
-inline uint qHash(long key) { return qHash(ulong(key)); }
-inline uint qHash(quint64 key)
+inline qtuint qHash(long key) { return qHash(ulong(key)); }
+inline qtuint qHash(quint64 key)
 {
-    if (sizeof(quint64) > sizeof(uint)) {
-        return uint(((key >> (8 * sizeof(uint) - 1)) ^ key) & (~0U));
+    if (sizeof(quint64) > sizeof(qtuint)) {
+        return qtuint(((key >> (8 * sizeof(qtuint) - 1)) ^ key) & (~0U));
     } else {
-        return uint(key & (~0U));
+        return qtuint(key & (~0U));
     }
 }
-inline uint qHash(qint64 key) { return qHash(quint64(key)); }
-inline uint qHash(QChar key) { return qHash(key.unicode()); }
-Q_CORE_EXPORT uint qHash(const QByteArray &key);
-Q_CORE_EXPORT uint qHash(const QString &key);
-Q_CORE_EXPORT uint qHash(const QStringRef &key);
-Q_CORE_EXPORT uint qHash(const QBitArray &key);
+inline qtuint qHash(qint64 key) { return qHash(quint64(key)); }
+inline qtuint qHash(QChar key) { return qHash(key.unicode()); }
+Q_CORE_EXPORT qtuint qHash(const QByteArray &key);
+Q_CORE_EXPORT qtuint qHash(const QString &key);
+Q_CORE_EXPORT qtuint qHash(const QStringRef &key);
+Q_CORE_EXPORT qtuint qHash(const QBitArray &key);
 
 #if defined(Q_CC_MSVC)
 #pragma warning( push )
 #pragma warning( disable : 4311 ) // disable pointer truncation warning
 #endif
-template <class T> inline uint qHash(const T *key)
+template <class T> inline qtuint qHash(const T *key)
 {
     return qHash(reinterpret_cast<quintptr>(key));
 }
@@ -102,10 +102,10 @@ template <class T> inline uint qHash(const T *key)
 #pragma warning( pop )
 #endif
 
-template <typename T1, typename T2> inline uint qHash(const QPair<T1, T2> &key)
+template <typename T1, typename T2> inline qtuint qHash(const QPair<T1, T2> &key)
 {
-    uint h1 = qHash(key.first);
-    uint h2 = qHash(key.second);
+    qtuint h1 = qHash(key.first);
+    qtuint h2 = qHash(key.second);
     return ((h1 << 16) | (h1 >> 16)) ^ h2;
 }
 
@@ -113,7 +113,7 @@ struct Q_CORE_EXPORT QHashData
 {
     struct Node {
         Node *next;
-        uint h;
+        qtuint h;
     };
 
     Node *fakeNext;
@@ -124,9 +124,9 @@ struct Q_CORE_EXPORT QHashData
     short userNumBits;
     short numBits;
     int numBuckets;
-    uint sharable : 1;
-    uint strictAlignment : 1;
-    uint reserved : 30;
+    qtuint sharable : 1;
+    qtuint strictAlignment : 1;
+    qtuint reserved : 30;
 
     void *allocateNode(); // ### Qt5 remove me
     void *allocateNode(int nodeAlign);
@@ -206,7 +206,7 @@ template <class Key, class T>
 struct QHashDummyNode
 {
     QHashDummyNode *next;
-    uint h;
+    qtuint h;
     Key key;
 
     inline QHashDummyNode(const Key &key0) : key(key0) {}
@@ -216,13 +216,13 @@ template <class Key, class T>
 struct QHashNode
 {
     QHashNode *next;
-    uint h;
+    qtuint h;
     Key key;
     T value;
 
     inline QHashNode(const Key &key0) : key(key0) {} // ### remove in 5.0
     inline QHashNode(const Key &key0, const T &value0) : key(key0), value(value0) {}
-    inline bool same_key(uint h0, const Key &key0) { return h0 == h && key0 == key; }
+    inline bool same_key(qtuint h0, const Key &key0) { return h0 == h && key0 == key; }
 };
 
 
@@ -230,7 +230,7 @@ struct QHashNode
     template <class T> \
     struct QHashDummyNode<key_type, T> { \
         QHashDummyNode *next; \
-        union { uint h; key_type key; }; \
+        union { qtuint h; key_type key; }; \
 \
         inline QHashDummyNode(key_type /* key0 */) {} \
     }; \
@@ -238,12 +238,12 @@ struct QHashNode
     template <class T> \
     struct QHashNode<key_type, T> { \
         QHashNode *next; \
-        union { uint h; key_type key; }; \
+        union { qtuint h; key_type key; }; \
         T value; \
 \
         inline QHashNode(key_type /* key0 */) {} \
         inline QHashNode(key_type /* key0 */, const T &value0) : value(value0) {} \
-        inline bool same_key(uint h0, key_type) { return h0 == h; } \
+        inline bool same_key(qtuint h0, key_type) { return h0 == h; } \
     }
 
 #if defined(Q_BYTE_ORDER) && Q_BYTE_ORDER == Q_LITTLE_ENDIAN
@@ -251,7 +251,7 @@ Q_HASH_DECLARE_INT_NODES(short);
 Q_HASH_DECLARE_INT_NODES(ushort);
 #endif
 Q_HASH_DECLARE_INT_NODES(int);
-Q_HASH_DECLARE_INT_NODES(uint);
+Q_HASH_DECLARE_INT_NODES(qtuint);
 #undef Q_HASH_DECLARE_INT_NODES
 
 template <class Key, class T>
@@ -496,8 +496,8 @@ public:
 private:
     void detach_helper();
     void freeData(QHashData *d);
-    Node **findNode(const Key &key, uint *hp = 0) const;
-    Node *createNode(uint h, const Key &key, const T &value, Node **nextNode);
+    Node **findNode(const Key &key, qtuint *hp = 0) const;
+    Node *createNode(qtuint h, const Key &key, const T &value, Node **nextNode);
     void deleteNode(Node *node);
     static void deleteNode2(QHashData::Node *node);
 
@@ -535,7 +535,7 @@ Q_INLINE_TEMPLATE void QHash<Key, T>::duplicateNode(QHashData::Node *node, void 
 
 template <class Key, class T>
 Q_INLINE_TEMPLATE typename QHash<Key, T>::Node *
-QHash<Key, T>::createNode(uint ah, const Key &akey, const T &avalue, Node **anextNode)
+QHash<Key, T>::createNode(qtuint ah, const Key &akey, const T &avalue, Node **anextNode)
 {
     Node *node;
 
@@ -739,7 +739,7 @@ Q_INLINE_TEMPLATE T &QHash<Key, T>::operator[](const Key &akey)
 {
     detach();
 
-    uint h;
+    qtuint h;
     Node **node = findNode(akey, &h);
     if (*node == e) {
         if (d->willGrow())
@@ -755,7 +755,7 @@ Q_INLINE_TEMPLATE typename QHash<Key, T>::iterator QHash<Key, T>::insert(const K
 {
     detach();
 
-    uint h;
+    qtuint h;
     Node **node = findNode(akey, &h);
     if (*node == e) {
         if (d->willGrow())
@@ -775,7 +775,7 @@ Q_INLINE_TEMPLATE typename QHash<Key, T>::iterator QHash<Key, T>::insertMulti(co
     detach();
     d->willGrow();
 
-    uint h;
+    qtuint h;
     Node **nextNode = findNode(akey, &h);
     return iterator(createNode(h, akey, avalue, nextNode));
 }
@@ -876,10 +876,10 @@ Q_INLINE_TEMPLATE bool QHash<Key, T>::contains(const Key &akey) const
 
 template <class Key, class T>
 Q_OUTOFLINE_TEMPLATE typename QHash<Key, T>::Node **QHash<Key, T>::findNode(const Key &akey,
-                                                                            uint *ahp) const
+                                                                            qtuint *ahp) const
 {
     Node **node;
-    uint h = qHash(akey);
+    qtuint h = qHash(akey);
 
     if (d->numBuckets) {
         node = reinterpret_cast<Node **>(&d->buckets[h % d->numBuckets]);

@@ -1,7 +1,12 @@
+
 Name AIWorld
 Obj AIWorld
-Position "0.0,-1.0,0.0"
-
-Name DefaultObject2
-Obj Cube
 Position "0.0,0.0,0.0"
+Rotate "0.0,1.0,0.0"
+Scale "1.0,1.0,1.0"
+
+Name Cube
+Obj TestAnimation
+Position "0.0,1.0,0.0"
+Rotate "0.0,1.0,0.0"
+Scale "1.0,1.0,1.0"

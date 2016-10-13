@@ -12,6 +12,7 @@
 #include "GameLogger.h"
 #include "SaveLogger.h"
 #include "RenderEngine\RenderEngine.h"
+#include "fbxsdk.h"
 #define NUM_ARRAY_ELEMENTS(a) sizeof(a) / sizeof(*a)
 int byteOffset = 0;
 #define MAXGEO 300
@@ -114,6 +115,7 @@ Geometry* ShapeGenerator::readScene(string ObjName)
 
 	string key = ObjName + "Scene";
 	Scene* scene;
+	AnimationScene* aScene = 0;
 	string sceneName = ConfigReader::findValueForKey(key);
 	if (sceneName != "0")
 	{
@@ -123,6 +125,8 @@ Geometry* ShapeGenerator::readScene(string ObjName)
 	{
 		sceneName = "..\\..\\StaticData\\Scenes\\" + ObjName + ".scene";
 		scene = scenereader.ReadSceneFile(sceneName);
+		sceneName = "..\\..\\StaticData\\Scenes\\" + ObjName + ".animation";
+		aScene = scenereader.ReadAnimationSceneFile(sceneName);
 	}
 
 	if (!scene)
@@ -140,6 +144,14 @@ Geometry* ShapeGenerator::readScene(string ObjName)
 	else
 	{
 		geoArray[numGeos].texturePath = "0";
+	}
+	if (aScene)
+	{
+		geoArray[numGeos].m_animationInfo.animationLength = aScene->animationLength;
+		geoArray[numGeos].m_animationInfo.hasAnimation = true;
+		//geoArray[numGeos].m_animationInfo.numKeys = aScene->numKeys;
+		geoArray[numGeos].m_animationInfo.animationData = reinterpret_cast<glm::mat4*>(aScene->animationData);
+		//geoArray[numGeos].m_animationInfo.keys = reinterpret_cast<FbxTime*>(aScene->keys);
 	}
 	geoArray[numGeos].objName = ObjName;
 	geoArray[numGeos].m_vertexCount = scene->numVertices;

@@ -106,7 +106,7 @@ public:
         ConversionFlags flags;
         int remainingChars;
         int invalidChars;
-        uint state_data[3];
+        qtuint state_data[3];
         void *d;
     private:
         Q_DISABLE_COPY(ConverterState)

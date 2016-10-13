@@ -468,7 +468,7 @@ struct Q_CORE_EXPORT QMetaObject
     struct { // private data
         const QMetaObject *superdata;
         const char *stringdata;
-        const uint *data;
+        const qtuint *data;
         const void *extradata;
     } d;
 };

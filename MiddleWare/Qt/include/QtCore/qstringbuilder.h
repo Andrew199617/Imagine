@@ -118,7 +118,7 @@ private:
     friend class QString;
     template <typename T> T convertTo() const
     {
-        const uint len = QConcatenable< QStringBuilder<A, B> >::size(*this);
+        const qtuint len = QConcatenable< QStringBuilder<A, B> >::size(*this);
         T s(len, Qt::Uninitialized);
 
         typename T::iterator d = s.data();

@@ -115,7 +115,7 @@ public:
     void setDefaultAction(QAction *);
     QAction *defaultAction() const;
 
-    static void wceCommands(uint command);
+    static void wceCommands(qtuint command);
     static void wceRefresh();
 #endif
 
@@ -149,7 +149,7 @@ protected:
 #ifdef QT3_SUPPORT
 public:
     QT3_SUPPORT_CONSTRUCTOR QMenuBar(QWidget *parent, const char *name);
-    inline QT3_SUPPORT uint count() const { return actions().count(); }
+    inline QT3_SUPPORT qtuint count() const { return actions().count(); }
     inline QT3_SUPPORT int insertItem(const QString &text, const QObject *receiver, const char* member,
                                     const QKeySequence& shortcut = 0, int id = -1, int index = -1) {
         return insertAny(0, &text, receiver, member, &shortcut, 0, id, index);
@@ -354,7 +354,7 @@ private:
 #ifdef Q_WS_MAC
     friend class QApplicationPrivate;
     friend class QWidgetPrivate;
-    friend bool qt_mac_activate_action(MenuRef, uint, QAction::ActionEvent, bool);
+    friend bool qt_mac_activate_action(MenuRef, qtuint, QAction::ActionEvent, bool);
 #endif
 };
 

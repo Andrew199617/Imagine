@@ -181,8 +181,8 @@ private:
     qreal   m_23;
     qreal   m_33;
 
-    mutable uint m_type : 5;
-    mutable uint m_dirty : 5;
+    mutable qtuint m_type : 5;
+    mutable qtuint m_dirty : 5;
 
     class Private;
     Private *d;

@@ -101,8 +101,8 @@ private:
     inline void killTimer(int){}
 
     int id, inter, del;
-    uint single : 1;
-    uint nulltimer : 1;
+    qtuint single : 1;
+    qtuint nulltimer : 1;
 };
 
 inline void QTimer::setSingleShot(bool asingleShot) { single = asingleShot; }

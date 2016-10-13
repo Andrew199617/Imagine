@@ -14,7 +14,7 @@ public:
 		, unsigned indexCount, unsigned indexSize, Geometry& mesh);
 	static void AddRenderInfo(RenderInfo* info);
 	static void RemoveRenderInfo();
-	static void Draw();
+	static void Draw(float dt, bool isPlaying);
 private:
 	RenderEngine();
 	static void DrawAllVertexBuffers();

@@ -79,8 +79,8 @@ public:
     };
 
     enum QueryType {
-        LanguageId, // uint
-        CountryId, // uint
+        LanguageId, // qtuint
+        CountryId, // qtuint
         DecimalPoint, // QString
         GroupSeparator, // QString
         ZeroDigit, // QString
@@ -101,7 +101,7 @@ public:
         DateTimeFormatShort, // QString
         DateTimeToStringLong, // QString in: QDateTime
         DateTimeToStringShort, // QString in: QDateTime
-        MeasurementSystem, // uint
+        MeasurementSystem, // qtuint
         PositiveSign, // QString
         AMText, // QString
         PMText, // QString
@@ -112,7 +112,7 @@ public:
         UILanguages, // QStringList
         StringToStandardQuotation, // QString in: QStringRef to quote
         StringToAlternateQuotation, // QString in: QStringRef to quote
-        ScriptId, // uint
+        ScriptId, // qtuint
         ListToSeparatedString, // QString
         LocaleChanged, // system locale changed
         NativeLanguageName, // QString
@@ -666,7 +666,7 @@ public:
     short toShort(const QString &s, bool *ok = 0, int base = 0) const;
     ushort toUShort(const QString &s, bool *ok = 0, int base = 0) const;
     int toInt(const QString &s, bool *ok = 0, int base = 0) const;
-    uint toUInt(const QString &s, bool *ok = 0, int base = 0) const;
+    qtuint toUInt(const QString &s, bool *ok = 0, int base = 0) const;
     qlonglong toLongLong(const QString &s, bool *ok = 0, int base = 0) const;
     qlonglong toULongLong(const QString &s, bool *ok = 0, int base = 0) const;
     float toFloat(const QString &s, bool *ok = 0) const;
@@ -677,7 +677,7 @@ public:
     inline QString toString(short i) const;
     inline QString toString(ushort i) const;
     inline QString toString(int i) const;
-    inline QString toString(uint i) const;
+    inline QString toString(qtuint i) const;
     QString toString(double i, char f = 'g', int prec = 6) const;
     inline QString toString(float i, char f = 'g', int prec = 6) const;
     QString toString(const QDate &date, const QString &formatStr) const;
@@ -733,7 +733,7 @@ public:
     inline QString toCurrencyString(short, const QString &symbol = QString()) const;
     inline QString toCurrencyString(ushort, const QString &symbol = QString()) const;
     inline QString toCurrencyString(int, const QString &symbol = QString()) const;
-    inline QString toCurrencyString(uint, const QString &symbol = QString()) const;
+    inline QString toCurrencyString(qtuint, const QString &symbol = QString()) const;
     QString toCurrencyString(double, const QString &symbol = QString()) const;
     inline QString toCurrencyString(float, const QString &symbol = QString()) const;
 
@@ -769,7 +769,7 @@ public:
 private:
     friend struct QLocalePrivate;
     // ### We now use this field to pack an index into locale_data and NumberOptions.
-    // ### Qt 5: change to a QLocaleData *d; uint numberOptions.
+    // ### Qt 5: change to a QLocaleData *d; qtuint numberOptions.
     union {
         void *v;
         Data p;
@@ -785,7 +785,7 @@ inline QString QLocale::toString(ushort i) const
     { return toString(qulonglong(i)); }
 inline QString QLocale::toString(int i) const
     { return toString(qlonglong(i)); }
-inline QString QLocale::toString(uint i) const
+inline QString QLocale::toString(qtuint i) const
     { return toString(qulonglong(i)); }
 inline QString QLocale::toString(float i, char f, int prec) const
     { return toString(double(i), f, prec); }
@@ -800,7 +800,7 @@ inline QString QLocale::toCurrencyString(ushort i, const QString &symbol) const
     { return toCurrencyString(qulonglong(i), symbol); }
 inline QString QLocale::toCurrencyString(int i, const QString &symbol) const
 { return toCurrencyString(qlonglong(i), symbol); }
-inline QString QLocale::toCurrencyString(uint i, const QString &symbol) const
+inline QString QLocale::toCurrencyString(qtuint i, const QString &symbol) const
 { return toCurrencyString(qulonglong(i), symbol); }
 inline QString QLocale::toCurrencyString(float i, const QString &symbol) const
 { return toCurrencyString(double(i), symbol); }
