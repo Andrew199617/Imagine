@@ -4,7 +4,7 @@
 #define MIN_HP 0
 
 class HealthEntity :
-	public Entity
+	public Imgn::Entity
 {
 public:
 	HealthEntity() { m_health = 100; }

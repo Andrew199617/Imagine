@@ -1,5 +1,8 @@
 #pragma once
-#include "Component.h"
+#pragma warning(push)
+#pragma warning (disable:4800)
+#include "ImgnComponent.h"
+#pragma warning(pop)
 #include "SpatialComponent.h"
 #include "RenderEngine\RenderInfo.h"
 #include "RenderEngine\VertexShaderInfo.h"
@@ -10,7 +13,7 @@
 #include "RenderEngine\TextureInfo.h"
 
 class MeshComponent :
-	public Component
+	public ImgnComponent
 {
 public:
 	MeshComponent();
@@ -33,5 +36,9 @@ public:
 	VertexShaderInfo vertexShaderInfo;
 	string vertexShaderLocation;
 	string fragmentShaderLocation;
+
+	// Inherited via ImgnComponent
+	virtual void ClearFocus() override;
+	virtual void SetHidden(bool) override;
 };
 

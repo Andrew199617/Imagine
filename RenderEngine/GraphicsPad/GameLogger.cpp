@@ -4,6 +4,11 @@ int GameLogger::index = 0;
 bool GameLogger::initialized;
 std::ofstream GameLogger::out;
 std::string GameLogger::value[LENGTHOFVALUE] = { " " };
+
+using std::ios;
+using std::cout;
+using std::endl;
+
 GameLogger::GameLogger()
 {
 
@@ -14,7 +19,7 @@ GameLogger::~GameLogger()
 {
 }
 
-void GameLogger::intialize(const char* filename)
+void GameLogger::Intialize(const char* filename)
 {
 	if (!initialized)
 	{
@@ -33,7 +38,7 @@ void GameLogger::log(std::string msg)
 	}
 	else
 	{
-		string s = to_string(index) + ". " + msg;
+		string s = std::to_string(index) + ". " + msg;
 		value[index] = s;
 		index++;
 		

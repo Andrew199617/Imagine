@@ -1,5 +1,5 @@
 #pragma once
-#include "Component.h"
+#include "TransformLayout.h"
 #pragma warning(push)
 #pragma warning (disable:4201)
 #include <glm.hpp>
@@ -7,7 +7,7 @@
 #include "RenderEngine\TransformInfo.h"
 
 class SpatialComponent :
-	public Component
+	public TransformLayout
 {
 	
 public:

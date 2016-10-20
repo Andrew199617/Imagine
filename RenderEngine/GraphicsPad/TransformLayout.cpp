@@ -1,66 +1,72 @@
 #include "TransformLayout.h"
 #include "OriginalGame.h"
-#include "glm.hpp"
-
-QLineEdit* TransformLayout::XYZ_TextBoxs[numXYZ] = {0};
+#include "vec3.hpp"
+#include "Qt\qboxlayout.h"
+#include "Qt\qlabel.h"
+#include "Qt\qlineedit.h"
 
 TransformLayout::TransformLayout()
 {
-	Initialize();
-}
 
+}
 
 TransformLayout::~TransformLayout()
 {
 
 }
 
-void TransformLayout::Initialize()
+bool TransformLayout::Initialize()
 {
-
 	isHidden = false;
-	this->addSpacing(12.5);
-	SetupLabels("Position",&positionLayout, &positionLabel, 0, 1, 2);
+	return true;
+}
+
+void TransformLayout::CreateWidgets()
+{
+	setTitle(m_name);
+	m_Layout = new QVBoxLayout;
+	m_Layout->addSpacing(12);
+
+	SetupLabels("Position", &positionLayout, &positionLabel, 0, 1, 2);
 	SetupLabels("Rotate", &rotateLayout, &rotateLabel, 3, 4, 5);
 	SetupLabels("Scale", &scaleLayout, &scaleLabel, 6, 7, 8);
 	SetTextBoxValues();
-	this->insertStretch(-1, 1);
+	m_Layout->insertStretch(-1, 1);
+	setLayout(m_Layout);
+	setFixedHeight(125);
+
+	layoutHasData = true;
+	layoutInitalized = true;
 }
 
 void TransformLayout::SetupLabels(string name, QHBoxLayout** layout, QLabel** nameLabel, int x, int y, int z)
 {
-	this->addLayout((*layout) = new QHBoxLayout);
+	m_Layout->addItem((*layout) = new QHBoxLayout);
 	(*layout)->addWidget(*nameLabel = new QLabel(name.c_str()));
 	(*nameLabel)->setFixedWidth(50);
 	(*nameLabel)->setContentsMargins(5, 5, 15 - name.length() * 2, 5);
 
 	(*layout)->addWidget(XYZ_Labels[x] = new QLabel("X"));
 	(*layout)->addWidget(XYZ_TextBoxs[x] = new QLineEdit);
+	XYZ_Labels[x]->setStyleSheet("margin-right:5px;");
 	connect(XYZ_TextBoxs[x], SIGNAL(returnPressed()), this, SLOT(XYZChanged()));
 
 	(*layout)->addWidget(XYZ_Labels[y] = new QLabel("Y"));
 	(*layout)->addWidget(XYZ_TextBoxs[y] = new QLineEdit);
+	XYZ_Labels[y]->setStyleSheet("margin-left:5px;margin-right:5px;");
 	connect(XYZ_TextBoxs[y], SIGNAL(returnPressed()), this, SLOT(XYZChanged()));
 
 	(*layout)->addWidget(XYZ_Labels[z] = new QLabel("Z"));
 	(*layout)->addWidget(XYZ_TextBoxs[z] = new QLineEdit);
+	XYZ_Labels[z]->setStyleSheet("margin-left:5px;margin-right:5px;");
 	connect(XYZ_TextBoxs[z], SIGNAL(returnPressed()), this, SLOT(XYZChanged()));
-
-	/*QPalette palette = XYZ_TextBoxs[x]->palette();
-	palette.setColor(XYZ_TextBoxs[x]->backgroundRole(), QColor(220, 220, 220));
-	XYZ_TextBoxs[x]->setPalette(palette);
-	XYZ_TextBoxs[x]->setAutoFillBackground(true);
-	XYZ_TextBoxs[y]->setPalette(palette);
-	XYZ_TextBoxs[y]->setAutoFillBackground(true);
-	XYZ_TextBoxs[z]->setPalette(palette);
-	XYZ_TextBoxs[z]->setAutoFillBackground(true);*/
 }
 
 void TransformLayout::SetTextBoxValues()
 {
-	glm::vec3 position = OriginalGame::entityManager.entitieSpatials[OriginalGame::entityManager.currentlySelectedObject].position;
-	glm::vec3 rotate = OriginalGame::entityManager.entitieSpatials[OriginalGame::entityManager.currentlySelectedObject].GetRotate();
-	glm::vec3 scale = OriginalGame::entityManager.entitieSpatials[OriginalGame::entityManager.currentlySelectedObject].GetScale();
+	glm::vec3 position = OriginalGame::entityManager.entitieSpatials[OriginalGame::entityManager.currentlySelectedObject]->position;
+	glm::vec3 rotate = OriginalGame::entityManager.entitieSpatials[OriginalGame::entityManager.currentlySelectedObject]->GetRotate();
+	glm::vec3 scale = OriginalGame::entityManager.entitieSpatials[OriginalGame::entityManager.currentlySelectedObject]->GetScale();
 	XYZ_TextBoxs[0]->setText(std::to_string(position.x).c_str());
 	XYZ_TextBoxs[1]->setText(std::to_string(position.y).c_str());
 	XYZ_TextBoxs[2]->setText(std::to_string(position.z).c_str());
@@ -93,7 +99,6 @@ void TransformLayout::SetHidden(bool b)
 	for (int i = 0; i < numXYZ; i++)
 	{
 		XYZ_TextBoxs[i]->setHidden(b);
-		values[i] = XYZ_TextBoxs[i]->text().toFloat();
 	}
 }
 
@@ -103,6 +108,11 @@ void TransformLayout::SetMaximumSize(int Width, int Height)
 	{
 		XYZ_TextBoxs[i]->setMaximumSize(Width,Height);
 	}
+}
+
+void TransformLayout::DeleteWidgets()
+{	
+	
 }
 
 void TransformLayout::XYZChanged()

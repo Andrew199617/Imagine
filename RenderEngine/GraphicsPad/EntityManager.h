@@ -1,51 +1,14 @@
 #pragma once
-#include "CameraComponent.h"
-#include "KeyboardComponent.h"
-#include "MeshComponent.h"
-#include "SpatialComponent.h"
-#include "MouseComponent.h"
-#include "GravityComponent.h"
-#include "PlayerEntity.h"
+#include "Entity.h"
 #include "SceneryEntity.h"
-#include "RenderEngine\TransformInfo.h"
-#include "RenderEngine\RenderEngine.h"
-#include "NodeMap.h"
-#include <Windows.h>
-#pragma warning(push)
-#pragma warning (disable:4127)
-#include <QtGui\qkeyevent>
-#pragma warning(pop)
-#include "SeekBehaviorComponent.h"
-#include "FleeBehaviorComponent.h"
-#include "MoveComponent.h"
-#include "WanderingComponent.h"
-#include "PursuitComponent.h"
-#include "EvasionComponent.h"
-#include "FlockingComponent.h"
-#include "ArrivalComponent.h"
-#include "MovementComponent.h"
-#include "StateMachine\StateComponent.h"
-#include "AIEntity.h"
-#include "PathFollowerComponent.h"
-#include "ShootingComponent.h"
-#include "Throwables.h"
-#include "NoiseGenerator.h"
-#include "ObjectSelectorComponent.h"
+#include "ImgnFwd.hpp"
+#include "SpatialComponent.h"
+class NoiseGenerator;
+class NodeMap;
+class QMouseEvent;
+class SaveLogger;
+//class MoveComponent;
 #define MAX_OBJS 500
-
-namespace
-{
-	PlayerEntity player;
-	CameraComponent playerCamera;
-	KeyboardComponent playerKeyboard;
-	MovementComponent playerMove;
-	MouseComponent playerMouse;
-	SpatialComponent playerSpatial;
-	GravityComponent playerGravity;
-	ShootingComponent playerShoot;
-	ObjectSelectorComponent objController;
-
-}
 
 
 class EntityManager
@@ -60,12 +23,12 @@ public:
 	bool UpdateSaveLoggerObjects();
 
 public:
-	inline void UpdateObjectPosition(int obj, glm::vec3 Position) { entitieSpatials[obj].SetPosition(Position); }
-	inline void UpdateObjectRotate(int obj, glm::vec3 Rotation) { entitieSpatials[obj].SetRotate(Rotation); }
-	inline void UpdateObjectScale(int obj, glm::vec3 Scale) { entitieSpatials[obj].SetScale(Scale); }
+	inline void UpdateObjectPosition(int obj, glm::vec3 Position) { entitieSpatials[obj]->SetPosition(Position); }
+	inline void UpdateObjectRotate(int obj, glm::vec3 Rotation) { entitieSpatials[obj]->SetRotate(Rotation); }
+	inline void UpdateObjectScale(int obj, glm::vec3 Scale) { entitieSpatials[obj]->SetScale(Scale); }
 
 public:
-	void Update(float dt);
+	void Update(float dt, bool isPlaying);
 	void ProcessKeys(float m_dt);
 	void ProcessMouseMove(QMouseEvent* e);
 	void ProcessMousePress(QMouseEvent* e);
@@ -75,14 +38,28 @@ public:
 	void SendNewDataToOpenGL();
 
 public:
-	NoiseGenerator noiseGenerator;
-	NodeMap nodeMap[4];
+	//NoiseGenerator noiseGenerator;
+	//NodeMap nodeMap[4];
 
 	int num_Objs;
 
 	SceneryEntity entities[MAX_OBJS];
-	SpatialComponent entitieSpatials[MAX_OBJS];
-	MeshComponent entitieMeshs[MAX_OBJS];
+	SpatialComponent* entitieSpatials[MAX_OBJS];
+	MeshComponent* entitieMeshs[MAX_OBJS];
+	ImgnComponent* entitieComponents[Imgn::MAX_COMPONENTS][MAX_OBJS];
+	int numComponent[MAX_OBJS];
 	int currentlySelectedObject;
+
+private:
+	SaveLogger* saveLogger;
+	Imgn::Entity player;
+	CameraComponent* playerCamera;
+	KeyboardComponent* playerKeyboard;
+	MovementComponent* playerMove;
+	MouseComponent* playerMouse;
+	SpatialComponent* playerSpatial;
+	GravityComponent* playerGravity;
+	ShootingComponent* playerShoot;
+	ObjectSelectorComponent* objController;
 };
 

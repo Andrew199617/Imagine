@@ -7,6 +7,7 @@
 SpatialComponent::SpatialComponent() :
 	UP(0.0f, 1.0f, 0.0f) , velocity(0.0f,0.0f,0.0f)
 {
+	transformInfo = 0;
 	position = glm::vec3(0, 0, 0);
 	rotate = glm::vec3(0, 1, 0);
 	scale = glm::vec3(1, 1, 1);
@@ -15,6 +16,7 @@ SpatialComponent::SpatialComponent() :
 
 SpatialComponent::~SpatialComponent()
 {
+
 }
 
 void SpatialComponent::SetPosition(glm::vec3 Position)

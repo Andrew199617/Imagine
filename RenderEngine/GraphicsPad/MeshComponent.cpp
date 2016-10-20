@@ -3,7 +3,7 @@
 #include "gtc\matrix_transform.hpp"
 #include "gtx\transform.hpp"
 
-MeshComponent::MeshComponent()
+MeshComponent::MeshComponent() : ImgnComponent()
 {
 }
 
@@ -57,12 +57,12 @@ void MeshComponent::makeShaderInfo(int vertexFormat, string objname)
 		break;
 	}
 	if (vertexShaderLocation == "")
-		vertexShaderLocation = ConfigReader::findValueForKey(objname+ "VertexShader");
+		vertexShaderLocation = ConfigReader::Instance()->findValueForKey(objname+ "VertexShader");
 	if (vertexShaderLocation != "0")
 		vertexShaderInfo.shaderLocation = vertexShaderLocation.c_str();
 	
 	if (fragmentShaderLocation == "")
-	fragmentShaderLocation = ConfigReader::findValueForKey(objname + "FragmentShader");
+	fragmentShaderLocation = ConfigReader::Instance()->findValueForKey(objname + "FragmentShader");
 	if (fragmentShaderLocation != "0")
 		fragmentShaderInfo.shaderLocation = fragmentShaderLocation.c_str();
 	
@@ -111,4 +111,12 @@ bool MeshComponent::Update(float dt)
 
 	dt;
 	return true;
+}
+
+void MeshComponent::ClearFocus()
+{
+}
+
+void MeshComponent::SetHidden(bool)
+{
 }

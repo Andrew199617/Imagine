@@ -1,15 +1,11 @@
 #pragma once
-#pragma warning(push)
-#pragma warning (disable:4251)
-#pragma warning (disable:4127)
-#include "QtGui\qboxlayout.h"
-#pragma warning(pop)
-#include <QtGui\qpushbutton.h>
-#include <Qt\qframe.h>
+#include "ImgnFrame.h"
+class QPushButton;
+class QVBoxLayout;
 #define MAX_OBJS 500
 
 class Hierarchy :
-	public QVBoxLayout
+	public ImgnFrame
 {
 	Q_OBJECT
 public:
@@ -21,12 +17,11 @@ public:
 	void SetHidden(bool);
 
 	inline bool IsHidden() { return isHidden; }
-	inline QFrame* GetWidget() { return frame; }
+	inline QFrame* GetWidget() { return this; }
 
 protected:
-
 private:
-	QFrame* frame;
+	QVBoxLayout* m_Layout;
 	QPushButton* objectsInScene[MAX_OBJS];
 
 	bool isHidden;

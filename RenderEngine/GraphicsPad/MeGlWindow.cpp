@@ -15,7 +15,6 @@ void MeGlWindow::Initialize()
 {
 	if (!game->Initialize())
 	{
-		SaveLogger::shutdownLog();
 		GameLogger::shutdownLog();
 		app->exit();
 		ShutdownApp = true;
@@ -24,7 +23,6 @@ void MeGlWindow::Initialize()
 
 void MeGlWindow::initializeGL()
 {
-	
 	setFocus();
 	game->InitializeGl();
 	setMouseTracking(true);
@@ -43,8 +41,8 @@ void MeGlWindow::mouseMoveEvent(QMouseEvent* e)
 
 void MeGlWindow::mousePressEvent(QMouseEvent * e)
 {
-	setFocus();
 	QWidget::mousePressEvent(e);
+	setFocus();
 	game->ProcessMousePress(e);
 }
 
@@ -54,7 +52,7 @@ void MeGlWindow::resizeGL(int w, int h)
 	float yOffset = 0;
 	height = w * (9.0f / 16.0f);
 	yOffset = ((float)h - height) / 2.0f;
-	QGLWidget::resizeGL(w, height);
+	QGLWidget::resizeGL(w, (int)height);
 	game->SetWidth(w);
 	game->SetHeight((int)height);
 	game->yOffset = (int)yOffset;
@@ -63,7 +61,8 @@ void MeGlWindow::resizeGL(int w, int h)
 void MeGlWindow::myUpdate()
 {	
 	game->Update(hasFocus());
-	shutdown();
+	if(hasFocus())
+		shutdown();
 	if (!ShutdownApp)
 		repaint();
 }
@@ -83,9 +82,9 @@ MeGlWindow::MeGlWindow(QApplication* app, OriginalGame* ocGame)
 
 void MeGlWindow::shutdown()
 {
-	if (GetAsyncKeyState(88) != 0 || GetAsyncKeyState(27) != 0)
+	if (GetAsyncKeyState(88) & 0x8000 || GetAsyncKeyState(27) & 0x8000)
 	{
-		SaveLogger::shutdownLog();
+		SaveLogger::Instance()->shutdownLog();
 		GameLogger::shutdownLog();
 		app->exit();
 		ShutdownApp = true;

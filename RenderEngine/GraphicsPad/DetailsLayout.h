@@ -1,45 +1,86 @@
 #pragma once
-#pragma warning(push)
-#pragma warning (disable:4251)
-#pragma warning (disable:4127)
-#include "QtGui\qboxlayout.h"
-#include "TransformLayout.h"
-#pragma warning(pop)
-#include <Qt\qgroupbox.h>
-#include "QtGui\qpushbutton.h"
-#include <Qt\qmenu.h>
-#include <Qt\qmenubar.h>
-#include "EntityData.h"
+#include "ImgnFrame.h"
+#include "ImgnFwd.hpp"
+class QVBoxLayout;
+class TransformLayout;
+class QPushButton;
+class QMenu;
+class ImgnComponent;
+class ImgnAction;
+class QScrollArea;
+class Entity;
 
 class DetailsLayout :
-	public QVBoxLayout
+	public ImgnFrame
 {
 	Q_OBJECT
 
-public:
 	DetailsLayout();
+public:
 	~DetailsLayout();
 
+	void Initialize();
 	void ClearFocus();
-	void SetHidden(bool);
-	bool isHidden;
-	QFrame* frame;
+	QVBoxLayout* m_Layout;
 
-	void AddComponent(char* name, QLayout* layout);
-
+	void Resize();
+	void SetEntity(Imgn::Entity* entity);
+	void UpdateComponents();
+	void AddComponent(char* name, ImgnComponent* layout,int);
+	inline static DetailsLayout* Instance()
+	{
+		if (!detailsLayout)
+			detailsLayout = new DetailsLayout;
+		return detailsLayout;
+	}
 private:
 	void CreateActions();
+	void CreateMenu();
+	template <class T> void CreateAction();
 
 private slots:
 	void ButtonPressed();
+	void CreateNewComponent();
 
 private:
+	static DetailsLayout* detailsLayout;
+	Imgn::Entity* currentEntity;
+
+	ImgnComponent** components;
 	int numComponents;
-	QGroupBox* groupBox[MAX_COMPONENTS];
-	//ObjectDetailsLayout* objectDetailsLayout;
-	TransformLayout* transformLayout;
+
+	QScrollArea* scrollArea;
 	QPushButton* addComponentButton;
+	Imgn::ImgnCreateComponent* createComponent;
+	QAction* createNewButton;
 	QMenu* componentMenu;
-	QAction* components[50];
+	ImgnAction* addableComponents[50];
+	int numAddableComponenets;
 };
 
+template<class T> inline void DetailsLayout::CreateAction()
+{
+	string name = typeid(T).name();
+	string objectName = name.substr(6, name.npos);
+	for (unsigned i = 1; i < objectName.length(); i++)
+	{
+		if (isupper(objectName.at(i)))
+		{
+			objectName += ' ';
+			for (unsigned j = objectName.length(); j > i; j--)
+			{
+				objectName[j] = objectName[j - 1];
+			}
+			objectName[i] = ' ';
+			objectName += ' ';
+			objectName[objectName.length() - 1] = '\0';
+			i+=2;
+		}
+	}
+	addableComponents[numAddableComponenets] = new ImgnAction(objectName.c_str(),this);
+	addableComponents[numAddableComponenets]->Create<T>();
+	addableComponents[numAddableComponenets]->setObjectName(objectName.c_str());
+	connect(addableComponents[numAddableComponenets], SIGNAL(triggered()), this, SLOT(ButtonPressed()));
+	componentMenu->addAction(addableComponents[numAddableComponenets]);
+	numAddableComponenets++;
+}

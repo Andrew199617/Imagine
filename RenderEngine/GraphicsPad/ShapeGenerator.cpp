@@ -111,22 +111,22 @@ Geometry * ShapeGenerator::makeLine(glm::vec3 point1, glm::vec3 point2)
 Geometry* ShapeGenerator::readScene(string ObjName)
 {
 	Geometry ret;
-	SceneReader scenereader;
+	SceneReader* scenereader = SceneReader::Instance();
 
 	string key = ObjName + "Scene";
 	Scene* scene;
 	AnimationScene* aScene = 0;
-	string sceneName = ConfigReader::findValueForKey(key);
+	string sceneName = ConfigReader::Instance()->findValueForKey(key);
 	if (sceneName != "0")
 	{
-		scene = scenereader.ReadSceneFile(sceneName);
+		scene = scenereader->ReadSceneFile(sceneName);
 	}
 	else
 	{
 		sceneName = "..\\..\\StaticData\\Scenes\\" + ObjName + ".scene";
-		scene = scenereader.ReadSceneFile(sceneName);
+		scene = scenereader->ReadSceneFile(sceneName);
 		sceneName = "..\\..\\StaticData\\Scenes\\" + ObjName + ".animation";
-		aScene = scenereader.ReadAnimationSceneFile(sceneName);
+		aScene = scenereader->ReadAnimationSceneFile(sceneName);
 	}
 
 	if (!scene)
@@ -139,7 +139,7 @@ Geometry* ShapeGenerator::readScene(string ObjName)
 	if(scene->SceneOutputFormat & HasTexture)
 	{
 
-		geoArray[numGeos].texturePath = ConfigReader::findValueForKey(ObjName + "Texture");
+		geoArray[numGeos].texturePath = ConfigReader::Instance()->findValueForKey(ObjName + "Texture");
 	}
 	else
 	{
@@ -182,42 +182,6 @@ Geometry* ShapeGenerator::readScene(string ObjName)
 	geoArray[numGeos].m_indexCount = scene->numIndices;
 	geoArray[numGeos].indices = scene->indices;
 	geoArray[numGeos].indicesShort = reinterpret_cast<GLuint*>(scene->indices);
-	geoArray[numGeos].m_indexStride = scene->sizeIndex;
-	geoArray[numGeos].m_indexByteOffset = byteOffset;
-	byteOffset += geoArray[numGeos].m_indexCount * geoArray[numGeos].m_indexStride;
-	geoArray[numGeos].VertexFormat = scene->SceneOutputFormat;
-
-	RenderEngine::AddGeometry(geoArray[numGeos].vertices, geoArray[numGeos].m_vertexCount, geoArray[numGeos].m_vertexCount * geoArray[numGeos].m_vertexStride, geoArray[numGeos].indices,
-		geoArray[numGeos].m_indexCount, geoArray[numGeos].m_indexCount * geoArray[numGeos].m_indexStride, geoArray[numGeos]);
-
-	numGeos++;
-
-	return &geoArray[numGeos - 1];
-}
-
-Geometry* ShapeGenerator::readScene(string File,string ObjName)
-{
-	Geometry ret;
-	/*if (!configRead.Initialize())
-	{
-	GameLogger::log("Config file did not intialize");
-	}*/
-	SceneReader scenereader;
-
-	
-	Scene* scene = scenereader.ReadSceneFile(File);
-
-	//geoArray[numGeos].texturePath = SaveLogger::getTextureWithKey(ObjName);
-	geoArray[numGeos].objName = " ";
-	geoArray[numGeos].m_vertexCount = scene->numVertices;
-	geoArray[numGeos].vertices = scene->vertices;
-	geoArray[numGeos].Verts = (vPositionTextureNormal*)scene->vertices;
-	geoArray[numGeos].m_vertexStride = scene->sizeVertex;
-	geoArray[numGeos].m_vertexByteOffset = byteOffset;
-	byteOffset += geoArray[numGeos].m_vertexCount * geoArray[numGeos].m_vertexStride;
-
-	geoArray[numGeos].m_indexCount = scene->numIndices;
-	geoArray[numGeos].indices = scene->indices;
 	geoArray[numGeos].m_indexStride = scene->sizeIndex;
 	geoArray[numGeos].m_indexByteOffset = byteOffset;
 	byteOffset += geoArray[numGeos].m_indexCount * geoArray[numGeos].m_indexStride;

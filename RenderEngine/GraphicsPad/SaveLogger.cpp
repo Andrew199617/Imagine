@@ -4,26 +4,27 @@
 #include "ConfigReader.h"
 #include "GameLogger.h"
 #include <windows.h>
+#include "vec3.hpp"
 
-int SaveLogger::index = 0;
-ofstream SaveLogger::out = ofstream();
-string SaveLogger::value[LENGTHOFVALUE][5] = { { "", "", "", "", "" } };
-string SaveLogger::currentFilename = "";
-int SaveLogger::curNumObjs = 0;
+using std::endl;
+using std::cout;
+using std::stringstream;
+using std::ifstream;
+using std::ios;
+using Imgn::LENGTHOFVALUE;
 
-SaveLogger::SaveLogger()
-{
-	intialize();
-}
-
+SaveLogger* SaveLogger::saveLogger = 0;
 
 SaveLogger::~SaveLogger()
 {
 }
 
-bool SaveLogger::intialize(const char* filename)
+void SaveLogger::Intialize(const char* filename)
 {
-	if (currentFilename == filename) return true;
+	if (currentFilename == filename)
+	{
+		return;
+	}
 	else
 	{
 		if (currentFilename != "")
@@ -107,7 +108,6 @@ bool SaveLogger::intialize(const char* filename)
 			{
 
 				cout << "To many Keys In Save Logger File" << endl;
-				return false;
 			}
 			i++;
 			index++;
@@ -118,7 +118,6 @@ bool SaveLogger::intialize(const char* filename)
 	curNumObjs = GetNumObjs();
 	GameLogger::log("Save Logger file loaded");
 	out.open(filename, ios::out | ios::app);
-	return true;
 }
 
 bool SaveLogger::isComment(string word)
@@ -231,7 +230,7 @@ void SaveLogger::AddObj(string ObjName)
 
 	value[index][0] = "Name";
 	int numObjs = (GetNumObjs());
-	ostringstream convert;
+	std::ostringstream convert;
 	convert << numObjs;
 	value[index][1] = "DefaultObject" + convert.str();
 	out << value[index][0] << " " << value[index][1] << "\n";
@@ -269,7 +268,7 @@ glm::vec3 SaveLogger::GetPosition(string objName)
 	{
 		if (value[i][1] == objName)
 		{
-			return glm::vec3(ConfigReader::GetFloatFromString(value[i+2][1]), ConfigReader::GetFloatFromString(value[i + 2][2]), ConfigReader::GetFloatFromString(value[i + 2][3]));
+			return glm::vec3(ConfigReader::Instance()->GetFloatFromString(value[i+2][1]), ConfigReader::Instance()->GetFloatFromString(value[i + 2][2]), ConfigReader::Instance()->GetFloatFromString(value[i + 2][3]));
 		}
 	}
 	GameLogger::log("could not find Position for Obj:" + objName);
@@ -283,7 +282,7 @@ glm::vec3 SaveLogger::GetRotate(string objName)
 	{
 		if (value[i][1] == objName)
 		{
-			return glm::vec3(ConfigReader::GetFloatFromString(value[i + 3][1]), ConfigReader::GetFloatFromString(value[i + 3][2]), ConfigReader::GetFloatFromString(value[i + 3][3]));
+			return glm::vec3(ConfigReader::Instance()->GetFloatFromString(value[i + 3][1]), ConfigReader::Instance()->GetFloatFromString(value[i + 3][2]), ConfigReader::Instance()->GetFloatFromString(value[i + 3][3]));
 		}
 	}
 	GameLogger::log("could not find Rotate for Obj:" + objName);
@@ -297,7 +296,7 @@ glm::vec3 SaveLogger::GetScale(string objName)
 	{
 		if (value[i][1] == objName)
 		{
-			return glm::vec3(ConfigReader::GetFloatFromString(value[i + 4][1]), ConfigReader::GetFloatFromString(value[i + 4][2]), ConfigReader::GetFloatFromString(value[i + 4][3]));
+			return glm::vec3(ConfigReader::Instance()->GetFloatFromString(value[i + 4][1]), ConfigReader::Instance()->GetFloatFromString(value[i + 4][2]), ConfigReader::Instance()->GetFloatFromString(value[i + 4][3]));
 		}
 	}
 	GameLogger::log("could not find Scale for Obj:" + objName);

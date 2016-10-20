@@ -1,32 +1,32 @@
 #pragma once
 #include <string>
-#include <sstream>
-#pragma warning(push)
-#pragma warning (disable:4201)
-#include <glm.hpp>
-#pragma warning(pop)
+#include "fwd.hpp"
 
-using namespace std;
-
+using std::string;
 
 class ConfigReader
 {
-public:
 	ConfigReader();
-	static bool Initialize(const char* filename = "..\\Data\\Config.txt");
-	static bool isComment(string word);
-	static string findValueForKey(string pKey);
-	static string findNeededValueForKey(string pKey);
-	static glm::vec3 findVec3ForKey(string pKey);
-	static glm::vec2 findVec2ForKey(string pKey);
-	static float GetFloatFromString(string s);
-	static int GetIntFromString(string s);
-	static bool GetBoolFromString(string s);
-	static bool Shutdown();
+public:
+	static ConfigReader* Instance() { 
+		if (!configReader) 
+		{ configReader = new ConfigReader(); }
+		return configReader; }
+	
+	string findValueForKey(string pKey);
+	string findNeededValueForKey(string pKey);
+	glm::vec3 findVec3ForKey(string pKey);
+	glm::vec2 findVec2ForKey(string pKey);
+	float GetFloatFromString(string s);
+	int GetIntFromString(string s);
+	bool GetBoolFromString(string s);
+	bool Shutdown();
 
 private:
+	void Initialize(const char* filename = "..\\Data\\Config.txt");
+	bool isComment(string word);
+	static ConfigReader* configReader;
+	string configFile;
 	static const int LENGTHOFVALUE = 92;
-	static string configFile;
-	static string value[LENGTHOFVALUE][5];
-	static bool alreadyInitialized;
+	string value[LENGTHOFVALUE][5];
 };

@@ -3,19 +3,23 @@
 #include <iostream>
 #include <fstream>
 #include "GameLogger.h"
+#include "vec3.hpp"
+#include "vec2.hpp"
 
-string ConfigReader::configFile = "";
-string ConfigReader::value[LENGTHOFVALUE][5] = { { " ", " ", " ", " ", " " } };
-bool ConfigReader::alreadyInitialized = false;
+ConfigReader* ConfigReader::configReader = 0;
+
+using std::stringstream;
+using std::ifstream;
+using std::cout;
+using std::endl;
 
 ConfigReader::ConfigReader()
 {
-
+	Initialize();
 }
 
-bool ConfigReader::Initialize(const char* filename)
+void ConfigReader::Initialize(const char* filename)
 {
-	if (alreadyInitialized) return true;
 	stringstream buffer;
 	ifstream meInput(filename);
 
@@ -85,7 +89,6 @@ bool ConfigReader::Initialize(const char* filename)
 			{
 
 				cout << "To many Keys In Config File" << endl;
-				return false;
 			}
 			i++;
 			i2 = 0;
@@ -93,8 +96,6 @@ bool ConfigReader::Initialize(const char* filename)
 	}
 
 	GameLogger::log("Config file loaded");
-	alreadyInitialized = true;
-	return true;
 }
 
 bool ConfigReader::isComment(string word)

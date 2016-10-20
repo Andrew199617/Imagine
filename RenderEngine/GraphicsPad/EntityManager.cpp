@@ -1,10 +1,20 @@
 #include "EntityManager.h"
-#include "Vertex.h"
 #include <stdio.h>
-#include "CollisionInfo.h"
 #include "ConfigReader.h"
 #include "GameLogger.h"
 #include "SaveLogger.h"
+#include "DetailsLayout.h"
+#pragma warning(push)
+#pragma warning (disable:4127)
+#include <QtGui\qkeyevent>
+#pragma warning(pop)
+#include <Windows.h>
+#include "KeyboardComponent.h"
+#include "MouseComponent.h"
+#include "ObjectSelectorComponent.h"
+#include "MeshComponent.h"
+#include "MovementComponent.h"
+#include "RenderEngine\RenderEngine.h"
 
 
 
@@ -14,28 +24,31 @@ EntityManager::EntityManager()
 
 EntityManager::~EntityManager()
 {
+	delete playerCamera;
+	delete playerKeyboard;
+	delete playerMove;
+	delete playerMouse;
+	delete playerSpatial;
+	delete objController;
 }
 
 bool EntityManager::Initialize()
 {
-	currentlySelectedObject = 0;
+	saveLogger = SaveLogger::Instance();
+	currentlySelectedObject = -1;
 	player.SetName("Player");
-	player.AddComponent(&playerSpatial, "PlayerSpatialComponent");
-	player.AddComponent(&playerCamera, "PlayerCameraComponent");
-	player.AddComponent(&playerKeyboard, "PlayerKeyboardComponent");
-	player.AddComponent(&playerMouse, "PlayerMouseComponent");
-	player.AddComponent(&playerMove, "PlayerMovementComponent");
-	player.AddComponent(&playerShoot, "PlayerShootingComponent");
-	player.AddComponent(&objController, "PlayerShootingComponent");
-	//player.AddComponent(&playerGravity, "PlayerGravityComponent");
-	//player.AddComponent(&batmanMesh, "PlayerMesh");
+	player.AddComponent(playerSpatial = new SpatialComponent, "PlayerSpatialComponent");
+	player.AddComponent(playerCamera = new CameraComponent, "PlayerCameraComponent");
+	player.AddComponent(playerKeyboard = new KeyboardComponent, "PlayerKeyboardComponent");
+	player.AddComponent(playerMouse = new MouseComponent, "PlayerMouseComponent");
+	player.AddComponent(playerMove = new MovementComponent, "PlayerMovementComponent");
+	player.AddComponent(objController = new ObjectSelectorComponent, "PlayerShootingComponent");
 	if (!player.Initialize())
 	{
 		string s = ": did not initialize";
 		GameLogger::log(player.GetName() + s);
 		return false;
 	}
-	playerShoot.Disable();
 
 	if (!InitializeSaveLoggerObjects())
 	{
@@ -43,29 +56,36 @@ bool EntityManager::Initialize()
 		GameLogger::log(s);
 		return false;
 	}
-	
-	GameLogger::log("Entity Manager Initialized");
+
+	if (num_Objs > 0)
+	{
+		currentlySelectedObject = 0;
+		DetailsLayout::Instance()->SetEntity(&entities[0]);
+		objController->SetMeshs(num_Objs, entitieMeshs);
+	}
+	GameLogger::log("Imgn::Entity Manager Initialized");
 	return true;
 }
 
 bool EntityManager::InitializeSaveLoggerObjects()
 {
-	num_Objs = SaveLogger::GetNumObjs();
-	/*for (int i = 0; i < num_Objs; i++)
-	{
-		entities[i] = SceneryEntity();
-	}*/
+	num_Objs = saveLogger->GetNumObjs();
 	for (int i = 0; i < num_Objs; i++)
 	{
-		entities[i].SetName(SaveLogger::GetName(i));
-		entitieSpatials[i].position = SaveLogger::GetPosition(entities[i].GetName());
-		string componentType = "SpatialComponent";
-		entities[i].AddComponent(&entitieSpatials[i], entities[i].GetName() + componentType);
-		componentType = "MeshComponent";
-		entities[i].AddComponent(&entitieMeshs[i], entities[i].GetName() + componentType);
-		entitieMeshs[i].setTransformInfo();
-		entitieSpatials[i].SetRotate(SaveLogger::GetRotate(entities[i].GetName()));
-		entitieSpatials[i].SetScale(SaveLogger::GetScale(entities[i].GetName()));
+		entitieSpatials[i] = new SpatialComponent;
+		entitieMeshs[i] = new MeshComponent;
+	}
+	for (int i = 0; i < num_Objs; i++)
+	{
+		entities[i].SetName(saveLogger->GetName(i));
+		entitieSpatials[i]->position = saveLogger->GetPosition(entities[i].GetName());
+		string componentType = "Transform";
+		entities[i].AddComponent(entitieSpatials[i], componentType);
+		componentType = "Mesh";
+		entities[i].AddComponent(entitieMeshs[i], componentType);
+		entitieMeshs[i]->setTransformInfo();
+		entitieSpatials[i]->SetRotate(saveLogger->GetRotate(entities[i].GetName()));
+		entitieSpatials[i]->SetScale(saveLogger->GetScale(entities[i].GetName()));
 		if (!entities[i].Initialize())
 		{
 			string s = ": did not initialize";
@@ -80,22 +100,23 @@ bool EntityManager::InitializeSaveLoggerObjects()
 bool EntityManager::UpdateSaveLoggerObjects()
 {
 	int pastNumObjs = num_Objs;
-	num_Objs = SaveLogger::GetNumObjs();
-	/*for (int i = pastNumObjs; i < num_Objs; i++)
-	{
-		entities[i] = SceneryEntity();
-	}*/
+	num_Objs = saveLogger->GetNumObjs();
 	for (int i = pastNumObjs; i < num_Objs; i++)
 	{
-		entities[i].SetName(SaveLogger::GetName(i));
-		entitieSpatials[i].position = SaveLogger::GetPosition(entities[i].GetName());
-		string componentType = "SpatialComponent";
-		entities[i].AddComponent(&entitieSpatials[i], entities[i].GetName() + componentType);
-		componentType = "MeshComponent";
-		entities[i].AddComponent(&entitieMeshs[i], entities[i].GetName() + componentType);
-		entitieMeshs[i].setTransformInfo();
-		entitieSpatials[i].SetRotate(SaveLogger::GetRotate(entities[i].GetName()));
-		entitieSpatials[i].SetScale(SaveLogger::GetScale(entities[i].GetName()));
+		entitieSpatials[i] = new SpatialComponent;
+		entitieMeshs[i] = new MeshComponent;
+	}
+	for (int i = pastNumObjs; i < num_Objs; i++)
+	{
+		entities[i].SetName(saveLogger->GetName(i));
+		entitieSpatials[i]->position = saveLogger->GetPosition(entities[i].GetName());
+		string componentType = "Transform";
+		entities[i].AddComponent(entitieSpatials[i], componentType);
+		componentType = "Mesh";
+		entities[i].AddComponent(entitieMeshs[i], componentType);
+		entitieMeshs[i]->setTransformInfo();
+		entitieSpatials[i]->SetRotate(saveLogger->GetRotate(entities[i].GetName()));
+		entitieSpatials[i]->SetScale(saveLogger->GetScale(entities[i].GetName()));
 		if (!entities[i].Initialize())
 		{
 			string s = ": did not initialize";
@@ -109,15 +130,13 @@ bool EntityManager::UpdateSaveLoggerObjects()
 
 
 
-void EntityManager::Update(float dt)
+void EntityManager::Update(float dt, bool isPlaying)
 {
-	TransformInfo::WorldToViewMatrix = playerCamera.getWorldToViewMatrix();
-	static float m_dt = 0;
-	m_dt += dt;	
+	TransformInfo::WorldToViewMatrix = playerCamera->getWorldToViewMatrix();
 	
 	player.Update(dt);
 
-	if (SaveLogger::ValueChanged())
+	if (saveLogger->ValueChanged())
 	{
 
 		if (!UpdateSaveLoggerObjects())
@@ -127,42 +146,43 @@ void EntityManager::Update(float dt)
 			GameLogger::shutdownLog();
 			exit(1);
 		}
-		
+
+		objController->SetMeshs(num_Objs, entitieMeshs);
 		SendNewDataToOpenGL();
 	}
 
-	//objController.Update();
-	objController.SetMeshs(num_Objs, entitieMeshs);
-
-	for (int i = 0; i < num_Objs; i++)
+	if (isPlaying)
 	{
-		entities[i].Update(dt);
+		for (int i = 0; i < num_Objs; i++)
+		{
+			entities[i].Update(dt);
+		}
 	}
 }
 
 void EntityManager::ProcessKeys(float m_dt)
 {
-	playerKeyboard.ProcessKeys(m_dt);
-	objController.ProcessKeys();
+	playerKeyboard->ProcessKeys(m_dt);
+	objController->ProcessKeys();
 }
 
 void EntityManager::ProcessMouseMove(QMouseEvent* e)
 {
-	playerMouse.ProcessMouseMove(e);
+	playerMouse->ProcessMouseMove(e);
 }
 
 void EntityManager::ProcessMousePress(QMouseEvent * e)
 {
-	objController.ProcessMousePress(e, this);
+	objController->ProcessMousePress(e, this);
 }
 
 void EntityManager::SendDataToOpenGL()
 {
-	TransformInfo::WorldToViewMatrix = playerCamera.getWorldToViewMatrix();
+	TransformInfo::WorldToViewMatrix = playerCamera->getWorldToViewMatrix();
 	for (int i = 0; i < num_Objs; i++)
 	{
-		entitieMeshs[i].setRenderInfo(SaveLogger::GetObj(entities[i].GetName()));
-		RenderEngine::AddRenderInfo(&entitieMeshs[i].renderinfo);
+		entitieMeshs[i]->setRenderInfo(saveLogger->GetObj(entities[i].GetName()));
+		RenderEngine::AddRenderInfo(&entitieMeshs[i]->renderinfo);
 	}
 	
 }
@@ -171,8 +191,8 @@ void EntityManager::SendNewDataToOpenGL()
 {
 	for (int i = num_Objs-1; i < num_Objs; i++)
 	{
-		entitieMeshs[i].setRenderInfo(SaveLogger::GetObj(entities[i].GetName()));
-		RenderEngine::AddRenderInfo(&entitieMeshs[i].renderinfo);
+		entitieMeshs[i]->setRenderInfo(saveLogger->GetObj(entities[i].GetName()));
+		RenderEngine::AddRenderInfo(&entitieMeshs[i]->renderinfo);
 	}
 }
 

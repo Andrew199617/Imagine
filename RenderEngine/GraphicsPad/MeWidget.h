@@ -1,32 +1,21 @@
 #pragma once
-#pragma warning(push)
-#pragma warning (disable:4251)
-#pragma warning (disable:4127)
-#include <QtGui\qvboxlayout>
-#include <QtGui\QLineEdit>
-#include "DetailsLayout.h"
-#include "Hierarchy.h"
-#pragma warning(pop)
-#include <QtGui\QPushButton>
-#include <QtGui\QCheckBox>
-#include <QtGui\qlabel.h>
-#pragma warning(push)
-#pragma warning (disable:4201)
-#include <QtGui\qwidget.h>
-#include "MeModel.h"
-#include "Slider.h"
 #include <Qt\qmainwindow.h>
-#include "PostProcessingModel.h"
 #include "OpenFileDialog.h"
-
-
+class SaveLogger;
 class MeGlWindow;
 class QApplication;
+class QPushButton;
+class QGridLayout;
+class QHBoxLayout;
+class QIcon;
+class Hierarchy;
+class DetailsLayout;
 
 class MeWidget : public QMainWindow
 {
 	Q_OBJECT
 
+	SaveLogger* saveLogger;
 	QGridLayout* mainLayout;
 	QHBoxLayout* meGlWindowLayout;
 
@@ -35,8 +24,6 @@ class MeWidget : public QMainWindow
 	QIcon* playIcon;
 	QIcon* pauseIcon;
 
-	QLabel* ObjectName;
-	DetailsLayout* detailsLayout;
 	Hierarchy* hierarchyLayout;
 
 	QMenu* fileMenu;
@@ -55,10 +42,8 @@ class MeWidget : public QMainWindow
 
 	OpenFileDialog openFileDialog;
 	MeGlWindow* meGlWindow;
-	MeModel* theModel;
 public:
-	MeWidget(MeGlWindow* meGl, MeModel*);
-
+	MeWidget(MeGlWindow* meGl);
 private:
 	void CreateActions();
 	void CreateMenus();
@@ -68,7 +53,8 @@ private:
 	void AddHierarchy();
 	
 protected:
-	void mousePressEvent(QMouseEvent*);
+	void mousePressEvent(QMouseEvent*) override;
+	void leaveEvent(QEvent*) override;
 
 private slots:
 	void WindowsShowEvent();
@@ -80,7 +66,6 @@ private slots:
 	void OnPlayButtonPress();
 };
 
-#pragma warning(pop)
 
 
 

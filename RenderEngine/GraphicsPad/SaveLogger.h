@@ -3,38 +3,41 @@
 #include <fstream>
 #include <ostream>
 #include <iostream>
-#pragma warning(push)
-#pragma warning (disable:4201)
-#include "glm.hpp"
-#pragma warning(pop)
+#include "fwd.hpp"
 
-using namespace std;
+namespace Imgn
+{
+	const int LENGTHOFVALUE = 50000;
+}
 
-
+using std::string;
+using std::ofstream;
 
 class SaveLogger
 {
-public:
-	SaveLogger();
+	SaveLogger() { Intialize(); }
 	~SaveLogger();
-	static bool intialize(const char* filename = "..\\Data\\SaveLogger.txt");
-	static bool isComment(string word);
-	static void log(std::string objName, std::string textureLocation, string, glm::vec3 position);
-	static void shutdownLog();
-	static std::ofstream out;
-	static int index;
-	static const int LENGTHOFVALUE = 50000;
-	static std::string value[LENGTHOFVALUE][5];
-	static int GetNumObjs();
-	static string GetName(int);
-	static string GetObj(string);
-	static void AddObj(string);
-	static glm::vec3 GetPosition(string);
-	static glm::vec3 GetRotate(string);
-	static glm::vec3 GetScale(string);
-	static bool ValueChanged();
+public:
+	static SaveLogger* Instance() { if (!saveLogger) { saveLogger = new SaveLogger(); } return saveLogger; }
+	void Intialize(const char* filename = "..\\Data\\SaveLogger.txt");
+	void log(std::string objName, std::string textureLocation, string, glm::vec3 position);
+	void shutdownLog();
+	int GetNumObjs();
+	string GetName(int);
+	string GetObj(string);
+	void AddObj(string);
+	glm::vec3 GetPosition(string);
+	glm::vec3 GetRotate(string);
+	glm::vec3 GetScale(string);
+	bool ValueChanged();
 private:
-	static string currentFilename;
-	static int curNumObjs;
+	static SaveLogger* saveLogger;
+	bool isComment(string word);
+
+	ofstream out;
+	int index;
+	string value[Imgn::LENGTHOFVALUE][5];
+	string currentFilename;
+	int curNumObjs;
 	
 };

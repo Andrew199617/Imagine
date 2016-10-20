@@ -5,7 +5,6 @@ bool Component::s_breakable = false;
 
 Component::Component()
 {
-	m_owner = 0;
 }
 
 
@@ -27,23 +26,23 @@ bool Component::Init()
 
 void Component::SetName(const char * const name)
 {
-	for (int i = 0; i < MAX_NAME_LEN; ++i)
+	for (int i = 0; i < Imgn::MAX_NAME_LEN; ++i)
 	{
 		m_name[i] = name[i];
 		if (!name[i]) return;
 	}
-	m_name[MAX_NAME_LEN - 1] = 0;
+	m_name[Imgn::MAX_NAME_LEN - 1] = 0;
 }
 
 void Component::SetName(string name)
 {
 	const char* c = name.c_str();
-	for (int i = 0; i < MAX_NAME_LEN; ++i)
+	for (int i = 0; i < Imgn::MAX_NAME_LEN; ++i)
 	{
 		m_name[i] = c[i];
 		if (!c[i]) return;
 	}
-	m_name[MAX_NAME_LEN - 1] = 0;
+	m_name[Imgn::MAX_NAME_LEN - 1] = 0;
 }
 
 void Component::SetBreak(bool enabled)

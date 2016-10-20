@@ -34,7 +34,7 @@ public:
 	QApplication* app;
 	bool ShutdownApp;
 
-	private slots:
+private slots:
 	void myUpdate();
 
 };

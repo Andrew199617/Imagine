@@ -4,14 +4,15 @@
 #include <ostream>
 #include <iostream>
 
-using namespace std;
+using std::ofstream;
+using std::string;
 
 class GameLogger
 {
 public:
 	GameLogger();
 	~GameLogger();
-	static void intialize(const char* filename = "..\\Data\\GameLogger.txt");
+	static void Intialize(const char* filename = "..\\Data\\GameLogger.txt");
 	static void log(std::string msg);
 	static void shutdownLog();
 	

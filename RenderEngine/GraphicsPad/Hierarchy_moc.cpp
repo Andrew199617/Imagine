@@ -50,7 +50,7 @@ const QMetaObjectExtraData Hierarchy::staticMetaObjectExtraData = {
 };
 
 const QMetaObject Hierarchy::staticMetaObject = {
-    { &QVBoxLayout::staticMetaObject, qt_meta_stringdata_Hierarchy,
+    { &QFrame::staticMetaObject, qt_meta_stringdata_Hierarchy,
       qt_meta_data_Hierarchy, &staticMetaObjectExtraData }
 };
 
@@ -68,12 +68,12 @@ void *Hierarchy::qt_metacast(const char *_clname)
     if (!_clname) return 0;
     if (!strcmp(_clname, qt_meta_stringdata_Hierarchy))
         return static_cast<void*>(const_cast< Hierarchy*>(this));
-    return QVBoxLayout::qt_metacast(_clname);
+    return QFrame::qt_metacast(_clname);
 }
 
 int Hierarchy::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QVBoxLayout::qt_metacall(_c, _id, _a);
+    _id = QFrame::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     return _id;

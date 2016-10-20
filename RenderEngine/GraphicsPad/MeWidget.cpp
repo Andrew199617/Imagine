@@ -1,42 +1,34 @@
-#include "FbxFileReader.h"
-#pragma warning(push)
-#pragma warning(push)
-#pragma warning (disable:4127)
 #include "MeWidget.h"
-#pragma warning(pop)
-#include "Slider.h"
-#pragma warning(push)
-#pragma warning (disable:4127)
-#pragma warning (disable:4251)
-#include <Qt\qdebug.h>
-#pragma warning(pop)
-#include <QtGui\qhboxlayout>
+#include "FbxFileReader.h"
+#include <QtGui\qboxlayout>
 #include "MeGlWindow.h"
 #include <iostream>
 #include "SaveLogger.h"
 #include <Qt\qmenu.h>
 #include <Qt\qmenubar.h>
-#include <QtGui\qtabwidget.h>
 #include "Scene.h"
 #include "SceneReader.h"
-#include <Qt\qgroupbox.h>
+#include "Hierarchy.h"
+#include "Qt\qpushbutton.h"
+#include "DetailsLayout.h"
+#include "MeGlWindow.h"
 #include "OriginalGame.h"
 
-MeWidget::MeWidget(MeGlWindow* meGl, MeModel* model)
+MeWidget::MeWidget(MeGlWindow* meGl)
 {
-	SaveLogger::intialize();
-	theModel = model;
+	saveLogger = saveLogger->Instance();
 	this->meGlWindow = meGl;
 
 	
 	QWidget *widget = new QWidget;
+	setAttribute(Qt::WA_DeleteOnClose);
 	setCentralWidget(widget);
 	widget->setLayout(mainLayout = new QGridLayout);
 
 	AddTools();
 	AddHierarchy();
 	AddGlWindow();
-	AddObjectDetails();
+	AddObjectDetails();	
 
 	CreateActions();
 	CreateMenus();
@@ -151,8 +143,10 @@ void MeWidget::AddGlWindow()
 
 void MeWidget::AddObjectDetails()
 {
-	detailsLayout = new DetailsLayout;
-	mainLayout->addWidget(detailsLayout->frame, 2, 3);
+	mainLayout->addWidget(DetailsLayout::Instance(), 2, 3);
+	DetailsLayout::Instance()->setMinimumWidth(250);
+	DetailsLayout::Instance()->setMaximumWidth(320);
+	
 }
 
 void MeWidget::AddHierarchy()
@@ -166,7 +160,16 @@ void MeWidget::AddHierarchy()
 
 void MeWidget::mousePressEvent(QMouseEvent *)
 {
-	detailsLayout->ClearFocus();
+	DetailsLayout::Instance()->ClearFocus();
+	if (focusWidget() != meGlWindow && focusWidget() != playButton)
+	{
+		meGlWindow->clearFocus();
+	}
+}
+
+void MeWidget::leaveEvent(QEvent * e)
+{
+	QMainWindow::leaveEvent(e);
 }
 
 void MeWidget::WindowsShowEvent()
@@ -176,7 +179,7 @@ void MeWidget::WindowsShowEvent()
 
 	if (objectName == "ShowDetails")
 	{
-		detailsLayout->SetHidden(!detailsLayout->isHidden);
+		DetailsLayout::Instance()->setHidden(!DetailsLayout::Instance()->isHidden());
 	}
 	else if (objectName == "ShowTools")
 	{
@@ -191,44 +194,40 @@ void MeWidget::WindowsShowEvent()
 void MeWidget::openingFile()
 {
 	string str = openFileDialog.getFile();
-	SaveLogger::intialize(str.c_str());
+	saveLogger->Intialize(str.c_str());
 }
 
 void MeWidget::AddObject()
 {
-	SceneReader scenereader;
+	SceneReader* scenereader = SceneReader::Instance();
 	FbxFileReader fileReader;
 
 	string str = openFileDialog.getFile();
 	string ObjName = fileReader.GetName(str);
 	string sceneName = "..\\..\\StaticData\\Scenes\\" + ObjName + ".scene";
 
-	Scene* scene = scenereader.ReadSceneFile(sceneName);
+	Scene* scene = scenereader->ReadSceneFile(sceneName);
 	if (!scene)
 	{
 		fileReader.Initialize(str);
 	}
-	else
-	{
-		delete scene;
-	}
-	SaveLogger::AddObj(ObjName);
+	saveLogger->AddObj(ObjName);
 	
 }
 
 void MeWidget::AddCube()
 {
-	SaveLogger::AddObj("Cube");
+	saveLogger->AddObj("Cube");
 }
 
 void MeWidget::AddSphere()
 {
-	SaveLogger::AddObj("Sphere");
+	saveLogger->AddObj("Sphere");
 }
 
 void MeWidget::AddPlane()
 {
-	SaveLogger::AddObj("Plane");
+	saveLogger->AddObj("Plane");
 }
 
 void MeWidget::OnPlayButtonPress()
@@ -241,5 +240,6 @@ void MeWidget::OnPlayButtonPress()
 	{
 		playButton->setIcon(*playIcon);
 	}
+	meGlWindow->setFocus();
 	meGlWindow->game->isPlaying = !meGlWindow->game->isPlaying;
 }
