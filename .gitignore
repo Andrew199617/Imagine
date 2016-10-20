@@ -38,3 +38,4 @@ Debug
 .vs
 *.sdf
 *.opendb
+/RenderEngine/FbxConverterTest
