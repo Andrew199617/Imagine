@@ -10,6 +10,7 @@ class QHBoxLayout;
 class QIcon;
 class Hierarchy;
 class DetailsLayout;
+class ImgnToolBar;
 
 class MeWidget : public QMainWindow
 {
@@ -19,6 +20,7 @@ class MeWidget : public QMainWindow
 	QGridLayout* mainLayout;
 	QHBoxLayout* meGlWindowLayout;
 
+	ImgnToolBar* imgnToolBar;
 	QHBoxLayout* toolsLayout;
 	QPushButton* playButton;
 	QIcon* playIcon;

@@ -13,6 +13,7 @@
 #include "DetailsLayout.h"
 #include "MeGlWindow.h"
 #include "OriginalGame.h"
+#include "ImgnToolBar.h"
 
 MeWidget::MeWidget(MeGlWindow* meGl)
 {
@@ -107,7 +108,9 @@ void MeWidget::CreateMenus()
 
 void MeWidget::AddTools()
 {
-	mainLayout->addLayout(toolsLayout = new QHBoxLayout, 1, 2);
+	imgnToolBar = new ImgnToolBar;
+	mainLayout->addWidget(imgnToolBar, 1, 2);
+	imgnToolBar->setLayout(toolsLayout = new QHBoxLayout);
 	toolsLayout->addWidget(playButton = new QPushButton);
 	QPixmap pixmap(tr("C:/Users/Andrew/Documents/Neumont/Imagine/StaticData/Images/Play.png"));
 	playIcon = new QIcon(pixmap);
@@ -160,6 +163,7 @@ void MeWidget::AddHierarchy()
 
 void MeWidget::mousePressEvent(QMouseEvent *)
 {
+	imgnToolBar->Initialize();
 	DetailsLayout::Instance()->ClearFocus();
 	if (focusWidget() != meGlWindow && focusWidget() != playButton)
 	{
@@ -199,7 +203,7 @@ void MeWidget::openingFile()
 
 void MeWidget::AddObject()
 {
-	SceneReader* scenereader = SceneReader::Instance();
+	SceneReader* scenereader = new SceneReader;
 	FbxFileReader fileReader;
 
 	string str = openFileDialog.getFile();
@@ -212,6 +216,7 @@ void MeWidget::AddObject()
 		fileReader.Initialize(str);
 	}
 	saveLogger->AddObj(ObjName);
+	delete scenereader;
 	
 }
 

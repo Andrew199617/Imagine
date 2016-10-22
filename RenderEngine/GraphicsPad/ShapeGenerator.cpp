@@ -111,7 +111,7 @@ Geometry * ShapeGenerator::makeLine(glm::vec3 point1, glm::vec3 point2)
 Geometry* ShapeGenerator::readScene(string ObjName)
 {
 	Geometry ret;
-	SceneReader* scenereader = SceneReader::Instance();
+	SceneReader scenereader;
 
 	string key = ObjName + "Scene";
 	Scene* scene;
@@ -119,14 +119,14 @@ Geometry* ShapeGenerator::readScene(string ObjName)
 	string sceneName = ConfigReader::Instance()->findValueForKey(key);
 	if (sceneName != "0")
 	{
-		scene = scenereader->ReadSceneFile(sceneName);
+		scene = scenereader.ReadSceneFile(sceneName);
 	}
 	else
 	{
 		sceneName = "..\\..\\StaticData\\Scenes\\" + ObjName + ".scene";
-		scene = scenereader->ReadSceneFile(sceneName);
+		scene = scenereader.ReadSceneFile(sceneName);
 		sceneName = "..\\..\\StaticData\\Scenes\\" + ObjName + ".animation";
-		aScene = scenereader->ReadAnimationSceneFile(sceneName);
+		aScene = scenereader.ReadAnimationSceneFile(sceneName);
 	}
 
 	if (!scene)

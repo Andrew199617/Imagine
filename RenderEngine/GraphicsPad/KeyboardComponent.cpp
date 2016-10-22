@@ -4,6 +4,9 @@
 #include "GravityComponent.h"
 #include "MovementComponent.h"
 #include "ShootingComponent.h"
+#include "RenderEngine\VertexShaderInfo.h"
+#include <Windows.h>
+#include "glm.hpp"
 
 KeyboardComponent::KeyboardComponent()
 {
@@ -14,11 +17,9 @@ KeyboardComponent::~KeyboardComponent()
 {
 }
 
-void KeyboardComponent::ProcessKeys(float m_dt)
+bool KeyboardComponent::Initialize()
 {
-	static float dt = 0;
-	dt += m_dt;
-	MovementComponent* movementComponent = this->GetSiblingComponent<MovementComponent>();
+	movementComponent = this->GetSiblingComponent<MovementComponent>();
 	if (!movementComponent)
 	{
 		string s = ": can not obtain Movement Component";
@@ -26,31 +27,39 @@ void KeyboardComponent::ProcessKeys(float m_dt)
 		GameLogger::shutdownLog();
 		exit(1);
 	}
-	if (GetAsyncKeyState(Qt::Key::Key_W) != 0)
+	return true;
+}
+
+void KeyboardComponent::ProcessKeys(float m_dt)
+{
+	static float dt = 0;
+	dt += m_dt;
+	
+	if (GetAsyncKeyState(Qt::Key::Key_W) & 0x8000)
 	{
 		movementComponent->moveForward(m_dt);
 	}
-	if (GetAsyncKeyState(Qt::Key::Key_S) != 0)
+	if (GetAsyncKeyState(Qt::Key::Key_S) & 0x8000)
 	{
 		movementComponent->moveBackward(m_dt);
 	}
-	if (GetAsyncKeyState(Qt::Key::Key_A) != 0)
+	if (GetAsyncKeyState(Qt::Key::Key_A) & 0x8000)
 	{
 		movementComponent->strafeLeft(m_dt);
 	}
-	if (GetAsyncKeyState(Qt::Key::Key_D) != 0)
+	if (GetAsyncKeyState(Qt::Key::Key_D) & 0x8000)
 	{
 		movementComponent->strafeRight(m_dt);
 	}
-	if (GetAsyncKeyState(Qt::Key::Key_R) != 0)
+	if (GetAsyncKeyState(Qt::Key::Key_R) & 0x8000)
 	{
 		movementComponent->moveUp(m_dt);
 	}
-	if (GetAsyncKeyState(Qt::Key::Key_F) != 0)
+	if (GetAsyncKeyState(Qt::Key::Key_F) & 0x8000)
 	{
 		movementComponent->moveDown(m_dt);
 	}
-	if (GetAsyncKeyState(Qt::Key::Key_O) != 0)
+	if (GetAsyncKeyState(Qt::Key::Key_O) & 0x8000)
 	{
 		ShootingComponent* shoot = this->GetSiblingComponent<ShootingComponent>();
 		if (!shoot)
@@ -64,7 +73,7 @@ void KeyboardComponent::ProcessKeys(float m_dt)
 		shoot->viewDirection = this->GetSiblingComponent<CameraComponent>()->viewDirection;
 
 	}
-	if (GetAsyncKeyState(Qt::Key::Key_B) != 0 && dt > .5)
+	if (GetAsyncKeyState(Qt::Key::Key_B) & 0x8000 && dt > .5)
 	{
 		VertexShaderInfo::isBumped = !VertexShaderInfo::isBumped;
 		dt = 0;

@@ -1,10 +1,10 @@
 #include "SaveLogger.h"
 #include <sstream>
-#include <fstream>
+#include <iostream>
+#include <ostream>
 #include "ConfigReader.h"
 #include "GameLogger.h"
 #include <windows.h>
-#include "vec3.hpp"
 
 using std::endl;
 using std::cout;

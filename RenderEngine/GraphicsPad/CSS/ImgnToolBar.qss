@@ -1,0 +1,4 @@
+QFrame {
+	border: 5px groove rgb(54,95,155);
+	background: rgb(204,245,255);
+}

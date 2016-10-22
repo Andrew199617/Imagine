@@ -7,6 +7,7 @@
 #include "MeGlWindow.h"
 #include "GameLogger.h"
 
+
 int main(int argc, char* argv[])
 {
 	QApplication app(argc, argv);

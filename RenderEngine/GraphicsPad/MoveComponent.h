@@ -1,7 +1,7 @@
 #pragma once
-#include "Component.h"
+#include "ImgnComponent.h"
 class MoveComponent :
-	public Component
+	public ImgnComponent
 {
 public:
 	MoveComponent();

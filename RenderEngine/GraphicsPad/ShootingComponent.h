@@ -1,5 +1,5 @@
 #pragma once
-#include "Component.h"
+#include "ImgnComponent.h"
 #pragma warning(push)
 #pragma warning (disable:4201)
 #pragma warning (disable:4458)
@@ -7,7 +7,7 @@
 #pragma warning(pop)
 
 class ShootingComponent :
-	public Component
+	public ImgnComponent
 {
 public:
 	ShootingComponent();

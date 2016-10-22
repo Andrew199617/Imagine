@@ -1,37 +1,36 @@
 #pragma once
-#include "Component.h"
-#include "CollisionTester.h"
-#include "Vertex.h"
-#include "CameraComponent.h"
-#include "SpatialComponent.h"
-#include "MeshComponent.h"
-#include "CollisionInfo.h"
-#include "RenderEngine\RenderInfo.h"
-#include <Windows.h>
-#pragma warning(push)
-#pragma warning (disable:4127)
-#include <QtGui\qkeyevent>
-#pragma warning(pop)
-
+#include "ImgnComponent.h"
+#include "glm.hpp"
+#include "ImgnProperties.h"
+struct CollisionInfo;
+class MeshComponent;
 class SpatialComponent;
 
 class GravityComponent :
-	public Component
+	public ImgnComponent
 {
+	IMGN_GENERATE(GravityComponent)
+	IMGN_PROPERTY(GravitySpeed, 0.98f)
+	IMGN_PROPERTY(DistanceFromWall, 0)
+	IMGN_END(GravityComponent)
 public:
-	GravityComponent();
-	~GravityComponent();
 
-	void fall(SpatialComponent* spatial,float dt);
-	CollisionInfo SomethingIsBelow(SpatialComponent*);
-	//CollisionInfo WallCollision();
+	void fall(float dt);
+	bool SomethingIsBelow(glm::vec3 pos0, glm::vec3 pos1, glm::vec3 pos2);
+	void GetVerts();
 	virtual bool Update(float dt) override;
 	virtual bool Initialize() override;
+	void SetMeshes() {}
 
-	//should be a pointer to an array meshes to cast for now im onlyusing dans hideout
-	RenderInfo* DansMesh;
-	float DistanceFromGround;
-	float DistanceFromWall;
+private:
+	int numMeshes;
+	CollisionInfo* info;
+	float floorCollision;
+	float objSelectedMinT;
+	MeshComponent** meshes;
+	SpatialComponent* spatial;
+
+	int DistanceFromWall;
 	float GravitySpeed;
 };
 

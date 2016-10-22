@@ -1,11 +1,11 @@
 #pragma once
-#include "Component.h"
+#include "ImgnComponent.h"
 #include "NodeMap.h"
 #include "PathFinding.h"
-#include "SeekBehaviorComponent.h"
+class SeekBehaviorComponent;
 
 class PathFollowerComponent :
-	public Component
+	public ImgnComponent
 {
 public:
 	PathFollowerComponent();

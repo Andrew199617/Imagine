@@ -11,6 +11,8 @@
 #include "ImgnCreateComponent.h"
 #include "Qt\qpushbutton.h"
 #include "Qt\qboxlayout.h"
+#include "Qt\qfile.h"
+#include "Qt\qdir.h"
 
 DetailsLayout* DetailsLayout::detailsLayout = 0;
 
@@ -48,6 +50,7 @@ void DetailsLayout::Initialize()
 	CreateActions();
 	CreateMenu();
 	addComponentButton->setMenu(componentMenu);
+	connect(componentMenu, SIGNAL(aboutToShow()), this, SLOT(ResizeMenu()));
 
 	setLayout(m_Layout);
 
@@ -62,12 +65,20 @@ void DetailsLayout::Initialize()
 		"QGroupBox::title { padding: 0 3px; margin-top:-7px; subcontrol-origin: margin; subcontrol-position: top center; }");
 	setMaximumHeight(1000);
 	m_Layout->setAlignment(Qt::AlignTop);
-
+	
+	string outputDir = QDir::currentPath().toLocal8Bit().data();
+	string fileName = "\\CSS\\QMenu.qss";
+	QFile file((outputDir + fileName).c_str());
+	file.open(QFile::ReadOnly);
+	QString styleSheet = QLatin1String(file.readAll());
+	componentMenu->setStyleSheet(styleSheet);
+	file.close();
 	Resize();
 }
 
 void DetailsLayout::ClearFocus()
 {
+	
 }
 
 void DetailsLayout::Resize()
@@ -82,7 +93,7 @@ void DetailsLayout::Resize()
 	setMaximumWidth(biggestWidth);
 }
 
-void DetailsLayout::SetEntity(Imgn::Entity * entity)
+void DetailsLayout::SetEntity(Imgn::Entity* entity)
 {
 	components = currentEntity->GetComponents();
 	for (int i = 0; i < numComponents; i++)
@@ -98,7 +109,8 @@ void DetailsLayout::SetEntity(Imgn::Entity * entity)
 	{
 		AddComponent((char*)components[i]->GetName(), components[i], i);
 	}
-
+	m_Layout->removeWidget(addComponentButton);
+	m_Layout->addWidget(addComponentButton, 0, Qt::AlignTop);
 	Resize();
 }
 
@@ -114,6 +126,8 @@ void DetailsLayout::UpdateComponents()
 	{
 		AddComponent((char*)components[i]->GetName(), components[i], i);
 	}
+	m_Layout->removeWidget(addComponentButton);
+	m_Layout->addWidget(addComponentButton, 0, Qt::AlignTop);
 }
 
 void DetailsLayout::AddComponent(char*, ImgnComponent* widget,int)
@@ -128,10 +142,6 @@ void DetailsLayout::AddComponent(char*, ImgnComponent* widget,int)
 		widget->setParent(this);
 		widget->setVisible(true);
 	}
-
-	m_Layout->removeWidget(addComponentButton);
-	m_Layout->addWidget(addComponentButton,0,Qt::AlignTop);
-	m_Layout->setContentsMargins(14, 25, 14, 25);
 }
 
 
@@ -147,9 +157,6 @@ void DetailsLayout::CreateActions()
 	CreateAction<MeshComponent>();
 	CreateAction<GravityComponent>();
 	CreateAction<PathFollowerComponent>();
-	
-	
-	componentMenu->setStyleSheet("");
 }
 
 void DetailsLayout::CreateMenu()
@@ -162,6 +169,10 @@ void DetailsLayout::CreateNewComponent()
 	createComponent = new Imgn::ImgnCreateComponent(this);
 }
 
+void DetailsLayout::ResizeMenu()
+{
+	componentMenu->setFixedWidth(addComponentButton->width());
+}
 
 void DetailsLayout::ButtonPressed()
 {
@@ -173,9 +184,9 @@ void DetailsLayout::ButtonPressed()
 		if (addableComponents[i]->objectName() == objectName.c_str())
 		{
 			currentEntity->AddComponent(addableComponents[i]->t, objectName);
+			UpdateComponents();
+			Resize();
 			break;
 		}
 	}
-	UpdateComponents();
-	Resize();
 }

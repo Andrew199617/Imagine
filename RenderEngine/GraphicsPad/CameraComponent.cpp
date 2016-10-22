@@ -1,17 +1,14 @@
 #include "CameraComponent.h"
-#pragma warning(push)
-#pragma warning (disable:4201)
+#include "ConfigReader.h"
 #include "gtx\transform.hpp"
-#pragma warning(pop)
 #include "GameLogger.h"
 #include "MouseComponent.h"
 #include "SpatialComponent.h"
 
 CameraComponent::CameraComponent() 
 {
-	ConfigReader::Initialize();
-	viewDirection = ConfigReader::findVec3ForKey("CameraViewDirection");
-	string s = ConfigReader::findNeededValueForKey("CameraRotateSpeed");
+	viewDirection = ConfigReader::Instance()->findVec3ForKey("CameraViewDirection");
+	string s = ConfigReader::Instance()->findNeededValueForKey("CameraRotateSpeed");
 	this->rotateSpeed = (float)atoi(s.c_str());
 }
 
@@ -69,7 +66,7 @@ bool CameraComponent::Initialize()
 		GameLogger::shutdownLog();
 		return false;
 	}
-	spatial->position = ConfigReader::findVec3ForKey("CameraPosition");
+	spatial->position = ConfigReader::Instance()->findVec3ForKey("CameraPosition");
 	Zoffset = 0;
 	Yoffset = 0.0;
 	return true;

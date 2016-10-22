@@ -5,6 +5,8 @@
 #include "Qt\qpushbutton.h"
 #include "Qt\qframe.h"
 #include "Qt\qmessagebox.h"
+#include <fstream>
+#include <stdio.h>
 
 namespace Imgn
 {
@@ -76,13 +78,40 @@ namespace Imgn
 		connect(cancelButton, SIGNAL(pressed()), this, SLOT(close()));
 		buttonLayout->addWidget(addButton);
 		buttonLayout->addWidget(cancelButton);
-		this->setStyleSheet("QPushButton {}");
+		//this->setStyleSheet("QPushButton {}");
 	}
 
 	void ImgnCreateComponent::CreateClass()
 	{
-		noClassName->setText("Empty string is not allowed.");
-		noClassName->show();
+		std::string s = className->text().toLocal8Bit().constData();
+		std::ofstream outputFile(s + ".h");
+
+		outputFile << "#pragma once" << std::endl;
+		outputFile << "#include \"ImgnComponent.h\"" << std::endl;
+		outputFile << "#include \"ImgnProperties.h\"" << std::endl << std::endl;
+		outputFile << "class " << s << " :" << std::endl;
+		outputFile << "	public ImgnComponent" << std::endl;
+		outputFile << "{" << std::endl;
+		outputFile << "	IMGN_GENERATE(" << s << ")" << std::endl;
+		outputFile << "	\"Use IMGN_PROPERTY(var_name) to have variable appear in editor\"" << std::endl;
+		outputFile << "	\"IMGN_PROPERTY(gravity, 9.8)\"" << std::endl;
+		outputFile << "	\"...\"" << std::endl;
+		outputFile << "	IMGN_END(" << s << ")" << std::endl;
+		outputFile << "public:" << std::endl;
+		outputFile << "};" << std::endl;
+
+		outputFile.close(); 
+		outputFile.open(s + ".cpp");
+
+		outputFile << "#include \"" << s << ".h\"" << std::endl << std::endl;
+		outputFile << s << "::~" << s << "()" << std::endl;
+		outputFile << "{" << std::endl << std::endl;
+		outputFile << "}" << std::endl;
+
+		outputFile.close();
+		system((s + ".h").c_str());
+		system((s + ".cpp").c_str());
+		this->close();
 	}
 
 }

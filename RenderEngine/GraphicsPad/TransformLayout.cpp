@@ -1,6 +1,6 @@
 #include "TransformLayout.h"
 #include "OriginalGame.h"
-#include "vec3.hpp"
+#include "glm.hpp"
 #include "Qt\qboxlayout.h"
 #include "Qt\qlabel.h"
 #include "Qt\qlineedit.h"

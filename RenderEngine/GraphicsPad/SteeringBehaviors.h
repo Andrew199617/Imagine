@@ -1,8 +1,7 @@
 #pragma once
-#include "Component.h"
+#include "ImgnComponent.h"
 #pragma warning(push)
 #pragma warning (disable:4201)
-#pragma warning (disable:4458)
 #include <glm.hpp>
 #pragma warning(pop)
 #include "SpatialComponent.h"
@@ -10,7 +9,7 @@
 typedef glm::vec3 SteeringForce;
 #define FLOCKSIZE 12
 
-class SteeringBehaviors : public Component
+class SteeringBehaviors : public ImgnComponent
 {
 public:
 	SteeringBehaviors();

@@ -1,23 +1,7 @@
 #include "MovementComponent.h"
-#pragma warning(push)
-#pragma warning (disable:4201)
-#include <glm.hpp>
-#pragma warning(pop)
+#include "glm.hpp"
 #include "GravityComponent.h"
-
-MovementComponent::MovementComponent(float Speed)
-{
-	if (Speed == 0.0f)
-	{
-		string s = ConfigReader::findNeededValueForKey("CameraStrafeSpeed");
-		this->strafeSpeed = (float)atoi(s.c_str());
-	}
-	else
-	{
-		this->strafeSpeed = Speed;
-	}
-}
-
+#include "ConfigReader.h"
 
 MovementComponent::~MovementComponent()
 {
@@ -25,7 +9,11 @@ MovementComponent::~MovementComponent()
 
 bool MovementComponent::Initialize()
 {
-	//checkNeededComponents();
+	if (strafeSpeed == 0.0f)
+	{
+		string s = ConfigReader::Instance()->findNeededValueForKey("CameraStrafeSpeed");
+		this->strafeSpeed = (float)atoi(s.c_str());
+	}
 	return true;
 }
 

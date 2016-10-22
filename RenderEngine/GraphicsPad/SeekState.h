@@ -20,11 +20,11 @@ protected:
 	bool m_AtTarget;
 
 	// Inherited via State
-	virtual void Enter(StateComponent *, Entity *) override;
-	virtual void Execute(StateComponent *, Entity *, float) override;
-	virtual void Exit(StateComponent *, Entity *) override;
-	virtual void WhatDoWhenAtLocation(StateComponent *, Entity *, float) = 0;
-	virtual void WhenToChangeState(StateComponent *, Entity *, float) = 0;
+	virtual void Enter(StateComponent *, Imgn::Entity*) override;
+	virtual void Execute(StateComponent *, Imgn::Entity*, float) override;
+	virtual void Exit(StateComponent *, Imgn::Entity*) override;
+	virtual void WhatDoWhenAtLocation(StateComponent *, Imgn::Entity*, float) = 0;
+	virtual void WhenToChangeState(StateComponent *, Imgn::Entity*, float) = 0;
 
 };
 

@@ -3,7 +3,12 @@
 #include "SaveLogger.h"
 #include "RenderEngine\VertexShaderInfo.h"
 #include "RenderEngine\FragmentShaderInfo.h"
-#include "PostProcessingModel.h"
+#include "RenderEngine\RenderEngine.h"
+#include "gtx\transform.hpp"
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
 
 using glm::mat4;
 
@@ -40,7 +45,7 @@ OriginalGame::~OriginalGame()
 
 void OriginalGame::SendDataToOpenGL()
 {
-	mat4 projectionMatrix = glm::perspective(70.0f, ((float)m_Width) / m_Height, 1.0f, 180.0f);
+	mat4 projectionMatrix = glm::perspective(90.0f, ((float)m_Width) / m_Height, 1.0f, 180.0f);
 	TransformInfo::projectionMatrix = projectionMatrix;
 
 	glGenVertexArrays(1, &quad_VertexArrayID);
@@ -86,7 +91,6 @@ void OriginalGame::InitializeGl()
 
 bool OriginalGame::Initialize()
 {
-	SaveLogger::intialize();
 	isPlaying = false;
 
 	if (!entityManager.Initialize())
@@ -104,14 +108,10 @@ void OriginalGame::Update(bool focus)
 	gametime.newFrame();
 	float dt = gametime.timeElapsedLastFrame();
 
-	VertexShaderInfo::uD = theModel.uD;
-	VertexShaderInfo::uR = theModel.uR;
-
 	if(focus)
 	ProcessKeys(dt);
 
-	entityManager.Update(dt);
-	
+	entityManager.Update(dt,isPlaying);
 	
 	Draw(dt);
 }

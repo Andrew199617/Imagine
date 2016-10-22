@@ -2,13 +2,12 @@
 #include "TransformLayout.h"
 #include "CollisionInfo.h"
 #include "CollisionTester.h"
-#include "Component.h"
 #include "SpatialComponent.h"
 class MeshComponent;
 class EntityManager;
 
 class ObjectSelectorComponent :
-	public Component
+	public ImgnComponent
 {
 public:
 	enum TransformationType
@@ -27,7 +26,7 @@ public:
 	void ProcessMousePress(QMouseEvent* e, EntityManager* entityManager);
 	void GetVerts(QMouseEvent* e);
 	bool CastRayFromMousePosition(QMouseEvent* e, glm::vec3 pos0, glm::vec3 pos1, glm::vec3 pos2);
-	inline void SetMeshs(int num, MeshComponent* m_Meshes)
+	inline void SetMeshs(int num, MeshComponent** m_Meshes)
 	{
 		numMeshes = num;
 		this->meshes = m_Meshes;
@@ -39,7 +38,7 @@ private:
 	CollisionInfo* info;
 	float objSelectedMinT;
 	int objSelected;
-	MeshComponent* meshes;
+	MeshComponent** meshes;
 	int numMeshes;
 };
 

@@ -3,8 +3,6 @@
 #include <iostream>
 #include <fstream>
 #include "GameLogger.h"
-#include "vec3.hpp"
-#include "vec2.hpp"
 
 ConfigReader* ConfigReader::configReader = 0;
 

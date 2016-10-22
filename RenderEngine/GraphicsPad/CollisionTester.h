@@ -15,8 +15,8 @@ public:
 	static float rayTriangleIntersect(const glm::vec3 &rayOrg, const glm::vec3 &rayDelta,
 		const glm::vec3 &p0, const glm::vec3 &p1, const glm::vec3 &p2, float minT);
 	void FindWall(glm::vec3 fromPosition, glm::vec3 rayDirection);
-	void FindWall(Entity entity);
-	void FindFloor(Entity entity);
+	void FindWall(Imgn::Entity entity);
+	void FindFloor(Imgn::Entity entity);
 
 };
 

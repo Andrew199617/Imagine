@@ -55,6 +55,15 @@
     <Filter Include="structs/enums">
       <UniqueIdentifier>{81c8ad52-4506-4427-9772-6e7d3a9e5e13}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Imgn">
+      <UniqueIdentifier>{c7b845c4-937d-4c6e-affb-a65aeffc2cf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Imgn\moc">
+      <UniqueIdentifier>{59e8154d-6583-4068-85b4-e95a0a8dd456}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="QT\QSS">
+      <UniqueIdentifier>{3ecd608d-6a22-47a6-b80c-b4c1de9aadbf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -256,19 +265,22 @@
       <Filter>Source Files\moc</Filter>
     </ClCompile>
     <ClCompile Include="ImgnAction.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Imgn</Filter>
     </ClCompile>
     <ClCompile Include="ImgnComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Imgn</Filter>
     </ClCompile>
     <ClCompile Include="ImgnCreateComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ImgnCreateComponent_moc.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Imgn</Filter>
     </ClCompile>
     <ClCompile Include="ImgnProperties.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Imgn</Filter>
+    </ClCompile>
+    <ClCompile Include="ImgnCreateComponent_moc.cpp">
+      <Filter>Imgn\moc</Filter>
+    </ClCompile>
+    <ClCompile Include="ImgnToolBar.cpp">
+      <Filter>Imgn</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -495,22 +507,25 @@
       <Filter>structs/enums</Filter>
     </ClInclude>
     <ClInclude Include="ImgnAction.h">
-      <Filter>Header Files</Filter>
+      <Filter>Imgn</Filter>
     </ClInclude>
     <ClInclude Include="ImgnComponent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Imgn</Filter>
     </ClInclude>
     <ClInclude Include="ImgnCreateComponent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Imgn</Filter>
     </ClInclude>
     <ClInclude Include="ImgnFrame.h">
-      <Filter>Header Files</Filter>
+      <Filter>Imgn</Filter>
     </ClInclude>
     <ClInclude Include="ImgnFwd.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Imgn</Filter>
     </ClInclude>
     <ClInclude Include="ImgnProperties.h">
-      <Filter>Header Files</Filter>
+      <Filter>Imgn</Filter>
+    </ClInclude>
+    <ClInclude Include="ImgnToolBar.h">
+      <Filter>Imgn</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -562,5 +577,9 @@
     <None Include="Shader\vPassThrough.glsl">
       <Filter>glsl\Vertex</Filter>
     </None>
+    <None Include="CSS\QMenu.qss">
+      <Filter>QT\QSS</Filter>
+    </None>
+    <None Include="CSS\ImgnToolBar.qss" />
   </ItemGroup>
 </Project>

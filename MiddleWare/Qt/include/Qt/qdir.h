@@ -166,7 +166,7 @@ public:
     SortFlags sorting() const;
     void setSorting(SortFlags sort);
 
-    uint count() const;
+    qtuint count() const;
     QString operator[](int) const;
 
     static QStringList nameFiltersFromString(const QString &nameFilter);

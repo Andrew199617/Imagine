@@ -1,22 +1,22 @@
 #pragma once
-#include "../Entity.h"
-#include <string.h>
+#include "..\ImgnFwd.hpp"
+#include <string>
 
 class StateComponent;
 
 class State
 {
 protected:
-	string m_name;
+	std::string m_name;
 
 public:
 	State() {}
 	virtual ~State() {}
-	virtual void Enter(StateComponent*,Entity*) = 0;
-	virtual void Execute(StateComponent*,Entity*,float) = 0;
-	virtual void Exit(StateComponent*,Entity*) = 0;
+	virtual void Enter(StateComponent*,Imgn::Entity*) = 0;
+	virtual void Execute(StateComponent*, Imgn::Entity*,float) = 0;
+	virtual void Exit(StateComponent*, Imgn::Entity*) = 0;
 
 public:
-	string Name() { return m_name; }
+	std::string Name() { return m_name; }
 };
 

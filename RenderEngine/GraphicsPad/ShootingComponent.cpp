@@ -19,26 +19,26 @@ bool ShootingComponent::Initialize()
 	return true;
 }
 
-bool ShootingComponent::Update(float dt)
+bool ShootingComponent::Update(float)
 {
 	CameraComponent* camera = this->GetSiblingComponent<CameraComponent>();
 	if (!camera)
 	{
-		string s = ": can not obtain Camera Component";
-		GameLogger::log(this->GetName() + s);
+		string str = ": can not obtain Camera Component";
+		GameLogger::log(this->GetName() + str);
 		GameLogger::shutdownLog();
 		exit(1);
 	}
 	
 	
-	if (Throwables::ArrowSpatial.position.y >= 4)
+	/*if (Throwables::ArrowSpatial.position.y >= 4)
 	{
 		Throwables::ArrowMove.moveForward(dt, viewDirection);
 	}
 	else
 	{
 		Disable();
-	}
+	}*/
 	
 	return true;
 }

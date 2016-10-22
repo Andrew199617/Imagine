@@ -1,0 +1,41 @@
+QMenu {
+    background-color: rgb(230,230,255);
+    margin: 5px; /* some spacing around the menu */
+	border: 2px solid black;
+}
+
+QMenu::item {
+    padding: 2px 25px 2px 25px;
+    border: 1px solid transparent; /* reserve space for selection border */
+	font-family: Futura, Trebuchet MS, Arial, sans-serif;
+}
+
+QMenu::item:selected {
+    border: 0px;
+    border-color: black;
+    background: lightblue;
+	border-radius: 0px;
+}
+
+QMenu::icon:checked { /* appearance of a 'checked' icon */
+    background: gray;
+    border: 1px inset gray;
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    bottom: 1px;
+    left: 1px;
+}
+
+QMenu::separator {
+    height: 1.5px;
+    background: black;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+QMenu::indicator {
+    width: 0px;
+    height: 0px;
+}
+

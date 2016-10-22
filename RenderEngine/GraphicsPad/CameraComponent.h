@@ -1,13 +1,9 @@
 #pragma once
-#pragma warning(push)
-#pragma warning (disable:4201)
-#include <glm.hpp>
-#pragma warning(pop)
-#include "ConfigReader.h"
-#include "Component.h"
+#include "ImgnComponent.h"
+#include "glm.hpp"
 
 class CameraComponent : 
-	public Component
+	public ImgnComponent
 {
 	
 	

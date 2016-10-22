@@ -1,4 +1,5 @@
 #include "PathFollowerComponent.h"
+#include "SeekBehaviorComponent.h"
 
 
 
@@ -24,15 +25,15 @@ bool PathFollowerComponent::Update(float)
 	SeekBehaviorComponent* seek = this->GetSiblingComponent<SeekBehaviorComponent>();
 	if (!seek)
 	{
-		string s = ": can not obtain Seek Component";
-		GameLogger::log(this->GetName() + s);
+		string str = ": can not obtain Seek Component";
+		GameLogger::log(this->GetName() + str);
 		return false;
 	}
 	SpatialComponent* spatial = this->GetSiblingComponent<SpatialComponent>();
 	if (!seek)
 	{
-		string s = ": can not obtain Spatial Component";
-		GameLogger::log(this->GetName() + s);
+		string str = ": can not obtain Spatial Component";
+		GameLogger::log(this->GetName() + str);
 		return false;
 	}
 	

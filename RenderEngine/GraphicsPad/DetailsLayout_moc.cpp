@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'DetailsLayout.h'
 **
-** Created: Tue Oct 18 10:39:40 2016
+** Created: Fri Oct 21 15:27:34 2016
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const qtuint qt_meta_data_DetailsLayout[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -33,13 +33,14 @@ static const qtuint qt_meta_data_DetailsLayout[] = {
  // slots: signature, parameters, type, tag, flags
       15,   14,   14,   14, 0x08,
       31,   14,   14,   14, 0x08,
+      52,   14,   14,   14, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_DetailsLayout[] = {
     "DetailsLayout\0\0ButtonPressed()\0"
-    "CreateNewComponent()\0"
+    "CreateNewComponent()\0ResizeMenu()\0"
 };
 
 void DetailsLayout::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -50,6 +51,7 @@ void DetailsLayout::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         switch (_id) {
         case 0: _t->ButtonPressed(); break;
         case 1: _t->CreateNewComponent(); break;
+        case 2: _t->ResizeMenu(); break;
         default: ;
         }
     }
@@ -61,7 +63,7 @@ const QMetaObjectExtraData DetailsLayout::staticMetaObjectExtraData = {
 };
 
 const QMetaObject DetailsLayout::staticMetaObject = {
-    { &QFrame::staticMetaObject, qt_meta_stringdata_DetailsLayout,
+    { &ImgnFrame::staticMetaObject, qt_meta_stringdata_DetailsLayout,
       qt_meta_data_DetailsLayout, &staticMetaObjectExtraData }
 };
 
@@ -79,18 +81,18 @@ void *DetailsLayout::qt_metacast(const char *_clname)
     if (!_clname) return 0;
     if (!strcmp(_clname, qt_meta_stringdata_DetailsLayout))
         return static_cast<void*>(const_cast< DetailsLayout*>(this));
-    return QFrame::qt_metacast(_clname);
+    return ImgnFrame::qt_metacast(_clname);
 }
 
 int DetailsLayout::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QFrame::qt_metacall(_c, _id, _a);
+    _id = ImgnFrame::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 3;
     }
     return _id;
 }

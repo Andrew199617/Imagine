@@ -1,7 +1,8 @@
 #pragma once
 #include "Entity.h"
+
 class SceneryEntity :
-	public Entity
+	public Imgn::Entity
 {
 public:
 	SceneryEntity();

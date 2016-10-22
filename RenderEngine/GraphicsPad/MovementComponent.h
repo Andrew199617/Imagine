@@ -1,16 +1,22 @@
 #pragma once
-#include "Component.h"
+#include "ImgnComponent.h"
 #include "SpatialComponent.h"
 #include "CameraComponent.h"
+#include "ImgnProperties.h"
 
 class MovementComponent :
-	public Component
+	public ImgnComponent
 {
-
-	float strafeSpeed;
-public:
-	MovementComponent(float Speed = 0.0f);
-	~MovementComponent();
+	IMGN_GENERATE(MovementComponent)
+	IMGN_PROPERTY(strafeSpeed,0.0f)
+	IMGN_PROPERTY(strafeSpeed, 0.0f)
+	IMGN_PROPERTY(strafeSpeed, 0.0f)
+	IMGN_PROPERTY(strafeSpeed, 0.0f)
+	IMGN_PROPERTY(strafeSpeed, 0.0f)
+	IMGN_PROPERTY(strafeSpeed, 0.0f)
+	IMGN_END(MovementComponent)
+	
+protected:
 	virtual bool Initialize() override;
 
 public:
@@ -23,5 +29,12 @@ public:
 	void moveUp(float dt);
 	void moveDown(float dt);
 	void Jump(int time, float dt);
+
+public:
+	void SetStrafeSpeed(float Speed) { strafeSpeed = Speed; }
+	float GetStrafeSpeed() { return strafeSpeed; }
+
+private:
+	float strafeSpeed;
 };
 

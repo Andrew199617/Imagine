@@ -1,6 +1,9 @@
 #include "StateComponent.h"
 #include "../GameLogger.h"
+#include "../Entity.h"
 
+using std::cout;
+using std::endl;
 
 StateComponent::StateComponent() :
 	m_pCurrentState(NULL),

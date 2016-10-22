@@ -41,6 +41,7 @@ private:
 private slots:
 	void ButtonPressed();
 	void CreateNewComponent();
+	void ResizeMenu();
 
 private:
 	static DetailsLayout* detailsLayout;

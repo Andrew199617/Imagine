@@ -1,5 +1,5 @@
 #pragma once
-#include "Component.h"
+#include "ImgnComponent.h"
 #pragma warning(push)
 #pragma warning (disable:4201)
 #include <glm.hpp>
@@ -11,7 +11,7 @@
 #pragma warning(pop)
 
 class MouseComponent :
-	public Component
+	public ImgnComponent
 {
 	glm::vec2 newMousePosition;
 	glm::vec2 oldMousePosition;

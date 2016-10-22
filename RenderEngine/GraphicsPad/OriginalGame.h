@@ -16,10 +16,6 @@ public:
 	void ProcessMouseMove(QMouseEvent* e);
 	void ProcessMousePress(QMouseEvent* e);
 	void Draw(float dt);
-	MeModel* getModel()
-	{
-		return &theModel;
-	}
 
 	static EntityManager entityManager;
 	inline void SetWidth(int width) { m_Width = width; delete frameBuffer; frameBuffer = new FrameBuffer; frameBuffer->GenerateFBO(m_Width, m_Height); }
@@ -35,8 +31,6 @@ private:
 	int m_Width;
 	int m_Height;
 	
-	MeModel theModel;
-
 
 #pragma warning(push)
 #pragma warning (disable:4512)

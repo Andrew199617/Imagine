@@ -1,17 +1,15 @@
 #pragma once
-#include "../Component.h"
+#include "../ImgnComponent.h"
 #include "../StateMachine\State.h"
-#include "../Entity.h"
+#include "..\ImgnFwd.hpp"
+
 class StateComponent :
-	public Component
+	public ImgnComponent
 {
 private:
 	State* m_pCurrentState;
 	State* m_pPreviousState;
 	State* m_pGlobalState;
-
-private:
-	Entity* m_owner;
 
 public:
 	StateComponent();

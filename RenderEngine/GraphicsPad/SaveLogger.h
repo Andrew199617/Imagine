@@ -1,9 +1,7 @@
 #pragma once
 #include <string>
 #include <fstream>
-#include <ostream>
-#include <iostream>
-#include "fwd.hpp"
+#include "glm.hpp"
 
 namespace Imgn
 {

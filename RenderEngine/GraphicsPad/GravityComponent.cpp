@@ -1,51 +1,80 @@
 #include "GravityComponent.h"
-#include "RenderEngine\RenderEngine.h"
-#include "Throwables.h"
+#include "OriginalGame.h"
+#include "MeshComponent.h"
+#include "CollisionTester.h"
+#include "Vertex.h"
+#include "SpatialComponent.h"
+#include "CollisionInfo.h"
+#include "glm.hpp"
 
-GravityComponent::GravityComponent()
-{
-}
-
+#define CASE(caseValue,VertexFormat) case caseValue: { VertexFormat* vertex = reinterpret_cast<VertexFormat*>(geo->vertices); \
+			for (int j = 0; j < numVerts; j += 3) \
+			{ \
+				if (SomethingIsBelow(vertex[j].position, vertex[j + 1].position, vertex[j + 2].position)) \
+				{ \
+					break; \
+				} \
+			}break;} \
 
 GravityComponent::~GravityComponent()
 {
 }
 
-void GravityComponent::fall(SpatialComponent* spatial,float dt)
+void GravityComponent::fall(float dt)
 {
 	spatial->position.y -= GravitySpeed * dt;
 }
 
-CollisionInfo GravityComponent::SomethingIsBelow(SpatialComponent* spatial)
+bool GravityComponent::SomethingIsBelow(glm::vec3 pos0, glm::vec3 pos1, glm::vec3 pos2)
 {
-	
-	vPositionTextureNormal* Verts = reinterpret_cast<vPositionTextureNormal*>(DansMesh->getGeometry()->vertices);
-	int numVerts = DansMesh->getGeometry()->m_indexCount;
-	glm::vec3 UP = spatial->UP;
+	glm::vec3 Direction = glm::vec3(0,-1,0);
 	glm::vec3 Position = spatial->position;
 
-
-	CollisionInfo info = CollisionInfo(FLT_MAX);
-
-	for (int i = 0; i < numVerts; i += 3)
+	float tempMinT = CollisionTester::rayTriangleIntersect(Position, Direction, pos0, pos1, pos2, info->minT);
+	if (tempMinT < info->minT)
 	{
-		float tempMinT = CollisionTester::rayTriangleIntersect(Position, -UP, Verts[i].position, Verts[i+1].position, Verts[i+2].position, info.minT);
-		if (tempMinT < info.minT)
-		{
-			info.minT = tempMinT;
-			info.p0 = Verts[i].position;
-			info.p1 = Verts[i+1].position;
-			info.p2 = Verts[i+2].position;
-		}
+		info->minT = tempMinT;
+		info->p0 = pos0;
+		info->p1 = pos1;
+		info->p2 = pos2;
+		return true;
 	}
-	
 
-	return info;
+	return false;
+}
+
+void GravityComponent::GetVerts()
+{
+	for (int i = 0; i < numMeshes; i++)
+	{
+		Geometry* geo = meshes[i]->renderinfo.getGeometry();
+		TransformInfo* tranInfo = meshes[i]->renderinfo.getTransformInfo();
+		int numVerts = geo->m_indexCount;
+		info = new CollisionInfo(FLT_MAX);
+		glm::vec3 offset(tranInfo->ModelViewProjectionMatrix[3].x, tranInfo->ModelViewProjectionMatrix[3].y, tranInfo->ModelViewProjectionMatrix[3].z);
+		switch (geo->VertexFormat)
+		{
+		CASE(PositionOnly,vPosition)
+		CASE(PositionColor, vPositionColor)
+		CASE(PositionColorNormal, vPositionColorNormal)
+		CASE(PositionColorTexture, vPositionColorTexture)
+		CASE(PositionTexture, vPositionTexture)
+		CASE(PositionNormal, vPositionNormal)
+		CASE(PositionTextureNormal, vPositionTextureNormal)
+		CASE(PositionColorTextureNormal, vPositionColorTextureNormal)
+		}
+		if (info->minT < objSelectedMinT)
+		{
+			objSelectedMinT = info->minT;
+			floorCollision = (info->p0.x + info->p1.y + info->p2.z)/3;
+		}
+		delete info;
+	}
 }
 
 bool GravityComponent::Update(float dt)
 {
-	SpatialComponent* spatial = this->GetSiblingComponent<SpatialComponent>();
+	spatial = this->GetSiblingComponent<SpatialComponent>();
 	if (!spatial)
 	{
 		string s = ": can not obtain a Component";
@@ -53,27 +82,28 @@ bool GravityComponent::Update(float dt)
 		GameLogger::shutdownLog();
 		return false;
 	}
-	CollisionInfo FloorCollision = CollisionInfo(FLT_MAX);
-	//should check to see the scene output format and do a switch
-	FloorCollision = SomethingIsBelow(spatial);
 
-	if (FloorCollision.minT > DistanceFromGround && GetAsyncKeyState(Qt::Key::Key_R) == 0)
+	//should check to see the scene output format and do a switch
+	GetVerts();
+
+	if (objSelectedMinT > 0.05f)
 	{
-		fall(spatial,dt);
+		fall(dt);
 	}
-	else if (FloorCollision.minT < DistanceFromGround - .1 && GetAsyncKeyState(Qt::Key::Key_F) == 0)
+	/*else if (objSelectedMinT <= 0.05f)
 	{
-		if (FloorCollision.p1.x != 0 && FloorCollision.p1.y != 0 && FloorCollision.p1.z != 0)
-			spatial->position.y = ((FloorCollision.p0.y + FloorCollision.p1.y + FloorCollision.p2.y) / 3) + DistanceFromGround;
-	}
+		spatial->position.y = floorCollision + .05f;
+	}*/
+	objSelectedMinT = FLT_MAX;
 	return true;
 }
 
 bool GravityComponent::Initialize()
 {
-
-	DistanceFromGround = 4;
-	GravitySpeed = 9.8f;
+	floorCollision = 0;
+	objSelectedMinT = FLT_MAX;
+	numMeshes = OriginalGame::entityManager.num_Objs;
+	meshes = OriginalGame::entityManager.entitieMeshs;
 	return true;
 }
 

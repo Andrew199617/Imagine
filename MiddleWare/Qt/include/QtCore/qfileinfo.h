@@ -121,9 +121,9 @@ public:
     inline QString symLinkTarget() const { return readLink(); }
 
     QString owner() const;
-    uint ownerId() const;
+    qtuint ownerId() const;
     QString group() const;
-    uint groupId() const;
+    qtuint groupId() const;
 
     bool permission(QFile::Permissions permissions) const;
     QFile::Permissions permissions() const;

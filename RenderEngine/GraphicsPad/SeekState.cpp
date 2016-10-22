@@ -11,7 +11,7 @@ SeekState::~SeekState()
 {
 }
 
-void SeekState::Enter(StateComponent *, Entity *entity)
+void SeekState::Enter(StateComponent *, Imgn::Entity* entity)
 {
 	
 	spatial = entity->GetComponentByType<SpatialComponent>();
@@ -28,7 +28,7 @@ void SeekState::Enter(StateComponent *, Entity *entity)
 	seek->setVelocity(glm::vec3(0.0f, 0.0f, 0.0f));
 }
 
-void SeekState::Execute(StateComponent * sc, Entity * entity, float dt)
+void SeekState::Execute(StateComponent * sc, Imgn::Entity* entity, float dt)
 {
 	//AIEntity* ai = reinterpret_cast<AIEntity*>(entity);
 	static float m_dt = 0;
@@ -52,7 +52,7 @@ void SeekState::Execute(StateComponent * sc, Entity * entity, float dt)
 	WhenToChangeState(sc, entity, dt);
 }
 
-void SeekState::Exit(StateComponent *, Entity *)
+void SeekState::Exit(StateComponent *, Imgn::Entity*)
 {
 	seek->Disable();
 	seek->setVelocity(glm::vec3(0.0f, 0.0f, 0.0f));

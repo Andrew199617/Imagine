@@ -8,7 +8,7 @@ TextureInfo::TextureInfo(string FileLocation, string objName)
 {
 	if(FileLocation != "0")
 	loadBMP_customFile(FileLocation);
-	string bumpPath = ConfigReader::findValueForKey(objName + "BumpMap");
+	string bumpPath = ConfigReader::Instance()->findValueForKey(objName + "BumpMap");
 	if(bumpPath != "0")
 	loadBMP_customFileBumpMap(bumpPath);
 }

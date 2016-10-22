@@ -1,10 +1,11 @@
 #include "ObjectSelectorComponent.h"
 #include <Windows.h>
-#pragma warning(push)
-#pragma warning (disable:4201)
 #include "MeshComponent.h"
-#pragma warning(pop)
 #include "EntityManager.h"
+#include "DetailsLayout.h"
+#include <QtGui\qmouseevent>
+#include "Vertex.h"
+#include "CameraComponent.h"
 #define Q 81
 #define W 87
 #define R 82
@@ -32,17 +33,17 @@ bool ObjectSelectorComponent::Initialize()
 
 void ObjectSelectorComponent::ProcessKeys()
 {
-	if (GetAsyncKeyState(Qt::Key::Key_Shift) != 0)
+	if (GetAsyncKeyState(Qt::Key::Key_Shift) & 0x8000)
 	{
-		if (GetAsyncKeyState(Q) != 0)
+		if (GetAsyncKeyState(Q) & 0x8000)
 		{
 			curType = Move;
 		}
-		else if (GetAsyncKeyState(W) != 0)
+		else if (GetAsyncKeyState(W) & 0x8000)
 		{
 			curType = Scale;
 		}
-		else if (GetAsyncKeyState(R) != 0)
+		else if (GetAsyncKeyState(R) & 0x8000)
 		{
 			curType = Rotate;
 		}
@@ -56,8 +57,12 @@ void ObjectSelectorComponent::ProcessMousePress(QMouseEvent * e,EntityManager* e
 		GetVerts(e);
 		if (objSelected != -1)
 		{
-			entityManager->currentlySelectedObject = objSelected;
-			TransformLayout::SetTextBoxValues();
+			if (entityManager->currentlySelectedObject != objSelected)
+			{
+				entityManager->currentlySelectedObject = objSelected;
+				//entityManager->entitieSpatials[objSelected].SetTextBoxValues();
+				DetailsLayout::Instance()->SetEntity(&entityManager->entities[objSelected]);
+			}
 			objSelected = -1;
 			objSelectedMinT = FLT_MAX;
 		}
@@ -68,8 +73,8 @@ void ObjectSelectorComponent::GetVerts(QMouseEvent * e)
 {
 	for (int i = 0; i < numMeshes; i++)
 	{
-		Geometry* geo = meshes[i].renderinfo.getGeometry();
-		TransformInfo* tranInfo = meshes[i].renderinfo.getTransformInfo();
+		Geometry* geo = meshes[i]->renderinfo.getGeometry();
+		TransformInfo* tranInfo = meshes[i]->renderinfo.getTransformInfo();
 		int numVerts = geo->m_indexCount;
 		info = new CollisionInfo(FLT_MAX);
 		glm::vec3 offset(tranInfo->ModelViewProjectionMatrix[3].x, tranInfo->ModelViewProjectionMatrix[3].y, tranInfo->ModelViewProjectionMatrix[3].z);
@@ -181,14 +186,11 @@ void ObjectSelectorComponent::GetVerts(QMouseEvent * e)
 	}
 }
 
-bool ObjectSelectorComponent::CastRayFromMousePosition(QMouseEvent * e, glm::vec3 pos0, glm::vec3 pos1, glm::vec3 pos2)
+bool ObjectSelectorComponent::CastRayFromMousePosition(QMouseEvent *, glm::vec3 pos0, glm::vec3 pos1, glm::vec3 pos2)
 {
-	e;
 	CameraComponent* camera = this->GetSiblingComponent<CameraComponent>();
 	glm::vec3 Direction = camera->viewDirection;
 	glm::vec3 Position = spatial->position;
-	
-	//CollisionInfo info = CollisionInfo(FLT_MAX);
 
 	float tempMinT = CollisionTester::rayTriangleIntersect(Position, Direction, pos0, pos1, pos2, info->minT);
 	if (tempMinT < info->minT)

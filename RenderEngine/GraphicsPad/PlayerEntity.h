@@ -1,7 +1,7 @@
 #pragma once
 #include "Entity.h"
 
-class PlayerEntity : public Entity
+class PlayerEntity : public Imgn::Entity
 {
 public:
 	PlayerEntity();

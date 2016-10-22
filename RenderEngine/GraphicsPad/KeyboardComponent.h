@@ -1,17 +1,19 @@
 #pragma once
-#pragma warning(push)
-#pragma warning (disable:4201)
-#include <glm.hpp>
-#pragma warning(pop)
-#include "Component.h"
+#include "ImgnComponent.h"
+class MovementComponent;
+
 class KeyboardComponent :
-	public Component
+	public ImgnComponent
 {
 public:
 	KeyboardComponent();
 	~KeyboardComponent();
 
+protected:
+	bool Initialize() override;
+
 public:
 	void ProcessKeys(float m_dt);
+	MovementComponent* movementComponent;
 };
 

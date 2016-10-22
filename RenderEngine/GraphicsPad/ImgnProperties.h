@@ -10,10 +10,10 @@ class ImgnComponent;
 	layoutInitalized = false;																	\
 	layoutHasData = false;																		\
 	setMaximumSize(348, 250);																	\
-	setMinimumSize(250, 50);																	\
+	setMinimumSize(220, 50);																	\
 	sizeHint().setHeight(50);																	\
 	minimumSizeHint().setHeight(50);															\
-	sizePolicy().setHorizontalPolicy(QSizePolicy::Policy::Expanding);								\
+	sizePolicy().setHorizontalPolicy(QSizePolicy::Policy::Expanding);							\
 	sizePolicy().setVerticalPolicy(QSizePolicy::Policy::Minimum);								\
 	m_owner = 0;																				\
 }																								\

@@ -9,4 +9,5 @@ SceneryEntity::SceneryEntity()
 
 SceneryEntity::~SceneryEntity()
 {
+
 }
