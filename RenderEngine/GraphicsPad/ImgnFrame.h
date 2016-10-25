@@ -12,5 +12,6 @@ protected:
 	{
 		setFocus();
 	}
+	virtual void Initialize() = 0;
 };
 

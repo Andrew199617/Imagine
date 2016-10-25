@@ -9,7 +9,8 @@
 #include "SaveLogger.h"
 #include "GameLogger.h"
 #include "Qt\qtooltip.h"
-
+#include "glm.hpp"
+#include "gtx\transform.hpp"
 
 void MeGlWindow::Initialize()
 {
@@ -48,14 +49,11 @@ void MeGlWindow::mousePressEvent(QMouseEvent * e)
 
 void MeGlWindow::resizeGL(int w, int h)
 {
-	float height = 0;
-	float yOffset = 0;
-	height = w * (9.0f / 16.0f);
-	yOffset = ((float)h - height) / 2.0f;
-	QGLWidget::resizeGL(w, (int)height);
+	QGLWidget::resizeGL(w,h);
 	game->SetWidth(w);
-	game->SetHeight((int)height);
-	game->yOffset = (int)yOffset;
+	game->SetHeight(h);
+	glm::mat4 projectionMatrix = glm::perspective(90.0f, ((float)w) / h, 1.0f, 180.0f);
+	TransformInfo::projectionMatrix = projectionMatrix;
 }
 
 void MeGlWindow::myUpdate()

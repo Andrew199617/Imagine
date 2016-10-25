@@ -1,4 +1,10 @@
 QFrame {
-	border: 5px groove rgb(54,95,155);
+	border: 3px groove lightgray;
 	background: rgb(204,245,255);
+}
+
+QFrame#ImgnTool {
+	background: rgb(174,215,225);
+	border: 2px solid rgb(134,165,255);
+	padding: -2px;
 }

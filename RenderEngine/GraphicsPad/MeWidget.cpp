@@ -14,6 +14,7 @@
 #include "MeGlWindow.h"
 #include "OriginalGame.h"
 #include "ImgnToolBar.h"
+#include "ImgnTool.h"
 
 MeWidget::MeWidget(MeGlWindow* meGl)
 {
@@ -110,17 +111,15 @@ void MeWidget::AddTools()
 {
 	imgnToolBar = new ImgnToolBar;
 	mainLayout->addWidget(imgnToolBar, 1, 2);
-	imgnToolBar->setLayout(toolsLayout = new QHBoxLayout);
-	toolsLayout->addWidget(playButton = new QPushButton);
+	playButton = new QPushButton;
+	ImgnTool* tool = new ImgnTool(playButton,new QPushButton("^"));
+	imgnToolBar->AddTool(tool);
 	QPixmap pixmap(tr("C:/Users/Andrew/Documents/Neumont/Imagine/StaticData/Images/Play.png"));
 	playIcon = new QIcon(pixmap);
 	pixmap.load(tr("C:/Users/Andrew/Documents/Neumont/Imagine/StaticData/Images/Pause.png"));
 	pauseIcon = new QIcon(pixmap);
 
 	playButton->setIcon(*playIcon);
-	QSize iconSize(25, 25);
-	playButton->setIconSize(iconSize);
-	playButton->setFixedSize(iconSize);
 	connect(playButton, SIGNAL(pressed()), this, SLOT(OnPlayButtonPress()));
 }
 
@@ -163,7 +162,7 @@ void MeWidget::AddHierarchy()
 
 void MeWidget::mousePressEvent(QMouseEvent *)
 {
-	imgnToolBar->Initialize();
+	imgnToolBar->SetQssFile();
 	DetailsLayout::Instance()->ClearFocus();
 	if (focusWidget() != meGlWindow && focusWidget() != playButton)
 	{

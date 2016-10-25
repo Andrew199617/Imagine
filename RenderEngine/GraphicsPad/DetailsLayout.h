@@ -1,12 +1,12 @@
 #pragma once
 #include "ImgnFrame.h"
 #include "ImgnFwd.hpp"
+#include "ImgnAction.h"
+#include "Qt\qmenu.h"
 class QVBoxLayout;
 class TransformLayout;
 class QPushButton;
-class QMenu;
 class ImgnComponent;
-class ImgnAction;
 class QScrollArea;
 class Entity;
 
@@ -33,7 +33,7 @@ public:
 			detailsLayout = new DetailsLayout;
 		return detailsLayout;
 	}
-private:
+public:
 	void CreateActions();
 	void CreateMenu();
 	template <class T> void CreateAction();
@@ -57,6 +57,7 @@ private:
 	QMenu* componentMenu;
 	ImgnAction* addableComponents[50];
 	int numAddableComponenets;
+
 };
 
 template<class T> inline void DetailsLayout::CreateAction()

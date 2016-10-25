@@ -64,6 +64,9 @@
     <Filter Include="QT\QSS">
       <UniqueIdentifier>{3ecd608d-6a22-47a6-b80c-b4c1de9aadbf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{a5b8cc67-f1b6-435f-8ac3-b0865a540f0e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -281,6 +284,18 @@
     </ClCompile>
     <ClCompile Include="ImgnToolBar.cpp">
       <Filter>Imgn</Filter>
+    </ClCompile>
+    <ClCompile Include="ImgnTool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImgnToolBar_moc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\RigidBody.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -527,6 +542,15 @@
     <ClInclude Include="ImgnToolBar.h">
       <Filter>Imgn</Filter>
     </ClInclude>
+    <ClInclude Include="ImgnTool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\RigidBody.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\vRippledSurfaceShader.glsl">
@@ -580,6 +604,8 @@
     <None Include="CSS\QMenu.qss">
       <Filter>QT\QSS</Filter>
     </None>
-    <None Include="CSS\ImgnToolBar.qss" />
+    <None Include="CSS\ImgnToolBar.qss">
+      <Filter>QT\QSS</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -18,9 +18,9 @@ public:
 	void Draw(float dt);
 
 	static EntityManager entityManager;
-	inline void SetWidth(int width) { m_Width = width; delete frameBuffer; frameBuffer = new FrameBuffer; frameBuffer->GenerateFBO(m_Width, m_Height); }
+	void SetWidth(int Width);
 	inline int GetWidth() { return m_Width; }
-	inline void SetHeight(int height) { m_Height = height; delete frameBuffer; frameBuffer = new FrameBuffer; frameBuffer->GenerateFBO(m_Width, m_Height);}
+	void SetHeight(int Height);
 	inline int GetHeight() { return m_Height; }
 
 	bool isPlaying;

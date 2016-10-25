@@ -31,6 +31,24 @@ GLuint uRegularDepthUL;
 
 EntityManager OriginalGame::entityManager;
 
+void OriginalGame::SetWidth(int Width)
+{
+	m_Width = Width; 
+	if(frameBuffer)
+		delete frameBuffer; 
+	frameBuffer = new FrameBuffer; 
+	frameBuffer->GenerateFBO(m_Width, m_Height);
+}
+
+void OriginalGame::SetHeight(int Height)
+{
+	m_Height = Height; 
+	if (frameBuffer)
+		delete frameBuffer; 
+	frameBuffer = new FrameBuffer; 
+	frameBuffer->GenerateFBO(m_Width, m_Height);
+}
+
 OriginalGame::OriginalGame()
 {
 

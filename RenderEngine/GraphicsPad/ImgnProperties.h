@@ -24,13 +24,14 @@ className(){																					\
 	Imgn::ImgnProperties* temp = Imgn::ImgnProperties::Instance();								\
 	if(typeid(this) != typeid(ImgnComponent*) && dynamic_cast<ImgnComponent*>(this) == NULL)	\
 	{																							\
-		string s = ": does not inherit ImgnComponent. Invalid  IMGN_GENERATE";				\
+		string s = ": does not inherit ImgnComponent. Invalid  IMGN_GENERATE";					\
 		GameLogger::log(typeid(this).name() + s);												\
 		GameLogger::shutdownLog();																\
 		exit(1);																				\
 	} 																							\
 	temp->AddClass(this,typeid(this).name());													\
 	Awake();
+
 	
 #pragma warning(push)
 #pragma warning(disable:4005)

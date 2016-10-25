@@ -9,7 +9,7 @@ class Component
 
 public:
 	Component();
-	~Component();
+	virtual ~Component();
 
 	bool Init();
 	virtual bool Initialize() { return true; }

@@ -7,6 +7,7 @@
 #include "Qt\qmessagebox.h"
 #include <fstream>
 #include <stdio.h>
+#include "ImgnToolBar.h"
 
 namespace Imgn
 {
@@ -84,18 +85,20 @@ namespace Imgn
 	void ImgnCreateComponent::CreateClass()
 	{
 		std::string s = className->text().toLocal8Bit().constData();
+		ImgnToolBar::classesToCompile[0] = s;
 		std::ofstream outputFile(s + ".h");
 
 		outputFile << "#pragma once" << std::endl;
 		outputFile << "#include \"ImgnComponent.h\"" << std::endl;
+		outputFile << "#include \"DetailsLayout.h\"" << std::endl;
 		outputFile << "#include \"ImgnProperties.h\"" << std::endl << std::endl;
 		outputFile << "class " << s << " :" << std::endl;
 		outputFile << "	public ImgnComponent" << std::endl;
 		outputFile << "{" << std::endl;
 		outputFile << "	IMGN_GENERATE(" << s << ")" << std::endl;
-		outputFile << "	\"Use IMGN_PROPERTY(var_name) to have variable appear in editor\"" << std::endl;
-		outputFile << "	\"IMGN_PROPERTY(gravity, 9.8)\"" << std::endl;
-		outputFile << "	\"...\"" << std::endl;
+		outputFile << "	\\\\Use IMGN_PROPERTY(var_name) to have variable appear in editor" << std::endl;
+		outputFile << "	\\\\IMGN_PROPERTY(gravity, 9.8)" << std::endl;
+		outputFile << "	\\\\..." << std::endl;
 		outputFile << "	IMGN_END(" << s << ")" << std::endl;
 		outputFile << "public:" << std::endl;
 		outputFile << "};" << std::endl;
@@ -112,6 +115,7 @@ namespace Imgn
 		system((s + ".h").c_str());
 		system((s + ".cpp").c_str());
 		this->close();
+		
 	}
 
 }

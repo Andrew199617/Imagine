@@ -13,6 +13,8 @@
 #include "Qt\qboxlayout.h"
 #include "Qt\qfile.h"
 #include "Qt\qdir.h"
+#include <windows.h>
+typedef long (*ADDCOMPONENTS)();
 
 DetailsLayout* DetailsLayout::detailsLayout = 0;
 
@@ -48,7 +50,6 @@ void DetailsLayout::Initialize()
 		"QPushButton {font-size: 16px; color: solid black;subcontrol-position: bottom center;}"
 		"QPushButton::menu-indicator{ subcontrol-position: right center; subcontrol-origin: padding; left: -5px;}");
 	CreateActions();
-	CreateMenu();
 	addComponentButton->setMenu(componentMenu);
 	connect(componentMenu, SIGNAL(aboutToShow()), this, SLOT(ResizeMenu()));
 
@@ -161,7 +162,27 @@ void DetailsLayout::CreateActions()
 
 void DetailsLayout::CreateMenu()
 {
-	
+	HINSTANCE hDLL;
+	LPCWSTR dll = L"GameName";
+	hDLL = LoadLibrary(dll);
+
+	if (hDLL)
+	{
+		FARPROC lpfnGetProcessID = GetProcAddress(HMODULE(hDLL), "AddComponents");
+		cout << GetLastError() << endl;
+		ADDCOMPONENTS AddComponents = ADDCOMPONENTS(lpfnGetProcessID);
+		cout << GetLastError() << endl;
+		if (!AddComponents)
+		{
+			// handle the error
+			FreeLibrary(hDLL);
+			//cout << "function not found for dll." << endl;
+		}
+		else
+		{
+			AddComponents();
+		}
+	}
 }
 
 void DetailsLayout::CreateNewComponent()
