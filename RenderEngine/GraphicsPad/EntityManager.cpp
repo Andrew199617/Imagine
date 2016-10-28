@@ -16,8 +16,6 @@
 #include "MovementComponent.h"
 #include "RenderEngine\RenderEngine.h"
 
-
-
 EntityManager::EntityManager()
 {
 }
@@ -85,7 +83,8 @@ bool EntityManager::InitializeSaveLoggerObjects()
 		entities[i].AddComponent(entitieMeshs[i], "Mesh");
 		for (int j = 0; j < numComponent[i] - 2; ++j)
 		{
-			entities[i].AddComponent(entitieComponents[i][j], saveLogger->GetComponentName(i, j + 3));
+			entities[i].AddComponent(entitieComponents[i][j], saveLogger->GetComponentName(i, j + 3).c_str());
+			saveLogger->LoadComponent(i, j + 3, entitieComponents[i][j]);
 		}
 		entitieMeshs[i]->setTransformInfo();
 		entitieSpatials[i]->SetRotate(saveLogger->GetRotate(entities[i].GetName()));
@@ -135,16 +134,32 @@ bool EntityManager::UpdateSaveLoggerObjects()
 		GameLogger::log(entities[pastNumObjs].GetName() + s);
 		return false;
 	}
-
+	
 	return true;
 }
 
 void EntityManager::SaveEntities()
 {
+	ImgnComponent** components;
+	Imgn::DisplayData* displayData;
 	for (int i = 0; i < num_Objs; ++i)
 	{
-
+		//if (!entity.IsSaved())
+		{
+			components = entities[i].GetComponents();
+			for (int iComponent = 0; iComponent < entities[i].GetNumComponents(); ++iComponent)
+			{
+				//if (!components[iComponent]->IsSaved())
+				{
+					displayData = components[iComponent]->GetDisplayData();
+					if (displayData)
+						saveLogger->AddComponentData(i, components[iComponent]->GetName(), displayData);
+				}
+			}
+		}
+		
 	}
+	int meme = 0;
 }
 
 void EntityManager::UpdateObjectPosition(int obj, glm::vec3 Position)
@@ -173,6 +188,7 @@ void EntityManager::Update(float dt, bool isPlaying)
 
 	if (isPlaying)
 	{
+		SaveEntities();
 		for (int i = 0; i < num_Objs; i++)
 		{
 			entities[i].Update(dt);
@@ -218,24 +234,47 @@ void EntityManager::SendNewDataToOpenGL()
 #include "GravityComponent.h"
 
 ImgnComponent ** EntityManager::GetComponents(int objNum)
-{																				
-	ImgnComponent** components = new ImgnComponent*[Imgn::MAX_COMPONENTS - 2];	
-	string name = saveLogger->GetName(objNum);									
-	int numComponents = 0;														
+{
+	ImgnComponent** components = new ImgnComponent*[Imgn::MAX_COMPONENTS - 2];
+	string name = saveLogger->GetName(objNum);
+	int numComponents = 0;
+	Imgn::DisplayData* displayData;
+	int iVar = 0;
+
 	if (name == "AIWorld")
 	{																		
 		components[numComponents] = new GravityComponent();
+		displayData = components[numComponents]->GetDisplayData();
+		if (displayData)
+		{
+			iVar = 0;
+				float* val0 = reinterpret_cast<float*>(displayData->values[iVar]);
+				*val0 = 1.980000;
+			iVar = 1;
+				int* val1 = reinterpret_cast<int*>(displayData->values[iVar]);
+				*val1 = 0;
+		}
 		numComponents++;
 	}
 	if (name == "Cube2")
 	{																		
 		components[numComponents] = new GravityComponent();
+		displayData = components[numComponents]->GetDisplayData();
+		if (displayData)
+		{
+			iVar = 0;
+				float* val0 = reinterpret_cast<float*>(displayData->values[iVar]);
+				*val0 = 2.980000;
+			iVar = 1;
+				int* val1 = reinterpret_cast<int*>(displayData->values[iVar]);
+				*val1 = 0;
+		}
 		numComponents++;
 	}
 	if (name == "DefaultObject3")
 	{																		
 	}
-																				
+
 	numComponent[objNum] += numComponents;										
 	return components;															
 }																				

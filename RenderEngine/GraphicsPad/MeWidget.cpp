@@ -45,6 +45,11 @@ void MeWidget::CreateActions()
 	openAct->setStatusTip(tr("Open a new Scene"));
 	connect(openAct, SIGNAL(triggered()), this, SLOT(openingFile()));
 
+	saveAct = new QAction(tr("&Save"), this);
+	saveAct->setShortcuts(QKeySequence::Save);
+	saveAct->setStatusTip(tr("Save your game"));
+	connect(saveAct, SIGNAL(triggered()), this, SLOT(Save()));
+
 	addObjectAct = new QAction(tr("&Add Object"), this);
 	addObjectAct->setShortcuts(QKeySequence::AddTab);
 	addObjectAct->setStatusTip(tr("Open a new Obj"));
@@ -82,7 +87,7 @@ void MeWidget::CreateMenus()
 {
 	fileMenu = menuBar()->addMenu(tr("&File"));
 	fileMenu->addAction(openAct);
-	fileMenu->addSeparator();
+	fileMenu->addAction(saveAct);
 
 	gameObjectMenu = menuBar()->addMenu(tr("&GameObject"));
 	gameObjectMenu->addAction(addObjectAct);
@@ -254,4 +259,9 @@ void MeWidget::OnPlayButtonPress()
 	}
 	meGlWindow->setFocus();
 	meGlWindow->game->isPlaying = !meGlWindow->game->isPlaying;
+}
+
+void MeWidget::Save()
+{
+	OriginalGame::entityManager.SaveEntities();
 }

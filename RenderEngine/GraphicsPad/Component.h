@@ -11,7 +11,6 @@ public:
 	Component();
 	virtual ~Component();
 
-	bool Init();
 	virtual bool Initialize() { return true; }
 	virtual bool Update(float dt) { dt; return true; }
 	virtual bool Draw() { return true; }

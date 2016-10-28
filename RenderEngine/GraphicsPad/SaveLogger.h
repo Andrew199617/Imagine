@@ -5,9 +5,11 @@
 #include "glm.hpp"
 #include "EntityData.h"
 #include <list>
+class ImgnComponent;
 
 namespace Imgn
 {
+	struct DisplayData;
 	const int MAXDATALENGTH = 4;
 	enum EntityDataTypes
 	{
@@ -36,9 +38,11 @@ public:
 	string GetName(int);
 	string GetSceneName(int objId);
 	void AddObj(string, string ObjName = " ");
-	void AddComponent(string ObjName, string ComponentName);
-	void AddComponent(int ObjNum, string ComponentName);
-	const char* GetComponentName(int objNum, int componentNum);
+	void LoadComponent(int ObjNum, int componentNum, ImgnComponent* component);
+	void AddNewComponent(string ObjName, string ComponentName, ImgnComponent* Component);
+	void AddNewComponent(int ObjNum, string ComponentName, ImgnComponent* Component);
+	void AddComponentData(int ObjNum, string ComponentName, Imgn::DisplayData* DisplayData);
+	string GetComponentName(int objNum, int componentNum);
 public:
 	glm::vec3 GetPosition(string);
 	glm::vec3 GetRotate(string);
@@ -59,7 +63,8 @@ private:
 	bool autoSave;
 
 	string entities[Imgn::MAX_ENTITIES * Imgn::MAXENTITYDATA][5];
-	string components[Imgn::MAX_ENTITIES][Imgn::MAX_COMPONENTS + 1];
+	string componentNames[Imgn::MAX_ENTITIES][Imgn::MAX_COMPONENTS + 1];
+	ImgnComponent* components[Imgn::MAX_ENTITIES][Imgn::MAX_COMPONENTS + 1];
 	string componentsData[Imgn::MAX_ENTITIES][Imgn::MAX_COMPONENTS + 1][Imgn::MAX_VARIABLES];
 	string currentFilename;
 	int curNumEntities;

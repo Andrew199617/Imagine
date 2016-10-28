@@ -16,6 +16,7 @@ class ImgnComponent;
 	sizePolicy().setHorizontalPolicy(QSizePolicy::Policy::Expanding);							\
 	sizePolicy().setVerticalPolicy(QSizePolicy::Policy::Minimum);								\
 	m_owner = 0;																				\
+	AwakeSuper();																				\
 }																								\
 ~##className();																							
 
@@ -29,8 +30,8 @@ className(){																					\
 		GameLogger::shutdownLog();																\
 		exit(1);																				\
 	} 																							\
-	temp->AddClass(this,typeid(this).name());													\
-	Awake();
+	temp->AddClass(this,typeid(this).name());													
+	
 
 	
 #pragma warning(push)

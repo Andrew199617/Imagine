@@ -92,7 +92,7 @@ namespace Imgn
 		if (added)
 		{
 			componentName.erase(std::remove_if(componentName.begin(), componentName.end(), isspace), componentName.end());
-			SaveLogger::Instance()->AddComponent(m_name,componentName);
+			SaveLogger::Instance()->AddNewComponent(m_name,componentName, c);
 		}
 		return added;
 	}

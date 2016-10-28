@@ -17,7 +17,7 @@ public:
 	~ImgnComponent();
 
 public:
-	
+	bool Init();
 	//Called every frame.
 	virtual bool Update(float) { return true; }
 	virtual bool Draw() { return true; }
@@ -36,6 +36,7 @@ public:
 	bool layoutHasData;
 	bool layoutInitalized;
 protected:
+	void AwakeSuper();
 	//Called in constructer, Use to initialize variables.
 	virtual void Awake() {}
 	//You can use components from other classes

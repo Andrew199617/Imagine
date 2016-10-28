@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'MeWidget.h'
 **
-** Created: Tue Oct 18 09:50:44 2016
+** Created: Fri Oct 28 03:14:22 2016
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const qtuint qt_meta_data_MeWidget[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -38,6 +38,7 @@ static const qtuint qt_meta_data_MeWidget[] = {
       65,    9,    9,    9, 0x08,
       77,    9,    9,    9, 0x08,
       88,    9,    9,    9, 0x08,
+     108,    9,    9,    9, 0x08,
 
        0        // eod
 };
@@ -45,7 +46,7 @@ static const qtuint qt_meta_data_MeWidget[] = {
 static const char qt_meta_stringdata_MeWidget[] = {
     "MeWidget\0\0WindowsShowEvent()\0openingFile()\0"
     "AddObject()\0AddCube()\0AddSphere()\0"
-    "AddPlane()\0OnPlayButtonPress()\0"
+    "AddPlane()\0OnPlayButtonPress()\0Save()\0"
 };
 
 void MeWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -61,6 +62,7 @@ void MeWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 4: _t->AddSphere(); break;
         case 5: _t->AddPlane(); break;
         case 6: _t->OnPlayButtonPress(); break;
+        case 7: _t->Save(); break;
         default: ;
         }
     }
@@ -99,9 +101,9 @@ int MeWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 8;
     }
     return _id;
 }

@@ -30,6 +30,7 @@ class MeWidget : public QMainWindow
 
 	QMenu* fileMenu;
 	QAction* openAct;
+	QAction* saveAct;
 
 	QMenu* gameObjectMenu;
 	QAction* addObjectAct;
@@ -67,6 +68,7 @@ protected:
 	void AddSphere();
 	void AddPlane();
 	void OnPlayButtonPress();
+	void Save();
 };
 
 

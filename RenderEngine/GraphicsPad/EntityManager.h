@@ -1,6 +1,5 @@
 #pragma once
 #include "Entity.h"
-#include "SceneryEntity.h"
 #include "ImgnFwd.hpp"
 #include "SpatialComponent.h"
 class NoiseGenerator;
@@ -41,7 +40,7 @@ public:
 public:
 	int num_Objs;
 
-	SceneryEntity entities[MAX_OBJS];
+	Imgn::Entity entities[MAX_OBJS];
 	SpatialComponent* entitieSpatials[MAX_OBJS];
 	MeshComponent* entitieMeshs[MAX_OBJS];
 	ImgnComponent** entitieComponents[MAX_OBJS];

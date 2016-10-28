@@ -12,19 +12,6 @@ Component::~Component()
 {
 }
 
-bool Component::Init()
-{
-	m_enabled = true;
-	SetSaved(true);
-	bool result = Initialize();
-	if (!result)
-	{
-		string s = ": failed to initialize";
-		GameLogger::log(this->GetName() + s);
-	}
-	return result;
-}
-
 void Component::SetName(const char * const name)
 {
 	for (int i = 0; i < Imgn::MAX_NAME_LEN; ++i)

@@ -39,6 +39,19 @@ ImgnComponent::~ImgnComponent()
 	}
 }
 
+bool ImgnComponent::Init()
+{
+	m_enabled = true;
+	SetSaved(true);
+	bool result = Initialize();
+	if (!result)
+	{
+		string s = ": failed to initialize";
+		GameLogger::log(this->GetName() + s);
+	}
+	return result;
+}
+
 void ImgnComponent::CreateWidgets()
 {
 	DisplayInEngine();
@@ -50,12 +63,16 @@ void ImgnComponent::DeleteWidgets()
 {
 }
 
+void ImgnComponent::AwakeSuper()
+{
+	displayData = Imgn::ImgnProperties::Instance()->GetMyProperties<decltype(this)>(componentType, componentTypeNum);
+	Awake();
+}
+
 void ImgnComponent::DisplayInEngine()
 {
 	if (!isHidden && componentType != -1)
 	{
-		Imgn::ImgnProperties* imgnProperties = Imgn::ImgnProperties::Instance();
-		displayData = imgnProperties->GetMyProperties<decltype(this)>(componentType,componentTypeNum);
 		if (displayData->hasData)
 		{
 			m_Layout = new QVBoxLayout;
