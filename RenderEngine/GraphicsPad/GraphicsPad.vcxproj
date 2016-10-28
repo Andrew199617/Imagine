@@ -18,7 +18,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -107,6 +107,7 @@
     <ClCompile Include="Hierarchy_moc.cpp" />
     <ClCompile Include="ImgnAction.cpp" />
     <ClCompile Include="ImgnComponent.cpp" />
+    <ClCompile Include="ImgnComponent_moc.cpp" />
     <ClCompile Include="ImgnCreateComponent.cpp" />
     <ClCompile Include="ImgnCreateComponent_moc.cpp" />
     <ClCompile Include="ImgnProperties.cpp" />
@@ -135,7 +136,6 @@
     <ClCompile Include="RenderEngine\BufferManager.cpp" />
     <ClCompile Include="RenderEngine\FragmentShaderInfo.cpp" />
     <ClCompile Include="GameTime.cpp" />
-    <ClCompile Include="Main.cpp" />
     <ClCompile Include="MeGlWindow.cpp" />
     <ClCompile Include="MeWidget.cpp" />
     <ClCompile Include="OriginalGame.cpp" />

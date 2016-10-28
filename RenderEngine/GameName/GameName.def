@@ -1,0 +1,3 @@
+LIBRARY GameName
+EXPORTS
+	AddActionToDetailsLayout @1

@@ -7,7 +7,6 @@ class NoiseGenerator;
 class NodeMap;
 class QMouseEvent;
 class SaveLogger;
-//class MoveComponent;
 #define MAX_OBJS 500
 
 
@@ -20,12 +19,14 @@ public:
 public:
 	bool Initialize();
 	bool InitializeSaveLoggerObjects();
+	void AddEntity();
 	bool UpdateSaveLoggerObjects();
 
 public:
-	inline void UpdateObjectPosition(int obj, glm::vec3 Position) { entitieSpatials[obj]->SetPosition(Position); }
-	inline void UpdateObjectRotate(int obj, glm::vec3 Rotation) { entitieSpatials[obj]->SetRotate(Rotation); }
-	inline void UpdateObjectScale(int obj, glm::vec3 Scale) { entitieSpatials[obj]->SetScale(Scale); }
+	void SaveEntities();
+	void UpdateObjectPosition(int obj, glm::vec3 Position);
+	void UpdateObjectRotate(int obj, glm::vec3 Rotation);
+	void UpdateObjectScale(int obj, glm::vec3 Scale);
 
 public:
 	void Update(float dt, bool isPlaying);
@@ -38,19 +39,17 @@ public:
 	void SendNewDataToOpenGL();
 
 public:
-	//NoiseGenerator noiseGenerator;
-	//NodeMap nodeMap[4];
-
 	int num_Objs;
 
 	SceneryEntity entities[MAX_OBJS];
 	SpatialComponent* entitieSpatials[MAX_OBJS];
 	MeshComponent* entitieMeshs[MAX_OBJS];
-	ImgnComponent* entitieComponents[Imgn::MAX_COMPONENTS][MAX_OBJS];
+	ImgnComponent** entitieComponents[MAX_OBJS];
 	int numComponent[MAX_OBJS];
 	int currentlySelectedObject;
 
 private:
+	ImgnComponent** GetComponents(int objNum);
 	SaveLogger* saveLogger;
 	Imgn::Entity player;
 	CameraComponent* playerCamera;
@@ -61,5 +60,6 @@ private:
 	GravityComponent* playerGravity;
 	ShootingComponent* playerShoot;
 	ObjectSelectorComponent* objController;
+
 };
 

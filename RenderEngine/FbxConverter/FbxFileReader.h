@@ -42,5 +42,6 @@ private:
 	string mAnimationName;
 	stringstream buffer;
 	bool deleteMemory = false;
+	void GetCenterOfMass();
 };
 

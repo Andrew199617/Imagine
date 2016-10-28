@@ -9,11 +9,6 @@ class MovementComponent :
 {
 	IMGN_GENERATE(MovementComponent)
 	IMGN_PROPERTY(strafeSpeed,0.0f)
-	IMGN_PROPERTY(strafeSpeed, 0.0f)
-	IMGN_PROPERTY(strafeSpeed, 0.0f)
-	IMGN_PROPERTY(strafeSpeed, 0.0f)
-	IMGN_PROPERTY(strafeSpeed, 0.0f)
-	IMGN_PROPERTY(strafeSpeed, 0.0f)
 	IMGN_END(MovementComponent)
 	
 protected:

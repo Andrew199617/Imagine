@@ -6,9 +6,18 @@
 #include "ImgnProperties.h"
 #include "Qt\qboxlayout.h"
 
-#define ADDQLINEEDIT(type) else if (name == typeid(type*).name()) \
+#define ADDQLINEEDIT(type) if (name == typeid(type*).name()) \
 { \
-	properties[i]->addWidget(new QLineEdit(std::to_string(*static_cast<float*>(displayData.values[i])).c_str())); \
+	QLineEdit* lineEdit = new QLineEdit(std::to_string(*static_cast<type*>(displayData->values[i])).c_str()); \
+	lineEdit->setObjectName(std::to_string(i).c_str()); \
+	properties[i]->addWidget(lineEdit); \
+	connect(lineEdit, SIGNAL(returnPressed()), this, SLOT(LineEdited())); \
+} \
+
+#define UPDATEQLINEEDIT(type, Type) if (name == typeid(type*).name()) \
+{ \
+	type* val = reinterpret_cast<type*>(displayData->values[i]); \
+	*val = lineEdit->text().##Type; \
 } \
 
 ImgnComponent::ImgnComponent()
@@ -18,12 +27,16 @@ ImgnComponent::ImgnComponent()
 	layoutHasData = false; 
 	isHidden = true;
 	m_owner = 0;
-	
+	displayData = 0;
 }
 
 
 ImgnComponent::~ImgnComponent()
 {
+	if (displayData)
+	{
+		delete displayData;
+	}
 }
 
 void ImgnComponent::CreateWidgets()
@@ -42,33 +55,47 @@ void ImgnComponent::DisplayInEngine()
 	if (!isHidden && componentType != -1)
 	{
 		Imgn::ImgnProperties* imgnProperties = Imgn::ImgnProperties::Instance();
-		Imgn::DisplayData displayData = imgnProperties->HasProperties<decltype(this)>(componentType,componentTypeNum);
-		if (displayData.hasData)
+		displayData = imgnProperties->GetMyProperties<decltype(this)>(componentType,componentTypeNum);
+		if (displayData->hasData)
 		{
 			m_Layout = new QVBoxLayout;
 			m_Layout->addSpacing(12);
-			for (int i = 0; i < displayData.numValues; i++)
+			for (int i = 0; i < displayData->numValues; i++)
 			{
 				properties[i] = new QHBoxLayout();
-				properties[i]->addWidget(propertyNames[i] = new QLabel(displayData.variableNames[i].c_str()));
+				properties[i]->addWidget(propertyNames[i] = new QLabel(displayData->variableNames[i].c_str()));
 
-				const char* name = displayData.typeName[i];
-				if (name == typeid(float*).name())
+				const char* name = displayData->typeName[i];
+
+				ADDQLINEEDIT(float)
+				else ADDQLINEEDIT(int)
+				else ADDQLINEEDIT(double)
+				else ADDQLINEEDIT(long)
+				//else ADDQLINEEDIT(char)
+				else ADDQLINEEDIT(short)
+				else ADDQLINEEDIT(unsigned int)
+				//else ADDQLINEEDIT(unsigned char)
+				else if (name == typeid(string*).name())
 				{
-					properties[i]->addWidget(new QLineEdit(std::to_string(*static_cast<float*>(displayData.values[i])).c_str()));
+					QLineEdit* lineEdit = new QLineEdit((*static_cast<string*>(displayData->values[i])).c_str());
+					lineEdit->setObjectName(std::to_string(i).c_str());
+					properties[i]->addWidget(lineEdit); 
+					connect(lineEdit, SIGNAL(returnPressed()), this, SLOT(LineEdited())); 
 				}
-				ADDQLINEEDIT(int)
-				ADDQLINEEDIT(double)
-				ADDQLINEEDIT(string)
-				ADDQLINEEDIT(char)
-				ADDQLINEEDIT(const char)
-				if (name == typeid(bool*).name())
+				else if (name == typeid(char**).name())
+				{
+					QLineEdit* lineEdit = new QLineEdit((*static_cast<char**>(displayData->values[i])));
+					lineEdit->setObjectName(std::to_string(i).c_str());
+					properties[i]->addWidget(lineEdit);
+					connect(lineEdit, SIGNAL(returnPressed()), this, SLOT(LineEdited()));
+				}
+				else if (name == typeid(bool*).name())
 				{
 					properties[i]->addWidget(new QCheckBox);
 				}
-				if (name == typeid(glm::vec3*).name())
+				else if (name == typeid(glm::vec3*).name())
 				{
-					glm::vec3* vec = static_cast<glm::vec3*>(displayData.values[i]);
+					glm::vec3* vec = static_cast<glm::vec3*>(displayData->values[i]);
 
 					properties[i]->addWidget(new QLineEdit(std::to_string(vec->x).c_str()));
 					properties[i]->addWidget(new QLineEdit(std::to_string(vec->y).c_str()));
@@ -83,6 +110,29 @@ void ImgnComponent::DisplayInEngine()
 			m_Layout->minimumSize().setHeight(50);
 			setLayout(m_Layout);
 			layoutHasData = true;
+		}
+	}
+}
+
+void ImgnComponent::LineEdited()
+{
+	QObject* sender = QObject::sender();
+	string objectName = sender->objectName().toLocal8Bit().constData();
+
+	for (int i = 0; i < displayData->numValues; i++)
+	{
+		if (objectName == std::to_string(i))
+		{
+			const char* name = displayData->typeName[i];
+			QLineEdit* lineEdit = reinterpret_cast<QLineEdit*>(sender);
+			UPDATEQLINEEDIT(int, toInt())
+			else UPDATEQLINEEDIT(float, toFloat())
+			else UPDATEQLINEEDIT(double, toDouble())
+			else UPDATEQLINEEDIT(char*, toLocal8Bit().data())
+			else UPDATEQLINEEDIT(long, toLong())
+			else UPDATEQLINEEDIT(short, toShort())
+			else UPDATEQLINEEDIT(unsigned int, toUInt())
+			SetSaved(false);
 		}
 	}
 }

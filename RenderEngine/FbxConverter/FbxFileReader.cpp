@@ -31,11 +31,17 @@ FbxFileReader::~FbxFileReader()
 		delete[] fbxData.verts;
 		delete[] fbxData.normals;
 		delete[] fbxData.texture;
+		if (fbxData.hasAnimation)
+		{
+			delete[] fbxData.keys;
+			delete[] fbxData.animationData;
+		}
 	}
 }
 
 void FbxFileReader::Initialize(string fileName)
 {
+	fbxData.hasAnimation = false;
 	GetName(fileName);
 	ReadTextFile(fileName);
 
@@ -47,8 +53,8 @@ void FbxFileReader::Initialize(string fileName)
 	LoadScene(fileName);
 	ProcessSkeletonHierarchy(fbxScene->GetRootNode());
 	GetGeometryData();
-	//GetAnimation();
-	
+	GetCenterOfMass();
+
 	fbxData.SceneOutputFormat = 13;
 	binaryOutput.WriteCustomBinaryFile(fbxData);
 	deleteMemory = true;
@@ -113,6 +119,7 @@ void FbxFileReader::GetAnimation(FbxNode* lNode)
 		
 		FbxAnimLayer* lAnimLayer = currAnimStack->GetMember<FbxAnimLayer>(0);
 		lAnimCurve = lNode->LclTranslation.GetCurve(lAnimLayer, FBXSDK_CURVENODE_COMPONENT_Y);
+
 		keys = new FbxTime[lAnimCurve->KeyGetCount()];
 		fbxData.numKeys = lAnimCurve->KeyGetCount();
 		fbxData.animationData = new mat4[fbxData.animationLength];
@@ -316,6 +323,8 @@ void FbxFileReader::GetGeometryData()
 						(float)pVertices[iControlPointIndex].mData[1],
 						(float)pVertices[iControlPointIndex].mData[2]);
 					fbxData.verts[curVert] = vec;
+					
+					
 
 					//get uvs
 					FbxVector2 uv = uvVertices->GetAt(pMesh->GetTextureUVIndex(j, k));
@@ -386,4 +395,48 @@ void FbxFileReader::ReadTextFile(string filename)
 	buffer << meInput.rdbuf();
 }
 
+void FbxFileReader::GetCenterOfMass()
+{
+	float minX = FLT_MAX;
+	float minY = FLT_MAX;
+	float minZ = FLT_MAX;
+	float maxX = FLT_MIN;
+	float maxY = FLT_MIN;
+	float maxZ = FLT_MIN;
+	
+	for (int i = 0; i < fbxData.numVerts; ++i)
+	{
+		vec3 vec = fbxData.verts[i];
+
+		if (vec.x < minX)
+		{
+			minX = vec.x;
+		}
+		else if (vec.x > maxX)
+		{
+			maxX = vec.x;
+		}
+		
+		if (vec.y < minY)
+		{
+			minY = vec.y;
+		}
+		else if (vec.y > maxY)
+		{
+			maxY = vec.y;
+		}
+
+		if (vec.z < minZ)
+		{
+			minZ = vec.z;
+		}		
+		else if (vec.z > maxZ)
+		{
+			maxZ = vec.z;
+		}
+	}
+	
+	fbxData.centerOfMass = glm::vec3((maxX + minX)/2 , (maxY + minY) / 2 , (maxZ + minZ) / 2);
+
+}
 

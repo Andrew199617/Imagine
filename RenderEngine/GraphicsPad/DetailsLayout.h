@@ -57,7 +57,6 @@ private:
 	QMenu* componentMenu;
 	ImgnAction* addableComponents[50];
 	int numAddableComponenets;
-
 };
 
 template<class T> inline void DetailsLayout::CreateAction()

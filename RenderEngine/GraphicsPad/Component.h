@@ -19,6 +19,8 @@ public:
 	void Disable(bool enabled = false) { m_enabled = enabled; }
 	bool IsEnabled() const { return m_enabled; }
 	bool IsDisabled() const { return !m_enabled; }
+	bool IsSaved() const { return saved; }
+	void SetSaved(bool val) { saved = val; SetSaved_Implentation(val); }
 	void SetName(const char* const name);
 	void SetName(string name);
 	const char * const GetName() { return m_name; }
@@ -31,6 +33,7 @@ public:
 	static void BreakIf(bool condition = true);
 
 protected:
+	virtual void SetSaved_Implentation(bool) = 0;
 
 protected:
 	char	m_name[Imgn::MAX_NAME_LEN];
@@ -38,5 +41,6 @@ protected:
 
 private:
 	static bool s_breakable;
+	bool saved;
 };
 

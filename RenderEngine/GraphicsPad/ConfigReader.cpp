@@ -115,7 +115,6 @@ string ConfigReader::findValueForKey(string pKey)
 	{
 		if (value[i][0] == pKey)
 		{
-			//GameLogger::log("key: " + pKey + " Value: " + value[i][1]);
 			return value[i][1];
 		}
 

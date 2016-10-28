@@ -15,6 +15,7 @@ Component::~Component()
 bool Component::Init()
 {
 	m_enabled = true;
+	SetSaved(true);
 	bool result = Initialize();
 	if (!result)
 	{

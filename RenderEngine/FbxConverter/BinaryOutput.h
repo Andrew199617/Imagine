@@ -16,10 +16,6 @@ class BinaryOutput
 public:
 	BinaryOutput();
 	void WriteCustomBinaryFile(FbxData data);
-	void WriteCustomBinaryFile(string filename, int numVerts, int numIndices, glm::vec3* vertices, 
-		glm::vec3* colors, glm::vec3* normals, glm::vec2* texture, GLuint* indices, int SceneOutputFormat, 
-		int animationLength, bool hasAnimation,int numKeys, FbxTime* keys, glm::mat4* data);
-
 	int WriteHeader(std::ofstream& out, int numVerts, int numIndices, int sizeVerts, 
 		int sizeIndices, int SceneOutputFormat);
 
@@ -36,6 +32,10 @@ public:
 	int WriteVec2(std::ofstream& out, glm::vec2 vec);
 	int WriteGLuint(std::ofstream& out, GLuint value);
 	int WriteIndices(std::ofstream& out, int numIndices, GLuint* indices);
+	
+
+private:
+	void WriteCustomBinaryFile(GLuint* indices);
 	FbxData fbxData;
 };
 

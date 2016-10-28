@@ -8,6 +8,7 @@ struct Scene
 	int sizeVertex;
 	int sizeIndex;
 	int SceneOutputFormat;
+	bool hasAnimation;
 	void* vertices;
 	void* indices;
 };

@@ -86,7 +86,7 @@ bool GravityComponent::Update(float dt)
 	//should check to see the scene output format and do a switch
 	GetVerts();
 
-	if (objSelectedMinT > 0.05f)
+	if (objSelectedMinT > 0.05f + DistanceFromWall)
 	{
 		fall(dt);
 	}

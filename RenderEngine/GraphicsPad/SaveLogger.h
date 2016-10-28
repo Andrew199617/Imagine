@@ -1,41 +1,74 @@
 #pragma once
 #include <string>
+#include <sstream>
 #include <fstream>
 #include "glm.hpp"
+#include "EntityData.h"
+#include <list>
 
 namespace Imgn
 {
-	const int LENGTHOFVALUE = 50000;
+	const int MAXDATALENGTH = 4;
+	enum EntityDataTypes
+	{
+		Name,
+		SceneName,
+		Position,
+		Rotation,
+		Scale,
+		MAXENTITYDATA
+	};
 }
-
 using std::string;
 using std::ofstream;
 
 class SaveLogger
 {
-	SaveLogger() { Intialize(); }
+	SaveLogger();
 	~SaveLogger();
 public:
 	static SaveLogger* Instance() { if (!saveLogger) { saveLogger = new SaveLogger(); } return saveLogger; }
-	void Intialize(const char* filename = "..\\Data\\SaveLogger.txt");
-	void log(std::string objName, std::string textureLocation, string, glm::vec3 position);
-	void shutdownLog();
+	void Open(const char* filename = "..\\Data\\SaveLogger.txt");
+	
+	bool shutdownLog();
+
 	int GetNumObjs();
 	string GetName(int);
-	string GetObj(string);
-	void AddObj(string);
+	string GetSceneName(int objId);
+	void AddObj(string, string ObjName = " ");
+	void AddComponent(string ObjName, string ComponentName);
+	void AddComponent(int ObjNum, string ComponentName);
+	const char* GetComponentName(int objNum, int componentNum);
+public:
 	glm::vec3 GetPosition(string);
 	glm::vec3 GetRotate(string);
 	glm::vec3 GetScale(string);
-	bool ValueChanged();
+	void SetPosition(int, glm::vec3);
+	void SetRotate(int, glm::vec3);
+	void SetScale(int, glm::vec3);
+
+private:
+	void AddEntityData(string &word, string &s);
+	void AddComponentsForEntity(string &word);
+	void DeleteData();
+	void GenerateUniqueComponents();
+	void WriteComponentData(std::ofstream* meOutput);
+
 private:
 	static SaveLogger* saveLogger;
-	bool isComment(string word);
+	bool autoSave;
 
-	ofstream out;
-	int index;
-	string value[Imgn::LENGTHOFVALUE][5];
+	string entities[Imgn::MAX_ENTITIES * Imgn::MAXENTITYDATA][5];
+	string components[Imgn::MAX_ENTITIES][Imgn::MAX_COMPONENTS + 1];
+	string componentsData[Imgn::MAX_ENTITIES][Imgn::MAX_COMPONENTS + 1][Imgn::MAX_VARIABLES];
 	string currentFilename;
-	int curNumObjs;
-	
+	int curNumEntities;
+
+	int numUniqueComponents;
+	std::list<string> uniqueComponents;
+
+	std::stringstream buffer;
+	bool inQuotes = false;
+	int currentEntityDataType;
+	int entityData;
 };

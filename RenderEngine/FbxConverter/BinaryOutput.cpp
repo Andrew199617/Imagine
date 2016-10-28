@@ -28,63 +28,64 @@ void BinaryOutput::WriteCustomBinaryFile(FbxData data)
 	{
 		indcies[i] = i;
 	}
-	WriteCustomBinaryFile("..\\..\\StaticData\\Scenes\\" + data.name + ".scene", data.numVerts, data.numIndcies, data.verts, data.colors, data.normals, data.texture, indcies, data.SceneOutputFormat,data.animationLength,data.hasAnimation,data.numKeys,data.keys, data.animationData);
+	WriteCustomBinaryFile(indcies);
 	delete[] indcies;
-	delete[] data.keys;
-	delete[] data.animationData;
 }
 
-void BinaryOutput::WriteCustomBinaryFile(string filename, int numVerts, int numIndices, glm::vec3* vertices, glm::vec3* colors, glm::vec3* normals, glm::vec2* texture, GLuint* indices, int SceneOutputFormat, int animationLength, bool hasAnimation, int numKeys,FbxTime* keys,glm::mat4* data)
+void BinaryOutput::WriteCustomBinaryFile(GLuint* indices)
 {
+	string filename = "..\\..\\StaticData\\Scenes\\" + fbxData.name + ".imgnasset";
+
 	int totalBytes = 0;
 	std::ofstream outputStream(filename, std::ios::binary | std::ios::out);
 
 	outputStream.seekp(0);
 	WriteInt(outputStream, totalBytes);
 
-	int VertexSize = 0;
-	switch (SceneOutputFormat)
+	int vertexSize = 0;
+	switch (fbxData.SceneOutputFormat)
 	{
-	case PositionOnly: VertexSize = sizeof(glm::vec3);
+	case PositionOnly: vertexSize = sizeof(glm::vec3);
 		break;
-	case PositionColor: VertexSize = 2 * sizeof(glm::vec3);
+	case PositionColor: vertexSize = 2 * sizeof(glm::vec3);
 		break;
-	case PositionColorNormal: VertexSize = 3 * sizeof(glm::vec3);
+	case PositionColorNormal: vertexSize = 3 * sizeof(glm::vec3);
 		break;
-	case PositionColorTexture: VertexSize = (2 * sizeof(glm::vec3)) + sizeof(glm::vec2);
+	case PositionColorTexture: vertexSize = (2 * sizeof(glm::vec3)) + sizeof(glm::vec2);
 		break;
-	case PositionTexture: VertexSize = sizeof(glm::vec3) + sizeof(glm::vec2);
+	case PositionTexture: vertexSize = sizeof(glm::vec3) + sizeof(glm::vec2);
 		break;
-	case PositionNormal: VertexSize = 2 * sizeof(glm::vec3);
+	case PositionNormal: vertexSize = 2 * sizeof(glm::vec3);
 		break;
-	case PositionTextureNormal: VertexSize = (2 * sizeof(glm::vec3)) + sizeof(glm::vec2);
+	case PositionTextureNormal: vertexSize = (2 * sizeof(glm::vec3)) + sizeof(glm::vec2);
 		break;
-	case PositionColorTextureNormal: VertexSize = (3 * sizeof(glm::vec3)) + sizeof(glm::vec2);
+	case PositionColorTextureNormal: vertexSize = (3 * sizeof(glm::vec3)) + sizeof(glm::vec2);
 		break;
 
 	}
 
 
-	totalBytes += WriteHeader(outputStream, numVerts, numIndices, VertexSize, sizeof(GLuint), SceneOutputFormat);
-	totalBytes += WriteVertexData(outputStream, numVerts, vertices, colors, normals, texture, SceneOutputFormat);
-	totalBytes += WriteIndices(outputStream, numIndices, indices);
+	totalBytes += WriteHeader(outputStream, fbxData.numVerts, fbxData.numIndcies, vertexSize, sizeof(GLuint), fbxData.SceneOutputFormat);
+	totalBytes += WriteVertexData(outputStream, fbxData.numVerts, fbxData.verts, fbxData.colors, fbxData.normals, fbxData.texture, fbxData.SceneOutputFormat);
+	totalBytes += WriteIndices(outputStream, fbxData.numIndcies, indices);
 
 	outputStream.seekp(0);
 	WriteInt(outputStream, totalBytes);
 	outputStream.close();
 	printf("Scene : wrote %d bytes.\n", totalBytes);
+	if (!fbxData.hasAnimation) { return; }
 
 	totalBytes = 0;
 	std::ofstream out("..\\..\\StaticData\\Scenes\\" + fbxData.name + ".animation", std::ios::binary | std::ios::out);
 	out.seekp(0);
 	WriteInt(out, totalBytes);
-	
-	totalBytes += WriteInt(out, animationLength);
+
+	totalBytes += WriteInt(out, fbxData.animationLength);
 	//totalBytes += WriteInt(out, numKeys);
 	//totalBytes += WriteBool(out, hasAnimation);
 	totalBytes += WritePointer(out, 1);
 	//totalBytes += WriteKeys(out, numKeys, keys);
-	totalBytes += WriteAnimationData(out, animationLength, data);
+	totalBytes += WriteAnimationData(out, fbxData.animationLength, fbxData.animationData);
 
 	out.seekp(0);
 	WriteInt(out, totalBytes);
@@ -101,6 +102,7 @@ int BinaryOutput::WriteHeader(std::ofstream& out, int numVerts, int numIndices, 
 	totalBytes += WriteInt(out, sizeVerts);
 	totalBytes += WriteInt(out, sizeIndices);
 	totalBytes += WriteInt(out, SceneOutputFormat);
+	totalBytes += WriteInt(out, (int)fbxData.hasAnimation);
 	totalBytes += WritePointer(out, 2);
 	return totalBytes;
 }

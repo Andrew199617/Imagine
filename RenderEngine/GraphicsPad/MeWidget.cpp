@@ -175,6 +175,14 @@ void MeWidget::leaveEvent(QEvent * e)
 	QMainWindow::leaveEvent(e);
 }
 
+void MeWidget::closeEvent(QCloseEvent * ce)
+{
+	if (!meGlWindow->forceShutdown())
+	{
+		ce->ignore();
+	}
+}
+
 void MeWidget::WindowsShowEvent()
 {
 	QObject* object = QObject::sender();
@@ -197,7 +205,7 @@ void MeWidget::WindowsShowEvent()
 void MeWidget::openingFile()
 {
 	string str = openFileDialog.getFile();
-	saveLogger->Intialize(str.c_str());
+	saveLogger->Open(str.c_str());
 }
 
 void MeWidget::AddObject()
@@ -207,7 +215,7 @@ void MeWidget::AddObject()
 
 	string str = openFileDialog.getFile();
 	string ObjName = fileReader.GetName(str);
-	string sceneName = "..\\..\\StaticData\\Scenes\\" + ObjName + ".scene";
+	string sceneName = "..\\..\\StaticData\\Scenes\\" + ObjName + ".imgnasset";
 
 	Scene* scene = scenereader->ReadSceneFile(sceneName);
 	if (!scene)
@@ -221,17 +229,17 @@ void MeWidget::AddObject()
 
 void MeWidget::AddCube()
 {
-	saveLogger->AddObj("Cube");
+	saveLogger->AddObj("Cube","Cube");
 }
 
 void MeWidget::AddSphere()
 {
-	saveLogger->AddObj("Sphere");
+	saveLogger->AddObj("Sphere","Sphere");
 }
 
 void MeWidget::AddPlane()
 {
-	saveLogger->AddObj("Plane");
+	saveLogger->AddObj("Plane","Plane");
 }
 
 void MeWidget::OnPlayButtonPress()

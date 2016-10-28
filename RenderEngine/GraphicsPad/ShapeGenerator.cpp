@@ -113,20 +113,26 @@ Geometry* ShapeGenerator::readScene(string ObjName)
 	Geometry ret;
 	SceneReader scenereader;
 
-	string key = ObjName + "Scene";
+	string key = ObjName + ".imgnasset";
 	Scene* scene;
 	AnimationScene* aScene = 0;
 	string sceneName = ConfigReader::Instance()->findValueForKey(key);
 	if (sceneName != "0")
 	{
 		scene = scenereader.ReadSceneFile(sceneName);
+		/*string animKey = ObjName + ".animation";
+		sceneName = ConfigReader::Instance()->findValueForKey(key);
+		if (sceneName != "0") aScene = scenereader.ReadAnimationSceneFile(sceneName);*/
 	}
 	else
 	{
-		sceneName = "..\\..\\StaticData\\Scenes\\" + ObjName + ".scene";
+		sceneName = "..\\..\\StaticData\\Scenes\\" + key;
 		scene = scenereader.ReadSceneFile(sceneName);
-		sceneName = "..\\..\\StaticData\\Scenes\\" + ObjName + ".animation";
-		aScene = scenereader.ReadAnimationSceneFile(sceneName);
+		if (scene && scene->hasAnimation)
+		{
+			sceneName = "..\\..\\StaticData\\Scenes\\" + ObjName + ".animation";
+			aScene = scenereader.ReadAnimationSceneFile(sceneName);
+		}
 	}
 
 	if (!scene)
@@ -138,7 +144,6 @@ Geometry* ShapeGenerator::readScene(string ObjName)
 
 	if(scene->SceneOutputFormat & HasTexture)
 	{
-
 		geoArray[numGeos].texturePath = ConfigReader::Instance()->findValueForKey(ObjName + "Texture");
 	}
 	else

@@ -25,7 +25,9 @@ void GameTime::newFrame()
 
 float GameTime::timeElapsedLastFrame()
 {
+	if(deltaTime < 1)
 	return deltaTime;
+	else return 0;
 }
 
 float GameTime::getGameTime()

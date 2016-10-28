@@ -1,12 +1,32 @@
-
 Name AIWorld
-Obj AIWorld
+SceneName AIWorld
 Position "0.0,0.0,0.0"
 Rotate "0.0,1.0,0.0"
 Scale "1.0,1.0,1.0"
+Components 3 {
+    SpatialComponent
+    MeshComponent
+    GravityComponent
+}
 
-Name Cube
-Obj TestAnimation
+Name Cube2
+SceneName Cube
 Position "0.0,1.0,0.0"
 Rotate "0.0,1.0,0.0"
+Scale "2.0,2.0,2.0"
+Components 3 {
+    SpatialComponent
+    MeshComponent
+    GravityComponent
+}
+
+Name DefaultObject3
+SceneName Sphere
+Position "0.0,0.0,0.0"
+Rotate "0.0,1.0,0.0"
 Scale "1.0,1.0,1.0"
+Components 2 {
+    SpatialComponent
+    MeshComponent
+}
+

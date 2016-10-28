@@ -18,6 +18,8 @@ struct FbxData
 	glm::vec2* texture;
 	glm::vec3* normals;
 
+	glm::vec3 centerOfMass;
+
 	int numVerts;
 	int numIndcies;
 	int SceneOutputFormat;

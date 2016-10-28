@@ -57,8 +57,9 @@ private:
 protected:
 	void mousePressEvent(QMouseEvent*) override;
 	void leaveEvent(QEvent*) override;
+	void closeEvent(QCloseEvent *) override;
 
-private slots:
+	private slots:
 	void WindowsShowEvent();
 	void openingFile();
 	void AddObject();

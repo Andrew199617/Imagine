@@ -28,6 +28,7 @@ public:
 	MeGlWindow(void);
 	MeGlWindow(QApplication*, OriginalGame*);
 	void shutdown();
+	bool forceShutdown();
 	OriginalGame* game;
 
 

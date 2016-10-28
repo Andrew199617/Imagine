@@ -19,7 +19,7 @@ namespace Imgn
 		void SetName(string s);
 		const char * const GetName();
 		bool AddComponent(ImgnComponent* c, const char * const name);
-		bool AddComponent(ImgnComponent* c, string name);
+		bool AddComponent(ImgnComponent* c, string name, string componentName);
 		bool AddComponent(void* c, string name);
 		template <class T> T* GetComponentByType() const;
 
@@ -27,11 +27,14 @@ namespace Imgn
 		inline ImgnComponent** GetComponents() { return m_components; }
 		inline int GetNumComponents() { return numComponents; }
 		bool alreadyAdded;
+		bool IsSaved() const { return saved; }
+		void SetSaved(bool val) { saved = val; }
 	protected:
 		int numComponents;
 	private:
 		ImgnComponent* m_components[Imgn::MAX_COMPONENTS];
 		char m_name[Imgn::MAX_NAME_LEN];
+		bool saved;
 	};
 
 	template<class T>

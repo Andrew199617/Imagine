@@ -13,10 +13,12 @@ public:
 	virtual bool Initialize() override;
 	virtual bool Update(float) override;
 
+	void SetInertiaTensor(const glm::mat3 InertiaTensor);
+
 private:
 	float inverseMass;
 	glm::mat4* transformMatrix;
 	class SpatialComponent* spatial;
-
+	glm::mat3 inverseInertiaTensor;;
 };
 

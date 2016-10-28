@@ -82,9 +82,23 @@ void MeGlWindow::shutdown()
 {
 	if (GetAsyncKeyState(88) & 0x8000 || GetAsyncKeyState(27) & 0x8000)
 	{
-		SaveLogger::Instance()->shutdownLog();
+		if (SaveLogger::Instance()->shutdownLog())
+		{
+			GameLogger::shutdownLog();
+			app->exit();
+			ShutdownApp = true;
+		}
+	}
+}
+
+bool MeGlWindow::forceShutdown()
+{
+	if (SaveLogger::Instance()->shutdownLog())
+	{
 		GameLogger::shutdownLog();
 		app->exit();
 		ShutdownApp = true;
+		return true;
 	}
+	return false;
 }

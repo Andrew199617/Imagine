@@ -2,9 +2,8 @@ OutputColor			random
 OutputTexture			random
 OutputNormal			generate
 
-AIWorldObj			..\\..\\StaticData\\OBJs\\AIWorld.obj
 AIWorldSceneOutputFormat	13
-AIWorldScene			..\\..\\StaticData\\Scenes\\AIWorld.scene
+AIWorldScene			..\\..\\StaticData\\Scenes\\AIWorld.imgnasset
 //AIWorldFragmentShader   	//..\Graphicspad\Shader\fErosion.glsl
 AIWorldTexture			..\\..\\StaticData\\Texture\\brick.bmp
 AIWorldBumpMap			..\\..\\StaticData\\Texture\\brick_bump.bmp

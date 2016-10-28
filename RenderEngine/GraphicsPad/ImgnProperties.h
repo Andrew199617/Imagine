@@ -90,24 +90,24 @@ namespace Imgn {
 			
 		}
 
-		template<class T> DisplayData HasProperties(int componentType,int componentTypeNum)
+		template<class T> DisplayData* GetMyProperties(int componentType,int componentTypeNum)
 		{
-			DisplayData data;
-			data.hasData = false;
+			datas[componentType][componentTypeNum] = new DisplayData;
+			datas[componentType][componentTypeNum]->hasData = false;
 
 			if (typeid(T) == typeid(components[componentType][componentTypeNum]))
 			{
 				if (numValues[componentType][componentTypeNum] > 0)
 				{
-					data.values = values[componentType][componentTypeNum];
-					data.typeName = typeName[componentType][componentTypeNum];
-					data.variableNames = variableNames[componentType][componentTypeNum];
-					data.numValues = numValues[componentType][componentTypeNum];
-					data.hasData = true;
+					datas[componentType][componentTypeNum]->values = values[componentType][componentTypeNum];
+					datas[componentType][componentTypeNum]->typeName = typeName[componentType][componentTypeNum];
+					datas[componentType][componentTypeNum]->variableNames = variableNames[componentType][componentTypeNum];
+					datas[componentType][componentTypeNum]->numValues = numValues[componentType][componentTypeNum];
+					datas[componentType][componentTypeNum]->hasData = true;
 				}
 			}
 			
-			return data;
+			return datas[componentType][componentTypeNum];
 		}
 		
 		void AddClass(ImgnComponent* imgn, const char* typeName);
@@ -115,6 +115,7 @@ namespace Imgn {
 		int currentComponent;
 		int numSameComponent[MAX_COMPONENTS];
 	private:
+		DisplayData* datas[MAX_COMPONENTS][MAX_SAME_COMPONENT];
 		static ImgnProperties* props;
 		ImgnComponent* components[MAX_COMPONENTS][MAX_SAME_COMPONENT];
 		const char* componentNames[MAX_COMPONENTS];

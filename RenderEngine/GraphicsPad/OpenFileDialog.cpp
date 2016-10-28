@@ -7,7 +7,7 @@ OpenFileDialog::OpenFileDialog(void)
 	this->FileName = new TCHAR[MAX_PATH];
 	this->Filter = 0;
 	this->FilterIndex = 0;
-	this->Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+	this->Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
 	this->InitialDir = 0;
 	this->Owner = 0;
 	this->Title = 0;
@@ -18,7 +18,7 @@ bool OpenFileDialog::ShowDialog()
 	OPENFILENAME ofn;
 
 	ZeroMemory(&ofn, sizeof(ofn));
-
+	
 	ofn.lStructSize = sizeof(ofn);
 	ofn.hwndOwner = this->Owner;
 	ofn.lpstrDefExt = this->DefaultExtension;

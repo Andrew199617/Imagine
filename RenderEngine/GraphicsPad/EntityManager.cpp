@@ -74,15 +74,19 @@ bool EntityManager::InitializeSaveLoggerObjects()
 	{
 		entitieSpatials[i] = new SpatialComponent;
 		entitieMeshs[i] = new MeshComponent;
+		numComponent[i] = 2;
+		entitieComponents[i] = GetComponents(i);
 	}
 	for (int i = 0; i < num_Objs; i++)
 	{
 		entities[i].SetName(saveLogger->GetName(i));
 		entitieSpatials[i]->position = saveLogger->GetPosition(entities[i].GetName());
-		string componentType = "Transform";
-		entities[i].AddComponent(entitieSpatials[i], componentType);
-		componentType = "Mesh";
-		entities[i].AddComponent(entitieMeshs[i], componentType);
+		entities[i].AddComponent(entitieSpatials[i], "Transform");
+		entities[i].AddComponent(entitieMeshs[i], "Mesh");
+		for (int j = 0; j < numComponent[i] - 2; ++j)
+		{
+			entities[i].AddComponent(entitieComponents[i][j], saveLogger->GetComponentName(i, j + 3));
+		}
 		entitieMeshs[i]->setTransformInfo();
 		entitieSpatials[i]->SetRotate(saveLogger->GetRotate(entities[i].GetName()));
 		entitieSpatials[i]->SetScale(saveLogger->GetScale(entities[i].GetName()));
@@ -95,61 +99,77 @@ bool EntityManager::InitializeSaveLoggerObjects()
 	}
 
 	return true;
+}
+
+void EntityManager::AddEntity()
+{
+	if (!UpdateSaveLoggerObjects())
+	{
+		string s = "Save Logger Objects did not Update";
+		GameLogger::log(s);
+		GameLogger::shutdownLog();
+		exit(1);
+	}
+
+	objController->SetMeshs(num_Objs, entitieMeshs);
+	SendNewDataToOpenGL();
 }
 
 bool EntityManager::UpdateSaveLoggerObjects()
 {
 	int pastNumObjs = num_Objs;
 	num_Objs = saveLogger->GetNumObjs();
-	for (int i = pastNumObjs; i < num_Objs; i++)
+
+	entitieSpatials[pastNumObjs] = new SpatialComponent;
+	entitieMeshs[pastNumObjs] = new MeshComponent;
+	entities[pastNumObjs].SetName(saveLogger->GetName(pastNumObjs));
+	entitieSpatials[pastNumObjs]->position = saveLogger->GetPosition(entities[pastNumObjs].GetName());
+	entities[pastNumObjs].AddComponent(entitieSpatials[pastNumObjs], "Transform");
+	entities[pastNumObjs].AddComponent(entitieMeshs[pastNumObjs], "Mesh");
+	entitieMeshs[pastNumObjs]->setTransformInfo();
+	entitieSpatials[pastNumObjs]->SetRotate(saveLogger->GetRotate(entities[pastNumObjs].GetName()));
+	entitieSpatials[pastNumObjs]->SetScale(saveLogger->GetScale(entities[pastNumObjs].GetName()));
+	if (!entities[pastNumObjs].Initialize())
 	{
-		entitieSpatials[i] = new SpatialComponent;
-		entitieMeshs[i] = new MeshComponent;
-	}
-	for (int i = pastNumObjs; i < num_Objs; i++)
-	{
-		entities[i].SetName(saveLogger->GetName(i));
-		entitieSpatials[i]->position = saveLogger->GetPosition(entities[i].GetName());
-		string componentType = "Transform";
-		entities[i].AddComponent(entitieSpatials[i], componentType);
-		componentType = "Mesh";
-		entities[i].AddComponent(entitieMeshs[i], componentType);
-		entitieMeshs[i]->setTransformInfo();
-		entitieSpatials[i]->SetRotate(saveLogger->GetRotate(entities[i].GetName()));
-		entitieSpatials[i]->SetScale(saveLogger->GetScale(entities[i].GetName()));
-		if (!entities[i].Initialize())
-		{
-			string s = ": did not initialize";
-			GameLogger::log(entities[i].GetName() + s);
-			return false;
-		}
+		string s = ": did not initialize";
+		GameLogger::log(entities[pastNumObjs].GetName() + s);
+		return false;
 	}
 
 	return true;
 }
 
+void EntityManager::SaveEntities()
+{
+	for (int i = 0; i < num_Objs; ++i)
+	{
 
+	}
+}
+
+void EntityManager::UpdateObjectPosition(int obj, glm::vec3 Position)
+{
+	entitieSpatials[obj]->SetPosition(Position);
+	entitieSpatials[obj]->SetSaved(false);
+}
+
+void EntityManager::UpdateObjectRotate(int obj, glm::vec3 Rotation)
+{
+	entitieSpatials[obj]->SetRotate(Rotation);
+	entitieSpatials[obj]->SetSaved(false);
+}
+
+void EntityManager::UpdateObjectScale(int obj, glm::vec3 Scale)
+{
+	entitieSpatials[obj]->SetScale(Scale);
+	entitieSpatials[obj]->SetSaved(false);
+}
 
 void EntityManager::Update(float dt, bool isPlaying)
 {
 	TransformInfo::WorldToViewMatrix = playerCamera->getWorldToViewMatrix();
 	
 	player.Update(dt);
-
-	if (saveLogger->ValueChanged())
-	{
-
-		if (!UpdateSaveLoggerObjects())
-		{
-			string s = "Save Logger Objects did not Update";
-			GameLogger::log(s);
-			GameLogger::shutdownLog();
-			exit(1);
-		}
-
-		objController->SetMeshs(num_Objs, entitieMeshs);
-		SendNewDataToOpenGL();
-	}
 
 	if (isPlaying)
 	{
@@ -181,7 +201,7 @@ void EntityManager::SendDataToOpenGL()
 	TransformInfo::WorldToViewMatrix = playerCamera->getWorldToViewMatrix();
 	for (int i = 0; i < num_Objs; i++)
 	{
-		entitieMeshs[i]->setRenderInfo(saveLogger->GetObj(entities[i].GetName()));
+		entitieMeshs[i]->setRenderInfo(saveLogger->GetSceneName(i));
 		RenderEngine::AddRenderInfo(&entitieMeshs[i]->renderinfo);
 	}
 	
@@ -189,11 +209,33 @@ void EntityManager::SendDataToOpenGL()
 
 void EntityManager::SendNewDataToOpenGL()
 {
-	for (int i = num_Objs-1; i < num_Objs; i++)
-	{
-		entitieMeshs[i]->setRenderInfo(saveLogger->GetObj(entities[i].GetName()));
-		RenderEngine::AddRenderInfo(&entitieMeshs[i]->renderinfo);
-	}
+	entitieMeshs[num_Objs-1]->setRenderInfo(saveLogger->GetSceneName(num_Objs-1));
+	RenderEngine::AddRenderInfo(&entitieMeshs[num_Objs-1]->renderinfo);
 }
 
+//DO NOT REMOVE THESE COMMENTS
+//Add Here
+#include "GravityComponent.h"
 
+ImgnComponent ** EntityManager::GetComponents(int objNum)
+{																				
+	ImgnComponent** components = new ImgnComponent*[Imgn::MAX_COMPONENTS - 2];	
+	string name = saveLogger->GetName(objNum);									
+	int numComponents = 0;														
+	if (name == "AIWorld")
+	{																		
+		components[numComponents] = new GravityComponent();
+		numComponents++;
+	}
+	if (name == "Cube2")
+	{																		
+		components[numComponents] = new GravityComponent();
+		numComponents++;
+	}
+	if (name == "DefaultObject3")
+	{																		
+	}
+																				
+	numComponent[objNum] += numComponents;										
+	return components;															
+}																				

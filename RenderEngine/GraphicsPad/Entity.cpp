@@ -2,6 +2,7 @@
 #include <string>
 #include "ImgnComponent.h"
 #include "GameLogger.h"
+#include "SaveLogger.h"
 
 using std::cout;
 using std::endl;
@@ -58,13 +59,7 @@ namespace Imgn
 
 	void Entity::SetName(string s)
 	{
-		const char* c = s.c_str();
-		for (int i = 0; i < MAX_NAME_LEN; ++i)
-		{
-			m_name[i] = c[i];
-			if (!c[i]) return;
-		}
-		m_name[MAX_NAME_LEN - 1] = 0;
+		SetName(s.c_str());
 	}
 
 	const char * const Entity::GetName()
@@ -91,47 +86,32 @@ namespace Imgn
 		return false;
 	}
 
-	bool Entity::AddComponent(ImgnComponent * c, string name)
+	bool Entity::AddComponent(ImgnComponent * c, string name, string componentName)
 	{
-		for (int i = 0; i < MAX_COMPONENTS; ++i)
+		bool added = AddComponent(c, name.c_str());
+		if (added)
 		{
-			if (!m_components[i])
-			{
-				numComponents++;
-				m_components[i] = c;
-				c->SetOwner(this);
-				c->SetName(name);
-				return true;
-			}
+			componentName.erase(std::remove_if(componentName.begin(), componentName.end(), isspace), componentName.end());
+			SaveLogger::Instance()->AddComponent(m_name,componentName);
 		}
-		string s = ": Could not be added";
-		GameLogger::log(name + s);
-		cout << "check log" << endl;
-		return false;
+		return added;
 	}
 
 	bool Entity::AddComponent(void * c, string name)
 	{
-		string s = ": Could not be added";
-		for (int i = 0; i < MAX_COMPONENTS; ++i)
+		ImgnComponent* component = reinterpret_cast<ImgnComponent*>(c);
+		bool added = AddComponent(component, name, name);
+		if (added)
 		{
-			if (!m_components[i])
+			if (!component->Init())
 			{
-				numComponents++;
-				m_components[i] = reinterpret_cast<ImgnComponent*>(c);
-				m_components[i]->SetOwner(this);
-				m_components[i]->SetName(name);
-				if (!m_components[i]->Initialize())
-				{
-					s = ": Could not be initialized;";
-					break;
-				}
-				return true;
+				string s = ": Could not be initialized;";
+				GameLogger::log(name + s);
+				cout << "check log" << endl;
+				return false;
 			}
 		}
-		GameLogger::log(name + s);
-		cout << "check log" << endl;
-		return false;
+		return added;
 	}
 
 	bool Entity::Initialize()

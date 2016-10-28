@@ -71,6 +71,7 @@ void ImgnToolBar::Compile()
 	system((laguage + cppfile).c_str());
 	system((laguage + "ProjectComponents.hpp").c_str());
 	system((laguage + "DetailsLayout.cpp").c_str());*/
+
 	DetailsLayout::Instance()->CreateMenu();
 }
 

@@ -14,7 +14,7 @@
 #include "Qt\qfile.h"
 #include "Qt\qdir.h"
 #include <windows.h>
-typedef long (*ADDCOMPONENTS)();
+typedef void* (*ADDCOMPONENTS)(string*);
 
 DetailsLayout* DetailsLayout::detailsLayout = 0;
 
@@ -162,25 +162,47 @@ void DetailsLayout::CreateActions()
 
 void DetailsLayout::CreateMenu()
 {
+	
 	HINSTANCE hDLL;
-	LPCWSTR dll = L"GameName";
+	LPCWSTR dll = L"GameName.dll";
 	hDLL = LoadLibrary(dll);
+	ADDCOMPONENTS AddComponents;
 
 	if (hDLL)
 	{
-		FARPROC lpfnGetProcessID = GetProcAddress(HMODULE(hDLL), "AddComponents");
-		cout << GetLastError() << endl;
-		ADDCOMPONENTS AddComponents = ADDCOMPONENTS(lpfnGetProcessID);
-		cout << GetLastError() << endl;
+		AddComponents = (ADDCOMPONENTS)GetProcAddress(hDLL, "AddActionToDetailsLayout");
 		if (!AddComponents)
 		{
 			// handle the error
 			FreeLibrary(hDLL);
-			//cout << "function not found for dll." << endl;
+			cout << "function not found for dll." << endl;
 		}
 		else
 		{
-			AddComponents();
+			string name;
+			void* test = AddComponents(&name);
+			string objectName = name.substr(6, name.npos);
+			for (unsigned i = 1; i < objectName.length(); i++)
+			{
+				if (isupper(objectName.at(i)))
+				{
+					objectName += ' ';
+					for (unsigned j = objectName.length(); j > i; j--)
+					{
+						objectName[j] = objectName[j - 1];
+					}
+					objectName[i] = ' ';
+					objectName += ' ';
+					objectName[objectName.length() - 1] = '\0';
+					i += 2;
+				}
+			}
+			addableComponents[numAddableComponenets] = new ImgnAction(objectName.c_str(), this);
+			addableComponents[numAddableComponenets]->t = test;
+			addableComponents[numAddableComponenets]->setObjectName(objectName.c_str());
+			connect(addableComponents[numAddableComponenets], SIGNAL(triggered()), this, SLOT(ButtonPressed()));
+			componentMenu->addAction(addableComponents[numAddableComponenets]);
+			numAddableComponenets++;
 		}
 	}
 }
