@@ -28,6 +28,7 @@ SaveLogger* SaveLogger::saveLogger = 0;
 
 SaveLogger::SaveLogger()
 {
+	memset(components, 0, sizeof(components));
 	Open();
 	autoSave = true;
 }
@@ -66,14 +67,14 @@ void SaveLogger::Open(const char* filename)
 		if (word == "Components")
 		{
 			//AddComponents
-			AddComponentsForEntity(word);
+			LoadComponents(word);
 			//Finished adding object move on to next object.
 			curNumEntities++;
 		}
 		else
 		{
 			//Add Data for current Entity.
-			AddEntityData(word, s);
+			LoadEntityData(word, s);
 		}
 
 
@@ -83,8 +84,10 @@ void SaveLogger::Open(const char* filename)
 	GameLogger::log("Save Logger file loaded");
 }
 
-void SaveLogger::AddEntityData(string &word, string &s)
+void SaveLogger::LoadEntityData(string &word, string &s)
 {
+	bool inQuotes = false;
+
 	entities[currentEntityDataType][entityData] = word;
 	buffer >> word;
 	entityData++;
@@ -137,16 +140,20 @@ void SaveLogger::AddEntityData(string &word, string &s)
 	}
 }
 
-void SaveLogger::AddComponentsForEntity(string &word)
+void SaveLogger::LoadComponents(string &word)
 {
 	buffer >> word;
 	componentNames[curNumEntities][0] = word;
 	int currentComponent = 1;
 	buffer >> word;
-	while (true)
+	while (buffer.good())
 	{
 		buffer >> word;
-		if (word == "}")
+		if (word == "{")
+		{
+			LoadComponentData(currentComponent);
+		}
+		else if (word == "}")
 		{
 			break;
 		}
@@ -158,21 +165,36 @@ void SaveLogger::AddComponentsForEntity(string &word)
 	}
 }
 
+void SaveLogger::LoadComponentData(int currentComponent)
+{
+	string word;
+	int currentData = 0;
+	while (buffer.good())
+	{
+		buffer >> word;
+		if (word == "}")
+		{
+			break;
+		}
+		else
+		{
+			componentsData[curNumEntities][currentComponent - 1][currentData] = word;
+			currentData++;
+		}
+	}
+}
+
 void SaveLogger::DeleteData()
 {
 	if (currentFilename != "")
 	{
-		for (int j = 0; j < currentEntityDataType; j++)
-		{
-			for (int j2 = 0; j2 < Imgn::MAXDATALENGTH; j2++)
-			{
-				entities[j][j2] = " ";
-			}
-			for (int j2 = 0; j2 < Imgn::MAX_COMPONENTS + 1; j2++)
-			{
-				componentNames[j][j2] = " ";
-			}
-		}
+		numUniqueComponents = 0;
+		uniqueComponentNames.clear();
+		currentFilename = "";
+		memset(componentNames, 0, sizeof(componentNames));
+		memset(entities, 0, sizeof(entities));
+		memset(componentsData, 0, sizeof(componentsData));
+		memset(components, 0, sizeof(components));
 	}
 }
 
@@ -180,82 +202,118 @@ bool SaveLogger::shutdownLog()
 {
 	if (autoSave)
 	{
-		ofstream out(currentFilename, ios::out | ios::trunc);
-		if (out.is_open())
+		if ( !WriteToSaveFile() ) 
 		{
-			for (int i = 0; i < curNumEntities; ++i)
-			{
-				int index = i * Imgn::MAXENTITYDATA;
-				out << entities[index][0] << " " << entities[index][1] << "\n";
-				index++;
-				out << entities[index][0] << " " << entities[index][1] << "\n";
-				index++;
-				out << entities[index][0] << " " << '"' << entities[index][1] << "," << entities[index][2] << "," << entities[index][3] << '"' << "\n";
-				index++;
-				out << entities[index][0] << " " << '"' << entities[index][1] << "," << entities[index][2] << "," << entities[index][3] << '"' << "\n";
-				index++;
-				out << entities[index][0] << " " << '"' << entities[index][1] << "," << entities[index][2] << "," << entities[index][3] << '"' << "\n";
-
-				out << "Components " << componentNames[i][0] << " {\n";
-				int numComponents = std::stoi(componentNames[i][0]);
-				for (int j = 0; j < numComponents; ++j)
-				{
-					out << "    " << componentNames[i][j + 1] << "\n";
-				}
-				out << "}\n\n";
-			}
-			out.close();
-		}
-		else
-		{
-			cout << "could not save file canceled close so that you did not lose data." << std::endl;
 			return false;
 		}
-		
 		GenerateUniqueComponents();
-		ifstream meInput("..\\GraphicsPad\\EntityManager.cpp");
-		if (meInput)
-		{
-			std::stringstream emBuffer;
-			emBuffer << meInput.rdbuf();
-			std::ofstream meOutput("..\\GraphicsPad\\EntityManager.cpp", ios::out);
-			string s;
-			while (emBuffer.good())
-			{
-				getline(emBuffer, s);
-				meOutput << s << "\n";
-				if (s == "//Add Here")
-				{
-					for (std::list<string>::iterator it = uniqueComponents.begin(); it != uniqueComponents.end(); ++it)
-					{
-						meOutput << "#include \"" << *it << ".h\"" << "\n";
-					}
-					meOutput << "\n";
-					meOutput << "ImgnComponent ** EntityManager::GetComponents(int objNum)" << "\n";
-					meOutput << "{" << "\n";
-					meOutput << "	ImgnComponent** components = new ImgnComponent*[Imgn::MAX_COMPONENTS - 2];" << "\n";
-					meOutput << "	string name = saveLogger->GetName(objNum);" << "\n";
-					meOutput << "	int numComponents = 0;" << "\n";
-					meOutput << "	Imgn::DisplayData* displayData;" << "\n";
-					meOutput << "	int iVar = 0;" << "\n\n";
-					WriteComponentData(&meOutput);
-					meOutput << "\n";
-					/*if (numComponents == 0)
-					{
-						delete[] components;
-						return 0;
-					}*/
-					meOutput << "	numComponent[objNum] += numComponents;										" << "\n";
-					meOutput << "	return components;															" << "\n";
-					meOutput << "}																				" << "\n";
-					break;
-				}
-			}
-			meOutput.close();
-
-		}
+		WriteToEntityManager();
 	}
 	return true;
+}
+
+void SaveLogger::WriteToEntityManager()
+{
+	ifstream meInput("..\\GraphicsPad\\EntityManager.cpp");
+	if (meInput)
+	{
+		std::stringstream emBuffer;
+		emBuffer << meInput.rdbuf();
+		std::ofstream meOutput("..\\GraphicsPad\\EntityManager.cpp", ios::out);
+		string s;
+		while (emBuffer.good())
+		{
+			getline(emBuffer, s);
+			meOutput << s << "\n";
+			if (s == "//Add Here")
+			{
+				for (std::list<string>::iterator it = uniqueComponentNames.begin(); it != uniqueComponentNames.end(); ++it)
+				{
+					meOutput << "#include \"" << *it << ".h\"" << "\n";
+				}
+				meOutput << "\n";
+				meOutput << "ImgnComponent ** EntityManager::GetComponents(int objNum)" << "\n";
+				meOutput << "{" << "\n";
+				meOutput << "	ImgnComponent** components = new ImgnComponent*[Imgn::MAX_COMPONENTS - 2];" << "\n";
+				meOutput << "	string name = saveLogger->GetName(objNum);" << "\n";
+				meOutput << "	int numComponents = 0;" << "\n";
+				meOutput << "	Imgn::DisplayData* displayData;" << "\n";
+				meOutput << "	int iVar = 0;" << "\n\n";
+				WriteComponentData(&meOutput);
+				meOutput << "\n";
+				/*meOutput << "if (numComponents == 0)" << "\n";
+				meOutput << "{" << "\n";
+				meOutput << "	delete[] components;" << "\n";
+				meOutput << "	return 0;" << "\n";
+				meOutput << "}" << "\n";*/
+				meOutput << "	numComponent[objNum] += numComponents;										" << "\n";
+				meOutput << "	return components;															" << "\n";
+				meOutput << "}																				" << "\n";
+				break;
+			}
+		}
+		meOutput.close();
+
+	}
+}
+
+bool SaveLogger::WriteToSaveFile()
+{
+	ofstream out(currentFilename, ios::out | ios::trunc);
+	if (out.is_open())
+	{
+		for (int i = 0; i < curNumEntities; ++i)
+		{
+			int index = i * Imgn::MAXENTITYDATA;
+			out << entities[index][0] << " " << entities[index][1] << "\n";
+			index++;
+			out << entities[index][0] << " " << entities[index][1] << "\n";
+			index++;
+			out << entities[index][0] << " " << '"' << entities[index][1] << "," << entities[index][2] << "," << entities[index][3] << '"' << "\n";
+			index++;
+			out << entities[index][0] << " " << '"' << entities[index][1] << "," << entities[index][2] << "," << entities[index][3] << '"' << "\n";
+			index++;
+			out << entities[index][0] << " " << '"' << entities[index][1] << "," << entities[index][2] << "," << entities[index][3] << '"' << "\n";
+
+			WriteComponents(&out, i);
+
+			out << "}\n\n";
+		}
+		out.close();
+	}
+	else
+	{
+		cout << "could not save file canceled close so that you did not lose data." << std::endl;
+		return false;
+	}
+	return true;
+}
+
+void SaveLogger::WriteComponents(ofstream* out, int iEntity)
+{
+	*out << "Components " << componentNames[iEntity][0] << " {\n";
+	int numComponents = std::stoi(componentNames[iEntity][0]);
+	for (int j = 0; j < numComponents; ++j)
+	{
+		*out << "    " << componentNames[iEntity][j + 1] << "\n";
+		if (components[iEntity][j + 1])
+		{
+			Imgn::DisplayData* displayData = components[iEntity][j + 1]->GetDisplayData();
+			if (displayData)
+			{
+				*out << "    {" << "\n";
+				for (int iCompData = 0; iCompData < displayData->numValues; ++iCompData)
+				{
+					if (componentsData[iEntity][j + 1][iCompData] == "")
+					{
+						continue;
+					}
+					*out << "        " << componentsData[iEntity][j + 1][iCompData] << "\n";
+				}
+				*out << "    }" << "\n";
+			}
+		}
+	}
 }
 
 void SaveLogger::WriteComponentData(std::ofstream* meOutput)
@@ -301,11 +359,11 @@ void SaveLogger::GenerateUniqueComponents()
 		int numComponents = std::stoi(componentNames[i][0]);
 		for (int j = 3; j < numComponents + 1; ++j)
 		{
-			uniqueComponents.push_back(componentNames[i][j]);
+			uniqueComponentNames.push_back(componentNames[i][j]);
 		}
 	}
-	uniqueComponents.sort();
-	uniqueComponents.unique();
+	uniqueComponentNames.sort();
+	uniqueComponentNames.unique();
 }
 
 int SaveLogger::GetNumObjs()
@@ -363,12 +421,12 @@ void SaveLogger::AddObj(string SceneName, string ObjName)
 	OriginalGame::entityManager.AddEntity();
 }
 
-void SaveLogger::LoadComponent(int ObjNum, int componentNum, ImgnComponent* component)
+void SaveLogger::SetComponent(int ObjNum, int componentNum, ImgnComponent* component)
 {
 	components[ObjNum][componentNum] = component;
 }
 
-void SaveLogger::AddNewComponent(string objName, string ComponentName, ImgnComponent* Component)
+void SaveLogger::AddComponent(string objName, string ComponentName, ImgnComponent* Component)
 {
 	int currentObjNum = -1;
 	for (int i = 0; i < currentEntityDataType; ++i)
@@ -382,10 +440,10 @@ void SaveLogger::AddNewComponent(string objName, string ComponentName, ImgnCompo
 			break;
 		}
 	}
-	AddNewComponent(currentObjNum, ComponentName,Component);
+	AddComponent(currentObjNum, ComponentName,Component);
 }
 
-void SaveLogger::AddNewComponent(int objNum, string ComponentName, ImgnComponent* Component)
+void SaveLogger::AddComponent(int objNum, string ComponentName, ImgnComponent* Component)
 {
 	int numComponents = std::stoi(componentNames[objNum][0]);
 	componentNames[objNum][0] = std::to_string(numComponents + 1);
@@ -395,6 +453,10 @@ void SaveLogger::AddNewComponent(int objNum, string ComponentName, ImgnComponent
 
 void SaveLogger::AddComponentData(int ObjNum, string ComponentName, Imgn::DisplayData* DisplayData)
 {
+	if (!DisplayData || !DisplayData->hasData)
+	{
+		return;
+	}
 	int numComponents = std::stoi(componentNames[ObjNum][0]);
 	int j = 0;
 	for (int i = 3; i < numComponents+1; ++i)

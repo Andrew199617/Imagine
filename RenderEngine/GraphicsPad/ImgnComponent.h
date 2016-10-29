@@ -21,7 +21,7 @@ public:
 	//Called every frame.
 	virtual bool Update(float) { return true; }
 	virtual bool Draw() { return true; }
-	Imgn::DisplayData* GetDisplayData() { return displayData; }
+	Imgn::DisplayData* GetDisplayData();
 
 	void SetOwner(Imgn::Entity* owner) { m_owner = owner; }
 	Imgn::Entity* GetOwner() { return m_owner; }

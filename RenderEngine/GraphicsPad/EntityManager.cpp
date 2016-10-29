@@ -84,7 +84,7 @@ bool EntityManager::InitializeSaveLoggerObjects()
 		for (int j = 0; j < numComponent[i] - 2; ++j)
 		{
 			entities[i].AddComponent(entitieComponents[i][j], saveLogger->GetComponentName(i, j + 3).c_str());
-			saveLogger->LoadComponent(i, j + 3, entitieComponents[i][j]);
+			saveLogger->SetComponent(i, j + 3, entitieComponents[i][j]);
 		}
 		entitieMeshs[i]->setTransformInfo();
 		entitieSpatials[i]->SetRotate(saveLogger->GetRotate(entities[i].GetName()));
@@ -144,12 +144,12 @@ void EntityManager::SaveEntities()
 	Imgn::DisplayData* displayData;
 	for (int i = 0; i < num_Objs; ++i)
 	{
-		//if (!entity.IsSaved())
+		if (!entities[i].IsSaved())
 		{
 			components = entities[i].GetComponents();
 			for (int iComponent = 0; iComponent < entities[i].GetNumComponents(); ++iComponent)
 			{
-				//if (!components[iComponent]->IsSaved())
+				if (!components[iComponent]->IsSaved())
 				{
 					displayData = components[iComponent]->GetDisplayData();
 					if (displayData)
@@ -249,7 +249,7 @@ ImgnComponent ** EntityManager::GetComponents(int objNum)
 		{
 			iVar = 0;
 				float* val0 = reinterpret_cast<float*>(displayData->values[iVar]);
-				*val0 = 1.980000;
+				*val0 = 0.98;
 			iVar = 1;
 				int* val1 = reinterpret_cast<int*>(displayData->values[iVar]);
 				*val1 = 0;
@@ -264,10 +264,10 @@ ImgnComponent ** EntityManager::GetComponents(int objNum)
 		{
 			iVar = 0;
 				float* val0 = reinterpret_cast<float*>(displayData->values[iVar]);
-				*val0 = 2.980000;
+				*val0 = 2.98;
 			iVar = 1;
 				int* val1 = reinterpret_cast<int*>(displayData->values[iVar]);
-				*val1 = 0;
+				*val1 = 2;
 		}
 		numComponents++;
 	}

@@ -52,6 +52,11 @@ bool ImgnComponent::Init()
 	return result;
 }
 
+Imgn::DisplayData* ImgnComponent::GetDisplayData()
+{
+	if (displayData && displayData->hasData) return displayData; else return 0;
+}
+
 void ImgnComponent::CreateWidgets()
 {
 	DisplayInEngine();
@@ -73,7 +78,7 @@ void ImgnComponent::DisplayInEngine()
 {
 	if (!isHidden && componentType != -1)
 	{
-		if (displayData->hasData)
+		if (displayData && displayData->hasData)
 		{
 			m_Layout = new QVBoxLayout;
 			m_Layout->addSpacing(12);
