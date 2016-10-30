@@ -66,6 +66,7 @@ void BinaryOutput::WriteCustomBinaryFile(GLuint* indices)
 
 
 	totalBytes += WriteHeader(outputStream, fbxData.numVerts, fbxData.numIndcies, vertexSize, sizeof(GLuint), fbxData.SceneOutputFormat);
+	totalBytes += WriteVec3(outputStream, fbxData.centerOfMass);
 	totalBytes += WriteVertexData(outputStream, fbxData.numVerts, fbxData.verts, fbxData.colors, fbxData.normals, fbxData.texture, fbxData.SceneOutputFormat);
 	totalBytes += WriteIndices(outputStream, fbxData.numIndcies, indices);
 
@@ -103,7 +104,7 @@ int BinaryOutput::WriteHeader(std::ofstream& out, int numVerts, int numIndices, 
 	totalBytes += WriteInt(out, sizeIndices);
 	totalBytes += WriteInt(out, SceneOutputFormat);
 	totalBytes += WriteInt(out, (int)fbxData.hasAnimation);
-	totalBytes += WritePointer(out, 2);
+	totalBytes += WritePointer(out, 3);
 	return totalBytes;
 }
 

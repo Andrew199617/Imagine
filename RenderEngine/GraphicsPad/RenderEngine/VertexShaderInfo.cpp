@@ -14,7 +14,6 @@ float VertexShaderInfo::uD = 1;
 float VertexShaderInfo::uR = 1;
 float VertexShaderInfo::uMax = .8f;
 float VertexShaderInfo::uMin = .2f;
-bool VertexShaderInfo::isBumped = true;
 GLuint VertexShaderInfo::uRenderedTexUL = 0;
 
 VertexShaderInfo::VertexShaderInfo(const char* path)
@@ -148,8 +147,6 @@ void VertexShaderInfo::installShader(GLuint fragmentShaderID)
 	uMaxUL = glGetUniformLocation(programID, "uMax");
 	uMinUL = glGetUniformLocation(programID, "uMin");
 	uIsBumpedUL = glGetUniformLocation(programID, "isBumped");
-	uBumpMapUL = glGetUniformLocation(programID, "bumpMap");
-	uTextureUL = glGetUniformLocation(programID, "myTextureSampler");
 	uRenderedTexUL = glGetUniformLocation(programID, "renderedTexture");
 	uModelViewMatrixUL = glGetUniformLocation(programID,"uModelViewMatrix");
 	uProjectionMatrixUL = glGetUniformLocation(programID, "uProjectionMatrix");
@@ -157,8 +154,8 @@ void VertexShaderInfo::installShader(GLuint fragmentShaderID)
 	uNormalMatrixUL = glGetUniformLocation(programID, "uNormalMatrix");
 	GLuint uDepthTextureUL = glGetUniformLocation(programID, "depthTexture");
 
-	glUniform1i(uTextureUL, 0);
-	glUniform1i(uBumpMapUL, 1);
+	glUniform1i(glGetUniformLocation(programID, "myTextureSampler"), 0);
+	glUniform1i(glGetUniformLocation(programID, "bumpMap"), 1);
 	glUniform1i(uRenderedTexUL, 2);
 	glUniform1i(uDepthTextureUL, 3);
 }

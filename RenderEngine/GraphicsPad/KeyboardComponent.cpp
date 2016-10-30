@@ -73,11 +73,6 @@ void KeyboardComponent::ProcessKeys(float m_dt)
 		shoot->viewDirection = this->GetSiblingComponent<CameraComponent>()->viewDirection;
 
 	}
-	if (GetAsyncKeyState(Qt::Key::Key_B) & 0x8000 && dt > .5)
-	{
-		VertexShaderInfo::isBumped = !VertexShaderInfo::isBumped;
-		dt = 0;
-	}
 }
 
 

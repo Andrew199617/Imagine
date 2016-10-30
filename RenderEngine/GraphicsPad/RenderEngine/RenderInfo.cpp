@@ -32,7 +32,7 @@ void RenderInfo::Draw(float dt, bool isPlaying)
 		}
 		return;
 	}
-
+	
 	m_vertexShaderInfo->useProgram();
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_mesh->m_vertexId);
@@ -43,10 +43,15 @@ void RenderInfo::Draw(float dt, bool isPlaying)
 
 	if (m_mesh->VertexFormat & HasTexture)
 	{
-		m_textureInfo->bindTexture(m_vertexShaderInfo->uTextureUL, m_vertexShaderInfo->uBumpMapUL);
+		m_textureInfo->bindTexture();
 	}
 
 	glDrawElements(GL_TRIANGLES, m_mesh->m_indexCount, GL_UNSIGNED_INT, (void*)m_mesh->m_indexByteOffset);
+
+	if (m_mesh->VertexFormat & HasTexture)
+	{
+		m_textureInfo->unBindTexture();
+	}
 
 	if (next != 0)
 	{
@@ -57,6 +62,7 @@ void RenderInfo::Draw(float dt, bool isPlaying)
 
 void RenderInfo::SendAttributeData()
 {
+	
 	int VERTEX_BYTE_SIZE;
 	switch (m_mesh->VertexFormat)
 	{
@@ -112,13 +118,8 @@ void RenderInfo::SendUniformData(float dt, bool isPlaying)
 	glm::mat4 mat = m_transformInfo->m_translateTransform * m_transformInfo->m_rotateTransform * m_transformInfo->m_scaleTransform;
 	if (m_mesh->m_animationInfo.hasAnimation && isPlaying)
 	{
-		m_dt += dt;
 		mat *= m_mesh->m_animationInfo.animationData[m_mesh->m_animationInfo.currentFrame];
-		if (m_dt >= 1.0f / 60.0f)
-		{
-			m_mesh->m_animationInfo.IncrementCurrentFrame();
-			m_dt = 0;
-		}
+		m_mesh->m_animationInfo.IncrementCurrentFrame();
 	}
 	else if (m_mesh->m_animationInfo.hasAnimation)
 	{
@@ -136,7 +137,7 @@ void RenderInfo::SendUniformData(float dt, bool isPlaying)
 
 	glUniform1fv(m_vertexShaderInfo->uMaxUL, 1, &VertexShaderInfo::uMax);
 	glUniform1fv(m_vertexShaderInfo->uMinUL, 1, &VertexShaderInfo::uMin);
-	glUniform1i(m_vertexShaderInfo->uIsBumpedUL, VertexShaderInfo::isBumped);
+	glUniform1i(m_vertexShaderInfo->uIsBumpedUL, m_textureInfo->IsBumped());
 	glUniform3fv(m_vertexShaderInfo->uLightPositionUL, 1, &VertexShaderInfo::lightPosition[0]);
 	glUniform1fv(m_vertexShaderInfo->uPercentLerped, 1, &VertexShaderInfo::percentLerped);
 	glUniform1fv(m_vertexShaderInfo->percentRippledUniformLocaton, 1, &m_vertexShaderInfo->percentRippled);

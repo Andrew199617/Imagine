@@ -1,5 +1,6 @@
 #pragma once
 #include "GL\glew.h"
+#include "glm.hpp"
 
 struct Scene
 {
@@ -9,6 +10,7 @@ struct Scene
 	int sizeIndex;
 	int SceneOutputFormat;
 	bool hasAnimation;
+	void* centerOfMass;
 	void* vertices;
 	void* indices;
 };

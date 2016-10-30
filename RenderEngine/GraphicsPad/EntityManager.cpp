@@ -232,6 +232,7 @@ void EntityManager::SendNewDataToOpenGL()
 //DO NOT REMOVE THESE COMMENTS
 //Add Here
 #include "GravityComponent.h"
+#include "MovementComponent.h"
 
 ImgnComponent ** EntityManager::GetComponents(int objNum)
 {
@@ -243,35 +244,25 @@ ImgnComponent ** EntityManager::GetComponents(int objNum)
 
 	if (name == "AIWorld")
 	{																		
-		components[numComponents] = new GravityComponent();
-		displayData = components[numComponents]->GetDisplayData();
-		if (displayData)
-		{
-			iVar = 0;
-				float* val0 = reinterpret_cast<float*>(displayData->values[iVar]);
-				*val0 = 0.98;
-			iVar = 1;
-				int* val1 = reinterpret_cast<int*>(displayData->values[iVar]);
-				*val1 = 0;
-		}
-		numComponents++;
 	}
-	if (name == "Cube2")
+	if (name == "Cube")
 	{																		
 		components[numComponents] = new GravityComponent();
 		displayData = components[numComponents]->GetDisplayData();
 		if (displayData)
 		{
-			iVar = 0;
-				float* val0 = reinterpret_cast<float*>(displayData->values[iVar]);
-				*val0 = 2.98;
-			iVar = 1;
-				int* val1 = reinterpret_cast<int*>(displayData->values[iVar]);
-				*val1 = 2;
+			iVar = 0; float* val0 = reinterpret_cast<float*>(displayData->values[iVar]); *val0 = 1.980000;
+			iVar = 1; int* val1 = reinterpret_cast<int*>(displayData->values[iVar]); *val1 = 0;
+		}
+		numComponents++;
+		components[numComponents] = new MovementComponent();
+		displayData = components[numComponents]->GetDisplayData();
+		if (displayData)
+		{
 		}
 		numComponents++;
 	}
-	if (name == "DefaultObject3")
+	if (name == "Sphere")
 	{																		
 	}
 

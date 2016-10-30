@@ -81,7 +81,7 @@ void MeshComponent::setRenderInfo(string objname)
 	setUpFragmentVertexShader();
 	renderinfo.setVertexShaderInfo(&vertexShaderInfo);
 	renderinfo.setTextureInfo(new TextureInfo(renderinfo.getGeometry()->texturePath,objname));
-	renderinfo.getTextureInfo()->SendData(renderinfo.getVertexShaderInfo()->uTextureUL, renderinfo.getVertexShaderInfo()->uBumpMapUL);
+	renderinfo.getTextureInfo()->SendData();
 }
 
 void MeshComponent::setNodeRenderInfo(string objname, float radius)

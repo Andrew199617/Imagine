@@ -33,7 +33,6 @@ public:
 	GLint frequencyUniformLocation;
 	float percentRippled;
 	float density;
-	static bool isBumped;
 	static float uMin, uMax;
 
 	static float uR;
@@ -43,8 +42,6 @@ public:
 	GLint uMinUL, uMaxUL;
 	GLint uTexCoordOffsetUL;
 	GLint uIsBumpedUL;
-	GLint uBumpMapUL;
-	GLint uTextureUL;
 	GLint uModelViewMatrixUL;
 	GLint uProjectionMatrixUL;
 	GLint uModelViewProjectionMatrixUL;

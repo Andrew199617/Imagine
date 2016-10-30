@@ -145,6 +145,10 @@ Geometry* ShapeGenerator::readScene(string ObjName)
 	if(scene->SceneOutputFormat & HasTexture)
 	{
 		geoArray[numGeos].texturePath = ConfigReader::Instance()->findValueForKey(ObjName + "Texture");
+		if (geoArray[numGeos].texturePath == "0")
+		{
+			geoArray[numGeos].texturePath = ConfigReader::Instance()->findValueForKey("DefaultTexture");
+		}
 	}
 	else
 	{

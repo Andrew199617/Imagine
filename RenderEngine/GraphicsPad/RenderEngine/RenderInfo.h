@@ -41,6 +41,5 @@ private:
 	FragmentShaderInfo* m_fragmentShaderInfo = 0;
 	TextureInfo* m_textureInfo = 0;
 	RenderInfo* next;
-	float m_dt;
 };
 

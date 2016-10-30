@@ -15,8 +15,12 @@
 
 #define SETVALUESOFCOMPONENT(type) if (name == typeid(type*).name()) \
 { \
-*meOutput << "				" << #type << "* val" << std::to_string(iVar) << " = reinterpret_cast<" << #type << "*>(displayData->values[iVar]);" << "\n"; \
-*meOutput << "				*val" << std::to_string(iVar) << " = " << componentsData[i][j][iVar] << ";" << "\n"; \
+	if(componentsData[i][j][iVar] != "") \
+	{ \
+		*meOutput << "			iVar = " << iVar << "; "; \
+		*meOutput << "" << #type << "* val" << std::to_string(iVar) << " = reinterpret_cast<" << #type << "*>(displayData->values[iVar]);" << " "; \
+		*meOutput << "*val" << std::to_string(iVar) << " = " << componentsData[i][j][iVar] << ";" << "\n"; \
+	} \
 } 
 
 using std::endl;
@@ -334,7 +338,6 @@ void SaveLogger::WriteComponentData(std::ofstream* meOutput)
 				*meOutput << "		{" << "\n";
 				for (int iVar = 0; iVar < displayData->numValues; iVar++)
 				{
-					*meOutput << "			iVar = " << iVar << ";\n";
 					const char* name = displayData->typeName[iVar];
 					SETVALUESOFCOMPONENT(int)
 					else SETVALUESOFCOMPONENT(float)

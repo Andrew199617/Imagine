@@ -6,11 +6,30 @@
 
 TextureInfo::TextureInfo(string FileLocation, string objName)
 {
-	if(FileLocation != "0")
-	loadBMP_customFile(FileLocation);
+	InitializeValues();
+
+	if (FileLocation != "0")
+	{
+		loadBMP_customFile(FileLocation);
+		textured = true;
+	}
 	string bumpPath = ConfigReader::Instance()->findValueForKey(objName + "BumpMap");
-	if(bumpPath != "0")
-	loadBMP_customFileBumpMap(bumpPath);
+	if (bumpPath != "0")
+	{
+		loadBMP_customFileBumpMap(bumpPath);
+		bumped = true;
+	}
+}
+
+void TextureInfo::InitializeValues()
+{
+	bumped = false;
+	textured = false;
+	static int texLocS = 0;
+	static int bumpLocS = 1;
+	texLoc = texLocS;
+	bumpLoc = bumpLocS;
+	bumpLocS += 2; texLocS += 2;
 }
 
 TextureInfo::~TextureInfo()
@@ -96,35 +115,53 @@ void TextureInfo::loadBMP_customFileBumpMap(string bumpPath)
 	fclose(file);
 }
 
-void TextureInfo::bindTexture(GLint tex,GLint bumpMap)
+void TextureInfo::bindTexture()
 {
-	glActiveTexture(GL_TEXTURE0 + 0);
-	glBindTexture(GL_TEXTURE_2D, tex);
-
-	if (bumpMap != -1)
+	if (bumped)
 	{
 		glActiveTexture(GL_TEXTURE0 + 1);
-		glBindTexture(GL_TEXTURE_2D, bumpMap);
+		glBindTexture(GL_TEXTURE_2D, bumpLoc);
 	}
-
+	if(textured)
+	{
+		glActiveTexture(GL_TEXTURE0 + 0);
+		glBindTexture(GL_TEXTURE_2D, texLoc);
+	}
 }
 
-void TextureInfo::SendData(GLint tex, GLint bumpMap)
+void TextureInfo::SendData()
 {
-	glActiveTexture(GL_TEXTURE0 + 0);
-	glBindTexture(GL_TEXTURE_2D, tex);
+	if (textured)
+	{
+		glActiveTexture(GL_TEXTURE0 + 0);
+		glBindTexture(GL_TEXTURE_2D, texLoc);
 
-	// Give the image to OpenGL
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texWidth, texHeight, 0, GL_BGR, GL_UNSIGNED_BYTE, texData);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-	if (bumpMap != -1)
+		// Give the image to OpenGL
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texWidth, texHeight, 0, GL_BGR, GL_UNSIGNED_BYTE, texData);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	}
+	
+	if (bumped)
 	{
 		glActiveTexture(GL_TEXTURE0 + 1);
-		glBindTexture(GL_TEXTURE_2D, bumpMap);
+		glBindTexture(GL_TEXTURE_2D, bumpLoc);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bumpWidth, bumpHeight, 0, GL_BGR, GL_UNSIGNED_BYTE, bumpData);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	}
+}
+
+void TextureInfo::unBindTexture()
+{
+	if (bumped)
+	{
+		glActiveTexture(GL_TEXTURE0 + 1);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+	if (textured)
+	{
+		glActiveTexture(GL_TEXTURE0 + 0);
+		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 }

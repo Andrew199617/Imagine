@@ -70,6 +70,8 @@ Scene* SceneReader::ReadSceneFile(string filename)
 	Scene* scene = reinterpret_cast<Scene*> (data);
 	char* p = data;
 	p += sizeof(Scene);
+	scene->centerOfMass = reinterpret_cast<glm::vec3*> (p);
+	p += sizeof(glm::vec3);
 	scene->vertices = p;
 	p += scene->numVertices * scene->sizeVertex;
 	scene->indices = reinterpret_cast<GLuint*> (p);

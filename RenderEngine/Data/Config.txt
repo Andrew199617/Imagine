@@ -1,6 +1,7 @@
 OutputColor			random
 OutputTexture			random
 OutputNormal			generate
+DefaultTexture			..\\..\\StaticData\\Texture\\DefaultTexture.bmp
 
 AIWorldSceneOutputFormat	13
 AIWorldScene			..\\..\\StaticData\\Scenes\\AIWorld.imgnasset

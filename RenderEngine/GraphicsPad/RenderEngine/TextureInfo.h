@@ -9,11 +9,15 @@ class TextureInfo
 public:
 	TextureInfo(){};
 	TextureInfo(string FileLocation,string BumpLocation);
+
+	void InitializeValues();
+
 	~TextureInfo();
 	void loadBMP_customFile(string texpath);
 	void loadBMP_customFileBumpMap(string texpath);
-	void bindTexture(GLint tex,GLint);
-	void SendData(GLint tex, GLint);
+	void bindTexture();
+	void unBindTexture();
+	void SendData();
 	string objName;
 
 	unsigned char header[54]; // Each BMP file begins by a 54-bytes header
@@ -26,5 +30,11 @@ public:
 
 	unsigned int bumpWidth, bumpHeight;
 	unsigned char * bumpData;
+	bool IsBumped() { return bumped; }
+private:
+	bool bumped;
+	bool textured;
+	int texLoc;
+	int bumpLoc;
 };
 
