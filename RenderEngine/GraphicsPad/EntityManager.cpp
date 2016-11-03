@@ -15,6 +15,7 @@
 #include "MeshComponent.h"
 #include "MovementComponent.h"
 #include "RenderEngine\RenderEngine.h"
+#include "Physics\PhysicsTypeDefs.hpp"
 
 EntityManager::EntityManager()
 {
@@ -157,9 +158,7 @@ void EntityManager::SaveEntities()
 				}
 			}
 		}
-		
 	}
-	int meme = 0;
 }
 
 void EntityManager::UpdateObjectPosition(int obj, glm::vec3 Position)
@@ -170,7 +169,8 @@ void EntityManager::UpdateObjectPosition(int obj, glm::vec3 Position)
 
 void EntityManager::UpdateObjectRotate(int obj, glm::vec3 Rotation)
 {
-	entitieSpatials[obj]->SetRotate(Rotation);
+	glm::vec3 rotateInRadians = glm::vec3(Rotation.x * R_PI / 180, Rotation.y * R_PI / 180, Rotation.z * R_PI / 180);
+	entitieSpatials[obj]->SetRotate(glm::quat(rotateInRadians));
 	entitieSpatials[obj]->SetSaved(false);
 }
 
@@ -231,7 +231,7 @@ void EntityManager::SendNewDataToOpenGL()
 
 //DO NOT REMOVE THESE COMMENTS
 //Add Here
-#include "GravityComponent.h"
+#include "Physics/RigidBody.h"
 #include "MovementComponent.h"
 
 ImgnComponent ** EntityManager::GetComponents(int objNum)
@@ -247,23 +247,25 @@ ImgnComponent ** EntityManager::GetComponents(int objNum)
 	}
 	if (name == "Cube")
 	{																		
-		components[numComponents] = new GravityComponent();
-		displayData = components[numComponents]->GetDisplayData();
-		if (displayData)
-		{
-			iVar = 0; float* val0 = reinterpret_cast<float*>(displayData->values[iVar]); *val0 = 1.980000;
-			iVar = 1; int* val1 = reinterpret_cast<int*>(displayData->values[iVar]); *val1 = 0;
-		}
-		numComponents++;
 		components[numComponents] = new MovementComponent();
 		displayData = components[numComponents]->GetDisplayData();
 		if (displayData)
 		{
+			iVar = 0; float* val0 = reinterpret_cast<float*>(displayData->values[iVar]); *val0 = (float)50.000000;
 		}
 		numComponents++;
-	}
-	if (name == "Sphere")
-	{																		
+		components[numComponents] = new Imgn::RigidBody();
+		displayData = components[numComponents]->GetDisplayData();
+		if (displayData)
+		{
+			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)1;
+			iVar = 1; double* val1 = reinterpret_cast<double*>(displayData->values[iVar]); *val1 = (double)1.000000;
+			iVar = 2; float* val2 = reinterpret_cast<float*>(displayData->values[iVar]); *val2 = (float)0.020000;
+			iVar = 3; float* val3 = reinterpret_cast<float*>(displayData->values[iVar]); *val3 = (float)0.050000;
+			iVar = 4; bool* val4 = reinterpret_cast<bool*>(displayData->values[iVar]); *val4 = (bool)1;
+			iVar = 5; bool* val5 = reinterpret_cast<bool*>(displayData->values[iVar]); *val5 = (bool)0;
+		}
+		numComponents++;
 	}
 
 	numComponent[objNum] += numComponents;										

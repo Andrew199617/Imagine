@@ -11,7 +11,7 @@ class Test :
 	IMGN_END(Test)
 public:
 	int DllVar;
-	virtual bool Update(float) override;
+	virtual void Update(float) override;
 
 };
 

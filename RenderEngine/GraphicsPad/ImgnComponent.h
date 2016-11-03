@@ -19,7 +19,7 @@ public:
 public:
 	bool Init();
 	//Called every frame.
-	virtual bool Update(float) { return true; }
+	virtual void Update(float) {}
 	virtual bool Draw() { return true; }
 	Imgn::DisplayData* GetDisplayData();
 
@@ -56,7 +56,7 @@ protected:
 
 private:
 	void DisplayInEngine();
-	virtual void SetSaved_Implentation(bool val) override { m_owner->SetSaved(val); }
+	void SetSaved_Implentation(bool val) override { m_owner->SetSaved(val); }
 
 private slots:
 	void LineEdited();

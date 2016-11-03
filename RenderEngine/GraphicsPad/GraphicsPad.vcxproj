@@ -115,11 +115,12 @@
     <ClCompile Include="ImgnToolBar.cpp" />
     <ClCompile Include="ImgnToolBar_moc.cpp" />
     <ClCompile Include="KeyboardComponent.cpp" />
+    <ClCompile Include="Physics\Matrix4.cpp" />
+    <ClCompile Include="Physics\Matrix3.cpp" />
     <ClCompile Include="MeGLWindow_moc.cpp" />
     <ClCompile Include="MeshComponent.cpp" />
     <ClCompile Include="MeWidget_moc.cpp" />
     <ClCompile Include="MouseComponent.cpp" />
-    <ClCompile Include="MoveComponent.cpp" />
     <ClCompile Include="MovementComponent.cpp" />
     <ClCompile Include="NodeMap.cpp" />
     <ClCompile Include="NoiseGenerator.cpp" />
@@ -128,6 +129,7 @@
     <ClCompile Include="OpenFileDialog.cpp" />
     <ClCompile Include="PathFinding.cpp" />
     <ClCompile Include="PathFollowerComponent.cpp" />
+    <ClCompile Include="Physics\Vector3.cpp" />
     <ClCompile Include="PlayerEntity.cpp" />
     <ClCompile Include="CollisionTester.cpp" />
     <ClCompile Include="PursuitComponent.cpp" />
@@ -194,9 +196,10 @@
     <ClInclude Include="ImgnTool.h" />
     <ClInclude Include="ImgnToolBar.h" />
     <ClInclude Include="KeyboardComponent.h" />
+    <ClInclude Include="Physics\Matrix4.h" />
+    <ClInclude Include="Physics\Matrix3.h" />
     <ClInclude Include="MeshComponent.h" />
     <ClInclude Include="MouseComponent.h" />
-    <ClInclude Include="MoveComponent.h" />
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="NodeLink.h" />
@@ -207,9 +210,12 @@
     <ClInclude Include="PathFinding.h" />
     <ClInclude Include="PathFollowerComponent.h" />
     <ClInclude Include="PathingNodes.h" />
+    <ClInclude Include="Physics\PhysicsTypeDefs.hpp" />
+    <ClInclude Include="Physics\Vector3.h" />
     <ClInclude Include="PlayerEntity.h" />
     <ClInclude Include="CollisionTester.h" />
     <ClInclude Include="PursuitComponent.h" />
+    <ClInclude Include="Physics\Quaternion.h" />
     <ClInclude Include="RenderEngine\AnimationInfo.h" />
     <ClInclude Include="RenderEngine\BufferInfo.h" />
     <ClInclude Include="RenderEngine\BufferManager.h" />

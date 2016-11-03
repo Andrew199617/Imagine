@@ -29,11 +29,10 @@ bool StateComponent::Initialize()
 	return true;
 }
 
-bool StateComponent::Update(float dt)
+void StateComponent::Update(float dt)
 {
 	if (m_pGlobalState) m_pGlobalState->Execute(this,m_owner,dt);
 	if (m_pCurrentState) m_pCurrentState->Execute(this,m_owner,dt);
-	return true;
 }
 
 void StateComponent::ChangeState(State * pNewState)

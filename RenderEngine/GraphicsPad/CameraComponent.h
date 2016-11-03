@@ -12,7 +12,7 @@ public:
 	glm::mat4 getWorldToViewMatrix();
 	bool mouseUpdate();
 
-	virtual bool Update(float dt) override;
+	virtual void Update(float dt) override;
 	virtual bool Initialize() override;
 	glm::vec3 position;
 	glm::vec3 viewDirection;

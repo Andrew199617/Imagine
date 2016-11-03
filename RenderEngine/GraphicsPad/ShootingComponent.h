@@ -14,7 +14,7 @@ public:
 	~ShootingComponent();
 
 	virtual bool Initialize() override;
-	virtual bool Update(float dt) override;
+	virtual void Update(float dt) override;
 	bool arrowHasntBeenShot;
 
 	glm::vec3 viewDirection;

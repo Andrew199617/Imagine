@@ -16,7 +16,7 @@ public:
 	~StateComponent();
 
 	bool Initialize() override;
-	bool Update(float dt) override;
+	void Update(float dt) override;
 	void ChangeState(State* pNewState);
 	void RevertToPreviousState() { ChangeState(m_pPreviousState); }
 	bool isInState(const State* st) const;

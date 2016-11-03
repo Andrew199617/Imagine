@@ -12,7 +12,7 @@ public:
 	virtual ~Component();
 
 	virtual bool Initialize() { return true; }
-	virtual bool Update(float dt) { dt; return true; }
+	virtual void Update(float dt) { dt; }
 	virtual bool Draw() { return true; }
 	void Enable(bool enabled = true) { m_enabled = enabled; }
 	void Disable(bool enabled = false) { m_enabled = enabled; }

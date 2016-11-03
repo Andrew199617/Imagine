@@ -5,8 +5,7 @@ Test::~Test()
 {
 }
 
-bool Test::Update(float)
+void Test::Update(float)
 {
 	std::cout << "Hello from dll" << std::endl;
-	return true;
 }

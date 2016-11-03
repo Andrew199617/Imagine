@@ -4,6 +4,7 @@
 #include "Qt\qboxlayout.h"
 #include "Qt\qlabel.h"
 #include "Qt\qlineedit.h"
+#include "gtx/quaternion.hpp"
 
 TransformLayout::TransformLayout()
 {
@@ -65,7 +66,7 @@ void TransformLayout::SetupLabels(string name, QHBoxLayout** layout, QLabel** na
 void TransformLayout::SetTextBoxValues()
 {
 	glm::vec3 position = OriginalGame::entityManager.entitieSpatials[OriginalGame::entityManager.currentlySelectedObject]->position;
-	glm::vec3 rotate = OriginalGame::entityManager.entitieSpatials[OriginalGame::entityManager.currentlySelectedObject]->GetRotate();
+	glm::vec3 rotate = glm::eulerAngles(OriginalGame::entityManager.entitieSpatials[OriginalGame::entityManager.currentlySelectedObject]->GetRotate());
 	glm::vec3 scale = OriginalGame::entityManager.entitieSpatials[OriginalGame::entityManager.currentlySelectedObject]->GetScale();
 	XYZ_TextBoxs[0]->setText(std::to_string(position.x).c_str());
 	XYZ_TextBoxs[1]->setText(std::to_string(position.y).c_str());

@@ -2,6 +2,8 @@
 #include "glm.hpp"
 #include "GravityComponent.h"
 #include "ConfigReader.h"
+#include "Physics\RigidBody.h"
+#include <windows.h>
 
 MovementComponent::~MovementComponent()
 {
@@ -135,5 +137,17 @@ void MovementComponent::Jump(int time, float dt)
 	else
 	{
 		moveUp(dt);
+	}
+}
+
+void MovementComponent::Update(float dt)
+{
+	Imgn::RigidBody* rigidBody = GetSiblingComponent<Imgn::RigidBody>();
+	if (rigidBody)
+	{
+		if (GetAsyncKeyState(Qt::Key::Key_M) & 0x8000)
+		{
+			rigidBody->AddForce(Imgn::Vector3(0, strafeSpeed, 0));
+		}
 	}
 }

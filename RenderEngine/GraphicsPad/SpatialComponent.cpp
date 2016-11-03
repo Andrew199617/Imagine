@@ -9,7 +9,7 @@ SpatialComponent::SpatialComponent() :
 {
 	transformInfo = 0;
 	position = glm::vec3(0, 0, 0);
-	rotate = glm::vec3(0, 1, 0);
+	rotate = glm::quat();
 	scale = glm::vec3(1, 1, 1);
 }
 
@@ -35,10 +35,10 @@ void SpatialComponent::SetScale(glm::vec3 Scale)
 	transformInfo->m_scaleTransform = glm::scale(scale);
 }
 
-void SpatialComponent::SetRotate(glm::vec3 Rotate)
+void SpatialComponent::SetRotate(glm::quat Rotate)
 {
 	this->rotate = Rotate;
 	if (!transformInfo)
 		transformInfo = this->GetSiblingComponent<MeshComponent>()->renderinfo.getTransformInfo();
-	transformInfo->m_rotateTransform = glm::rotate(transformInfo->angle,rotate);
+	transformInfo->m_rotateTransform = glm::mat4_cast(rotate);
 }

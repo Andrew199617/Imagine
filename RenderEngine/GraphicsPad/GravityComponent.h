@@ -18,7 +18,7 @@ public:
 	void fall(float dt);
 	bool SomethingIsBelow(glm::vec3 pos0, glm::vec3 pos1, glm::vec3 pos2);
 	void GetVerts();
-	virtual bool Update(float dt) override;
+	virtual void Update(float dt) override;
 	virtual bool Initialize() override;
 	void SetMeshes() {}
 

@@ -14,7 +14,7 @@ class SteeringBehaviors : public ImgnComponent
 public:
 	SteeringBehaviors();
 	~SteeringBehaviors();
-	virtual bool Update(float dt) = 0;
+	virtual void Update(float dt) = 0;
 
 public:
 	SteeringForce Seek(glm::vec3 position, glm::vec3 target);

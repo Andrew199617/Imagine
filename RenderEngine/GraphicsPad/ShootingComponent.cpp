@@ -19,7 +19,7 @@ bool ShootingComponent::Initialize()
 	return true;
 }
 
-bool ShootingComponent::Update(float)
+void ShootingComponent::Update(float dt)
 {
 	CameraComponent* camera = this->GetSiblingComponent<CameraComponent>();
 	if (!camera)
@@ -39,6 +39,5 @@ bool ShootingComponent::Update(float)
 	{
 		Disable();
 	}*/
-	
-	return true;
+
 }

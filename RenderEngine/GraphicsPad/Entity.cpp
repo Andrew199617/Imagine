@@ -26,14 +26,7 @@ namespace Imgn
 		{
 			if (m_components[i] && m_components[i]->isEnabled())
 			{
-				bool result = m_components[i]->Update(dt);
-				if (!result)
-				{
-					string s = ": failed to update";
-					GameLogger::log(m_components[i]->GetName() + s);
-					GameLogger::shutdownLog();
-					exit(1);
-				}
+				m_components[i]->Update(dt);
 			}
 		}
 		/*for (int i = 0; i < MAX_COMPONENTS; i++)

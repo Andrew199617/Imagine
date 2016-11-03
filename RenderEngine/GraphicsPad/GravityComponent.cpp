@@ -72,7 +72,7 @@ void GravityComponent::GetVerts()
 	}
 }
 
-bool GravityComponent::Update(float dt)
+void GravityComponent::Update(float dt)
 {
 	spatial = this->GetSiblingComponent<SpatialComponent>();
 	if (!spatial)
@@ -80,7 +80,6 @@ bool GravityComponent::Update(float dt)
 		string s = ": can not obtain a Component";
 		GameLogger::log(this->GetName() + s);
 		GameLogger::shutdownLog();
-		return false;
 	}
 
 	//should check to see the scene output format and do a switch
@@ -95,7 +94,6 @@ bool GravityComponent::Update(float dt)
 		spatial->position.y = floorCollision + .05f;
 	}*/
 	objSelectedMinT = FLT_MAX;
-	return true;
 }
 
 bool GravityComponent::Initialize()

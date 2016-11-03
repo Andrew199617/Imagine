@@ -19,7 +19,7 @@ bool PathFollowerComponent::Initialize()
 	return true;
 }
 
-bool PathFollowerComponent::Update(float)
+void PathFollowerComponent::Update(float dt)
 {
 	
 	SeekBehaviorComponent* seek = this->GetSiblingComponent<SeekBehaviorComponent>();
@@ -27,14 +27,12 @@ bool PathFollowerComponent::Update(float)
 	{
 		string str = ": can not obtain Seek Component";
 		GameLogger::log(this->GetName() + str);
-		return false;
 	}
 	SpatialComponent* spatial = this->GetSiblingComponent<SpatialComponent>();
 	if (!seek)
 	{
 		string str = ": can not obtain Spatial Component";
 		GameLogger::log(this->GetName() + str);
-		return false;
 	}
 	
 
@@ -67,7 +65,6 @@ bool PathFollowerComponent::Update(float)
 		Done(seek);
 	}
 	
-	return true;
 }
 
 void PathFollowerComponent::Done(SeekBehaviorComponent* seek)

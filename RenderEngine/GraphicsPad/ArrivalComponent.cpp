@@ -11,7 +11,7 @@ ArrivalComponent::~ArrivalComponent()
 {
 }
 
-bool ArrivalComponent::Update(float dt)
+void ArrivalComponent::Update(float dt)
 {
 	SpatialComponent* spatial = this->GetSiblingComponent<SpatialComponent>();
 	if (!spatial)
@@ -19,7 +19,6 @@ bool ArrivalComponent::Update(float dt)
 		string s = ": can not obtain Spatial Component";
 		GameLogger::log(this->GetName() + s);
 		GameLogger::shutdownLog();
-		return false;
 	}
 	m_velocity = Arrival(spatial->position,3);
 	spatial->position += m_velocity * dt;
@@ -28,5 +27,4 @@ bool ArrivalComponent::Update(float dt)
 	{
 		spatial->position.z = -40;
 	}
-	return true;
 }

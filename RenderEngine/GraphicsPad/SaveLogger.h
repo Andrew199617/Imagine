@@ -3,6 +3,7 @@
 #include <sstream>
 #include <fstream>
 #include "glm.hpp"
+#include "gtx/quaternion.hpp"
 #include "EntityData.h"
 #include <list>
 class ImgnComponent;
@@ -46,7 +47,7 @@ public:
 	string GetComponentName(int objNum, int componentNum);
 public:
 	glm::vec3 GetPosition(string);
-	glm::vec3 GetRotate(string);
+	glm::quat GetRotate(string);
 	glm::vec3 GetScale(string);
 	void SetPosition(int, glm::vec3);
 	void SetRotate(int, glm::vec3);

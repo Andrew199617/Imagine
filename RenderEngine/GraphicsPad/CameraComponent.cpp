@@ -40,20 +40,18 @@ bool CameraComponent::mouseUpdate()
 	return true;
 }
 
-bool CameraComponent::Update(float dt)
+void CameraComponent::Update(float dt)
 {
 	SpatialComponent* spatial = this->GetSiblingComponent<SpatialComponent>();
 	if (!spatial)
 	{
 		string s = ": can not obtain spatial Component";
 		GameLogger::log(this->GetName() + s);
-		return false;
 	}
 	this->position = spatial->position;
 	this->position.z += Zoffset;
 	this->position.y += Yoffset;
 	dt;
-	return true;
 }
 
 bool CameraComponent::Initialize()

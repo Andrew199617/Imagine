@@ -54,7 +54,8 @@ bool ImgnComponent::Init()
 
 Imgn::DisplayData* ImgnComponent::GetDisplayData()
 {
-	if (displayData && displayData->hasData) return displayData; else return 0;
+	if (displayData && displayData->hasData) return displayData; 
+	else return 0;
 }
 
 void ImgnComponent::CreateWidgets()
@@ -113,7 +114,11 @@ void ImgnComponent::DisplayInEngine()
 				}
 				else if (name == typeid(bool*).name())
 				{
-					properties[i]->addWidget(new QCheckBox);
+					QCheckBox* checkBox = new QCheckBox();
+					checkBox->setChecked(*(static_cast<bool*>(displayData->values[i])));
+					checkBox->setObjectName(("Bool" + std::to_string(i)).c_str());
+					properties[i]->addWidget(checkBox);
+					connect(checkBox, SIGNAL(released()), this, SLOT(LineEdited()));
 				}
 				else if (name == typeid(glm::vec3*).name())
 				{
@@ -154,6 +159,13 @@ void ImgnComponent::LineEdited()
 			else UPDATEQLINEEDIT(long, toLong())
 			else UPDATEQLINEEDIT(short, toShort())
 			else UPDATEQLINEEDIT(unsigned int, toUInt())
+			SetSaved(false);
+		}
+		if (objectName == "Bool" + std::to_string(i))
+		{
+			QCheckBox* checkBox = reinterpret_cast<QCheckBox*>(sender);
+			bool* val = reinterpret_cast<bool*>(displayData->values[i]);
+			*val = checkBox->isChecked();
 			SetSaved(false);
 		}
 	}

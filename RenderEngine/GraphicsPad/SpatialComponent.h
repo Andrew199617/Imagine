@@ -15,8 +15,8 @@ public:
 	~SpatialComponent();
 	void SetPosition(glm::vec3 Position);
 	void SetScale(glm::vec3 Scale);
-	void SetRotate(glm::vec3 Rotate);
-	inline glm::vec3 GetRotate() { return rotate; }
+	void SetRotate(glm::quat Rotate);
+	inline glm::quat GetRotate() { return rotate; }
 	inline glm::vec3 GetScale() { return scale; }
 
 	glm::vec3 position;
@@ -26,6 +26,6 @@ public:
 private:
 	TransformInfo* transformInfo;
 	glm::vec3 scale;
-	glm::vec3 rotate;
+	glm::quat rotate;
 };
 

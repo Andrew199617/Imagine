@@ -14,6 +14,13 @@ TransformInfo::TransformInfo(glm::vec3 m_translateTransform, glm::vec3 m_scaleTr
 	this->angle = angle;
 }
 
+TransformInfo::TransformInfo(glm::vec3 m_translateTransform, glm::vec3 m_scaleTransform, glm::quat rotation)
+{
+	this->m_translateTransform = glm::translate(m_translateTransform);
+	this->m_scaleTransform = glm::scale(m_scaleTransform);
+	this->m_rotateTransform = glm::mat4_cast(rotation);
+}
+
 TransformInfo::~TransformInfo()
 {
 

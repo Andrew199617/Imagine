@@ -25,6 +25,9 @@ public:
 	void moveDown(float dt);
 	void Jump(int time, float dt);
 
+
+	virtual void Update(float dt) override;
+
 public:
 	void SetStrafeSpeed(float Speed) { strafeSpeed = Speed; }
 	float GetStrafeSpeed() { return strafeSpeed; }

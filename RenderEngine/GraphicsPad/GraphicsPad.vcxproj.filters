@@ -213,9 +213,6 @@
     <ClCompile Include="SeekState.cpp">
       <Filter>States</Filter>
     </ClCompile>
-    <ClCompile Include="MoveComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="NoiseGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -295,6 +292,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ImgnComponent_moc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\Vector3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\Matrix4.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\Matrix3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -467,9 +473,6 @@
     <ClInclude Include="ShootingComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="MoveComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="Throwables.h">
       <Filter>Entities</Filter>
     </ClInclude>
@@ -549,6 +552,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Physics\RigidBody.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Vector3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\PhysicsTypeDefs.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Quaternion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Matrix4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Matrix3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

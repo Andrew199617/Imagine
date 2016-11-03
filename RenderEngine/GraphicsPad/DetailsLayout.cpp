@@ -4,6 +4,7 @@
 #include "MovementComponent.h"
 #include "MeshComponent.h"
 #include "GravityComponent.h"
+#include "Physics/RigidBody.h"
 #include "PathFollowerComponent.h"
 #include "ImgnAction.h"
 #include "Qt\qscrollarea.h"
@@ -154,6 +155,7 @@ void DetailsLayout::CreateActions()
 	componentMenu->addSeparator();
 	connect(createNewButton, SIGNAL(triggered()), this, SLOT(CreateNewComponent()));
 
+	CreateAction<Imgn::RigidBody>();
 	CreateAction<MovementComponent>();
 	CreateAction<MeshComponent>();
 	CreateAction<GravityComponent>();

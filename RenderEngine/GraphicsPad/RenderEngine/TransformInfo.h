@@ -5,13 +5,15 @@
 #include <glm.hpp>
 #pragma warning(pop)
 #include "..\CameraComponent.h"
+#include "gtc\quaternion.hpp"
 
 class TransformInfo
 {
+	TransformInfo(glm::vec3 m_translateTransform, glm::vec3 m_scaleTransform, float angle,
+		glm::vec3 m_rotateTransform);
 public:
 	TransformInfo(){}
-	TransformInfo(glm::vec3 m_translateTransform , glm::vec3 m_scaleTransform, float angle,
-		glm::vec3 m_rotateTransform);
+	TransformInfo(glm::vec3 m_translateTransform, glm::vec3 m_scaleTransform, glm::quat rotation);
 	~TransformInfo();
 	static glm::mat4 WorldToViewMatrix;
 	static glm::mat4 projectionMatrix;

@@ -24,7 +24,7 @@ public:
 	void setRenderInfo(string objname);
 	void setNodeRenderInfo(string objname, float radius);
 	void setRenderInfo_Line(glm::vec3 point1, glm::vec3 point2);
-	virtual bool Update(float dt) override;
+	virtual void Update(float dt) override;
 	void disableEnableMesh() 
 	{ 
 		if(renderinfo.isEnabled) renderinfo.isEnabled = false;

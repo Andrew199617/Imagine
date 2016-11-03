@@ -1,7 +1,7 @@
 Name AIWorld
 SceneName AIWorld
 Position "0.0,0.0,0.0"
-Rotate "0.0,1.0,0.0"
+Rotate "0.0,0.0,0.0"
 Scale "1.0,1.0,1.0"
 Components 2 {
     SpatialComponent
@@ -11,28 +11,23 @@ Components 2 {
 Name Cube
 SceneName Cube
 Position "0.0,1.0,0.0"
-Rotate "0.0,1.0,0.0"
+Rotate "0.0,0.0,0.0"
 Scale "2.0,2.0,2.0"
 Components 4 {
     SpatialComponent
     MeshComponent
-    GravityComponent
-    {
-        1.980000
-        0
-    }
     MovementComponent
     {
+        50.000000
     }
-}
-
-Name Sphere
-SceneName Sphere
-Position "0.0,20.0,0.0"
-Rotate "0.0,1.0,0.0"
-Scale "1.0,1.0,1.0"
-Components 2 {
-    SpatialComponent
-    MeshComponent
+    Imgn::RigidBody
+    {
+        1
+        1.000000
+        0.020000
+        0.050000
+        1
+        0
+    }
 }
 

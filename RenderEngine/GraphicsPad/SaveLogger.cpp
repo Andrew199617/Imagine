@@ -7,6 +7,7 @@
 #include "OriginalGame.h"
 #include "ImgnProperties.h"
 #include "ImgnComponent.h"
+#include "Physics/PhysicsTypeDefs.hpp"
 #define SETCOMPONENTDATA(type) if (name == typeid(type*).name()) \
 { \
 	type* val = reinterpret_cast<type*>(DisplayData->values[iVar]); \
@@ -19,7 +20,7 @@
 	{ \
 		*meOutput << "			iVar = " << iVar << "; "; \
 		*meOutput << "" << #type << "* val" << std::to_string(iVar) << " = reinterpret_cast<" << #type << "*>(displayData->values[iVar]);" << " "; \
-		*meOutput << "*val" << std::to_string(iVar) << " = " << componentsData[i][j][iVar] << ";" << "\n"; \
+		*meOutput << "*val" << std::to_string(iVar) << " = (" << #type << ")" << componentsData[i][j][iVar] << ";" << "\n"; \
 	} \
 } 
 
@@ -206,6 +207,7 @@ bool SaveLogger::shutdownLog()
 {
 	if (autoSave)
 	{
+		OriginalGame::entityManager.SaveEntities();
 		if ( !WriteToSaveFile() ) 
 		{
 			return false;
@@ -233,6 +235,11 @@ void SaveLogger::WriteToEntityManager()
 			{
 				for (std::list<string>::iterator it = uniqueComponentNames.begin(); it != uniqueComponentNames.end(); ++it)
 				{
+					if (*it == "Imgn::RigidBody")
+					{
+						meOutput << "#include \"Physics/RigidBody.h\"" << "\n";
+					}
+					else
 					meOutput << "#include \"" << *it << ".h\"" << "\n";
 				}
 				meOutput << "\n";
@@ -346,6 +353,7 @@ void SaveLogger::WriteComponentData(std::ofstream* meOutput)
 					else SETVALUESOFCOMPONENT(short)
 					else SETVALUESOFCOMPONENT(unsigned int)
 					else SETVALUESOFCOMPONENT(char*)
+					else SETVALUESOFCOMPONENT(bool)
 				}
 				*meOutput << "		}" << "\n";
 			}
@@ -479,6 +487,7 @@ void SaveLogger::AddComponentData(int ObjNum, string ComponentName, Imgn::Displa
 		else SETCOMPONENTDATA(long)
 		else SETCOMPONENTDATA(short)
 		else SETCOMPONENTDATA(unsigned int)
+		else SETCOMPONENTDATA(bool)
 		else if (name == typeid(char**).name())
 		{
 			char** c = reinterpret_cast<char**>(DisplayData->values[iVar]);
@@ -501,18 +510,20 @@ glm::vec3 SaveLogger::GetPosition(string objName)
 	return glm::vec3();
 }
 
-glm::vec3 SaveLogger::GetRotate(string objName)
+glm::quat SaveLogger::GetRotate(string objName)
 {
 	for (int i = 0; i < currentEntityDataType; i++)
 	{
 		if (entities[i][1] == objName)
 		{
-			return glm::vec3(ConfigReader::Instance()->GetFloatFromString(entities[i + 3][1]), ConfigReader::Instance()->GetFloatFromString(entities[i + 3][2]), ConfigReader::Instance()->GetFloatFromString(entities[i + 3][3]));
+			glm::vec3 rotate = glm::vec3(ConfigReader::Instance()->GetFloatFromString(entities[i + 3][1]), ConfigReader::Instance()->GetFloatFromString(entities[i + 3][2]), ConfigReader::Instance()->GetFloatFromString(entities[i + 3][3]));
+			glm::vec3 rotateInRadians = glm::vec3(rotate.x * R_PI / 180, rotate.y * R_PI / 180, rotate.z * R_PI / 180);
+			return glm::quat(rotateInRadians);
 		}
 	}
 	GameLogger::log("could not find Rotate for Obj:" + objName);
 	cout << "check log" << endl;
-	return glm::vec3();
+	return glm::quat();
 }
 
 glm::vec3 SaveLogger::GetScale(string objName)

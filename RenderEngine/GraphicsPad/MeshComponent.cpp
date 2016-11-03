@@ -71,7 +71,7 @@ void MeshComponent::makeShaderInfo(int vertexFormat, string objname)
 void MeshComponent::setTransformInfo()
 {
 	SpatialComponent* spatial = this->GetSiblingComponent<SpatialComponent>();
-	renderinfo.setTransfromInfo(new TransformInfo(spatial->position, spatial->GetScale(), 0.0f, spatial->GetRotate()));
+	renderinfo.setTransfromInfo(new TransformInfo(spatial->position, spatial->GetScale(), spatial->GetRotate()));
 }
 
 void MeshComponent::setRenderInfo(string objname)
@@ -86,8 +86,10 @@ void MeshComponent::setRenderInfo(string objname)
 
 void MeshComponent::setNodeRenderInfo(string objname, float radius)
 {
+	SpatialComponent* spatial = GetSiblingComponent<SpatialComponent>();
 	renderinfo.setGeometry(ShapeGenerator::readScene(objname));
-	renderinfo.setTransfromInfo(new TransformInfo(GetSiblingComponent<SpatialComponent>()->position, glm::vec3(radius, radius,radius), 0.0f, glm::vec3(0.0f, 1.0f, 0.0f)));
+	if(spatial)
+		renderinfo.setTransfromInfo(new TransformInfo(spatial->position, glm::vec3(radius, radius,radius), spatial->GetRotate()));
 	makeShaderInfo(renderinfo.getGeometry()->VertexFormat, objname);
 	setUpFragmentVertexShader();
 	renderinfo.setVertexShaderInfo(&vertexShaderInfo);
@@ -97,20 +99,19 @@ void MeshComponent::setNodeRenderInfo(string objname, float radius)
 void MeshComponent::setRenderInfo_Line(glm::vec3 point1, glm::vec3 point2)
 {
 	renderinfo.setGeometry(ShapeGenerator::makeLine(point1,point2));
-	renderinfo.setTransfromInfo(new TransformInfo(glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 0.0f, glm::vec3(0.0f, 1.0f, 0.0f)));
+	renderinfo.setTransfromInfo(new TransformInfo(glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::quat()));
 	makeShaderInfo(renderinfo.getGeometry()->VertexFormat, "noname");
 	setUpFragmentVertexShader();
 	renderinfo.setVertexShaderInfo(&vertexShaderInfo);
 	renderinfo.setTextureInfo(new TextureInfo(renderinfo.getGeometry()->texturePath,""));
 }
 
-bool MeshComponent::Update(float dt)
+void MeshComponent::Update(float dt)
 {
 
 	renderinfo.getTransformInfo()->m_translateTransform = glm::translate(GetSiblingComponent<SpatialComponent>()->position);
 
 	dt;
-	return true;
 }
 
 void MeshComponent::ClearFocus()

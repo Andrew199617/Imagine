@@ -15,15 +15,14 @@ WanderingComponent::~WanderingComponent()
 {
 }
 
-bool WanderingComponent::Update(float dt)
+void WanderingComponent::Update(float dt)
 {
 	SpatialComponent* spatial = this->GetSiblingComponent<SpatialComponent>();
 	if (!spatial)
 	{
 		string s = ": can not obtain Spatial Component";
 		GameLogger::log(this->GetName() + s);
-		GameLogger::shutdownLog();
-		return false;
+		//GameLogger show.
 	}
 	static float sumdt = 0;
 	sumdt += dt;
@@ -57,7 +56,6 @@ bool WanderingComponent::Update(float dt)
 		m_velocity.x = -m_velocity.x;
 		steering.x = -steering.x;
 	}
-	return true;
 }
 
 bool WanderingComponent::Initialize()
