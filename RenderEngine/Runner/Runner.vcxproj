@@ -89,6 +89,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(Projectdir)..\..\MiddleWare\FBX SDK\2017.0.1\include;$(ProjectDir)..\GraphicsPad;$(ProjectDir)..\FbxConverter;$(ProjectDir)..\..\MiddleWare\glm\glm;$(Projectdir)..\..\MiddleWare\glew\include;$(Projectdir)..\..\MiddleWare\qt\include;$(Projectdir)..\..\MiddleWare\libnoise\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4251;4800;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

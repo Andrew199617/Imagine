@@ -2,7 +2,6 @@
 #include "..\ImgnComponent.h"
 #include "..\ImgnProperties.h"
 #include "Matrix3.h"
-#include "Matrix4.h"
 class SpatialComponent;
 
 namespace Imgn
@@ -23,45 +22,16 @@ namespace Imgn
 		virtual bool Initialize() override;
 		virtual void Update(float dt) override;
 
-		/**
-		* Integrates the rigid body forward in time by the given amount.
-		* This function uses a Newton-Euler integration method, which is a
-		* linear approximation to the correct integral. For this reason it
-		* may be inaccurate in some cases.
-		*/
 		void Integrate(float duration);
-
-		/**
-		* Returns true if the mass of the body is not-infinite.
-		*/
 		bool HasFiniteMass();
 		void SetInertiaTensor(const Matrix3 InertiaTensor);
 		void SetOrientation(const real r, const real i,
 			const real j, const real k);
-		/**
-		* Fills the given matrix data structure with a
-		* transformation representing the rigid body's position and
-		* orientation. The matrix is transposed from that returned
-		* by getTransform. This call returns a matrix suitable
-		* for applying as an OpenGL transform.
-		*
-		* @note Transforming a vector by this matrix turns it from
-		* the body's local space to world space.
-		*
-		* @param matrix A pointer to the matrix to fill.
-		*/
-		glm::mat4 GetGLTransform() const;
 
 		/**
 		* Applies the given change in velocity.
 		*/
 		void AddVelocity(const Vector3 &deltaVelocity);
-		/**
-		* Clears the forces and torques in the accumulators. This will
-		* be called automatically after each intergration step.
-		*/
-		void ClearAccumulators();
-
 		/**
 		* Adds the given force to centre of mass of the rigid body.
 		* The force is expressed in world-coordinates.
@@ -78,24 +48,45 @@ namespace Imgn
 		* world-coordinates.
 		*/
 		void addForceAtPoint(const Vector3 &force, const Vector3 &point);
-
 		/**
 		* Applies the given change in rotation.
 		*/
 		void addRotation(const Vector3 &deltaRotation);
 		void SetVelocity(class Vector3);
 		float InverseMass();
+		bool IsKinematic() const { return isKinematic; }
+		void SetIsKinematic(bool val) { isKinematic = val; }
+		/************************************************************************/
+		/* Is the RigidBody using Gravity.
+		/************************************************************************/
+		bool UsingGravity() const { return useGravity; }
+		/************************************************************************/
+		/* Will the RigidBody use Gravity.
+		/************************************************************************/
+		void SetUseGravity(bool val) { useGravity = val; }
+		double GetMass() const { return mass; }
+		void SetMass(double val) { mass = val; }
+		/************************************************************************/
+		/* Get the value the RigidBody is using for Gravity.
+		/************************************************************************/
+		Imgn::Vector3 GetGravity() const { return gravity; }
+		/************************************************************************/
+		/* Set the value the RigidBody will use for Gravity.
+		/************************************************************************/
+		void SetGravity(Imgn::Vector3 val) { gravity = val; }
+
+	private:
+		void ClearAccumulators();
+		void CalculateDerivedData();
+
 	private:
 		double mass;
 		bool useGravity;
 		bool isKinematic;
-
-		void CalculateDerivedData();
-	private:
 		Vector3 position;
 		Vector3 velocity;
 		Vector3 rotation;
-		Matrix4 transformMatrix;
+		Vector3 gravity;
 		SpatialComponent* spatial;
 		Matrix3 inverseInertiaTensor;
 		Matrix3 inverseInertiaTensorWorld;

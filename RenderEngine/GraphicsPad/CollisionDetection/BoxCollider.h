@@ -1,6 +1,6 @@
 #pragma once
-#include "ImgnComponent.h"
-#include "ImgnProperties.h"
+#include "../ImgnComponent.h"
+#include "../ImgnProperties.h"
 #include "glm.hpp"
 
 class BoxCollider :

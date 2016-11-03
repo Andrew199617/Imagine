@@ -90,7 +90,7 @@
   <ItemGroup>
     <ClCompile Include="AIEntity.cpp" />
     <ClCompile Include="ArrivalComponent.cpp" />
-    <ClCompile Include="BoxCollider.cpp" />
+    <ClCompile Include="CollisionDetection\BoxCollider.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ConfigReader.cpp" />
@@ -171,7 +171,7 @@
     <ClInclude Include="AIEntity.h" />
     <ClInclude Include="Area.h" />
     <ClInclude Include="ArrivalComponent.h" />
-    <ClInclude Include="BoxCollider.h" />
+    <ClInclude Include="CollisionDetection\BoxCollider.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="CollisionInfo.h" />
     <ClInclude Include="Component.h" />

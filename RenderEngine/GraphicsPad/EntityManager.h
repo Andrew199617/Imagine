@@ -48,6 +48,9 @@ public:
 	int currentlySelectedObject;
 
 private:
+	/************************************************************************/
+	/* 	Used to load saved components;                                      
+	/************************************************************************/
 	ImgnComponent** GetComponents(int objNum);
 	SaveLogger* saveLogger;
 	Imgn::Entity player;

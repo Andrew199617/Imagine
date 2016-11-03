@@ -13,12 +13,12 @@ SceneName Cube
 Position "0.0,1.0,0.0"
 Rotate "0.0,0.0,0.0"
 Scale "2.0,2.0,2.0"
-Components 4 {
+Components 5 {
     SpatialComponent
     MeshComponent
     MovementComponent
     {
-        50.000000
+        10.000000
     }
     Imgn::RigidBody
     {
@@ -26,8 +26,12 @@ Components 4 {
         1.000000
         0.020000
         0.050000
-        1
         0
+        0
+    }
+    BoxCollider
+    {
+        1
     }
 }
 

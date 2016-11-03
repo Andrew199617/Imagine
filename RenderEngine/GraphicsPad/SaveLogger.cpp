@@ -239,6 +239,10 @@ void SaveLogger::WriteToEntityManager()
 					{
 						meOutput << "#include \"Physics/RigidBody.h\"" << "\n";
 					}
+					else if (*it == "BoxCollider")
+					{
+						meOutput << "#include \"CollisionDetection/BoxCollider.h\"" << "\n"; 
+					}
 					else
 					meOutput << "#include \"" << *it << ".h\"" << "\n";
 				}
@@ -354,6 +358,7 @@ void SaveLogger::WriteComponentData(std::ofstream* meOutput)
 					else SETVALUESOFCOMPONENT(unsigned int)
 					else SETVALUESOFCOMPONENT(char*)
 					else SETVALUESOFCOMPONENT(bool)
+					else SETVALUESOFCOMPONENT(glm::vec3)
 				}
 				*meOutput << "		}" << "\n";
 			}

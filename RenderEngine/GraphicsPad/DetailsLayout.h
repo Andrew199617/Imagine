@@ -3,6 +3,7 @@
 #include "ImgnFwd.hpp"
 #include "ImgnAction.h"
 #include "Qt\qmenu.h"
+#include <string>
 class QVBoxLayout;
 class TransformLayout;
 class QPushButton;
@@ -37,6 +38,7 @@ public:
 	void CreateActions();
 	void CreateMenu();
 	template <class T> void CreateAction();
+	template <class T> void CreateAction(std::string objectName);
 
 private slots:
 	void ButtonPressed();
@@ -75,10 +77,20 @@ template<class T> inline void DetailsLayout::CreateAction()
 			objectName[i] = ' ';
 			objectName += ' ';
 			objectName[objectName.length() - 1] = '\0';
-			i+=2;
+			i += 2;
 		}
 	}
 	addableComponents[numAddableComponenets] = new ImgnAction(objectName.c_str(),this);
+	addableComponents[numAddableComponenets]->Create<T>();
+	addableComponents[numAddableComponenets]->setObjectName(objectName.c_str());
+	connect(addableComponents[numAddableComponenets], SIGNAL(triggered()), this, SLOT(ButtonPressed()));
+	componentMenu->addAction(addableComponents[numAddableComponenets]);
+	numAddableComponenets++;
+}
+
+template<class T> inline void DetailsLayout::CreateAction(std::string objectName)
+{
+	addableComponents[numAddableComponenets] = new ImgnAction(objectName.c_str(), this);
 	addableComponents[numAddableComponenets]->Create<T>();
 	addableComponents[numAddableComponenets]->setObjectName(objectName.c_str());
 	connect(addableComponents[numAddableComponenets], SIGNAL(triggered()), this, SLOT(ButtonPressed()));

@@ -140,7 +140,7 @@ void MovementComponent::Jump(int time, float dt)
 	}
 }
 
-void MovementComponent::Update(float dt)
+void MovementComponent::Update(float)
 {
 	Imgn::RigidBody* rigidBody = GetSiblingComponent<Imgn::RigidBody>();
 	if (rigidBody)
