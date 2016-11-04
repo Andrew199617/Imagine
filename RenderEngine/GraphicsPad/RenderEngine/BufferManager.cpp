@@ -127,6 +127,18 @@ void BufferManager::AddRenderInfo(RenderInfo* info)
 	}
 }
 
+void BufferManager::RemoveRenderInfo(RenderInfo* info)
+{
+	for (int i = 0; i <= m_numVertexBuffers; i++)
+	{
+		if (m_bufferPool[i].m_vert_ID == info->getGeometry()->m_vertexId &&
+			m_bufferPool[i].M_index_ID == info->getGeometry()->m_indexId)
+		{
+			m_bufferPool[i].remove(info);
+		}
+	}
+}
+
 void BufferManager::RemoveRenderInfo()
 {
 	for (int i = 0; i < m_numVertexBuffers; i++)

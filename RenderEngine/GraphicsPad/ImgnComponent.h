@@ -20,7 +20,7 @@ public:
 	bool Init();
 	//Called every frame.
 	virtual void Update(float) {}
-	virtual bool Draw() { return true; }
+	virtual void Draw(float) {}
 	Imgn::DisplayData* GetDisplayData();
 
 	void SetOwner(Imgn::Entity* owner) { m_owner = owner; }
@@ -32,6 +32,8 @@ public:
 	virtual void SetHidden(bool IsHidden) { isHidden = IsHidden; }
 	inline bool GetHidden() { return isHidden; }
 	virtual void DeleteWidgets();
+	virtual void focusOutEvent(QFocusEvent *) override;
+	virtual void focusInEvent(QFocusEvent *) override;
 
 	bool layoutHasData;
 	bool layoutInitalized;
@@ -49,6 +51,19 @@ protected:
 		return m_owner->GetComponentByType<T>();
 	}
 
+	//************************************
+	// Method:    GetVariableName
+	// FullName:  ImgnComponent::GetVariableName
+	// Access:    protected 
+	// Returns:   The name that you will use for OnValueChange.
+	// Parameter: var the address of the variable whos name you want.
+	//************************************
+	std::string GetVariableName(void* var);
+	/************************************************************************/
+	/* Called whenever a variable in the editor gets changed.                                                                     
+	/************************************************************************/
+	virtual void OnValueChange(std::string VariableName) {}
+
 protected:
 	QVBoxLayout* m_Layout;
 	Imgn::Entity* m_owner;
@@ -56,6 +71,7 @@ protected:
 
 private:
 	void DisplayInEngine();
+	void AddVec3(int i);
 	void SetSaved_Implentation(bool val) override { m_owner->SetSaved(val); }
 
 private slots:

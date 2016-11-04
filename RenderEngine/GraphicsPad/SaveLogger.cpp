@@ -8,6 +8,8 @@
 #include "ImgnProperties.h"
 #include "ImgnComponent.h"
 #include "Physics/PhysicsTypeDefs.hpp"
+#include "gtx/string_cast.hpp"
+
 #define SETCOMPONENTDATA(type) if (name == typeid(type*).name()) \
 { \
 	type* val = reinterpret_cast<type*>(DisplayData->values[iVar]); \
@@ -358,6 +360,15 @@ void SaveLogger::WriteComponentData(std::ofstream* meOutput)
 					else SETVALUESOFCOMPONENT(unsigned int)
 					else SETVALUESOFCOMPONENT(char*)
 					else SETVALUESOFCOMPONENT(bool)
+					else if (name == typeid(glm::vec3*).name()) 
+					{ 
+						if (componentsData[i][j][iVar] != "") 
+						{ 
+							*meOutput << "			iVar = " << iVar << "; "; 
+							*meOutput << "" << "glm::detail::tvec3<float>" << "* val" << std::to_string(iVar) << " = reinterpret_cast<" << "glm::detail::tvec3<float>" << "*>(displayData->values[iVar]);" << " ";
+							*meOutput << "*val" << std::to_string(iVar) << " = (" << "glm::detail::tvec3<float>" << ")" << componentsData[i][j][iVar] << ";" << "\n"; 
+						} \
+					}
 					else SETVALUESOFCOMPONENT(glm::vec3)
 				}
 				*meOutput << "		}" << "\n";
@@ -497,6 +508,13 @@ void SaveLogger::AddComponentData(int ObjNum, string ComponentName, Imgn::Displa
 		{
 			char** c = reinterpret_cast<char**>(DisplayData->values[iVar]);
 			componentsData[ObjNum][j][iVar] = string(*c);
+		}
+		else if (name == typeid(glm::vec3*).name())
+		{
+			glm::vec3* c = reinterpret_cast<glm::vec3*>(DisplayData->values[iVar]);
+			string vecBad = glm::to_string(*c);
+			string vec = vecBad.substr(5, vecBad.npos);
+			componentsData[ObjNum][j][iVar] = vec;
 		}
 	}
 }

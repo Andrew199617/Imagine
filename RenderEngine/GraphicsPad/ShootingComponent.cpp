@@ -19,7 +19,7 @@ bool ShootingComponent::Initialize()
 	return true;
 }
 
-void ShootingComponent::Update(float dt)
+void ShootingComponent::Update(float)
 {
 	CameraComponent* camera = this->GetSiblingComponent<CameraComponent>();
 	if (!camera)

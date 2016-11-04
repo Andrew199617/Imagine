@@ -1,19 +1,31 @@
 #pragma once
-#include "../ImgnComponent.h"
-#include "../ImgnProperties.h"
-#include "glm.hpp"
+#include "ImgnCollider.h"
+class RenderInfo;
+class SpatialComponent;
 
-class BoxCollider :
-	public ImgnComponent
+class BoxCollider : public ImgnCollider
 {
 	IMGN_GENERATE(BoxCollider)
 	IMGN_PROPERTY(isTrigger, false)
-	IMGN_PROPERTY(center,glm::vec3(0, 0, 0))
-	IMGN_PROPERTY(size,glm::vec3(0, 0, 0))
+	IMGN_PROPERTY(center, glm::vec3())
+	IMGN_PROPERTY_DEFAULT(size)
 	IMGN_END(BoxCollider)
+private:
+	bool Initialize() override;
+	void Update(float) override;
+	void Draw(float) override;
+	void DrawBox();
+
+	RenderInfo* renderInfo;
+	SpatialComponent* spatial;
+protected:
+	void OnValueChange(std::string VariableName) override;	
+	
 public:
-	bool isTrigger;
-	glm::vec3 center;
+	void focusOutEvent(QFocusEvent *) override;
+	void focusInEvent(QFocusEvent *) override;
+
 	glm::vec3 size;
+
 };
 

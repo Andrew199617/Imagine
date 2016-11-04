@@ -252,26 +252,21 @@ ImgnComponent ** EntityManager::GetComponents(int objNum)
 		displayData = components[numComponents]->GetDisplayData();
 		if (displayData)
 		{
-			iVar = 0; float* val0 = reinterpret_cast<float*>(displayData->values[iVar]); *val0 = (float)10.000000;
 		}
 		numComponents++;
 		components[numComponents] = new Imgn::RigidBody();
 		displayData = components[numComponents]->GetDisplayData();
 		if (displayData)
 		{
-			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)1;
-			iVar = 1; double* val1 = reinterpret_cast<double*>(displayData->values[iVar]); *val1 = (double)1.000000;
-			iVar = 2; float* val2 = reinterpret_cast<float*>(displayData->values[iVar]); *val2 = (float)0.020000;
-			iVar = 3; float* val3 = reinterpret_cast<float*>(displayData->values[iVar]); *val3 = (float)0.050000;
-			iVar = 4; bool* val4 = reinterpret_cast<bool*>(displayData->values[iVar]); *val4 = (bool)0;
-			iVar = 5; bool* val5 = reinterpret_cast<bool*>(displayData->values[iVar]); *val5 = (bool)0;
 		}
 		numComponents++;
 		components[numComponents] = new BoxCollider();
 		displayData = components[numComponents]->GetDisplayData();
 		if (displayData)
 		{
-			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)1;
+			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)0;
+			iVar = 1; glm::detail::tvec3<float>* val1 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val1 = (glm::detail::tvec3<float>)(0.000000, 0.000000, 0.000000);
+			iVar = 2; glm::detail::tvec3<float>* val2 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val2 = (glm::detail::tvec3<float>)(2.100000, 2.100000, 2.100000);
 		}
 		numComponents++;
 	}

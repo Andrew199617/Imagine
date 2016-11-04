@@ -110,6 +110,7 @@
     <ClCompile Include="ImgnComponent_moc.cpp" />
     <ClCompile Include="ImgnCreateComponent.cpp" />
     <ClCompile Include="ImgnCreateComponent_moc.cpp" />
+    <ClCompile Include="ImgnLineEdit.cpp" />
     <ClCompile Include="ImgnProperties.cpp" />
     <ClCompile Include="ImgnTool.cpp" />
     <ClCompile Include="ImgnToolBar.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="RenderEngine\TransformInfo.cpp" />
     <ClCompile Include="RenderEngine\VertexShaderInfo.cpp" />
     <ClCompile Include="SpatialComponent.cpp" />
+    <ClCompile Include="CollisionDetection\SphereCollider.cpp" />
     <ClCompile Include="StateMachine\StateComponent.cpp" />
     <ClCompile Include="SteeringBehaviors.cpp" />
     <ClCompile Include="Throwables.cpp" />
@@ -173,6 +175,7 @@
     <ClInclude Include="ArrivalComponent.h" />
     <ClInclude Include="CollisionDetection\BoxCollider.h" />
     <ClInclude Include="CameraComponent.h" />
+    <ClInclude Include="CollisionDetection\ImgnCollider.h" />
     <ClInclude Include="CollisionInfo.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ConfigReader.h" />
@@ -192,6 +195,7 @@
     <ClInclude Include="ImgnCreateComponent.h" />
     <ClInclude Include="ImgnFrame.h" />
     <ClInclude Include="ImgnFwd.hpp" />
+    <ClInclude Include="ImgnLineEdit.h" />
     <ClInclude Include="ImgnProperties.h" />
     <ClInclude Include="ImgnTool.h" />
     <ClInclude Include="ImgnToolBar.h" />
@@ -245,6 +249,7 @@
     <ClInclude Include="RenderEngine\TextureInfo.h" />
     <ClInclude Include="RenderEngine\TransformInfo.h" />
     <ClInclude Include="SpatialComponent.h" />
+    <ClInclude Include="CollisionDetection\SphereCollider.h" />
     <ClInclude Include="StateMachine\StateComponent.h" />
     <ClInclude Include="StateMachine\State.h" />
     <ClInclude Include="StateManager.h" />
@@ -261,6 +266,7 @@
     <None Include="CSS\ImgnToolBar.qss" />
     <None Include="CSS\QMenu.qss" />
     <None Include="Shader\ctFragmentShaderCode.glsl" />
+    <None Include="Shader\fColliderFragmentShader.glsl" />
     <None Include="Shader\fErosion.glsl" />
     <None Include="Shader\fImageWarping.glsl" />
     <None Include="Shader\fPixelDiscarderShader.glsl" />
@@ -268,6 +274,7 @@
     <None Include="Shader\specularFragmentShaderCode.glsl" />
     <None Include="Shader\specularVertexShaderCode.glsl" />
     <None Include="Shader\tFragmentShaderCode.glsl" />
+    <None Include="Shader\vColliderVertexShader.glsl" />
     <None Include="Shader\VertexShaderCode.glsl" />
     <None Include="Shader\vLightBulb.glsl" />
     <None Include="Shader\vMakeACube.glsl" />

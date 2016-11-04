@@ -113,7 +113,7 @@ void RenderInfo::SendAttributeData()
 	}
 }
 
-void RenderInfo::SendUniformData(float dt, bool isPlaying)
+void RenderInfo::SendUniformData(float, bool isPlaying)
 {
 	glm::mat4 mat = m_transformInfo->m_translateTransform * m_transformInfo->m_rotateTransform * m_transformInfo->m_scaleTransform;
 	if (m_mesh->m_animationInfo.hasAnimation && isPlaying)

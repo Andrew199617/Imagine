@@ -19,7 +19,7 @@ bool PathFollowerComponent::Initialize()
 	return true;
 }
 
-void PathFollowerComponent::Update(float dt)
+void PathFollowerComponent::Update(float)
 {
 	
 	SeekBehaviorComponent* seek = this->GetSiblingComponent<SeekBehaviorComponent>();

@@ -5,12 +5,8 @@
 #pragma warning(pop)
 #include "SpatialComponent.h"
 #include "RenderEngine\RenderInfo.h"
-#include "RenderEngine\VertexShaderInfo.h"
-#include "RenderEngine\FragmentShaderInfo.h"
 #include "ShapeGenerator.h"
-#include "RenderEngine\TransformInfo.h"
 #include "VertexFormats.h"
-#include "RenderEngine\TextureInfo.h"
 
 class MeshComponent :
 	public ImgnComponent

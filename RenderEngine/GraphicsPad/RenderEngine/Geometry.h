@@ -21,7 +21,7 @@ public:
 	unsigned m_indexByteOffset;
 	unsigned m_indexCount;
 	unsigned m_indexStride;
-	unsigned centerOfMass;
+	glm::vec3* centerOfMass;
 	std::string objName;
 	std::string texturePath;
 	int VertexFormat;

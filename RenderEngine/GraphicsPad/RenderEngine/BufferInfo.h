@@ -18,6 +18,7 @@ public:
 	unsigned M_index_ID;
 	int VertexFormat;
 	void push(RenderInfo*);
+	void remove(RenderInfo*);
 	const void pop();
 	bool isEmpty() const
 	{

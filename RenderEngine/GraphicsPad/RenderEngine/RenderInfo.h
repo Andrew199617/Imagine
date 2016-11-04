@@ -2,8 +2,8 @@
 #include <GL\glew.h>
 class Geometry;
 #include "TransformInfo.h"
-class VertexShaderInfo;
-class FragmentShaderInfo;
+#include "FragmentShaderInfo.h"
+#include "VertexShaderInfo.h"
 #include "TextureInfo.h"
 #include "AnimationInfo.h"
 
@@ -12,12 +12,17 @@ class RenderInfo
 public:
 	RenderInfo(RenderInfo* me,RenderInfo* next);
 	RenderInfo(){ isEnabled = true; }
-	~RenderInfo() { delete m_transformInfo; delete m_textureInfo; }
+	~RenderInfo() { delete m_transformInfo; delete m_textureInfo; 
+	if (m_vertexShaderInfo) { delete m_vertexShaderInfo; }
+	if (m_fragmentShaderInfo) { delete m_fragmentShaderInfo; }
+	}
 	void Draw(float dt, bool isPlaying);
 	void SendAttributeData();
 	void SendUniformData(float dt, bool isPlaying);
 
 public:
+	FragmentShaderInfo* GetFragmentShaderInfo() const { return m_fragmentShaderInfo; }
+	void SetFragmentShaderInfo(FragmentShaderInfo* val) { m_fragmentShaderInfo = val; }
 	void setGeometry(Geometry* geo) { m_mesh = geo;	}
 	Geometry* getGeometry(){ return m_mesh; }
 	void setTransfromInfo(TransformInfo* tranInfo) { m_transformInfo = tranInfo; }

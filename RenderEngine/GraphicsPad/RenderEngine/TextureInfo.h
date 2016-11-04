@@ -6,9 +6,9 @@ using namespace std;
 
 class TextureInfo
 {
+
 public:
-	TextureInfo(){};
-	TextureInfo(string FileLocation,string BumpLocation);
+	TextureInfo(string FileLocation = "0",string BumpLocation = "0");
 
 	void InitializeValues();
 

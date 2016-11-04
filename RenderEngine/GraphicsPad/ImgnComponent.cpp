@@ -1,15 +1,14 @@
 #include "ImgnComponent.h"
 #include "Qt\qlabel.h"
-#include "Qt\qlineedit.h"
+#include "ImgnLineEdit.h"
 #include "Qt\qcheckbox.h"
-#include "glm.hpp"
 #include "ImgnProperties.h"
 #include "Qt\qboxlayout.h"
 
 #define ADDQLINEEDIT(type) if (name == typeid(type*).name()) \
 { \
-	QLineEdit* lineEdit = new QLineEdit(std::to_string(*static_cast<type*>(displayData->values[i])).c_str()); \
-	lineEdit->setObjectName(std::to_string(i).c_str()); \
+	ImgnLineEdit* lineEdit = new ImgnLineEdit(std::to_string(*static_cast<type*>(displayData->values[i])),this); \
+	lineEdit->setObjectName(displayData->variableNames[i].c_str()); \
 	properties[i]->addWidget(lineEdit); \
 	connect(lineEdit, SIGNAL(returnPressed()), this, SLOT(LineEdited())); \
 } \
@@ -71,8 +70,32 @@ void ImgnComponent::DeleteWidgets()
 
 void ImgnComponent::AwakeSuper()
 {
-	displayData = Imgn::ImgnProperties::Instance()->GetMyProperties<decltype(this)>(componentType, componentTypeNum);
-	Awake();
+	Awake(); 
+	displayData = Imgn::ImgnProperties::Instance()->GetMyProperties(componentType, componentTypeNum);
+}
+
+std::string ImgnComponent::GetVariableName(void* var)
+{
+	if (displayData && displayData->hasData)
+	for (int i = 0; i < displayData->numValues; i++)
+	{
+		if (displayData->values[i] == var)
+		{
+			return displayData->variableNames[i];
+		}
+	}
+
+	return "Variable Not Found did you add it with IMGN_PROPERTY";
+}
+
+void ImgnComponent::focusOutEvent(QFocusEvent * e)
+{
+	QGroupBox::focusOutEvent(e);
+}
+
+void ImgnComponent::focusInEvent(QFocusEvent * e)
+{
+	QGroupBox::focusInEvent(e);
 }
 
 void ImgnComponent::DisplayInEngine()
@@ -100,17 +123,16 @@ void ImgnComponent::DisplayInEngine()
 				//else ADDQLINEEDIT(unsigned char)
 				else if (name == typeid(string*).name())
 				{
-					QLineEdit* lineEdit = new QLineEdit((*static_cast<string*>(displayData->values[i])).c_str());
-					lineEdit->setObjectName(std::to_string(i).c_str());
+					ImgnLineEdit* lineEdit = new ImgnLineEdit((*static_cast<string*>(displayData->values[i])), this);
+					lineEdit->setObjectName(displayData->variableNames[i].c_str());
 					properties[i]->addWidget(lineEdit); 
 					connect(lineEdit, SIGNAL(returnPressed()), this, SLOT(LineEdited())); 
 				}
 				else if (name == typeid(char**).name())
 				{
-					QLineEdit* lineEdit = new QLineEdit((*static_cast<char**>(displayData->values[i])));
-					lineEdit->setObjectName(std::to_string(i).c_str());
+					ImgnLineEdit* lineEdit = new ImgnLineEdit((*static_cast<char**>(displayData->values[i])),this);
+					lineEdit->setObjectName(displayData->variableNames[i].c_str());
 					properties[i]->addWidget(lineEdit);
-					connect(lineEdit, SIGNAL(returnPressed()), this, SLOT(LineEdited()));
 				}
 				else if (name == typeid(bool*).name())
 				{
@@ -122,11 +144,8 @@ void ImgnComponent::DisplayInEngine()
 				}
 				else if (name == typeid(glm::vec3*).name())
 				{
-					glm::vec3* vec = static_cast<glm::vec3*>(displayData->values[i]);
+					AddVec3(i);
 
-					properties[i]->addWidget(new QLineEdit(std::to_string(vec->x).c_str()));
-					properties[i]->addWidget(new QLineEdit(std::to_string(vec->y).c_str()));
-					properties[i]->addWidget(new QLineEdit(std::to_string(vec->z).c_str()));
 				}
 				properties[i]->insertStretch(-1, 1);
 				m_Layout->addLayout(properties[i]);
@@ -141,17 +160,35 @@ void ImgnComponent::DisplayInEngine()
 	}
 }
 
+void ImgnComponent::AddVec3(int i)
+{
+	glm::vec3* vec = static_cast<glm::vec3*>(displayData->values[i]);
+	ImgnLineEdit* lineEditX = new ImgnLineEdit(std::to_string(vec->x), Imgn::ISX, this);
+	ImgnLineEdit* lineEditY = new ImgnLineEdit(std::to_string(vec->y), Imgn::ISY, this);
+	ImgnLineEdit* lineEditZ = new ImgnLineEdit(std::to_string(vec->z), Imgn::ISZ, this);
+	lineEditX->setObjectName(displayData->variableNames[i].c_str());
+	lineEditY->setObjectName(displayData->variableNames[i].c_str());
+	lineEditZ->setObjectName(displayData->variableNames[i].c_str());
+	properties[i]->addWidget(lineEditX);
+	properties[i]->addWidget(lineEditY);
+	properties[i]->addWidget(lineEditZ);
+	connect(lineEditX, SIGNAL(returnPressed()), this, SLOT(LineEdited()));
+	connect(lineEditY, SIGNAL(returnPressed()), this, SLOT(LineEdited()));
+	connect(lineEditZ, SIGNAL(returnPressed()), this, SLOT(LineEdited()));
+}
+
 void ImgnComponent::LineEdited()
 {
 	QObject* sender = QObject::sender();
+	
 	string objectName = sender->objectName().toLocal8Bit().constData();
 
 	for (int i = 0; i < displayData->numValues; i++)
 	{
-		if (objectName == std::to_string(i))
+		if (objectName == displayData->variableNames[i])
 		{
 			const char* name = displayData->typeName[i];
-			QLineEdit* lineEdit = reinterpret_cast<QLineEdit*>(sender);
+			ImgnLineEdit* lineEdit = reinterpret_cast<ImgnLineEdit*>(sender);
 			UPDATEQLINEEDIT(int, toInt())
 			else UPDATEQLINEEDIT(float, toFloat())
 			else UPDATEQLINEEDIT(double, toDouble())
@@ -159,9 +196,25 @@ void ImgnComponent::LineEdited()
 			else UPDATEQLINEEDIT(long, toLong())
 			else UPDATEQLINEEDIT(short, toShort())
 			else UPDATEQLINEEDIT(unsigned int, toUInt())
+			else if (name == typeid(glm::vec3*).name()) 
+			{ 
+				glm::vec3* val = reinterpret_cast<glm::vec3*>(displayData->values[i]);
+				if (lineEdit->IsX())
+				{
+					val->x = lineEdit->text().toFloat();
+				}
+				else if (lineEdit->IsY())
+				{
+					val->y = lineEdit->text().toFloat();
+				}
+				else if (lineEdit->IsZ())
+				{
+					val->z = lineEdit->text().toFloat();
+				}
+			} 
 			SetSaved(false);
 		}
-		if (objectName == "Bool" + std::to_string(i))
+		else if (objectName == "Bool" + std::to_string(i))
 		{
 			QCheckBox* checkBox = reinterpret_cast<QCheckBox*>(sender);
 			bool* val = reinterpret_cast<bool*>(displayData->values[i]);
@@ -169,4 +222,5 @@ void ImgnComponent::LineEdited()
 			SetSaved(false);
 		}
 	}
+	OnValueChange(objectName);
 }

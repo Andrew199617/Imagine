@@ -162,6 +162,7 @@ Geometry* ShapeGenerator::readScene(string ObjName)
 		geoArray[numGeos].m_animationInfo.animationData = reinterpret_cast<glm::mat4*>(aScene->animationData);
 		//geoArray[numGeos].m_animationInfo.keys = reinterpret_cast<FbxTime*>(aScene->keys);
 	}
+	geoArray[numGeos].centerOfMass = reinterpret_cast<glm::vec3*>(scene->centerOfMass);
 	geoArray[numGeos].objName = ObjName;
 	geoArray[numGeos].m_vertexCount = scene->numVertices;
 	geoArray[numGeos].vertices = scene->vertices;

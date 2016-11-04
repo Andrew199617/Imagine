@@ -5,8 +5,8 @@
 class ImgnComponent;
 
 #define IMGN_END(className) isHidden = false;													\
-	SetComponentType(temp->currentComponent);													\
-	SetComponentTypeNum(temp->numSameComponent[temp->currentComponent]);						\
+	SetComponentType(imgnProps->currentComponent);												\
+	SetComponentTypeNum(imgnProps->numSameComponent[imgnProps->currentComponent]);				\
 	layoutInitalized = false;																	\
 	layoutHasData = false;																		\
 	setMaximumSize(348, 250);																	\
@@ -15,14 +15,15 @@ class ImgnComponent;
 	minimumSizeHint().setHeight(50);															\
 	sizePolicy().setHorizontalPolicy(QSizePolicy::Policy::Expanding);							\
 	sizePolicy().setVerticalPolicy(QSizePolicy::Policy::Minimum);								\
+	setFocusPolicy(Qt::ClickFocus);																\
 	m_owner = 0;																				\
-	AwakeSuper();																				\
+	AwakeSuper(); 																				\
 }																								\
 ~##className();																							
 
 #define IMGN_GENERATE(className) public:														\
 className(){																					\
-	Imgn::ImgnProperties* temp = Imgn::ImgnProperties::Instance();								\
+	Imgn::ImgnProperties* imgnProps = Imgn::ImgnProperties::Instance();							\
 	if(typeid(this) != typeid(ImgnComponent*) && dynamic_cast<ImgnComponent*>(this) == NULL)	\
 	{																							\
 		string s = ": does not inherit ImgnComponent. Invalid  IMGN_GENERATE";					\
@@ -30,15 +31,12 @@ className(){																					\
 		GameLogger::shutdownLog();																\
 		exit(1);																				\
 	} 																							\
-	temp->AddClass(this,typeid(this).name());													
+	imgnProps->AddClass(this,typeid(this).name());																													
 	
 
-	
-#pragma warning(push)
-#pragma warning(disable:4005)
-#define IMGN_PROPERTY(name) Imgn::ImgnProperties::Instance()->AddProperty<decltype(&name)>(&name,#name);
-#define IMGN_PROPERTY(name, init_value) Imgn::ImgnProperties::Instance()->AddProperty<decltype(&name)>(&name,#name); name = init_value;
-#pragma warning(pop)
+#define IMGN_PROPERTY_DEFAULT(name) imgnProps->AddProperty<decltype(&name)>(&name,#name);
+#define IMGN_PROPERTY(name, init_value) imgnProps->AddProperty<decltype(&name)>(&name,#name); name = init_value;
+
 
 
 namespace Imgn {
@@ -65,10 +63,7 @@ namespace Imgn {
 
 		template<class V> inline void AddProperty(V var, std::string name)
 		{
-			if (!isupper(name[0]))
-			{
-				name[0] = (char)toupper(name[0]);
-			}
+			name[0] = (char)toupper(name[0]);
 			for (unsigned i = 1; i < name.length(); i++)
 			{
 				if (isupper(name.at(i)))
@@ -91,22 +86,25 @@ namespace Imgn {
 			
 		}
 
-		template<class T> DisplayData* GetMyProperties(int componentType,int componentTypeNum)
+		DisplayData* GetMyProperties(int componentType,int componentTypeNum)
 		{
 			datas[componentType][componentTypeNum] = new DisplayData;
 			datas[componentType][componentTypeNum]->hasData = false;
 
-			if (typeid(T) == typeid(components[componentType][componentTypeNum]))
+			if (numValues[componentType][componentTypeNum] > 0)
 			{
-				if (numValues[componentType][componentTypeNum] > 0)
-				{
-					datas[componentType][componentTypeNum]->values = values[componentType][componentTypeNum];
-					datas[componentType][componentTypeNum]->typeName = typeName[componentType][componentTypeNum];
-					datas[componentType][componentTypeNum]->variableNames = variableNames[componentType][componentTypeNum];
-					datas[componentType][componentTypeNum]->numValues = numValues[componentType][componentTypeNum];
-					datas[componentType][componentTypeNum]->hasData = true;
-				}
+				datas[componentType][componentTypeNum]->values = values[componentType][componentTypeNum];
+				datas[componentType][componentTypeNum]->typeName = typeName[componentType][componentTypeNum];
+				datas[componentType][componentTypeNum]->variableNames = variableNames[componentType][componentTypeNum];
+				datas[componentType][componentTypeNum]->numValues = numValues[componentType][componentTypeNum];
+				datas[componentType][componentTypeNum]->hasData = true;
 			}
+			else
+			{
+				delete datas[componentType][componentTypeNum];
+				return 0;
+			}
+			
 			
 			return datas[componentType][componentTypeNum];
 		}

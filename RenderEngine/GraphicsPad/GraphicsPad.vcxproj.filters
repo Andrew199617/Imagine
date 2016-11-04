@@ -255,9 +255,6 @@
     <ClCompile Include="Hierarchy_moc.cpp">
       <Filter>Source Files\moc</Filter>
     </ClCompile>
-    <ClCompile Include="DetailsLayout.cpp">
-      <Filter>QT</Filter>
-    </ClCompile>
     <ClCompile Include="DetailsLayout_moc.cpp">
       <Filter>Source Files\moc</Filter>
     </ClCompile>
@@ -301,6 +298,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CollisionDetection\BoxCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DetailsLayout.cpp">
+      <Filter>QT</Filter>
+    </ClCompile>
+    <ClCompile Include="ImgnLineEdit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionDetection\SphereCollider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -518,9 +524,6 @@
     <ClInclude Include="Slider.h">
       <Filter>QT</Filter>
     </ClInclude>
-    <ClInclude Include="DetailsLayout.h">
-      <Filter>QT</Filter>
-    </ClInclude>
     <ClInclude Include="EntityData.h">
       <Filter>structs/enums</Filter>
     </ClInclude>
@@ -567,6 +570,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CollisionDetection\BoxCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionDetection\ImgnCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DetailsLayout.h">
+      <Filter>QT</Filter>
+    </ClInclude>
+    <ClInclude Include="ImgnLineEdit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionDetection\SphereCollider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -625,5 +640,7 @@
     <None Include="CSS\ImgnToolBar.qss">
       <Filter>QT\QSS</Filter>
     </None>
+    <None Include="Shader\vColliderVertexShader.glsl" />
+    <None Include="Shader\fColliderFragmentShader.glsl" />
   </ItemGroup>
 </Project>

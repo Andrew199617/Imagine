@@ -29,14 +29,13 @@ namespace Imgn
 				m_components[i]->Update(dt);
 			}
 		}
-		/*for (int i = 0; i < MAX_COMPONENTS; i++)
+		for (int i = 0; i < MAX_COMPONENTS; i++)
 		{
 			if (m_components[i] && m_components[i]->IsEnabled())
 			{
-				bool result = m_components[i]->Draw();
-				if (!result) GameLogger::log("Component " + to_string(i) + " failed to draw");
+				m_components[i]->Draw(dt);
 			}
-		}*/
+		}
 		return true;
 	}
 

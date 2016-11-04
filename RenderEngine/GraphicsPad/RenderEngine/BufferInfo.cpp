@@ -43,6 +43,26 @@ void BufferInfo::push(RenderInfo* var)
 	top = node;
 }
 
+void BufferInfo::remove(RenderInfo * info)
+{
+	if (top == info)
+	{
+		top = top->Next();
+	}
+	RenderInfo* tempTop = top;
+	while (tempTop->Next())
+	{
+		RenderInfo* last = tempTop;
+		tempTop = tempTop->Next();
+		if (tempTop == info)
+		{
+			last->Next(tempTop->Next());
+			delete tempTop;
+			break;
+		}
+	}
+}
+
 const void BufferInfo::pop()
 {
 	if (top)
