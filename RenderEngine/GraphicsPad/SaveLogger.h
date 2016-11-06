@@ -70,9 +70,9 @@ private:
 	bool autoSave;
 
 	string entities[Imgn::MAX_ENTITIES * Imgn::MAXENTITYDATA][5];
-	string componentNames[Imgn::MAX_ENTITIES][Imgn::MAX_COMPONENTS + 1];
-	ImgnComponent* components[Imgn::MAX_ENTITIES][Imgn::MAX_COMPONENTS + 1];
-	string componentsData[Imgn::MAX_ENTITIES][Imgn::MAX_COMPONENTS + 1][Imgn::MAX_VARIABLES];
+	string componentNames[Imgn::MAX_ENTITIES][Imgn::MAX_COMPONENTS_PERENTITY + 1];
+	ImgnComponent* components[Imgn::MAX_ENTITIES][Imgn::MAX_COMPONENTS_PERENTITY + 1];
+	string componentsData[Imgn::MAX_ENTITIES][Imgn::MAX_COMPONENTS_PERENTITY + 1][Imgn::MAX_VARIABLES];
 	std::list<string> uniqueComponentNames;
 
 	int curNumEntities;

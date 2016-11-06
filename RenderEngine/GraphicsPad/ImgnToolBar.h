@@ -27,7 +27,7 @@ public:
 	void AddTool(ImgnTool* Tool);
 	void SetQssFile();
 
-	static std::string classesToCompile[Imgn::MAX_COMPONENTS];
+	static std::string classesToCompile[Imgn::MAX_COMPONENTS_PERENTITY];
 private slots:
 	void Compile();
 

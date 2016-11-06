@@ -11,32 +11,30 @@ namespace Imgn
 {
 	Entity::Entity()
 	{
-		memset(m_components, 0, MAX_COMPONENTS * sizeof(m_components[0]));
+		memset(m_components, 0, MAX_COMPONENTS_PERENTITY * sizeof(m_components[0]));
 		numComponents = 0;
 	}
-
-
+	
 	Entity::~Entity()
 	{
 	}
 
-	bool Entity::Update(float dt)
+	void Entity::Update(float dt)
 	{
-		for (int i = 0; i < MAX_COMPONENTS; i++)
+		for (int i = 0; i < MAX_COMPONENTS_PERENTITY; i++)
 		{
 			if (m_components[i] && m_components[i]->isEnabled())
 			{
 				m_components[i]->Update(dt);
 			}
 		}
-		for (int i = 0; i < MAX_COMPONENTS; i++)
+		for (int i = 0; i < MAX_COMPONENTS_PERENTITY; i++)
 		{
 			if (m_components[i] && m_components[i]->IsEnabled())
 			{
 				m_components[i]->Draw(dt);
 			}
 		}
-		return true;
 	}
 
 	void Entity::SetName(const char * const name)
@@ -61,7 +59,7 @@ namespace Imgn
 
 	bool Entity::AddComponent(ImgnComponent * c, const char * const name)
 	{
-		for (int i = 0; i < MAX_COMPONENTS; ++i)
+		for (int i = 0; i < MAX_COMPONENTS_PERENTITY; ++i)
 		{
 			if (!m_components[i])
 			{
@@ -108,7 +106,7 @@ namespace Imgn
 
 	bool Entity::Initialize()
 	{
-		for (int i = 0; i < MAX_COMPONENTS; ++i)
+		for (int i = 0; i < MAX_COMPONENTS_PERENTITY; ++i)
 		{
 			if (m_components[i])
 			{
@@ -117,4 +115,16 @@ namespace Imgn
 		}
 		return true;
 	}
+
+	void Entity::Collided(Entity* entity)
+	{
+		for (int i = 0; i < MAX_COMPONENTS_PERENTITY; ++i)
+		{
+			if (m_components[i])
+			{
+				m_components[i]->OnCollisionEnter(entity);
+			}
+		}
+	}
+
 }

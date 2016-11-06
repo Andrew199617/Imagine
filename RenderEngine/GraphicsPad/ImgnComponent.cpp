@@ -4,6 +4,7 @@
 #include "Qt\qcheckbox.h"
 #include "ImgnProperties.h"
 #include "Qt\qboxlayout.h"
+#include <string>
 
 #define ADDQLINEEDIT(type) if (name == typeid(type*).name()) \
 { \
@@ -106,13 +107,13 @@ void ImgnComponent::DisplayInEngine()
 		{
 			m_Layout = new QVBoxLayout;
 			m_Layout->addSpacing(12);
-			for (int i = 0; i < displayData->numValues; i++)
+			for (int i = 0; i < displayData->numValues; ++i)
 			{
 				properties[i] = new QHBoxLayout();
 				properties[i]->addWidget(propertyNames[i] = new QLabel(displayData->variableNames[i].c_str()));
 
-				const char* name = displayData->typeName[i];
-
+				std::string name = displayData->typeName[i];
+				
 				ADDQLINEEDIT(float)
 				else ADDQLINEEDIT(int)
 				else ADDQLINEEDIT(double)
@@ -187,7 +188,7 @@ void ImgnComponent::LineEdited()
 	{
 		if (objectName == displayData->variableNames[i])
 		{
-			const char* name = displayData->typeName[i];
+			std::string name = displayData->typeName[i];
 			ImgnLineEdit* lineEdit = reinterpret_cast<ImgnLineEdit*>(sender);
 			UPDATEQLINEEDIT(int, toInt())
 			else UPDATEQLINEEDIT(float, toFloat())

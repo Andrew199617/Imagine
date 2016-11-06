@@ -2,11 +2,13 @@
 #include "../ImgnComponent.h"
 #include "../ImgnProperties.h"
 #include "glm.hpp"
+#include <vector>
 
 class ImgnCollider : public ImgnComponent
 {
 	
 public:
+	ImgnCollider();
 	~ImgnCollider() {}
 protected:
 	bool isTrigger;
@@ -16,5 +18,7 @@ protected:
 	void Awake() override
 	{
 	}
-
+	
+	Imgn::CollisionData* collisionData;
 };
+

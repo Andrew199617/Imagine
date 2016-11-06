@@ -14,7 +14,7 @@ namespace Imgn
 		Entity();
 		~Entity();
 
-		bool Update(float dt);
+		void Update(float dt);
 		void SetName(const char * const name);
 		void SetName(string s);
 		const char * const GetName();
@@ -24,6 +24,8 @@ namespace Imgn
 		template <class T> T* GetComponentByType() const;
 
 		bool Initialize();
+		void Collided(Entity* entity);
+
 		inline ImgnComponent** GetComponents() { return m_components; }
 		inline int GetNumComponents() { return numComponents; }
 		bool alreadyAdded;
@@ -31,8 +33,9 @@ namespace Imgn
 		void SetSaved(bool val) { saved = val; }
 	protected:
 		int numComponents;
+
 	private:
-		ImgnComponent* m_components[Imgn::MAX_COMPONENTS];
+		ImgnComponent* m_components[Imgn::MAX_COMPONENTS_PERENTITY];
 		char m_name[Imgn::MAX_NAME_LEN];
 		bool saved;
 	};
@@ -40,7 +43,7 @@ namespace Imgn
 	template<class T>
 	inline T * Entity::GetComponentByType() const
 	{
-		for (int i = 0; i < Imgn::MAX_COMPONENTS; i++)
+		for (int i = 0; i < Imgn::MAX_COMPONENTS_PERENTITY; i++)
 		{
 			if (!m_components[i]) continue;
 			if (typeid(T) == typeid(*m_components[i]))

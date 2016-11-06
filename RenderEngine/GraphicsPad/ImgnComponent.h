@@ -18,8 +18,18 @@ public:
 
 public:
 	bool Init();
-	//Called every frame.
+
+	/************************************************************************/
+	/* The game loop. Gets called every frame.
+	/************************************************************************/
 	virtual void Update(float) {}
+
+	/************************************************************************/
+	/* Called whenever a Collider detects a collision
+	/* Param: Entity you collided with.
+	/************************************************************************/
+	virtual void OnCollisionEnter(Imgn::Entity*) {}
+
 	virtual void Draw(float) {}
 	Imgn::DisplayData* GetDisplayData();
 
@@ -28,7 +38,6 @@ public:
 
 	virtual void CreateWidgets();
 	virtual void ClearFocus() {}
-	//have implementation be public.
 	virtual void SetHidden(bool IsHidden) { isHidden = IsHidden; }
 	inline bool GetHidden() { return isHidden; }
 	virtual void DeleteWidgets();

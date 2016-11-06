@@ -13,12 +13,13 @@ namespace Imgn
 				currentComponent = i;
 				components[currentComponent][numSameComponent[currentComponent]] = imgn;
 				numSameComponent[currentComponent]++;
+				numValues[currentComponent] = 0;
 				return;
 			}
 		}
+		currentComponent = numComponents;
 		componentNames[numComponents] = name;
 		components[numComponents][numSameComponent[currentComponent]] = imgn;
-		currentComponent = numComponents;
 		numSameComponent[currentComponent]++;
 		numComponents++;
 	}

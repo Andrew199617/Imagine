@@ -237,7 +237,7 @@ void EntityManager::SendNewDataToOpenGL()
 
 ImgnComponent ** EntityManager::GetComponents(int objNum)
 {
-	ImgnComponent** components = new ImgnComponent*[Imgn::MAX_COMPONENTS - 2];
+	ImgnComponent** components = new ImgnComponent*[Imgn::MAX_COMPONENTS_PERENTITY - 2];
 	string name = saveLogger->GetName(objNum);
 	int numComponents = 0;
 	Imgn::DisplayData* displayData;
@@ -249,10 +249,6 @@ ImgnComponent ** EntityManager::GetComponents(int objNum)
 	if (name == "Cube")
 	{																		
 		components[numComponents] = new MovementComponent();
-		displayData = components[numComponents]->GetDisplayData();
-		if (displayData)
-		{
-		}
 		numComponents++;
 		components[numComponents] = new Imgn::RigidBody();
 		displayData = components[numComponents]->GetDisplayData();

@@ -251,7 +251,7 @@ void SaveLogger::WriteToEntityManager()
 				meOutput << "\n";
 				meOutput << "ImgnComponent ** EntityManager::GetComponents(int objNum)" << "\n";
 				meOutput << "{" << "\n";
-				meOutput << "	ImgnComponent** components = new ImgnComponent*[Imgn::MAX_COMPONENTS - 2];" << "\n";
+				meOutput << "	ImgnComponent** components = new ImgnComponent*[Imgn::MAX_COMPONENTS_PERENTITY - 2];" << "\n";
 				meOutput << "	string name = saveLogger->GetName(objNum);" << "\n";
 				meOutput << "	int numComponents = 0;" << "\n";
 				meOutput << "	Imgn::DisplayData* displayData;" << "\n";
@@ -351,7 +351,7 @@ void SaveLogger::WriteComponentData(std::ofstream* meOutput)
 				*meOutput << "		{" << "\n";
 				for (int iVar = 0; iVar < displayData->numValues; iVar++)
 				{
-					const char* name = displayData->typeName[iVar];
+					std::string name = displayData->typeName[iVar];
 					SETVALUESOFCOMPONENT(int)
 					else SETVALUESOFCOMPONENT(float)
 					else SETVALUESOFCOMPONENT(double)
@@ -496,7 +496,7 @@ void SaveLogger::AddComponentData(int ObjNum, string ComponentName, Imgn::Displa
 	}
 	for (int iVar = 0; iVar < DisplayData->numValues; iVar++)
 	{
-		const char* name = DisplayData->typeName[iVar];
+		std::string name = DisplayData->typeName[iVar];
 		SETCOMPONENTDATA(int)
 		else SETCOMPONENTDATA(float)
 		else SETCOMPONENTDATA(double)

@@ -17,8 +17,6 @@ Components 5 {
     SpatialComponent
     MeshComponent
     MovementComponent
-    {
-    }
     Imgn::RigidBody
     {
     }

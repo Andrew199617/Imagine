@@ -5,6 +5,7 @@
 #include "..\SpatialComponent.h"
 #include "QtGui/qevent.h"
 
+
 BoxCollider::~BoxCollider()
 {
 
@@ -15,13 +16,17 @@ bool BoxCollider::Initialize()
 	renderInfo = 0;
 	spatial = GetSiblingComponent<SpatialComponent>();
 	size = spatial->GetScale() + glm::vec3(.1f,.1f,.1f);
-	
+	collisionData = new Imgn::CollisionData;
+	Imgn::ImgnProperties::Instance()->GetAllComponentData(collisionData);
 	return true;
 }
 
 void BoxCollider::Update(float)
 {
-	
+	for (int currentCollider = 0; currentCollider < collisionData->numComponents; ++currentCollider)
+	{
+		
+	}
 }
 
 void BoxCollider::Draw(float)

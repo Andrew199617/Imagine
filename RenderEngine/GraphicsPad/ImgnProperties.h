@@ -6,7 +6,7 @@ class ImgnComponent;
 
 #define IMGN_END(className) isHidden = false;													\
 	SetComponentType(imgnProps->currentComponent);												\
-	SetComponentTypeNum(imgnProps->numSameComponent[imgnProps->currentComponent]);				\
+	SetComponentTypeNum(imgnProps->numSameComponent[imgnProps->currentComponent] - 1);				\
 	layoutInitalized = false;																	\
 	layoutHasData = false;																		\
 	setMaximumSize(348, 250);																	\
@@ -31,7 +31,7 @@ className(){																					\
 		GameLogger::shutdownLog();																\
 		exit(1);																				\
 	} 																							\
-	imgnProps->AddClass(this,typeid(this).name());																													
+	imgnProps->AddClass(this,typeid(this).name());												
 	
 
 #define IMGN_PROPERTY_DEFAULT(name) imgnProps->AddProperty<decltype(&name)>(&name,#name);
@@ -41,8 +41,16 @@ className(){																					\
 
 namespace Imgn {
 
+	struct CollisionData
+	{
+		ImgnComponent*** components;
+		std::string* componentNames;
+		int numComponents;
+		int* numSameComponents;
+	};
+
 	struct DisplayData {
-		const char** typeName;
+		std::string* typeName;
 		std::string* variableNames;
 		void** values;
 		int numValues;
@@ -51,7 +59,7 @@ namespace Imgn {
 
 	class ImgnProperties {
 
-		ImgnProperties() : numComponents(0), numValues(), numSameComponent(), currentComponent(0) {}
+		ImgnProperties() : numComponents(0), numValues(), numSameComponent(), currentComponent(0) { }
 	public:
 
 		static ImgnProperties* Instance()
@@ -79,11 +87,18 @@ namespace Imgn {
 					i += 2;
 				}
 			}
-			typeName[currentComponent][numSameComponent[currentComponent]][numValues[currentComponent][numSameComponent[currentComponent]]] = typeid(V).name();
-			values[currentComponent][numSameComponent[currentComponent]][numValues[currentComponent][numSameComponent[currentComponent]]] = var;
-			variableNames[currentComponent][numSameComponent[currentComponent]][numValues[currentComponent][numSameComponent[currentComponent]]] = name;
-			numValues[currentComponent][numSameComponent[currentComponent]]++;
-			
+
+			int i = currentComponent;
+			int j = numSameComponent[i] - 1;
+			int k = numValues[i];
+
+			values[i][j][k] = var;
+			if (j == 0)
+			{
+				typeName[i][k] = typeid(V).name();
+				variableNames[i][k] = name;
+				numValues[i]++;
+			}
 		}
 
 		DisplayData* GetMyProperties(int componentType,int componentTypeNum)
@@ -91,12 +106,12 @@ namespace Imgn {
 			datas[componentType][componentTypeNum] = new DisplayData;
 			datas[componentType][componentTypeNum]->hasData = false;
 
-			if (numValues[componentType][componentTypeNum] > 0)
+			if (numValues[componentType] > 0)
 			{
 				datas[componentType][componentTypeNum]->values = values[componentType][componentTypeNum];
-				datas[componentType][componentTypeNum]->typeName = typeName[componentType][componentTypeNum];
-				datas[componentType][componentTypeNum]->variableNames = variableNames[componentType][componentTypeNum];
-				datas[componentType][componentTypeNum]->numValues = numValues[componentType][componentTypeNum];
+				datas[componentType][componentTypeNum]->typeName = typeName[componentType];
+				datas[componentType][componentTypeNum]->variableNames = variableNames[componentType];
+				datas[componentType][componentTypeNum]->numValues = numValues[componentType];
 				datas[componentType][componentTypeNum]->hasData = true;
 			}
 			else
@@ -109,19 +124,41 @@ namespace Imgn {
 			return datas[componentType][componentTypeNum];
 		}
 		
+		inline void GetAllComponentData(CollisionData* componentData)
+		{
+			componentData->numComponents = 0;
+			componentData->numSameComponents = new int[NUM_COLLIDERS];
+			componentData->componentNames = new std::string[NUM_COLLIDERS];
+			componentData->components = new ImgnComponent**[NUM_COLLIDERS];
+
+			int cdCurComponent = 0;
+
+			for (int iCurComp = 0; iCurComp < numComponents; ++iCurComp)
+			{
+				if (componentNames[iCurComp] == "class BoxCollider *")
+				{
+					componentData->components[cdCurComponent] = components[iCurComp];
+					componentData->componentNames[cdCurComponent] = componentNames[iCurComp];
+					componentData->numSameComponents[cdCurComponent] = numSameComponent[iCurComp];
+					++componentData->numComponents; 
+					++cdCurComponent;
+				}
+			}
+		}
+
 		void AddClass(ImgnComponent* imgn, const char* typeName);
 		
 		int currentComponent;
-		int numSameComponent[MAX_COMPONENTS];
+		int numSameComponent[MAX_COMPONENTCLASS];
 	private:
-		DisplayData* datas[MAX_COMPONENTS][MAX_SAME_COMPONENT];
+		DisplayData* datas[MAX_COMPONENTCLASS][MAX_SAME_COMPONENT];
 		static ImgnProperties* props;
-		ImgnComponent* components[MAX_COMPONENTS][MAX_SAME_COMPONENT];
-		const char* componentNames[MAX_COMPONENTS];
+		ImgnComponent* components[MAX_COMPONENTCLASS][MAX_SAME_COMPONENT];
+		std::string componentNames[MAX_COMPONENTCLASS];
 		int numComponents;
-		int numValues[MAX_COMPONENTS][MAX_SAME_COMPONENT];
-		std::string variableNames[MAX_COMPONENTS][MAX_SAME_COMPONENT][MAX_VARIABLES];
-		const char* typeName[MAX_COMPONENTS][MAX_SAME_COMPONENT][MAX_VARIABLES];
-		void* values[MAX_COMPONENTS][MAX_SAME_COMPONENT][MAX_VARIABLES];
+		int numValues[MAX_COMPONENTCLASS];
+		std::string variableNames[MAX_COMPONENTCLASS][MAX_VARIABLES];
+		std::string typeName[MAX_COMPONENTCLASS][MAX_VARIABLES];
+		void* values[MAX_COMPONENTCLASS][MAX_SAME_COMPONENT][MAX_VARIABLES];
 	};
 }
