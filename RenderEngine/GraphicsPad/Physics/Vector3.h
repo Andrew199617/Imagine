@@ -6,19 +6,19 @@
 
 namespace Imgn
 {
-	class Vector3
+	class Vector3 : public glm::vec3 
 	{
 	public:
-		Vector3() : x(0), y(0), z(0) {}
-		Vector3(real x, real y, real z) : x(x), y(y), z(z) {}
+		Vector3() : glm::vec3() {}
+		Vector3(real x, real y, real z) : glm::vec3(x,y,z) {}
+		Vector3(glm::vec3 vec) : glm::vec3(vec) {}
+		/*public:
+			real x;
+			real y;
+			real z;
 
-	public:
-		real x;
-		real y;
-		real z;
-
-	private:
-		real pad;
+		private:
+			real pad;*/
 
 	public:
 		void invert();

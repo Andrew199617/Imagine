@@ -27,6 +27,13 @@ Components 5 {
     }
     Imgn::RigidBody
     {
+        1
+        1.000000
+        0.050000
+        0.050000
+        (0.000000,-9.800000,0.000000)
+        1
+        0
     }
     BoxCollider
     {
@@ -41,8 +48,24 @@ SceneName Sphere
 Position "0.0,5.0,0.0"
 Rotate "0.0,1.0,0.0"
 Scale "1.0,1.0,1.0"
-Components 2 {
+Components 4 {
     SpatialComponent
     MeshComponent
+    Imgn::RigidBody
+    {
+        1
+        1.000000
+        0.050000
+        0.050000
+        (0.000000, -2.799999, 0.000000)
+        1
+        0
+    }
+    SphereCollider
+    {
+        0
+        (0.000000,0.000000,0.000000)
+        0.900000
+    }
 }
 

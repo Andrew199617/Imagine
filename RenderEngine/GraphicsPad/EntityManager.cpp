@@ -234,6 +234,7 @@ void EntityManager::SendNewDataToOpenGL()
 #include "CollisionDetection/BoxCollider.h"
 #include "Physics/RigidBody.h"
 #include "MovementComponent.h"
+#include "CollisionDetection/SphereCollider.h"
 
 ImgnComponent ** EntityManager::GetComponents(int objNum)
 {
@@ -267,6 +268,13 @@ ImgnComponent ** EntityManager::GetComponents(int objNum)
 		displayData = components[numComponents]->GetDisplayData();
 		if (displayData)
 		{
+			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)1;
+			iVar = 1; double* val1 = reinterpret_cast<double*>(displayData->values[iVar]); *val1 = (double)1.000000;
+			iVar = 2; float* val2 = reinterpret_cast<float*>(displayData->values[iVar]); *val2 = (float)0.050000;
+			iVar = 3; float* val3 = reinterpret_cast<float*>(displayData->values[iVar]); *val3 = (float)0.050000;
+			iVar = 4; glm::detail::tvec3<float>* val4 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val4 = glm::vec3(0.000000,-9.800000,0.000000);
+			iVar = 5; bool* val5 = reinterpret_cast<bool*>(displayData->values[iVar]); *val5 = (bool)1;
+			iVar = 6; bool* val6 = reinterpret_cast<bool*>(displayData->values[iVar]); *val6 = (bool)0;
 		}
 		numComponents++;
 		components[numComponents] = new BoxCollider();
@@ -281,6 +289,28 @@ ImgnComponent ** EntityManager::GetComponents(int objNum)
 	}
 	if (name == "Sphere3")
 	{																		
+		components[numComponents] = new Imgn::RigidBody();
+		displayData = components[numComponents]->GetDisplayData();
+		if (displayData)
+		{
+			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)1;
+			iVar = 1; double* val1 = reinterpret_cast<double*>(displayData->values[iVar]); *val1 = (double)1.000000;
+			iVar = 2; float* val2 = reinterpret_cast<float*>(displayData->values[iVar]); *val2 = (float)0.050000;
+			iVar = 3; float* val3 = reinterpret_cast<float*>(displayData->values[iVar]); *val3 = (float)0.050000;
+			iVar = 4; glm::detail::tvec3<float>* val4 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val4 = glm::vec3(0.000000, -2.799999, 0.000000);
+			iVar = 5; bool* val5 = reinterpret_cast<bool*>(displayData->values[iVar]); *val5 = (bool)1;
+			iVar = 6; bool* val6 = reinterpret_cast<bool*>(displayData->values[iVar]); *val6 = (bool)0;
+		}
+		numComponents++;
+		components[numComponents] = new SphereCollider();
+		displayData = components[numComponents]->GetDisplayData();
+		if (displayData)
+		{
+			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)0;
+			iVar = 1; glm::detail::tvec3<float>* val1 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val1 = glm::vec3(0.000000,0.000000,0.000000);
+			iVar = 2; float* val2 = reinterpret_cast<float*>(displayData->values[iVar]); *val2 = (float)0.900000;
+		}
+		numComponents++;
 	}
 
 	numComponent[objNum] += numComponents;										

@@ -248,16 +248,20 @@ void SaveLogger::WriteToEntityManager()
 			{
 				for (std::list<string>::iterator it = uniqueComponentNames.begin(); it != uniqueComponentNames.end(); ++it)
 				{
-					if (*it == "Imgn::RigidBody")
-					{
-						meOutput << "#include \"Physics/RigidBody.h\"" << "\n";
+					string className = *it;
+					string path = "";
+					if ((*it).find("::") != std::string::npos) {
+						className = (*it).substr((*it).find("::") + 2);
 					}
-					else if (*it == "BoxCollider")
+					if (*it == "Imgn::RigidBody" || *it == "RigidBody")
 					{
-						meOutput << "#include \"CollisionDetection/BoxCollider.h\"" << "\n"; 
+						path = "Physics/";
 					}
-					else
-					meOutput << "#include \"" << *it << ".h\"" << "\n";
+					else if (*it == "BoxCollider" || *it == "SphereCollider")
+					{
+						path = "CollisionDetection/";
+					}
+					meOutput << "#include \"" << path << className << ".h\"" << "\n";
 				}
 				meOutput << "\n";
 				meOutput << "ImgnComponent ** EntityManager::GetComponents(int objNum)" << "\n";

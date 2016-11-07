@@ -17,8 +17,6 @@ namespace Imgn
 
 	bool RigidBody::Initialize()
 	{
-
-		SetGravity(Vector3(0, -9.8f, 0));
 		SpatialComponent* spatial = GetSiblingComponent<SpatialComponent>();
 		if (spatial)
 		{
@@ -38,7 +36,7 @@ namespace Imgn
 		}
 		if (useGravity)
 		{
-			AddForce(GetGravity());
+			AddForce(Gravity());
 		}
 		Integrate(dt);
 	}
@@ -149,6 +147,11 @@ namespace Imgn
 		velocity = vec;
 	}
 
+	Vector3 RigidBody::GetVelocity()
+	{
+		return velocity;
+	}
+
 	static void CalculateTransformMatrix(Matrix4 &transformMatrix, const Vector3 &position, const Quaternion &orientation)
 	{
 		transformMatrix.data[0] = 1 - 2 * orientation.j*orientation.j -
@@ -204,5 +207,7 @@ namespace Imgn
 	{
 		return 1 / GetMass();
 	}
+
+	
 
 }

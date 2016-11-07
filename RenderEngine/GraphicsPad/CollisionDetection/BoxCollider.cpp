@@ -23,7 +23,7 @@ bool BoxCollider::Initialize()
 	return true;
 }
 
-void BoxCollider::Update(float)
+void BoxCollider::Update(float dt)
 {
 	Imgn::RigidBody* rigidBody = GetSiblingComponent<Imgn::RigidBody>();
 	if (!rigidBody || rigidBody->IsKinematic())
@@ -56,7 +56,7 @@ void BoxCollider::Update(float)
 							if (v)
 							{
 								v->SetVelocity(Imgn::Vector3());
-								v->AddForce(v->GetGravity() * -1);
+								v->AddForce(v->Gravity() * -1.0f);
 							}
 							m_owner->Collided(collider->GetOwner());
 						}
@@ -77,9 +77,9 @@ void BoxCollider::Update(float)
 				glm::vec3 myCenter = center + spatial->position;
 				glm::vec3 mySize = GetHalfSize();
 
-				float closestX = glm::clamp(sphereCenter.x, myCenter.x + mySize.x, myCenter.x + mySize.x);
-				float closestY = glm::clamp(sphereCenter.y, myCenter.y + mySize.y, myCenter.y + mySize.y);
-				float closestZ = glm::clamp(sphereCenter.z, myCenter.z + mySize.z, myCenter.z + mySize.z);
+				float closestX = glm::clamp(sphereCenter.x, myCenter.x - mySize.x, myCenter.x + mySize.x);
+				float closestY = glm::clamp(sphereCenter.y, myCenter.y - mySize.y, myCenter.y + mySize.y);
+				float closestZ = glm::clamp(sphereCenter.z, myCenter.z - mySize.z, myCenter.z + mySize.z);
 
 				// Calculate the distance between the circle's center and this closest point
 				float distanceX = sphereCenter.x - closestX;
@@ -90,7 +90,14 @@ void BoxCollider::Update(float)
 				float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY) + (distanceZ * distanceZ);
 				if (distanceSquared < (radius * radius))
 				{
-
+					Imgn::RigidBody* v = sphere->GetSiblingComponent<Imgn::RigidBody>();
+					if (v)
+					{
+						v->SetVelocity(Imgn::Vector3());
+						Imgn::Vector3 vec = Imgn::Vector3(glm::abs(sphereCenter.x - myCenter.x), glm::abs(sphereCenter.y - myCenter.y), glm::abs(sphereCenter.z - myCenter.z));
+						v->AddForce((v->Gravity() * -1) + /*vec * 9.8f +*/ Imgn::Vector3(rigidBody->GetVelocity() / dt) );
+						//v->addForceAtPoint((v->Gravity() * -1) + /*vec * 9.8f +*/ rigidBody->GetVelocity(),Imgn::Vector3(glm::abs(sphereCenter.x - myCenter.x), glm::abs(sphereCenter.y - myCenter.y), glm::abs(sphereCenter.z - myCenter.z)));
+					}
 				}
 
 				m_owner->Collided(sphere->GetOwner());

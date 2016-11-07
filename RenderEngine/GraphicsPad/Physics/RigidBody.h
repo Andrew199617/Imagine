@@ -14,6 +14,7 @@ namespace Imgn
 			IMGN_PROPERTY(mass, 1)
 			IMGN_PROPERTY(linearDamping, 0.05f)
 			IMGN_PROPERTY(angularDamping, 0.05f)
+			IMGN_PROPERTY(gravity, glm::vec3(0.0,9.8f,0.0f))
 			IMGN_PROPERTY(useGravity, true)
 			IMGN_PROPERTY(isKinematic, false)
 			IMGN_END(RigidBody)
@@ -53,6 +54,7 @@ namespace Imgn
 		*/
 		void addRotation(const Vector3 &deltaRotation);
 		void SetVelocity(class Vector3);
+		Vector3 GetVelocity();
 		float InverseMass();
 		bool IsKinematic() const { return isKinematic; }
 		void SetIsKinematic(bool val) { isKinematic = val; }
@@ -69,12 +71,14 @@ namespace Imgn
 		/************************************************************************/
 		/* Get the value the RigidBody is using for Gravity.
 		/************************************************************************/
-		Imgn::Vector3 GetGravity() const { return gravity; }
+		Vector3 Gravity() { return Vector3(gravity.x, gravity.y, gravity.z); }
 		/************************************************************************/
 		/* Set the value the RigidBody will use for Gravity.
 		/************************************************************************/
-		void SetGravity(Imgn::Vector3 val) { gravity = val; }
+		void SetGravity(Imgn::Vector3 val) { gravity = val.toVec3(); }
 
+		Imgn::Vector3 GetForceAccum() const { return forceAccum; }
+		void SetForceAccum(Imgn::Vector3 val) { forceAccum = val; }
 	private:
 		void ClearAccumulators();
 		void CalculateDerivedData();
@@ -86,7 +90,7 @@ namespace Imgn
 		Vector3 position;
 		Vector3 velocity;
 		Vector3 rotation;
-		Vector3 gravity;
+		glm::vec3 gravity;
 		Matrix3 inverseInertiaTensor;
 		Matrix3 inverseInertiaTensorWorld;
 		

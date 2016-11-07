@@ -135,7 +135,7 @@ namespace Imgn {
 
 			for (int iCurComp = 0; iCurComp < numComponents; ++iCurComp)
 			{
-				if (componentNames[iCurComp] == "class BoxCollider *")
+				if (componentNames[iCurComp] == "class BoxCollider *" || componentNames[iCurComp] == "class SphereCollider *")
 				{
 					componentData->components[cdCurComponent] = components[iCurComp];
 					componentData->componentNames[cdCurComponent] = componentNames[iCurComp];
