@@ -44,6 +44,11 @@ public:
 	virtual void focusOutEvent(QFocusEvent *) override;
 	virtual void focusInEvent(QFocusEvent *) override;
 
+	template <class T> T* GetSiblingComponent()
+	{
+		return m_owner->GetComponentByType<T>();
+	}
+
 	bool layoutHasData;
 	bool layoutInitalized;
 protected:
@@ -55,10 +60,7 @@ protected:
 
 	void SetComponentType(int i) { componentType = i; }
 	void SetComponentTypeNum(int i) { componentTypeNum = i; }
-	template <class T> T* GetSiblingComponent()
-	{
-		return m_owner->GetComponentByType<T>();
-	}
+	int GetComponentTypeNum() { return componentTypeNum; }
 
 	//************************************
 	// Method:    GetVariableName

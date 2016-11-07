@@ -10,6 +10,8 @@
 9. No value found for key: CubeVertexShader
 10. No value found for key: CubeFragmentShader
 11. No value found for key: CubeBumpMap
-12. No value found for key: Cube.imgnasset
-13. No value found for key: CubeTexture
-14. No value found for key: 0BumpMap
+12. No value found for key: Sphere.imgnasset
+13. No value found for key: SphereTexture
+14. No value found for key: SphereVertexShader
+15. No value found for key: SphereFragmentShader
+16. No value found for key: SphereBumpMap

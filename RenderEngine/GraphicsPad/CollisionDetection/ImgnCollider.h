@@ -8,7 +8,7 @@ class ImgnCollider : public ImgnComponent
 {
 	
 public:
-	ImgnCollider();
+	ImgnCollider() {}
 	~ImgnCollider() {}
 protected:
 	bool isTrigger;

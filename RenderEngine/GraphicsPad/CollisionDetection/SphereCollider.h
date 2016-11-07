@@ -11,6 +11,8 @@ class SphereCollider : public ImgnCollider
 public:
 	virtual void Update(float) override;
 
+	glm::vec3 GetCenter() { return center; }
+	float GetRadius();
 private:
 	float radius;
 

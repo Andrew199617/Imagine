@@ -14,6 +14,7 @@
 #include "Qt\qdir.h"
 #include <windows.h>
 #include "CollisionDetection\BoxCollider.h"
+#include "CollisionDetection\SphereCollider.h"
 typedef void* (*ADDCOMPONENTS)(string*);
 
 DetailsLayout* DetailsLayout::detailsLayout = 0;
@@ -156,6 +157,7 @@ void DetailsLayout::CreateActions()
 
 	CreateAction<Imgn::RigidBody>("Rigid Body");
 	CreateAction<BoxCollider>();
+	CreateAction<SphereCollider>();
 	componentMenu->addSeparator();
 	CreateAction<MovementComponent>();
 	CreateAction<MeshComponent>();

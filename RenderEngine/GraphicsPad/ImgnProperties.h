@@ -93,11 +93,11 @@ namespace Imgn {
 			int k = numValues[i];
 
 			values[i][j][k] = var;
+			numValues[i]++;
 			if (j == 0)
 			{
 				typeName[i][k] = typeid(V).name();
 				variableNames[i][k] = name;
-				numValues[i]++;
 			}
 		}
 

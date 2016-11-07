@@ -3,6 +3,7 @@
 #include "..\MeshComponent.h"
 #include <gtc/matrix_transform.hpp>
 #include <gtc/quaternion.hpp>
+#include "Matrix4.h"
 
 namespace Imgn
 {
@@ -18,7 +19,7 @@ namespace Imgn
 	{
 
 		SetGravity(Vector3(0, -9.8f, 0));
-		spatial = GetSiblingComponent<SpatialComponent>();
+		SpatialComponent* spatial = GetSiblingComponent<SpatialComponent>();
 		if (spatial)
 		{
 			position = spatial->position;
@@ -29,6 +30,12 @@ namespace Imgn
 
 	void RigidBody::Update(float dt)
 	{
+		SpatialComponent* spatial = GetSiblingComponent<SpatialComponent>();
+		if (spatial)
+		{
+			position = spatial->position;
+			orientation = Imgn::Quaternion(spatial->GetRotate().w, spatial->GetRotate().x, spatial->GetRotate().y, spatial->GetRotate().z);
+		}
 		if (useGravity)
 		{
 			AddForce(GetGravity());
@@ -118,7 +125,7 @@ namespace Imgn
 	void RigidBody::AddForce(const Vector3 &force)
 	{
 		forceAccum += force;
-		Enable();
+		//Enable();
 	}
 
 	void RigidBody::addForceAtPoint(const Vector3 &force, const Vector3 &point)
@@ -129,7 +136,7 @@ namespace Imgn
 		forceAccum += force;
 		torqueAccum += pt % force;
 
-		Enable();
+		//Enable();
 	}
 
 	void RigidBody::addRotation(const Vector3 &deltaRotation)
@@ -142,10 +149,41 @@ namespace Imgn
 		velocity = vec;
 	}
 
+	static void CalculateTransformMatrix(Matrix4 &transformMatrix, const Vector3 &position, const Quaternion &orientation)
+	{
+		transformMatrix.data[0] = 1 - 2 * orientation.j*orientation.j -
+			2 * orientation.k*orientation.k;
+		transformMatrix.data[1] = 2 * orientation.i*orientation.j -
+			2 * orientation.r*orientation.k;
+		transformMatrix.data[2] = 2 * orientation.i*orientation.k +
+			2 * orientation.r*orientation.j;
+		transformMatrix.data[3] = position.x;
+
+		transformMatrix.data[4] = 2 * orientation.i*orientation.j +
+			2 * orientation.r*orientation.k;
+		transformMatrix.data[5] = 1 - 2 * orientation.i*orientation.i -
+			2 * orientation.k*orientation.k;
+		transformMatrix.data[6] = 2 * orientation.j*orientation.k -
+			2 * orientation.r*orientation.i;
+		transformMatrix.data[7] = position.y;
+
+		transformMatrix.data[8] = 2 * orientation.i*orientation.k -
+			2 * orientation.r*orientation.j;
+		transformMatrix.data[9] = 2 * orientation.j*orientation.k +
+			2 * orientation.r*orientation.i;
+		transformMatrix.data[10] = 1 - 2 * orientation.i*orientation.i -
+			2 * orientation.j*orientation.j;
+		transformMatrix.data[11] = position.z;
+	}
+
 	void RigidBody::CalculateDerivedData()
 	{
-		spatial->SetPosition(position.toVec3());
-		spatial->velocity = velocity.toVec3();
+		SpatialComponent* spatial = GetSiblingComponent<SpatialComponent>();
+		if (spatial)
+		{
+			spatial->SetPosition(position.toVec3());
+			spatial->velocity = velocity.toVec3();
+		}
 		
 		orientation.normalise();
 		MeshComponent* mesh = GetSiblingComponent<MeshComponent>();
@@ -153,9 +191,9 @@ namespace Imgn
 		{
 			TransformInfo* info = mesh->renderinfo.getTransformInfo();
 			info->m_rotateTransform = glm::mat4_cast(orientation.toQuat());
+			// Calculate the transform matrix for the body.
+			//CalculateTransformMatrix(transformMatrix, position, orientation);
 		}
-		// Calculate the transform matrix for the body.
-		//CalculateTransformMatrix(transformMatrix, position, orientation);
 
 		// Calculate the inertiaTensor in world space.
 		//TransformInertiaTensor(inverseInertiaTensorWorld, orientation, 

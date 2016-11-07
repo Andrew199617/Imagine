@@ -245,10 +245,23 @@ ImgnComponent ** EntityManager::GetComponents(int objNum)
 
 	if (name == "AIWorld")
 	{																		
+		components[numComponents] = new BoxCollider();
+		displayData = components[numComponents]->GetDisplayData();
+		if (displayData)
+		{
+			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)0;
+			iVar = 1; glm::detail::tvec3<float>* val1 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val1 = glm::vec3(0.000000,-0.100000,0.000000);
+			iVar = 2; glm::detail::tvec3<float>* val2 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val2 = glm::vec3(333.000000,0.200000,280.000000);
+		}
+		numComponents++;
 	}
 	if (name == "Cube")
 	{																		
 		components[numComponents] = new MovementComponent();
+		displayData = components[numComponents]->GetDisplayData();
+		if (displayData)
+		{
+		}
 		numComponents++;
 		components[numComponents] = new Imgn::RigidBody();
 		displayData = components[numComponents]->GetDisplayData();
@@ -261,10 +274,13 @@ ImgnComponent ** EntityManager::GetComponents(int objNum)
 		if (displayData)
 		{
 			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)0;
-			iVar = 1; glm::detail::tvec3<float>* val1 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val1 = (glm::detail::tvec3<float>)(0.000000, 0.000000, 0.000000);
-			iVar = 2; glm::detail::tvec3<float>* val2 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val2 = (glm::detail::tvec3<float>)(2.100000, 2.100000, 2.100000);
+			iVar = 1; glm::detail::tvec3<float>* val1 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val1 = glm::vec3(0.000000,0.000000,0.000000);
+			iVar = 2; glm::detail::tvec3<float>* val2 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val2 = glm::vec3(2.100000,2.100000,2.100000);
 		}
 		numComponents++;
+	}
+	if (name == "Sphere3")
+	{																		
 	}
 
 	numComponent[objNum] += numComponents;										

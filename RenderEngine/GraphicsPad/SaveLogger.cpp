@@ -183,6 +183,17 @@ void SaveLogger::LoadComponentData(int currentComponent)
 		{
 			break;
 		}
+		else if (word.at(0) == '(')
+		{
+			string vec = word;
+			while (word.at(word.length() - 1) != ')')
+			{
+				buffer >> word;
+				vec += word;
+			}
+			componentsData[curNumEntities][currentComponent - 1][currentData] = vec;
+			currentData++;
+		}
 		else
 		{
 			componentsData[curNumEntities][currentComponent - 1][currentData] = word;
@@ -366,7 +377,7 @@ void SaveLogger::WriteComponentData(std::ofstream* meOutput)
 						{ 
 							*meOutput << "			iVar = " << iVar << "; "; 
 							*meOutput << "" << "glm::detail::tvec3<float>" << "* val" << std::to_string(iVar) << " = reinterpret_cast<" << "glm::detail::tvec3<float>" << "*>(displayData->values[iVar]);" << " ";
-							*meOutput << "*val" << std::to_string(iVar) << " = (" << "glm::detail::tvec3<float>" << ")" << componentsData[i][j][iVar] << ";" << "\n"; 
+							*meOutput << "*val" << std::to_string(iVar) << " = " << "glm::vec3" << componentsData[i][j][iVar] << ";" << "\n"; 
 						} \
 					}
 					else SETVALUESOFCOMPONENT(glm::vec3)

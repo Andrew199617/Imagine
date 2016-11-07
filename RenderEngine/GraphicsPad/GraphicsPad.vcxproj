@@ -92,7 +92,6 @@
     <ClCompile Include="ArrivalComponent.cpp" />
     <ClCompile Include="CollisionDetection\BoxCollider.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
-    <ClCompile Include="CollisionDetection\ImgnCollider.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ConfigReader.cpp" />
     <ClCompile Include="DetailsLayout.cpp" />

@@ -87,9 +87,9 @@ namespace Imgn
 		Vector3 velocity;
 		Vector3 rotation;
 		Vector3 gravity;
-		SpatialComponent* spatial;
 		Matrix3 inverseInertiaTensor;
 		Matrix3 inverseInertiaTensorWorld;
+		
 
 		/**
 		* Holds the angular orientation of the rigid body in
