@@ -63,7 +63,6 @@ void SaveLogger::Open(const char* filename)
 	buffer = std::stringstream(saveFile);
 
 	string word;
-	string s;
 	currentEntityDataType = 0;
 	entityData = 0;
 	curNumEntities = 0;
@@ -81,7 +80,7 @@ void SaveLogger::Open(const char* filename)
 		else
 		{
 			//Add Data for current Entity.
-			LoadEntityData(word, s);
+			LoadEntityData(word);
 		}
 
 
@@ -91,50 +90,15 @@ void SaveLogger::Open(const char* filename)
 	GameLogger::log("Save Logger file loaded");
 }
 
-void SaveLogger::LoadEntityData(string &word, string &s)
+void SaveLogger::LoadEntityData(string &word)
 {
-	bool inQuotes = false;
-
 	entities[currentEntityDataType][entityData] = word;
 	buffer >> word;
 	entityData++;
 
-	if (word[0] == '"')
-	{
-		word[0] = ' ';
-		inQuotes = true;
-	}
-	else
-	{
-		entities[currentEntityDataType][entityData] = word;
-	}
-	while (inQuotes)
-	{
-		for (unsigned int j = 1; j < word.length(); j++)
-		{
-			if (word[j] == '"')
-			{
-				inQuotes = false;
-				word[j] = ' ';
-				break;
-			}
-			else if (word[j] == ',')
-			{
-				entities[currentEntityDataType][entityData] = s;
-				s = "";
-				entityData++;
-			}
-			else
-			{
-				s += word[j];
-			}
+	entities[currentEntityDataType][entityData] = word;
 
-		}
-		entities[currentEntityDataType][entityData] = s;
-		entityData++;
-		s = "";
-	}
-	if (currentEntityDataType > Imgn::MAX_ENTITIES*Imgn::MAXENTITYDATA)
+	if (currentEntityDataType >= Imgn::MAX_ENTITIES * Imgn::MAXENTITYDATA - 1)
 	{
 		GameLogger::log("To many Keys In Save Logger File");
 		GameLogger::shutdownLog();
@@ -266,9 +230,9 @@ void SaveLogger::WriteToEntityManager()
 				meOutput << "\n";
 				meOutput << "ImgnComponent ** EntityManager::GetComponents(int objNum)" << "\n";
 				meOutput << "{" << "\n";
-				meOutput << "	ImgnComponent** components = new ImgnComponent*[Imgn::MAX_COMPONENTS_PERENTITY - 2];" << "\n";
+				meOutput << "	ImgnComponent** components;" << "\n";
 				meOutput << "	string name = saveLogger->GetName(objNum);" << "\n";
-				meOutput << "	int numComponents = 0;" << "\n";
+				meOutput << "	int numComponents = 1;" << "\n";
 				meOutput << "	Imgn::DisplayData* displayData;" << "\n";
 				meOutput << "	int iVar = 0;" << "\n\n";
 				WriteComponentData(&meOutput);
@@ -278,9 +242,11 @@ void SaveLogger::WriteToEntityManager()
 				meOutput << "	delete[] components;" << "\n";
 				meOutput << "	return 0;" << "\n";
 				meOutput << "}" << "\n";*/
-				meOutput << "	numComponent[objNum] += numComponents;										" << "\n";
-				meOutput << "	return components;															" << "\n";
-				meOutput << "}																				" << "\n";
+				meOutput << "	if(numComponents == 1)" << "{ components = new ImgnComponent*[1]; }" << "\n";
+				
+				meOutput << "	numComponent[objNum] += numComponents;" << "\n";
+				meOutput << "	return components;" << "\n";
+				meOutput << "}" << "\n";
 				break;
 			}
 		}
@@ -297,16 +263,10 @@ bool SaveLogger::WriteToSaveFile()
 		for (int i = 0; i < curNumEntities; ++i)
 		{
 			int index = i * Imgn::MAXENTITYDATA;
-			out << entities[index][0] << " " << entities[index][1] << "\n";
-			index++;
-			out << entities[index][0] << " " << entities[index][1] << "\n";
-			index++;
-			out << entities[index][0] << " " << '"' << entities[index][1] << "," << entities[index][2] << "," << entities[index][3] << '"' << "\n";
-			index++;
-			out << entities[index][0] << " " << '"' << entities[index][1] << "," << entities[index][2] << "," << entities[index][3] << '"' << "\n";
-			index++;
-			out << entities[index][0] << " " << '"' << entities[index][1] << "," << entities[index][2] << "," << entities[index][3] << '"' << "\n";
-
+			for (int jEntityData = index; jEntityData < index + Imgn::MAXENTITYDATA; ++jEntityData)
+			{
+				out << entities[jEntityData][0] << " " << entities[jEntityData][1] << "\n";
+			}
 			WriteComponents(&out, i);
 
 			out << "}\n\n";
@@ -325,22 +285,22 @@ void SaveLogger::WriteComponents(ofstream* out, int iEntity)
 {
 	*out << "Components " << componentNames[iEntity][0] << " {\n";
 	int numComponents = std::stoi(componentNames[iEntity][0]);
-	for (int j = 0; j < numComponents; ++j)
+	for (int j = 1; j < numComponents+1; ++j)
 	{
-		*out << "    " << componentNames[iEntity][j + 1] << "\n";
-		if (components[iEntity][j + 1])
+		*out << "    " << componentNames[iEntity][j] << "\n";
+		if (components[iEntity][j])
 		{
-			Imgn::DisplayData* displayData = components[iEntity][j + 1]->GetDisplayData();
+			Imgn::DisplayData* displayData = components[iEntity][j]->GetDisplayData();
 			if (displayData)
 			{
 				*out << "    {" << "\n";
 				for (int iCompData = 0; iCompData < displayData->numValues; ++iCompData)
 				{
-					if (componentsData[iEntity][j + 1][iCompData] == "")
+					if (componentsData[iEntity][j][iCompData] == "")
 					{
 						continue;
 					}
-					*out << "        " << componentsData[iEntity][j + 1][iCompData] << "\n";
+					*out << "        " << componentsData[iEntity][j][iCompData] << "\n";
 				}
 				*out << "    }" << "\n";
 			}
@@ -352,9 +312,10 @@ void SaveLogger::WriteComponentData(std::ofstream* meOutput)
 {
 	for (int i = 0; i < curNumEntities; ++i)
 	{
+		int numComponents = std::stoi(componentNames[i][0]);
 		*meOutput << "	if (name == \"" << entities[i * Imgn::MAXENTITYDATA][1] << "\")" << "\n";
 		*meOutput << "	{																		" << "\n";
-		int numComponents = std::stoi(componentNames[i][0]);
+		*meOutput << "	components = new ImgnComponent*[" << numComponents << "];" << "\n";
 		for (int j = 3; j < numComponents + 1; ++j)
 		{
 			*meOutput << "		components[numComponents] = new " << componentNames[i][j] << "();" << "\n";
@@ -427,7 +388,7 @@ string SaveLogger::GetSceneName(int objId)
 
 void SaveLogger::AddObj(string SceneName, string ObjName)
 {
-	int index = curNumEntities * 5;
+	int index = curNumEntities * Imgn::MAXENTITYDATA;
 
 	entities[index][0] = "Name";
 	if(ObjName == " ") entities[index][1] = "DefaultObject" + std::to_string(curNumEntities + 1);
@@ -437,27 +398,8 @@ void SaveLogger::AddObj(string SceneName, string ObjName)
 	entities[index][0] = "SceneName";
 	entities[index][1] = SceneName;
 
-	index++;
-	entities[index][0] = "Position";
-	entities[index][1] = "0.0";
-	entities[index][2] = "0.0";
-	entities[index][3] = "0.0";
-	
-	index++;
-	entities[index][0] = "Rotate";
-	entities[index][1] = "0.0";
-	entities[index][2] = "1.0";
-	entities[index][3] = "0.0";
-
-	index++;
-	entities[index][0] = "Scale";
-	entities[index][1] = "1.0";
-	entities[index][2] = "1.0";
-	entities[index][3] = "1.0";
-
-	componentNames[curNumEntities][0] = "2";
-	componentNames[curNumEntities][1] = "SpatialComponent";
-	componentNames[curNumEntities][2] = "MeshComponent";
+	componentNames[curNumEntities][0] = "1";
+	componentNames[curNumEntities][1] = "MeshComponent";
 	curNumEntities++;
 	currentEntityDataType = index + 1;
 	OriginalGame::entityManager.AddEntity();
@@ -471,7 +413,7 @@ void SaveLogger::SetComponent(int ObjNum, int componentNum, ImgnComponent* compo
 void SaveLogger::AddComponent(string objName, string ComponentName, ImgnComponent* Component)
 {
 	int currentObjNum = -1;
-	for (int i = 0; i < currentEntityDataType; ++i)
+	for (int i = 0; i < currentEntityDataType; i += Imgn::MAXENTITYDATA)
 	{
 		if (entities[i][0] == "Name")
 		{
@@ -488,9 +430,11 @@ void SaveLogger::AddComponent(string objName, string ComponentName, ImgnComponen
 void SaveLogger::AddComponent(int objNum, string ComponentName, ImgnComponent* Component)
 {
 	int numComponents = std::stoi(componentNames[objNum][0]);
-	componentNames[objNum][0] = std::to_string(numComponents + 1);
-	componentNames[objNum][numComponents + 1] = ComponentName;
-	components[objNum][numComponents + 1] = Component;
+	++numComponents;
+
+	componentNames[objNum][0] = std::to_string(numComponents);
+	componentNames[objNum][numComponents] = ComponentName;
+	components[objNum][numComponents] = Component;
 }
 
 void SaveLogger::AddComponentData(int ObjNum, string ComponentName, Imgn::DisplayData* DisplayData)
@@ -501,7 +445,7 @@ void SaveLogger::AddComponentData(int ObjNum, string ComponentName, Imgn::Displa
 	}
 	int numComponents = std::stoi(componentNames[ObjNum][0]);
 	int j = 0;
-	for (int i = 3; i < numComponents+1; ++i)
+	for (int i = 2; i < numComponents+1; ++i)
 	{
 		if (componentNames[ObjNum][i] == ComponentName)
 		{
@@ -534,51 +478,43 @@ void SaveLogger::AddComponentData(int ObjNum, string ComponentName, Imgn::Displa
 	}
 }
 
-glm::vec3 SaveLogger::GetPosition(string objName)
-{
-	for (int i = 0; i < currentEntityDataType; i++)
-	{
-		if (entities[i][1] == objName)
-		{
-			return glm::vec3(ConfigReader::Instance()->GetFloatFromString(entities[i+2][1]), ConfigReader::Instance()->GetFloatFromString(entities[i + 2][2]), ConfigReader::Instance()->GetFloatFromString(entities[i + 2][3]));
-		}
-	}
-	GameLogger::log("could not find Position for Obj:" + objName);
-	cout << "check log" << endl;
-	return glm::vec3();
-}
-
-glm::quat SaveLogger::GetRotate(string objName)
-{
-	for (int i = 0; i < currentEntityDataType; i++)
-	{
-		if (entities[i][1] == objName)
-		{
-			glm::vec3 rotate = glm::vec3(ConfigReader::Instance()->GetFloatFromString(entities[i + 3][1]), ConfigReader::Instance()->GetFloatFromString(entities[i + 3][2]), ConfigReader::Instance()->GetFloatFromString(entities[i + 3][3]));
-			glm::vec3 rotateInRadians = glm::vec3(rotate.x * R_PI / 180, rotate.y * R_PI / 180, rotate.z * R_PI / 180);
-			return glm::quat(rotateInRadians);
-		}
-	}
-	GameLogger::log("could not find Rotate for Obj:" + objName);
-	cout << "check log" << endl;
-	return glm::quat();
-}
-
-glm::vec3 SaveLogger::GetScale(string objName)
-{
-	for (int i = 0; i < currentEntityDataType; i++)
-	{
-		if (entities[i][1] == objName)
-		{
-			return glm::vec3(ConfigReader::Instance()->GetFloatFromString(entities[i + 4][1]), ConfigReader::Instance()->GetFloatFromString(entities[i + 4][2]), ConfigReader::Instance()->GetFloatFromString(entities[i + 4][3]));
-		}
-	}
-	GameLogger::log("could not find Scale for Obj:" + objName);
-	cout << "check log" << endl;
-	return glm::vec3();
-}
-
 string SaveLogger::GetComponentName(int objNum, int componentNum)
 {
 	return componentNames[objNum][componentNum];
+}
+
+glm::vec3 SaveLogger::GetComponentData(int curEntity, int CurComponent, int CurDataNum)
+{
+	return glm::vec3(GetVec3FromString(componentsData[curEntity][CurComponent][CurDataNum]));
+}
+
+glm::vec3 SaveLogger::GetVec3FromString(string vec)
+{
+	ConfigReader* configReader = ConfigReader::Instance();
+	glm::vec3 vecFromString;
+	int curXYZ = 0;
+	string curNum = "";
+	for (unsigned i = 1; i < vec.length(); ++i)
+	{
+		if (vec[i] == ',' || vec[i] == ')')
+		{
+			switch (curXYZ)
+			{
+			case 0:
+				vecFromString.x = configReader->GetFloatFromString(curNum);
+				break;
+			case 1:
+				vecFromString.y = configReader->GetFloatFromString(curNum);
+				break;
+			case 2:
+				vecFromString.z = configReader->GetFloatFromString(curNum);
+				break;
+			}
+			curXYZ++;
+			curNum = "";
+			continue;
+		}
+		curNum += vec[i];
+	}
+	return vecFromString;
 }

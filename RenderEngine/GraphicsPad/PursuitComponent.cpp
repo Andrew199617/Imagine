@@ -20,7 +20,7 @@ void PursuitComponent::Update(float dt)
 		GameLogger::log(this->GetName() + s);
 		GameLogger::shutdownLog();
 	}
-	m_velocity = Pursuit(spatial->position);
+	m_velocity = Pursuit(spatial->GetPosition());
 
-	spatial->position += m_velocity * dt;
+	spatial->SetPosition(spatial->GetPosition() + m_velocity * dt);
 }

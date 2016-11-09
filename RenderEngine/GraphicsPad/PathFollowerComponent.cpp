@@ -43,7 +43,7 @@ void PathFollowerComponent::Update(float)
 	else if (m_pathFinder.m_foundGoal)
 	{
 		glm::vec3 target = m_pathFinder.NextPathPos(spatial, 1.0f);
-		if (glm::distance(spatial->position, target) > 1.5f)
+		if (glm::distance(spatial->GetPosition(), target) > 1.5f)
 		{
 			//seek->setVelocity(glm::vec3(0.0f, 0.0f, 0.0f));
 			seek->setTarget(target);

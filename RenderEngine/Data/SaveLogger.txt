@@ -1,11 +1,13 @@
 Name AIWorld
 SceneName AIWorld
-Position "0.0,0.0,0.0"
-Rotate "0.0,0.0,0.0"
-Scale "1.0,1.0,1.0"
 Components 3 {
-    SpatialComponent
     MeshComponent
+    SpatialComponent
+    {
+        (0.0,0.0,0.0)
+        (0.0,0.0,0.0)
+        (1.0,1.0,1.0)
+    }
     BoxCollider
     {
         0
@@ -16,12 +18,14 @@ Components 3 {
 
 Name Cube
 SceneName Cube
-Position "0.0,2.5,0.0"
-Rotate "0.0,0.0,0.0"
-Scale "2.0,2.0,2.0"
 Components 5 {
-    SpatialComponent
     MeshComponent
+    SpatialComponent
+    {
+        (0.000000,4.000000,0.000000)
+        (0.000000,0.000000,0.000000)
+        (2.000000,2.000000,2.000000)
+    }
     MovementComponent
     {
     }
@@ -39,25 +43,27 @@ Components 5 {
     {
         0
         (0.000000,0.000000,0.000000)
-        (2.100000,2.100000,2.100000)
+        (2.000000,2.000000,2.000000)
     }
 }
 
 Name Sphere3
 SceneName Sphere
-Position "0.0,5.0,0.0"
-Rotate "0.0,1.0,0.0"
-Scale "1.0,1.0,1.0"
 Components 4 {
-    SpatialComponent
     MeshComponent
+    SpatialComponent
+    {
+        (0.000000,6.500000,0.000000)
+        (0.000000,0.000000,0.000000)
+        (1.000000,1.000000,1.000000)
+    }
     Imgn::RigidBody
     {
         1
         1.000000
         0.050000
         0.050000
-        (0.000000, -2.799999, 0.000000)
+        (0.000000,-18.799999,0.000000)
         1
         0
     }
@@ -65,7 +71,7 @@ Components 4 {
     {
         0
         (0.000000,0.000000,0.000000)
-        0.900000
+        1.000000
     }
 }
 

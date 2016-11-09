@@ -23,11 +23,6 @@ bool ObjectSelectorComponent::Initialize()
 {
 	objSelectedMinT = FLT_MAX;
 	objSelected = -1;
-	spatial = this->GetSiblingComponent<SpatialComponent>();
-	if (!spatial)
-	{
-		return false;
-	}
 	return true;
 }
 
@@ -188,9 +183,10 @@ void ObjectSelectorComponent::GetVerts(QMouseEvent * e)
 
 bool ObjectSelectorComponent::CastRayFromMousePosition(QMouseEvent *, glm::vec3 pos0, glm::vec3 pos1, glm::vec3 pos2)
 {
-	CameraComponent* camera = this->GetSiblingComponent<CameraComponent>();
+	CameraComponent* camera = GetSiblingComponent<CameraComponent>();
+	SpatialComponent* spatial = GetSiblingComponent<SpatialComponent>();
 	glm::vec3 Direction = camera->viewDirection;
-	glm::vec3 Position = spatial->position;
+	glm::vec3 Position = spatial->GetPosition();
 
 	float tempMinT = CollisionTester::rayTriangleIntersect(Position, Direction, pos0, pos1, pos2, info->minT);
 	if (tempMinT < info->minT)

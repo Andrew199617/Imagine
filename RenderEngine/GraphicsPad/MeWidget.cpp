@@ -163,11 +163,11 @@ void MeWidget::AddHierarchy()
 	hierarchyLayout->GetWidget()->sizePolicy().setHorizontalPolicy(QSizePolicy::Policy::Maximum);
 	hierarchyLayout->GetWidget()->setMinimumWidth(250);
 	hierarchyLayout->GetWidget()->setMaximumWidth(320);
+	hierarchyLayout->setHidden(true);
 }
 
 void MeWidget::mousePressEvent(QMouseEvent *)
 {
-	imgnToolBar->SetQssFile();
 	DetailsLayout::Instance()->ClearFocus();
 	if (focusWidget() != meGlWindow && focusWidget() != playButton)
 	{

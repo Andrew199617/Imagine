@@ -116,6 +116,14 @@ namespace Imgn
 			k = q.r*multiplier.k + q.k*multiplier.r +
 				q.i*multiplier.j - q.j*multiplier.i;
 		}
+
+		void operator =(const glm::quat quat)
+		{
+			r = quat.w;
+			i = quat.x;
+			j = quat.y;
+			k = quat.z;
+		}
 	
 		/**
 		* Adds the given vector to this, scaled by the given amount.

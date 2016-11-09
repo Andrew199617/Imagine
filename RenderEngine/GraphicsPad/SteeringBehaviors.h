@@ -37,7 +37,7 @@ public:
 		this->m_flockI = M_flockI;
 		for (int i = 0; i < FLOCKSIZE; ++i)
 		{
-			m_flockPos[i] = entities[i].position;
+			m_flockPos[i] = entities[i].GetPosition();
 			m_flockVel[i] = entities[i].velocity;
 		}
 	}

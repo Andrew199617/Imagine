@@ -1,6 +1,5 @@
 #pragma once
 #include "ImgnCollider.h"
-class RenderInfo;
 
 class BoxCollider : public ImgnCollider
 {
@@ -13,19 +12,11 @@ private:
 	bool Initialize() override;
 	void Update(float) override;
 	void Draw(float) override;
-	void DrawBox();
 
-	RenderInfo* renderInfo;
 protected:
 	void OnValueChange(std::string VariableName) override;	
 	
-public:
-	void focusOutEvent(QFocusEvent *) override;
-	void focusInEvent(QFocusEvent *) override;
-
 	glm::vec3 GetHalfSize() { return size / 2.0f; }
-private:
-	glm::vec3 size;
 
 };
 

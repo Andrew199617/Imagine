@@ -71,25 +71,30 @@ bool EntityManager::InitializeSaveLoggerObjects()
 	num_Objs = saveLogger->GetNumObjs();
 	for (int i = 0; i < num_Objs; i++)
 	{
-		entitieSpatials[i] = new SpatialComponent;
 		entitieMeshs[i] = new MeshComponent;
-		numComponent[i] = 2;
+		numComponent[i] = 0;
 		entitieComponents[i] = GetComponents(i);
 	}
 	for (int i = 0; i < num_Objs; i++)
 	{
 		entities[i].SetName(saveLogger->GetName(i));
-		entitieSpatials[i]->position = saveLogger->GetPosition(entities[i].GetName());
-		entities[i].AddComponent(entitieSpatials[i], "Transform");
+
+		SpatialComponent* spatial = new SpatialComponent;
+		spatial->SetPosition(saveLogger->GetComponentData(i, 2, 0));
+		spatial->SetRotation(saveLogger->GetComponentData(i, 2, 1));
+		spatial->SetScale(saveLogger->GetComponentData(i, 2, 2));
+		entitieComponents[i][0] = spatial;
+		entities[i].AddComponent(entitieComponents[i][0], "SpatialComponent");
+		saveLogger->SetComponent(i, 2, entitieComponents[i][0]);
+
 		entities[i].AddComponent(entitieMeshs[i], "Mesh");
-		for (int j = 0; j < numComponent[i] - 2; ++j)
+
+		for (int j = 1; j < numComponent[i]; ++j)
 		{
-			entities[i].AddComponent(entitieComponents[i][j], saveLogger->GetComponentName(i, j + 3).c_str());
-			saveLogger->SetComponent(i, j + 3, entitieComponents[i][j]);
+			entities[i].AddComponent(entitieComponents[i][j], saveLogger->GetComponentName(i, j + 2).c_str());
+			saveLogger->SetComponent(i, j + 2, entitieComponents[i][j]);
 		}
 		entitieMeshs[i]->setTransformInfo();
-		entitieSpatials[i]->SetRotate(saveLogger->GetRotate(entities[i].GetName()));
-		entitieSpatials[i]->SetScale(saveLogger->GetScale(entities[i].GetName()));
 		if (!entities[i].Initialize())
 		{
 			string s = ": did not initialize";
@@ -120,15 +125,14 @@ bool EntityManager::UpdateSaveLoggerObjects()
 	int pastNumObjs = num_Objs;
 	num_Objs = saveLogger->GetNumObjs();
 
-	entitieSpatials[pastNumObjs] = new SpatialComponent;
+	SpatialComponent* spatial = new SpatialComponent;
 	entitieMeshs[pastNumObjs] = new MeshComponent;
+
 	entities[pastNumObjs].SetName(saveLogger->GetName(pastNumObjs));
-	entitieSpatials[pastNumObjs]->position = saveLogger->GetPosition(entities[pastNumObjs].GetName());
-	entities[pastNumObjs].AddComponent(entitieSpatials[pastNumObjs], "Transform");
 	entities[pastNumObjs].AddComponent(entitieMeshs[pastNumObjs], "Mesh");
+	entities[pastNumObjs].AddComponent(spatial, "SpatialComponent");
+	saveLogger->SetComponent(pastNumObjs, 2, spatial);
 	entitieMeshs[pastNumObjs]->setTransformInfo();
-	entitieSpatials[pastNumObjs]->SetRotate(saveLogger->GetRotate(entities[pastNumObjs].GetName()));
-	entitieSpatials[pastNumObjs]->SetScale(saveLogger->GetScale(entities[pastNumObjs].GetName()));
 	if (!entities[pastNumObjs].Initialize())
 	{
 		string s = ": did not initialize";
@@ -155,29 +159,11 @@ void EntityManager::SaveEntities()
 					displayData = components[iComponent]->GetDisplayData();
 					if (displayData)
 						saveLogger->AddComponentData(i, components[iComponent]->GetName(), displayData);
+					components[iComponent]->SetSaved(true);
 				}
 			}
 		}
 	}
-}
-
-void EntityManager::UpdateObjectPosition(int obj, glm::vec3 Position)
-{
-	entitieSpatials[obj]->SetPosition(Position);
-	entitieSpatials[obj]->SetSaved(false);
-}
-
-void EntityManager::UpdateObjectRotate(int obj, glm::vec3 Rotation)
-{
-	glm::vec3 rotateInRadians = glm::vec3(Rotation.x * R_PI / 180, Rotation.y * R_PI / 180, Rotation.z * R_PI / 180);
-	entitieSpatials[obj]->SetRotate(glm::quat(rotateInRadians));
-	entitieSpatials[obj]->SetSaved(false);
-}
-
-void EntityManager::UpdateObjectScale(int obj, glm::vec3 Scale)
-{
-	entitieSpatials[obj]->SetScale(Scale);
-	entitieSpatials[obj]->SetSaved(false);
 }
 
 void EntityManager::Update(float dt, bool isPlaying)
@@ -188,7 +174,6 @@ void EntityManager::Update(float dt, bool isPlaying)
 
 	if (isPlaying)
 	{
-		SaveEntities();
 		for (int i = 0; i < num_Objs; i++)
 		{
 			entities[i].Update(dt);
@@ -238,14 +223,15 @@ void EntityManager::SendNewDataToOpenGL()
 
 ImgnComponent ** EntityManager::GetComponents(int objNum)
 {
-	ImgnComponent** components = new ImgnComponent*[Imgn::MAX_COMPONENTS_PERENTITY - 2];
+	ImgnComponent** components;
 	string name = saveLogger->GetName(objNum);
-	int numComponents = 0;
+	int numComponents = 1;
 	Imgn::DisplayData* displayData;
 	int iVar = 0;
 
 	if (name == "AIWorld")
 	{																		
+	components = new ImgnComponent*[3];
 		components[numComponents] = new BoxCollider();
 		displayData = components[numComponents]->GetDisplayData();
 		if (displayData)
@@ -258,6 +244,7 @@ ImgnComponent ** EntityManager::GetComponents(int objNum)
 	}
 	if (name == "Cube")
 	{																		
+	components = new ImgnComponent*[5];
 		components[numComponents] = new MovementComponent();
 		displayData = components[numComponents]->GetDisplayData();
 		if (displayData)
@@ -283,12 +270,13 @@ ImgnComponent ** EntityManager::GetComponents(int objNum)
 		{
 			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)0;
 			iVar = 1; glm::detail::tvec3<float>* val1 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val1 = glm::vec3(0.000000,0.000000,0.000000);
-			iVar = 2; glm::detail::tvec3<float>* val2 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val2 = glm::vec3(2.100000,2.100000,2.100000);
+			iVar = 2; glm::detail::tvec3<float>* val2 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val2 = glm::vec3(2.000000,2.000000,2.000000);
 		}
 		numComponents++;
 	}
 	if (name == "Sphere3")
 	{																		
+	components = new ImgnComponent*[4];
 		components[numComponents] = new Imgn::RigidBody();
 		displayData = components[numComponents]->GetDisplayData();
 		if (displayData)
@@ -297,7 +285,7 @@ ImgnComponent ** EntityManager::GetComponents(int objNum)
 			iVar = 1; double* val1 = reinterpret_cast<double*>(displayData->values[iVar]); *val1 = (double)1.000000;
 			iVar = 2; float* val2 = reinterpret_cast<float*>(displayData->values[iVar]); *val2 = (float)0.050000;
 			iVar = 3; float* val3 = reinterpret_cast<float*>(displayData->values[iVar]); *val3 = (float)0.050000;
-			iVar = 4; glm::detail::tvec3<float>* val4 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val4 = glm::vec3(0.000000, -2.799999, 0.000000);
+			iVar = 4; glm::detail::tvec3<float>* val4 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val4 = glm::vec3(0.000000,-18.799999,0.000000);
 			iVar = 5; bool* val5 = reinterpret_cast<bool*>(displayData->values[iVar]); *val5 = (bool)1;
 			iVar = 6; bool* val6 = reinterpret_cast<bool*>(displayData->values[iVar]); *val6 = (bool)0;
 		}
@@ -308,11 +296,12 @@ ImgnComponent ** EntityManager::GetComponents(int objNum)
 		{
 			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)0;
 			iVar = 1; glm::detail::tvec3<float>* val1 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val1 = glm::vec3(0.000000,0.000000,0.000000);
-			iVar = 2; float* val2 = reinterpret_cast<float*>(displayData->values[iVar]); *val2 = (float)0.900000;
+			iVar = 2; float* val2 = reinterpret_cast<float*>(displayData->values[iVar]); *val2 = (float)1.000000;
 		}
 		numComponents++;
 	}
 
-	numComponent[objNum] += numComponents;										
-	return components;															
-}																				
+	if(numComponents == 1){ components = new ImgnComponent*[1]; }
+	numComponent[objNum] += numComponents;
+	return components;
+}

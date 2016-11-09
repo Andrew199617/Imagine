@@ -16,9 +16,6 @@ namespace Imgn
 	{
 		Name,
 		SceneName,
-		Position,
-		Rotation,
-		Scale,
 		MAXENTITYDATA
 	};
 }
@@ -43,19 +40,16 @@ public:
 	void SetComponent(int ObjNum, int componentNum, ImgnComponent* component);
 	void AddComponent(string ObjName, string ComponentName, ImgnComponent* Component);
 	void AddComponent(int ObjNum, string ComponentName, ImgnComponent* Component);
+	//Can be used to Add Component data for the first time or to update the already existing data.
 	void AddComponentData(int ObjNum, string ComponentName, Imgn::DisplayData* DisplayData);
 	string GetComponentName(int objNum, int componentNum);
-public:
-	glm::vec3 GetPosition(string);
-	glm::quat GetRotate(string);
-	glm::vec3 GetScale(string);
-	void SetPosition(int, glm::vec3);
-	void SetRotate(int, glm::vec3);
-	void SetScale(int, glm::vec3);
 
+	glm::vec3 GetComponentData(int curEntity, int CurComponent, int CurDataNum);
+	glm::vec3 GetVec3FromString(string vec);
 private:
-	void LoadEntityData(string &word, string &s);
+	void LoadEntityData(string &word);
 	void LoadComponents(string &word);
+	//Get Components Data if it exist.
 	void LoadComponentData(int currentComponent);
 	void DeleteData();
 	void GenerateUniqueComponents();

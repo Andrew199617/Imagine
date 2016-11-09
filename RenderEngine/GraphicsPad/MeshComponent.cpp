@@ -71,7 +71,10 @@ void MeshComponent::makeShaderInfo(int vertexFormat, string objname)
 void MeshComponent::setTransformInfo()
 {
 	SpatialComponent* spatial = this->GetSiblingComponent<SpatialComponent>();
-	renderinfo.setTransfromInfo(new TransformInfo(spatial->position, spatial->GetScale(), spatial->GetRotate()));
+	if (spatial)
+	{
+		renderinfo.setTransfromInfo(new TransformInfo(spatial->GetPosition(), spatial->GetScale(), spatial->GetRotate()));
+	}
 }
 
 void MeshComponent::setRenderInfo(string objname)
@@ -89,7 +92,7 @@ void MeshComponent::setNodeRenderInfo(string objname, float radius)
 	SpatialComponent* spatial = GetSiblingComponent<SpatialComponent>();
 	renderinfo.setGeometry(ShapeGenerator::readScene(objname));
 	if(spatial)
-		renderinfo.setTransfromInfo(new TransformInfo(spatial->position, glm::vec3(radius, radius,radius), spatial->GetRotate()));
+		renderinfo.setTransfromInfo(new TransformInfo(spatial->GetPosition(), glm::vec3(radius, radius,radius), spatial->GetRotate()));
 	makeShaderInfo(renderinfo.getGeometry()->VertexFormat, objname);
 	setUpFragmentVertexShader();
 	renderinfo.setVertexShaderInfo(&vertexShaderInfo);
@@ -106,12 +109,9 @@ void MeshComponent::setRenderInfo_Line(glm::vec3 point1, glm::vec3 point2)
 	renderinfo.setTextureInfo(new TextureInfo(renderinfo.getGeometry()->texturePath,""));
 }
 
-void MeshComponent::Update(float dt)
+void MeshComponent::Update(float)
 {
-
-	renderinfo.getTransformInfo()->m_translateTransform = glm::translate(GetSiblingComponent<SpatialComponent>()->position);
-
-	dt;
+	//renderinfo.getTransformInfo()->m_translateTransform = glm::translate(GetSiblingComponent<SpatialComponent>()->GetPosition());
 }
 
 void MeshComponent::ClearFocus()

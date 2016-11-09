@@ -27,8 +27,8 @@ void SeekBehaviorComponent::Update(float dt)
 		GameLogger::log(this->GetName() + s);
 	}
 
-	m_velocity = Seek(spatial->position,m_target);
-	spatial->position += m_velocity * dt;
+	m_velocity = Seek(spatial->GetPosition(),m_target);
+	spatial->SetPosition(spatial->GetPosition() + m_velocity * dt);
 
 }
 

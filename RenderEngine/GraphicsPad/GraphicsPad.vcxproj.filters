@@ -234,12 +234,6 @@
     <ClCompile Include="ObjectSelectorComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="TransformLayout_moc.cpp">
-      <Filter>Source Files\moc</Filter>
-    </ClCompile>
-    <ClCompile Include="TransformLayout.cpp">
-      <Filter>QT</Filter>
-    </ClCompile>
     <ClCompile Include="Hierarchy.cpp">
       <Filter>QT</Filter>
     </ClCompile>
@@ -307,6 +301,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CollisionDetection\SphereCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionDetection\ImgnCollider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -509,9 +506,6 @@
     <ClInclude Include="ObjectSelectorComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="TransformLayout.h">
-      <Filter>QT</Filter>
-    </ClInclude>
     <ClInclude Include="Hierarchy.h">
       <Filter>QT</Filter>
     </ClInclude>
@@ -582,6 +576,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CollisionDetection\SphereCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImgnConstants.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,6 +4,7 @@
 #include <gtc/matrix_transform.hpp>
 #include <gtc/quaternion.hpp>
 #include "Matrix4.h"
+#include "gtx\transform.hpp"
 
 namespace Imgn
 {
@@ -20,7 +21,7 @@ namespace Imgn
 		SpatialComponent* spatial = GetSiblingComponent<SpatialComponent>();
 		if (spatial)
 		{
-			position = spatial->position;
+			position = spatial->GetPosition();
 			rotation = glm::eulerAngles(spatial->GetRotate());
 		}
 		return true;
@@ -31,8 +32,8 @@ namespace Imgn
 		SpatialComponent* spatial = GetSiblingComponent<SpatialComponent>();
 		if (spatial)
 		{
-			position = spatial->position;
-			orientation = Imgn::Quaternion(spatial->GetRotate().w, spatial->GetRotate().x, spatial->GetRotate().y, spatial->GetRotate().z);
+			position = spatial->GetPosition();
+			orientation = spatial->GetRotate();
 		}
 		if (useGravity)
 		{
@@ -184,7 +185,7 @@ namespace Imgn
 		SpatialComponent* spatial = GetSiblingComponent<SpatialComponent>();
 		if (spatial)
 		{
-			spatial->SetPosition(position.toVec3());
+			spatial->SetPosition(position);
 			spatial->velocity = velocity.toVec3();
 		}
 		
@@ -194,6 +195,7 @@ namespace Imgn
 		{
 			TransformInfo* info = mesh->renderinfo.getTransformInfo();
 			info->m_rotateTransform = glm::mat4_cast(orientation.toQuat());
+			info->m_translateTransform = glm::translate(position.toVec3());
 			// Calculate the transform matrix for the body.
 			//CalculateTransformMatrix(transformMatrix, position, orientation);
 		}

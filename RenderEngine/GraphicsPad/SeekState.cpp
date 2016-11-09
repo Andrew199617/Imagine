@@ -38,7 +38,7 @@ void SeekState::Execute(StateComponent * sc, Imgn::Entity* entity, float dt)
 	string z = " , z :" + std::to_string(spatial->position.z);
 	GameLogger::log(entity->GetName() + x + y + z);*/
 
-	if (glm::distance(spatial->position, m_target) <= m_radius)
+	if (glm::distance(spatial->GetPosition(), m_target) <= m_radius)
 	{
 		if (!m_AtTarget)
 		{

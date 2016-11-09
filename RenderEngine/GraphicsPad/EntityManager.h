@@ -23,9 +23,6 @@ public:
 
 public:
 	void SaveEntities();
-	void UpdateObjectPosition(int obj, glm::vec3 Position);
-	void UpdateObjectRotate(int obj, glm::vec3 Rotation);
-	void UpdateObjectScale(int obj, glm::vec3 Scale);
 
 public:
 	void Update(float dt, bool isPlaying);
@@ -41,7 +38,6 @@ public:
 	int num_Objs;
 
 	Imgn::Entity entities[MAX_OBJS];
-	SpatialComponent* entitieSpatials[MAX_OBJS];
 	MeshComponent* entitieMeshs[MAX_OBJS];
 	ImgnComponent** entitieComponents[MAX_OBJS];
 	int numComponent[MAX_OBJS];

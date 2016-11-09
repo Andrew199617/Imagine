@@ -6,11 +6,11 @@ class ImgnComponent;
 
 #define IMGN_END(className) isHidden = false;													\
 	SetComponentType(imgnProps->currentComponent);												\
-	SetComponentTypeNum(imgnProps->numSameComponent[imgnProps->currentComponent] - 1);				\
+	SetComponentTypeNum(imgnProps->numSameComponent[imgnProps->currentComponent] - 1);			\
 	layoutInitalized = false;																	\
 	layoutHasData = false;																		\
 	setMaximumSize(348, 250);																	\
-	setMinimumSize(220, 50);																	\
+	setMinimumSize(280, 50);																	\
 	sizeHint().setHeight(50);																	\
 	minimumSizeHint().setHeight(50);															\
 	sizePolicy().setHorizontalPolicy(QSizePolicy::Policy::Expanding);							\
@@ -26,8 +26,8 @@ className(){																					\
 	Imgn::ImgnProperties* imgnProps = Imgn::ImgnProperties::Instance();							\
 	if(typeid(this) != typeid(ImgnComponent*) && dynamic_cast<ImgnComponent*>(this) == NULL)	\
 	{																							\
-		string s = ": does not inherit ImgnComponent. Invalid  IMGN_GENERATE";					\
-		GameLogger::log(typeid(this).name() + s);												\
+		string errorMsg = ": does not inherit ImgnComponent. Invalid  IMGN_GENERATE";					\
+		GameLogger::log(typeid(this).name() + errorMsg);												\
 		GameLogger::shutdownLog();																\
 		exit(1);																				\
 	} 																							\

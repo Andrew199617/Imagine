@@ -3,15 +3,7 @@
 #include "gtc\matrix_transform.hpp"
 #include "gtx\transform.hpp"
 #include "MeshComponent.h"
-
-SpatialComponent::SpatialComponent() :
-	UP(0.0f, 1.0f, 0.0f) , velocity(0.0f,0.0f,0.0f)
-{
-	transformInfo = 0;
-	position = glm::vec3(0, 0, 0);
-	rotate = glm::quat();
-	scale = glm::vec3(1, 1, 1);
-}
+#include "Physics\PhysicsTypeDefs.hpp"
 
 
 SpatialComponent::~SpatialComponent()
@@ -19,26 +11,73 @@ SpatialComponent::~SpatialComponent()
 
 }
 
-void SpatialComponent::SetPosition(glm::vec3 Position)
+void SpatialComponent::UpdatePosition()
 {
-	this->position = Position;
-	if(!transformInfo)
-		transformInfo = this->GetSiblingComponent<MeshComponent>()->renderinfo.getTransformInfo();
-	transformInfo->m_translateTransform = glm::translate(position);
+	SetTransformInfo();
+	if(transformInfo)
+		transformInfo->m_translateTransform = glm::translate(GetPosition());
 }
 
-void SpatialComponent::SetScale(glm::vec3 Scale)
+void SpatialComponent::UpdateScale()
 {
-	this->scale = Scale;
-	if (!transformInfo)
-		transformInfo = this->GetSiblingComponent<MeshComponent>()->renderinfo.getTransformInfo();
-	transformInfo->m_scaleTransform = glm::scale(scale);
+	SetTransformInfo();
+	if (transformInfo)
+		transformInfo->m_scaleTransform = glm::scale(GetScale());
 }
 
-void SpatialComponent::SetRotate(glm::quat Rotate)
+void SpatialComponent::UpdateRotate()
 {
-	this->rotate = Rotate;
-	if (!transformInfo)
-		transformInfo = this->GetSiblingComponent<MeshComponent>()->renderinfo.getTransformInfo();
+	SetTransformInfo();
+	glm::vec3 rotateInRadians = glm::vec3(rotation.x * R_PI / 180, rotation.y * R_PI / 180, rotation.z * R_PI / 180);
+	SetRotate(glm::quat(rotateInRadians));
+	if (transformInfo)
+		transformInfo->m_rotateTransform = glm::mat4_cast(GetRotate());
+}
+
+void SpatialComponent::SetTransformInfo()
+{
+	MeshComponent* mesh = GetSiblingComponent<MeshComponent>();
+	if (mesh)
+	{
+		transformInfo = mesh->renderinfo.getTransformInfo();
+	}
+}
+
+void SpatialComponent::SetPosition(glm::vec3 val)
+{
+	position = val;
+}
+
+void SpatialComponent::SetRotation(glm::vec3 val)
+{
+	rotation = val;
+}
+
+void SpatialComponent::SetRotate(glm::quat val)
+{
+	rotate = val;
+	SetTransformInfo();
+	rotation = glm::eulerAngles(rotate);
 	transformInfo->m_rotateTransform = glm::mat4_cast(rotate);
+}
+
+void SpatialComponent::Awake() 
+{
+	transformInfo = 0;
+}
+
+void SpatialComponent::OnValueChange(std::string VariableName)
+{
+	if (VariableName == "Position")
+	{
+		UpdatePosition();
+	}
+	if (VariableName == "Scale")
+	{
+		UpdateScale();
+	}
+	if (VariableName == "Rotation")
+	{
+		UpdateRotate();
+	}
 }

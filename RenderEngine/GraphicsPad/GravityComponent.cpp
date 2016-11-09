@@ -20,15 +20,14 @@ GravityComponent::~GravityComponent()
 {
 }
 
-void GravityComponent::fall(float dt)
+void GravityComponent::fall(float)
 {
-	spatial->position.y -= GravitySpeed * dt;
 }
 
 bool GravityComponent::SomethingIsBelow(glm::vec3 pos0, glm::vec3 pos1, glm::vec3 pos2)
 {
 	glm::vec3 Direction = glm::vec3(0,-1,0);
-	glm::vec3 Position = spatial->position;
+	glm::vec3 Position = spatial->GetPosition();
 
 	float tempMinT = CollisionTester::rayTriangleIntersect(Position, Direction, pos0, pos1, pos2, info->minT);
 	if (tempMinT < info->minT)

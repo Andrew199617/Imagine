@@ -4,6 +4,7 @@
 #include "ConfigReader.h"
 #include "Physics\RigidBody.h"
 #include <windows.h>
+#include "ImgnConstants.hpp"
 
 MovementComponent::~MovementComponent()
 {
@@ -19,7 +20,7 @@ bool MovementComponent::Initialize()
 	return true;
 }
 
-void MovementComponent::checkNeededComponents(SpatialComponent* spatial, CameraComponent* camera)
+void MovementComponent::checkNeededComponents(ImgnComponent* spatial, ImgnComponent* camera)
 {
 	if (!spatial)
 	{
@@ -43,8 +44,10 @@ void MovementComponent::moveForward(float dt)
 	CameraComponent* cameraComponent = this->GetSiblingComponent<CameraComponent>();
 	checkNeededComponents(spatialcomponent, cameraComponent);
 
-	spatialcomponent->position.x += (strafeSpeed * cameraComponent->viewDirection * dt).x;
-	spatialcomponent->position.z += (strafeSpeed * cameraComponent->viewDirection * dt).z;
+	glm::vec3 pos = spatialcomponent->GetPosition();
+	pos.x += (strafeSpeed * cameraComponent->viewDirection * dt).x;
+	pos.z += (strafeSpeed * cameraComponent->viewDirection * dt).z;
+	spatialcomponent->SetPosition(pos);
 }
 
 void MovementComponent::moveForward(float dt,glm::vec3 viewDirection)
@@ -57,8 +60,11 @@ void MovementComponent::moveForward(float dt,glm::vec3 viewDirection)
 		GameLogger::shutdownLog();
 		exit(1);
 	}
-	spatialcomponent->position.x += (strafeSpeed * viewDirection * dt).x;
-	spatialcomponent->position.z += (strafeSpeed * viewDirection * dt).z;
+
+	glm::vec3 pos = spatialcomponent->GetPosition();
+	pos.x += (strafeSpeed * viewDirection * dt).x;
+	pos.z += (strafeSpeed * viewDirection * dt).z;
+	spatialcomponent->SetPosition(pos);
 }
 
 void MovementComponent::moveBackward(float dt)
@@ -66,8 +72,11 @@ void MovementComponent::moveBackward(float dt)
 	SpatialComponent* spatialcomponent = this->GetSiblingComponent<SpatialComponent>();
 	CameraComponent* cameraComponent = this->GetSiblingComponent<CameraComponent>();
 	checkNeededComponents(spatialcomponent, cameraComponent);
-	spatialcomponent->position.x += (-strafeSpeed * cameraComponent->viewDirection * dt).x;
-	spatialcomponent->position.z += (-strafeSpeed * cameraComponent->viewDirection * dt).z;
+
+	glm::vec3 pos = spatialcomponent->GetPosition();
+	pos.x += (-strafeSpeed * cameraComponent->viewDirection * dt).x;
+	pos.z += (-strafeSpeed * cameraComponent->viewDirection * dt).z;
+	spatialcomponent->SetPosition(pos);
 }
 
 void MovementComponent::strafeLeft(float dt)
@@ -76,10 +85,13 @@ void MovementComponent::strafeLeft(float dt)
 	CameraComponent* cameraComponent = this->GetSiblingComponent<CameraComponent>();
 	checkNeededComponents(spatialcomponent, cameraComponent);
 
-	glm::vec3 strafeDirection = glm::cross(cameraComponent->viewDirection, spatialcomponent->UP);
+	glm::vec3 strafeDirection = glm::cross(cameraComponent->viewDirection, Imgn::UP);
 
-	spatialcomponent->position.x += (-strafeSpeed * strafeDirection * dt).x;
-	spatialcomponent->position.z += (-strafeSpeed * strafeDirection * dt).z;
+	glm::vec3 pos = spatialcomponent->GetPosition();
+	pos.x += (-strafeSpeed * strafeDirection * dt).x;
+	pos.z += (-strafeSpeed * strafeDirection * dt).z;
+	spatialcomponent->SetPosition(pos);
+
 }
 
 void MovementComponent::strafeRight(float dt)
@@ -88,10 +100,12 @@ void MovementComponent::strafeRight(float dt)
 	CameraComponent* cameraComponent = this->GetSiblingComponent<CameraComponent>();
 	checkNeededComponents(spatialcomponent, cameraComponent);
 
-	glm::vec3 strafeDirection = glm::cross(cameraComponent->viewDirection, spatialcomponent->UP);
+	glm::vec3 strafeDirection = glm::cross(cameraComponent->viewDirection, Imgn::UP);
 
-	spatialcomponent->position.x += (strafeSpeed * strafeDirection * dt).x;
-	spatialcomponent->position.z += (strafeSpeed * strafeDirection * dt).z;
+	glm::vec3 pos = spatialcomponent->GetPosition();
+	pos.x += (strafeSpeed * strafeDirection * dt).x;
+	pos.z += (strafeSpeed * strafeDirection * dt).z;
+	spatialcomponent->SetPosition(pos);
 }
 
 void MovementComponent::moveUp(float dt)
@@ -104,7 +118,9 @@ void MovementComponent::moveUp(float dt)
 		GameLogger::shutdownLog();
 		exit(1);
 	}
-	spatialcomponent->position.y += (strafeSpeed * spatialcomponent->UP * dt).y;
+	glm::vec3 pos = spatialcomponent->GetPosition();
+	pos.y += (strafeSpeed * Imgn::UP * dt).y;
+	spatialcomponent->SetPosition(pos);
 }
 
 void MovementComponent::moveDown(float dt)
@@ -117,7 +133,10 @@ void MovementComponent::moveDown(float dt)
 		GameLogger::shutdownLog();
 		exit(1);
 	}
-	spatialcomponent->position.y += (-strafeSpeed * spatialcomponent->UP * dt).y;
+	glm::vec3 pos = spatialcomponent->GetPosition();
+	pos.y += (-strafeSpeed * Imgn::UP * dt).y;
+	spatialcomponent->SetPosition(pos);
+
 }
 
 void MovementComponent::Jump(int time, float dt)

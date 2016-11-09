@@ -41,9 +41,9 @@ void BoxCollider::Update(float dt)
 				BoxCollider* collider = reinterpret_cast<BoxCollider*>(collisionData->components[iCurComponent][jCurCollider]);
 				SpatialComponent* colliderSpatial = collider->GetSiblingComponent<SpatialComponent>();
 
-				glm::vec3 colliderCenter = collider->center + colliderSpatial->position;
+				glm::vec3 colliderCenter = collider->center + colliderSpatial->GetPosition();
 				glm::vec3 colliderSize = collider->GetHalfSize();
-				glm::vec3 myCenter = center + spatial->position;
+				glm::vec3 myCenter = center + spatial->GetPosition();
 				glm::vec3 mySize = GetHalfSize();
 
 				if (std::abs(myCenter.y - colliderCenter.y) < mySize.y + colliderSize.y)
@@ -72,9 +72,9 @@ void BoxCollider::Update(float dt)
 				SphereCollider* sphere = reinterpret_cast<SphereCollider*>(collisionData->components[iCurComponent][jCurCollider]);
 				SpatialComponent* sphereSpatial = sphere->GetSiblingComponent<SpatialComponent>();
 
-				glm::vec3 sphereCenter = sphere->GetCenter() + sphereSpatial->position;
+				glm::vec3 sphereCenter = sphere->GetCenter() + sphereSpatial->GetPosition();
 				float radius = sphere->GetRadius();
-				glm::vec3 myCenter = center + spatial->position;
+				glm::vec3 myCenter = center + spatial->GetPosition();
 				glm::vec3 mySize = GetHalfSize();
 
 				float closestX = glm::clamp(sphereCenter.x, myCenter.x - mySize.x, myCenter.x + mySize.x);
@@ -95,7 +95,7 @@ void BoxCollider::Update(float dt)
 					{
 						v->SetVelocity(Imgn::Vector3());
 						Imgn::Vector3 vec = Imgn::Vector3(glm::abs(sphereCenter.x - myCenter.x), glm::abs(sphereCenter.y - myCenter.y), glm::abs(sphereCenter.z - myCenter.z));
-						v->AddForce((v->Gravity() * -1) + /*vec * 9.8f +*/ Imgn::Vector3(rigidBody->GetVelocity() / dt) );
+						v->AddForce((v->Gravity() * -1) + Imgn::Vector3(vec / dt) );
 						//v->addForceAtPoint((v->Gravity() * -1) + /*vec * 9.8f +*/ rigidBody->GetVelocity(),Imgn::Vector3(glm::abs(sphereCenter.x - myCenter.x), glm::abs(sphereCenter.y - myCenter.y), glm::abs(sphereCenter.z - myCenter.z)));
 					}
 				}
@@ -112,64 +112,10 @@ void BoxCollider::Draw(float)
 	
 }
 
-void BoxCollider::DrawBox()
-{
-	if (renderInfo)
-	{
-		delete renderInfo->getTransformInfo();
-		SpatialComponent* spatial = GetSiblingComponent<SpatialComponent>();
-		if (spatial)
-		{
-			renderInfo->setTransfromInfo(new TransformInfo(center + spatial->position, size, spatial->GetRotate()));
-		}
-	}
-	else
-	{
-		renderInfo = new RenderInfo();
-		std::string objName = "Cube";
-		renderInfo->setGeometry(ShapeGenerator::readScene(objName));
-		SpatialComponent* spatial = GetSiblingComponent<SpatialComponent>();
-		if (spatial)
-		{
-			renderInfo->setTransfromInfo(new TransformInfo(center + spatial->position, size, spatial->GetRotate()));
-		}
-
-		FragmentShaderInfo* fragmentShader = new FragmentShaderInfo("..\\Graphicspad\\Shader\\fColliderFragmentShader.glsl");
-		GLuint fId = fragmentShader->createShader();
-		renderInfo->SetFragmentShaderInfo(fragmentShader);
-		renderInfo->setVertexShaderInfo(new VertexShaderInfo("..\\Graphicspad\\Shader\\vColliderVertexShader.glsl"));
-		renderInfo->getVertexShaderInfo()->installShader(fId);
-
-		renderInfo->setTextureInfo(new TextureInfo());
-
-		RenderEngine::AddRenderInfo(renderInfo);
-	}
-	
-}
-
 void BoxCollider::OnValueChange(std::string VariableName)
 {
 	if (VariableName == "Center" || VariableName == "Size")
 	{
-		DrawBox();
+		DisplayCollider("Cube");
 	}
 }
-
-void BoxCollider::focusInEvent(QFocusEvent * event)
-{
-	QWidget::focusInEvent(event);
-	if (renderInfo)
-	{
-		renderInfo->isEnabled = true;
-	}
-}
-
-void BoxCollider::focusOutEvent(QFocusEvent * event)
-{
-	QWidget::focusOutEvent(event);
-	if (renderInfo)
-	{
-		renderInfo->isEnabled = false;
-	}
-}
-

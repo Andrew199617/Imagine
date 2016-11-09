@@ -1,5 +1,4 @@
 #pragma once
-#include "TransformLayout.h"
 #include "CollisionInfo.h"
 #include "CollisionTester.h"
 #include "SpatialComponent.h"
@@ -33,7 +32,6 @@ public:
 	}
 
 private:
-	SpatialComponent* spatial;
 	CollisionTester collisionTester;
 	CollisionInfo* info;
 	float objSelectedMinT;

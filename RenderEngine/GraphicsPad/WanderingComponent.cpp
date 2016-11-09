@@ -32,26 +32,26 @@ void WanderingComponent::Update(float dt)
 		m_velocity = glm::normalize(steering) * MAX_SPEED;
 		sumdt = 0;
 	}
-	spatial->position += m_velocity * dt;
+	spatial->SetPosition(spatial->GetPosition() + m_velocity * dt);
 
 	//Helps Demostrate wandering
-	if (spatial->position.z > m_Bound.z + m_Bound.offset)
+	if (spatial->GetPosition().z > m_Bound.z + m_Bound.offset)
 	{
 		m_velocity.z = -m_velocity.z;
 		steering.z = -steering.z;
 		
 	}
-	else if (spatial->position.z < m_Bound.z - m_Bound.offset)
+	else if (spatial->GetPosition().z < m_Bound.z - m_Bound.offset)
 	{
 		m_velocity.z = -m_velocity.z;
 		steering.z = -steering.z;
 	}
-	if (spatial->position.x < m_Bound.x - m_Bound.offset)
+	if (spatial->GetPosition().x < m_Bound.x - m_Bound.offset)
 	{
 		m_velocity.x = -m_velocity.x;
 		steering.x = -steering.x;
 	}
-	else if (spatial->position.x > m_Bound.x + m_Bound.offset)
+	else if (spatial->GetPosition().x > m_Bound.x + m_Bound.offset)
 	{
 		m_velocity.x = -m_velocity.x;
 		steering.x = -steering.x;

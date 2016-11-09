@@ -20,7 +20,7 @@ void EvasionComponent::Update(float dt)
 		GameLogger::log(this->GetName() + s);
 		GameLogger::shutdownLog();
 	}
-	m_velocity = Evasion(spatial->position);
+	m_velocity = Evasion(spatial->GetPosition());
 
-	spatial->position += m_velocity * dt;
+	spatial->SetPosition(spatial->GetPosition() + m_velocity * dt);
 }

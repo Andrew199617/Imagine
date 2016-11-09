@@ -13,6 +13,10 @@ public:
 
 	glm::vec3 GetCenter() { return center; }
 	float GetRadius();
+
+protected:
+	void OnValueChange(std::string VariableName) override;
+
 private:
 	float radius;
 

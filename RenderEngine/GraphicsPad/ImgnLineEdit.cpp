@@ -7,7 +7,7 @@ ImgnLineEdit::ImgnLineEdit()
 }
 
 
-ImgnLineEdit::ImgnLineEdit(std::string currentText, Imgn::VecPart xyz, ImgnComponent* parent) : QLineEdit(currentText.c_str()) , isX(false), isY(false), isZ(false)
+ImgnLineEdit::ImgnLineEdit(std::string currentText, Imgn::VecPart xyz, ImgnComponent* parent) : QLineEdit(currentText.c_str()) , isX(false), isY(false), isZ(false), m_SelectAll(0)
 {
 	parentWidget = parent;
 	switch (xyz)
@@ -27,7 +27,7 @@ ImgnLineEdit::ImgnLineEdit(std::string currentText, Imgn::VecPart xyz, ImgnCompo
 	setValidator(validator);
 }
 
-ImgnLineEdit::ImgnLineEdit(std::string currentText, ImgnComponent* parent) : QLineEdit(currentText.c_str()) , isX(false), isY(false), isZ(false)
+ImgnLineEdit::ImgnLineEdit(std::string currentText, ImgnComponent* parent) : QLineEdit(currentText.c_str()) , isX(false), isY(false), isZ(false), m_SelectAll(0)
 {
 	parentWidget = parent;
 	setFocusPolicy(Qt::ClickFocus);
@@ -45,7 +45,17 @@ void ImgnLineEdit::focusOutEvent(QFocusEvent * e)
 
 void ImgnLineEdit::focusInEvent(QFocusEvent * e)
 {
-	this->selectAll();
 	QLineEdit::focusInEvent(e);
+	m_SelectAll = true;
 	parentWidget->focusInEvent(e);
+}
+
+void ImgnLineEdit::mousePressEvent(QMouseEvent *me)
+{
+	QLineEdit::mousePressEvent(me);
+	if (m_SelectAll)
+	{
+		selectAll();
+		m_SelectAll = false;
+	}
 }

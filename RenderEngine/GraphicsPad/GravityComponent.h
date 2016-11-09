@@ -6,6 +6,7 @@ struct CollisionInfo;
 class MeshComponent;
 class SpatialComponent;
 
+//Deprecated use RigidBodies.
 class GravityComponent :
 	public ImgnComponent
 {

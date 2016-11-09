@@ -33,7 +33,7 @@ ImgnTool::ImgnTool(QPushButton * Tool, QPushButton * ExtraOptions)
 	}
 	else
 	{
-		this->setFixedSize(45, 45);
+		this->setFixedSize(50, 45);
 	}
 	setLayout(m_Layout);
 }
@@ -48,15 +48,4 @@ void ImgnTool::Initialize()
 	extraOptions = 0;
 	options = 0;
 	this->setObjectName("ImgnTool");
-}
-
-void ImgnTool::SetQssFile()
-{
-	string outputDir = QDir::currentPath().toLocal8Bit().data();
-	string fileName = "\\CSS\\ImgnTool.qss";
-	QFile file((outputDir + fileName).c_str());
-	file.open(QFile::ReadOnly);
-	QString styleSheet = QLatin1String(file.readAll());
-	setStyleSheet(styleSheet);
-	file.close();
 }

@@ -92,6 +92,7 @@
     <ClCompile Include="ArrivalComponent.cpp" />
     <ClCompile Include="CollisionDetection\BoxCollider.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
+    <ClCompile Include="CollisionDetection\ImgnCollider.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ConfigReader.cpp" />
     <ClCompile Include="DetailsLayout.cpp" />
@@ -165,8 +166,6 @@
     <ClCompile Include="StateMachine\StateComponent.cpp" />
     <ClCompile Include="SteeringBehaviors.cpp" />
     <ClCompile Include="Throwables.cpp" />
-    <ClCompile Include="TransformLayout.cpp" />
-    <ClCompile Include="TransformLayout_moc.cpp" />
     <ClCompile Include="WanderingComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -192,6 +191,7 @@
     <ClInclude Include="Hierarchy.h" />
     <ClInclude Include="ImgnAction.h" />
     <ClInclude Include="ImgnComponent.h" />
+    <ClInclude Include="ImgnConstants.hpp" />
     <ClInclude Include="ImgnCreateComponent.h" />
     <ClInclude Include="ImgnFrame.h" />
     <ClInclude Include="ImgnFwd.hpp" />
@@ -255,7 +255,6 @@
     <ClInclude Include="StateManager.h" />
     <ClInclude Include="SteeringBehaviors.h" />
     <ClInclude Include="Throwables.h" />
-    <ClInclude Include="TransformLayout.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="RenderEngine\VertexShaderInfo.h" />
     <ClInclude Include="VertexFormats.h" />

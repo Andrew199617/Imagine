@@ -88,7 +88,7 @@ void DetailsLayout::Resize()
 	int biggestWidth = 250;
 	for (int i = 0; i < numComponents; i++)
 	{
-		if (biggestWidth <= components[i]->size().width())
+		if (biggestWidth <= components[i]->size().width() && components[i]->size().width() <= 348)
 			biggestWidth = components[i]->size().width() + 30;
 		//height += groupBox[i]->size().height();
 	}

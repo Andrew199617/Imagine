@@ -15,7 +15,7 @@ protected:
 	virtual bool Initialize() override;
 
 public:
-	void checkNeededComponents(SpatialComponent* spatial, CameraComponent* camera);
+	void checkNeededComponents(ImgnComponent* spatial, ImgnComponent* camera);
 	void moveForward(float dt);
 	void moveForward(float dt, glm::vec3 viewDirection);
 	void moveBackward(float dt);

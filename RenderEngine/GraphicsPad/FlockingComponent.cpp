@@ -21,10 +21,10 @@ void FlockingComponent::Update(float dt)
 		GameLogger::shutdownLog();
 	}
 	float localNeighboorhood = 5.0f;
-	glm::vec3 SeperationVel = Seperation(spatial->position, localNeighboorhood);
-	glm::vec3 cohesionVel = Cohesion(spatial->position, localNeighboorhood);
-	glm::vec3 alignmentVel = Alignment(spatial->position, localNeighboorhood);
+	glm::vec3 SeperationVel = Seperation(spatial->GetPosition(), localNeighboorhood);
+	glm::vec3 cohesionVel = Cohesion(spatial->GetPosition(), localNeighboorhood);
+	glm::vec3 alignmentVel = Alignment(spatial->GetPosition(), localNeighboorhood);
 	m_velocity = (SeperationVel * 2.0f + alignmentVel * 2.9f + cohesionVel * .15f) / 3.0f;
-	spatial->position += m_velocity * dt;
+	spatial->SetPosition(spatial->GetPosition() + m_velocity * dt);
 
 }

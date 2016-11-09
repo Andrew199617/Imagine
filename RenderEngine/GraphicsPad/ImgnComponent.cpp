@@ -106,11 +106,19 @@ void ImgnComponent::DisplayInEngine()
 		if (displayData && displayData->hasData)
 		{
 			m_Layout = new QVBoxLayout;
-			m_Layout->addSpacing(12);
+			m_Layout->addSpacing(15);
+			m_Layout->setContentsMargins(2, 0, 8, 0);
 			for (int i = 0; i < displayData->numValues; ++i)
 			{
 				properties[i] = new QHBoxLayout();
 				properties[i]->addWidget(propertyNames[i] = new QLabel(displayData->variableNames[i].c_str()));
+				propertyNames[i]->setFixedWidth(80);
+				propertyNames[i]->setContentsMargins(5, 5, 15 - displayData->variableNames[i].length() * 2, 5);
+				QFrame* line = new QFrame();
+				line->setGeometry(QRect(0, 0, 2, 30));
+				line->setFrameShape(QFrame::VLine); // Replace by VLine for vertical line
+				line->setFrameShadow(QFrame::Plain);
+				properties[i]->addWidget(line,0,Qt::AlignLeft);
 
 				std::string name = displayData->typeName[i];
 				
@@ -155,6 +163,7 @@ void ImgnComponent::DisplayInEngine()
 			m_Layout->insertStretch(-1, 1);
 			m_Layout->sizeHint().setHeight(50);
 			m_Layout->minimumSize().setHeight(50);
+			m_Layout->addSpacing(15);
 			setLayout(m_Layout);
 			layoutHasData = true;
 		}

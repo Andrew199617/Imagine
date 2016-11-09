@@ -20,12 +20,12 @@ void FleeBehaviorComponent::Update(float dt)
 		GameLogger::log(this->GetName() + s);
 		GameLogger::shutdownLog();
 	}
-	glm::vec3 Position = spatial->position;
+	glm::vec3 Position = spatial->GetPosition();
 	m_velocity = Flee(Position, m_target, m_velocity);
-	spatial->position += m_velocity * dt;
-	if (spatial->position.z > -40)
+	spatial->SetPosition(spatial->GetPosition() + m_velocity * dt);
+	if (spatial->GetPosition().z > -40)
 	{
-		spatial->position.z = -70;
+		spatial->SetPosition(spatial->GetPosition() + glm::vec3(0,0,-70));
 	}
 }
 

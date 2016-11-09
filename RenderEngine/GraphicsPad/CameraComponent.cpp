@@ -4,6 +4,7 @@
 #include "GameLogger.h"
 #include "MouseComponent.h"
 #include "SpatialComponent.h"
+#include "ImgnConstants.hpp"
 
 CameraComponent::CameraComponent() 
 {
@@ -15,8 +16,7 @@ CameraComponent::CameraComponent()
 bool CameraComponent::mouseUpdate()
 {
 	MouseComponent* mouse = this->GetSiblingComponent<MouseComponent>();
-	SpatialComponent* spatial = this->GetSiblingComponent<SpatialComponent>();
-	if (!mouse || !spatial)
+	if (!mouse)
 	{
 		string s = ": can not obtain a Component";
 		GameLogger::log(this->GetName() + s);
@@ -32,9 +32,9 @@ bool CameraComponent::mouseUpdate()
 		return false;
 	}
 	
-	glm::vec3 toRotateAround = glm::cross(viewDirection, spatial->UP);
+	glm::vec3 toRotateAround = glm::cross(viewDirection, Imgn::UP);
 
-	viewDirection = glm::mat3(glm::rotate(-mouseDelta.x * rotateSpeed, spatial->UP) * glm::rotate(-mouseDelta.y * rotateSpeed , toRotateAround))  * viewDirection;
+	viewDirection = glm::mat3(glm::rotate(-mouseDelta.x * rotateSpeed, Imgn::UP) * glm::rotate(-mouseDelta.y * rotateSpeed , toRotateAround))  * viewDirection;
 
 	mouse->setOldMousePosition();
 	return true;
@@ -48,7 +48,7 @@ void CameraComponent::Update(float dt)
 		string s = ": can not obtain spatial Component";
 		GameLogger::log(this->GetName() + s);
 	}
-	this->position = spatial->position;
+	this->position = spatial->GetPosition();
 	this->position.z += Zoffset;
 	this->position.y += Yoffset;
 	dt;
@@ -64,7 +64,7 @@ bool CameraComponent::Initialize()
 		GameLogger::shutdownLog();
 		return false;
 	}
-	spatial->position = ConfigReader::Instance()->findVec3ForKey("CameraPosition");
+	spatial->SetPosition(ConfigReader::Instance()->findVec3ForKey("CameraPosition"));
 	Zoffset = 0;
 	Yoffset = 0.0;
 	return true;
@@ -72,7 +72,7 @@ bool CameraComponent::Initialize()
 
 glm::mat4 CameraComponent::getWorldToViewMatrix()
 {
-	return glm::lookAt(position, position + viewDirection, this->GetSiblingComponent<SpatialComponent>()->UP );
+	return glm::lookAt(position, position + viewDirection, Imgn::UP );
 }
 
 //const float MOVEMENT_SPEED = 3.0f;

@@ -1,18 +1,17 @@
 #pragma once
 #include "ImgnFrame.h"
 #include "EntityData.h"
-#include <string>
 class ImgnTool;
 class QHBoxLayout;
 class QPushButton;
 class QMenu;
 namespace Imgn
 {
-	const int MAX_TOOLS = 15;
 	enum
 	{
 		PLAY_BUTTON = 0,
 		COMPILE_BUTTON = 1,
+		NUM_TOOLS
 	};
 }
 
@@ -25,7 +24,6 @@ public:
 	~ImgnToolBar();
 	void Initialize();
 	void AddTool(ImgnTool* Tool);
-	void SetQssFile();
 
 	static std::string classesToCompile[Imgn::MAX_COMPONENTS_PERENTITY];
 private slots:
@@ -33,9 +31,9 @@ private slots:
 
 private:
 	QHBoxLayout* m_Layout;
-	ImgnTool* tools[Imgn::MAX_TOOLS];
-	QPushButton* buttons[Imgn::MAX_TOOLS];
-	QMenu* buttonOptions[Imgn::MAX_TOOLS];
+	ImgnTool* tools[Imgn::NUM_TOOLS];
+	QPushButton* buttons[Imgn::NUM_TOOLS];
+	QMenu* buttonOptions[Imgn::NUM_TOOLS];
 
 	int currentTool;
 };

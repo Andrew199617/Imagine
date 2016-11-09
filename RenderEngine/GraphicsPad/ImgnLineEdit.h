@@ -29,13 +29,13 @@ private:
 	bool isX;
 	bool isY;
 	bool isZ;
+	bool m_SelectAll;
 
 	ImgnComponent* parentWidget;
 protected:
 	void focusOutEvent(QFocusEvent *) override;
-
-
 	virtual void focusInEvent(QFocusEvent *) override;
+	virtual void mousePressEvent(QMouseEvent *) override;
 
 };
 

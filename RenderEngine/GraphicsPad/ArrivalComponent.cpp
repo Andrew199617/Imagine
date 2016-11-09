@@ -20,11 +20,11 @@ void ArrivalComponent::Update(float dt)
 		GameLogger::log(this->GetName() + s);
 		GameLogger::shutdownLog();
 	}
-	m_velocity = Arrival(spatial->position,3);
-	spatial->position += m_velocity * dt;
+	m_velocity = Arrival(spatial->GetPosition(),3);
+	spatial->SetPosition(spatial->GetPosition() + m_velocity * dt);
 
-	if (spatial->position.z < m_target.z + 1.0f)
+	if (spatial->GetPosition().z < m_target.z + 1.0f)
 	{
-		spatial->position.z = -40;
+		spatial->SetPosition(spatial->GetPosition() + glm::vec3(0, 0, -40));
 	}
 }
