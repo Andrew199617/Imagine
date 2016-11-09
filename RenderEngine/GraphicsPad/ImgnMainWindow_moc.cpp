@@ -1,15 +1,15 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'MeWidget.h'
+** Meta object code from reading C++ file 'ImgnMainWindow.h'
 **
-** Created: Fri Oct 28 03:14:22 2016
+** Created: Tue Nov 8 17:09:29 2016
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.2)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "MeWidget.h"
+#include "ImgnMainWindow.h"
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'MeWidget.h' doesn't include <QObject>."
+#error "The header file 'ImgnMainWindow.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 63
 #error "This file was generated using the moc from 4.8.2. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -17,7 +17,7 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-static const qtuint qt_meta_data_MeWidget[] = {
+static const qtuint qt_meta_data_ImgnMainWindow[] = {
 
  // content:
        6,       // revision
@@ -31,29 +31,30 @@ static const qtuint qt_meta_data_MeWidget[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      10,    9,    9,    9, 0x08,
-      29,    9,    9,    9, 0x08,
-      43,    9,    9,    9, 0x08,
-      55,    9,    9,    9, 0x08,
-      65,    9,    9,    9, 0x08,
-      77,    9,    9,    9, 0x08,
-      88,    9,    9,    9, 0x08,
-     108,    9,    9,    9, 0x08,
+      16,   15,   15,   15, 0x08,
+      35,   15,   15,   15, 0x08,
+      49,   15,   15,   15, 0x08,
+      61,   15,   15,   15, 0x08,
+      71,   15,   15,   15, 0x08,
+      83,   15,   15,   15, 0x08,
+      94,   15,   15,   15, 0x08,
+     114,   15,   15,   15, 0x08,
 
        0        // eod
 };
 
-static const char qt_meta_stringdata_MeWidget[] = {
-    "MeWidget\0\0WindowsShowEvent()\0openingFile()\0"
-    "AddObject()\0AddCube()\0AddSphere()\0"
-    "AddPlane()\0OnPlayButtonPress()\0Save()\0"
+static const char qt_meta_stringdata_ImgnMainWindow[] = {
+    "ImgnMainWindow\0\0WindowsShowEvent()\0"
+    "openingFile()\0AddObject()\0AddCube()\0"
+    "AddSphere()\0AddPlane()\0OnPlayButtonPress()\0"
+    "Save()\0"
 };
 
-void MeWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void ImgnMainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
         Q_ASSERT(staticMetaObject.cast(_o));
-        MeWidget *_t = static_cast<MeWidget *>(_o);
+        ImgnMainWindow *_t = static_cast<ImgnMainWindow *>(_o);
         switch (_id) {
         case 0: _t->WindowsShowEvent(); break;
         case 1: _t->openingFile(); break;
@@ -69,33 +70,33 @@ void MeWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
     Q_UNUSED(_a);
 }
 
-const QMetaObjectExtraData MeWidget::staticMetaObjectExtraData = {
+const QMetaObjectExtraData ImgnMainWindow::staticMetaObjectExtraData = {
     0,  qt_static_metacall 
 };
 
-const QMetaObject MeWidget::staticMetaObject = {
-    { &QMainWindow::staticMetaObject, qt_meta_stringdata_MeWidget,
-      qt_meta_data_MeWidget, &staticMetaObjectExtraData }
+const QMetaObject ImgnMainWindow::staticMetaObject = {
+    { &QMainWindow::staticMetaObject, qt_meta_stringdata_ImgnMainWindow,
+      qt_meta_data_ImgnMainWindow, &staticMetaObjectExtraData }
 };
 
 #ifdef Q_NO_DATA_RELOCATION
-const QMetaObject &MeWidget::getStaticMetaObject() { return staticMetaObject; }
+const QMetaObject &ImgnMainWindow::getStaticMetaObject() { return staticMetaObject; }
 #endif //Q_NO_DATA_RELOCATION
 
-const QMetaObject *MeWidget::metaObject() const
+const QMetaObject *ImgnMainWindow::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
 }
 
-void *MeWidget::qt_metacast(const char *_clname)
+void *ImgnMainWindow::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_MeWidget))
-        return static_cast<void*>(const_cast< MeWidget*>(this));
+    if (!strcmp(_clname, qt_meta_stringdata_ImgnMainWindow))
+        return static_cast<void*>(const_cast< ImgnMainWindow*>(this));
     return QMainWindow::qt_metacast(_clname);
 }
 
-int MeWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int ImgnMainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QMainWindow::qt_metacall(_c, _id, _a);
     if (_id < 0)

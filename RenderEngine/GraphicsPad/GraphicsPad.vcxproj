@@ -112,6 +112,7 @@
     <ClCompile Include="ImgnCreateComponent.cpp" />
     <ClCompile Include="ImgnCreateComponent_moc.cpp" />
     <ClCompile Include="ImgnLineEdit.cpp" />
+    <ClCompile Include="ImgnMainWindow_moc.cpp" />
     <ClCompile Include="ImgnProperties.cpp" />
     <ClCompile Include="ImgnTool.cpp" />
     <ClCompile Include="ImgnToolBar.cpp" />
@@ -121,7 +122,6 @@
     <ClCompile Include="Physics\Matrix3.cpp" />
     <ClCompile Include="MeGLWindow_moc.cpp" />
     <ClCompile Include="MeshComponent.cpp" />
-    <ClCompile Include="MeWidget_moc.cpp" />
     <ClCompile Include="MouseComponent.cpp" />
     <ClCompile Include="MovementComponent.cpp" />
     <ClCompile Include="NodeMap.cpp" />
@@ -141,7 +141,7 @@
     <ClCompile Include="RenderEngine\FragmentShaderInfo.cpp" />
     <ClCompile Include="GameTime.cpp" />
     <ClCompile Include="MeGlWindow.cpp" />
-    <ClCompile Include="MeWidget.cpp" />
+    <ClCompile Include="ImgnMainWindow.cpp" />
     <ClCompile Include="OriginalGame.cpp" />
     <ClCompile Include="RenderEngine\FrameBuffer.cpp" />
     <ClCompile Include="RenderEngine\Geometry.cpp" />
@@ -227,7 +227,7 @@
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="MeGlWindow.h" />
     <ClInclude Include="MeModel.h" />
-    <ClInclude Include="MeWidget.h" />
+    <ClInclude Include="ImgnMainWindow.h" />
     <ClInclude Include="OriginalGame.h" />
     <ClInclude Include="OriginalGameIncludes.h" />
     <ClInclude Include="RenderEngine\FrameBuffer.h" />

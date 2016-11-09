@@ -1,4 +1,4 @@
-#include "MeWidget.h"
+#include "ImgnMainWindow.h"
 #include "FbxFileReader.h"
 #include <QtGui\qboxlayout>
 #include "MeGlWindow.h"
@@ -12,11 +12,11 @@
 #include "Qt\qpushbutton.h"
 #include "DetailsLayout.h"
 #include "MeGlWindow.h"
-#include "OriginalGame.h"
+#include "ImgnViewport.h"
 #include "ImgnToolBar.h"
 #include "ImgnTool.h"
 
-MeWidget::MeWidget(MeGlWindow* meGl)
+ImgnMainWindow::ImgnMainWindow(MeGlWindow* meGl)
 {
 	saveLogger = saveLogger->Instance();
 	this->meGlWindow = meGl;
@@ -38,7 +38,7 @@ MeWidget::MeWidget(MeGlWindow* meGl)
 	setWindowTitle(tr("Imagine"));
 }
 
-void MeWidget::CreateActions()
+void ImgnMainWindow::CreateActions()
 {
 	openAct = new QAction(tr("&Open"), this);
 	openAct->setShortcuts(QKeySequence::New);
@@ -83,7 +83,7 @@ void MeWidget::CreateActions()
 	connect(showHierarchy, SIGNAL(triggered()), this, SLOT(WindowsShowEvent()));
 }
 
-void MeWidget::CreateMenus()
+void ImgnMainWindow::CreateMenus()
 {
 	fileMenu = menuBar()->addMenu(tr("&File"));
 	fileMenu->addAction(openAct);
@@ -112,7 +112,7 @@ void MeWidget::CreateMenus()
 
 }
 
-void MeWidget::AddTools()
+void ImgnMainWindow::AddTools()
 {
 	imgnToolBar = new ImgnToolBar;
 	mainLayout->addWidget(imgnToolBar, 1, 2);
@@ -128,7 +128,7 @@ void MeWidget::AddTools()
 	connect(playButton, SIGNAL(pressed()), this, SLOT(OnPlayButtonPress()));
 }
 
-void MeWidget::AddGlWindow()
+void ImgnMainWindow::AddGlWindow()
 {
 	meGlWindowLayout = new QHBoxLayout;
 	QFrame* frame = new QFrame;
@@ -148,7 +148,7 @@ void MeWidget::AddGlWindow()
 
 }
 
-void MeWidget::AddObjectDetails()
+void ImgnMainWindow::AddObjectDetails()
 {
 	mainLayout->addWidget(DetailsLayout::Instance(), 2, 3);
 	DetailsLayout::Instance()->setMinimumWidth(250);
@@ -156,7 +156,7 @@ void MeWidget::AddObjectDetails()
 	
 }
 
-void MeWidget::AddHierarchy()
+void ImgnMainWindow::AddHierarchy()
 {
 	hierarchyLayout = new Hierarchy;
 	mainLayout->addWidget(hierarchyLayout->GetWidget(), 2, 1);
@@ -166,7 +166,7 @@ void MeWidget::AddHierarchy()
 	hierarchyLayout->setHidden(true);
 }
 
-void MeWidget::mousePressEvent(QMouseEvent *)
+void ImgnMainWindow::mousePressEvent(QMouseEvent *)
 {
 	DetailsLayout::Instance()->ClearFocus();
 	if (focusWidget() != meGlWindow && focusWidget() != playButton)
@@ -175,12 +175,12 @@ void MeWidget::mousePressEvent(QMouseEvent *)
 	}
 }
 
-void MeWidget::leaveEvent(QEvent * e)
+void ImgnMainWindow::leaveEvent(QEvent * e)
 {
 	QMainWindow::leaveEvent(e);
 }
 
-void MeWidget::closeEvent(QCloseEvent * ce)
+void ImgnMainWindow::closeEvent(QCloseEvent * ce)
 {
 	if (!meGlWindow->forceShutdown())
 	{
@@ -188,7 +188,7 @@ void MeWidget::closeEvent(QCloseEvent * ce)
 	}
 }
 
-void MeWidget::WindowsShowEvent()
+void ImgnMainWindow::WindowsShowEvent()
 {
 	QObject* object = QObject::sender();
 	QString objectName = object->objectName();
@@ -207,13 +207,13 @@ void MeWidget::WindowsShowEvent()
 	}
 }
 
-void MeWidget::openingFile()
+void ImgnMainWindow::openingFile()
 {
 	string str = openFileDialog.getFile();
 	saveLogger->Open(str.c_str());
 }
 
-void MeWidget::AddObject()
+void ImgnMainWindow::AddObject()
 {
 	SceneReader* scenereader = new SceneReader;
 	FbxFileReader fileReader;
@@ -232,24 +232,24 @@ void MeWidget::AddObject()
 	
 }
 
-void MeWidget::AddCube()
+void ImgnMainWindow::AddCube()
 {
 	saveLogger->AddObj("Cube","Cube");
 }
 
-void MeWidget::AddSphere()
+void ImgnMainWindow::AddSphere()
 {
 	saveLogger->AddObj("Sphere","Sphere");
 }
 
-void MeWidget::AddPlane()
+void ImgnMainWindow::AddPlane()
 {
 	saveLogger->AddObj("Plane","Plane");
 }
 
-void MeWidget::OnPlayButtonPress()
+void ImgnMainWindow::OnPlayButtonPress()
 {
-	if (!meGlWindow->game->isPlaying)
+	if (!meGlWindow->viewport->isPlaying)
 	{
 		playButton->setIcon(*pauseIcon);
 	}
@@ -258,10 +258,10 @@ void MeWidget::OnPlayButtonPress()
 		playButton->setIcon(*playIcon);
 	}
 	meGlWindow->setFocus();
-	meGlWindow->game->isPlaying = !meGlWindow->game->isPlaying;
+	meGlWindow->viewport->isPlaying = !meGlWindow->viewport->isPlaying;
 }
 
-void MeWidget::Save()
+void ImgnMainWindow::Save()
 {
-	OriginalGame::entityManager.SaveEntities();
+	ImgnViewport::entityManager.SaveEntities();
 }

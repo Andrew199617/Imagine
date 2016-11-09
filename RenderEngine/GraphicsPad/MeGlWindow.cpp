@@ -5,7 +5,7 @@
 #pragma warning (disable:4127)
 #include <QtGui\qmouseevent>
 #pragma warning(pop)
-#include "OriginalGame.h"
+#include "ImgnViewport.h"
 #include "SaveLogger.h"
 #include "GameLogger.h"
 #include "Qt\qtooltip.h"
@@ -14,7 +14,7 @@
 
 void MeGlWindow::Initialize()
 {
-	if (!game->Initialize())
+	if (!viewport->Initialize())
 	{
 		GameLogger::shutdownLog();
 		app->exit();
@@ -25,7 +25,7 @@ void MeGlWindow::Initialize()
 void MeGlWindow::initializeGL()
 {
 	setFocus();
-	game->InitializeGl();
+	viewport->InitializeGl();
 	setMouseTracking(true);
 	setMinimumSize(1280, 720);
 
@@ -37,28 +37,28 @@ void MeGlWindow::initializeGL()
 void MeGlWindow::mouseMoveEvent(QMouseEvent* e)
 {
 	QWidget::mouseMoveEvent(e);
-	game->ProcessMouseMove(e);
+	viewport->ProcessMouseMove(e);
 }
 
 void MeGlWindow::mousePressEvent(QMouseEvent * e)
 {
 	QWidget::mousePressEvent(e);
 	setFocus();
-	game->ProcessMousePress(e);
+	viewport->ProcessMousePress(e);
 }
 
 void MeGlWindow::resizeGL(int w, int h)
 {
 	QGLWidget::resizeGL(w,h);
-	game->SetWidth(w);
-	game->SetHeight(h);
+	viewport->SetWidth(w);
+	viewport->SetHeight(h);
 	glm::mat4 projectionMatrix = glm::perspective(90.0f, ((float)w) / h, 1.0f, 180.0f);
 	TransformInfo::projectionMatrix = projectionMatrix;
 }
 
 void MeGlWindow::myUpdate()
 {	
-	game->Update(hasFocus());
+	viewport->Update(hasFocus());
 	if(hasFocus())
 		shutdown();
 	if (!ShutdownApp)
@@ -70,10 +70,10 @@ MeGlWindow::MeGlWindow()
 
 }
 
-MeGlWindow::MeGlWindow(QApplication* app, OriginalGame* ocGame)
+MeGlWindow::MeGlWindow(QApplication* app, ImgnViewport* ocGame)
 {
 	this->app = app;
-	this->game = ocGame;
+	this->viewport = ocGame;
 	ShutdownApp = false;
 	Initialize();
 }

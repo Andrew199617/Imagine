@@ -12,7 +12,7 @@ class Hierarchy;
 class DetailsLayout;
 class ImgnToolBar;
 
-class MeWidget : public QMainWindow
+class ImgnMainWindow : public QMainWindow
 {
 	Q_OBJECT
 
@@ -46,7 +46,7 @@ class MeWidget : public QMainWindow
 	OpenFileDialog openFileDialog;
 	MeGlWindow* meGlWindow;
 public:
-	MeWidget(MeGlWindow* meGl);
+	ImgnMainWindow(MeGlWindow* meGl);
 private:
 	void CreateActions();
 	void CreateMenus();

@@ -2,12 +2,12 @@
 #include "OriginalGameIncludes.h"
 #include "RenderEngine\FrameBuffer.h"
 
-class OriginalGame
+class ImgnViewport
 {
 
 public:
-	OriginalGame();
-	~OriginalGame();
+	ImgnViewport();
+	~ImgnViewport();
 	void SendDataToOpenGL();
 	void InitializeGl();
 	bool Initialize();

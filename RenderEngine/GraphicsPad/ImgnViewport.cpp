@@ -1,4 +1,4 @@
-#include "OriginalGame.h"
+#include "ImgnViewport.h"
 #include "GameLogger.h"
 #include "SaveLogger.h"
 #include "RenderEngine\VertexShaderInfo.h"
@@ -29,9 +29,9 @@ GLuint quad_VertexArrayID;
 GLuint uDiscardBasedOfDepthUL;
 GLuint uRegularDepthUL;
 
-EntityManager OriginalGame::entityManager;
+EntityManager ImgnViewport::entityManager;
 
-void OriginalGame::SetWidth(int Width)
+void ImgnViewport::SetWidth(int Width)
 {
 	m_Width = Width; 
 	if(frameBuffer)
@@ -40,7 +40,7 @@ void OriginalGame::SetWidth(int Width)
 	frameBuffer->GenerateFBO(m_Width, m_Height);
 }
 
-void OriginalGame::SetHeight(int Height)
+void ImgnViewport::SetHeight(int Height)
 {
 	m_Height = Height; 
 	if (frameBuffer)
@@ -49,19 +49,19 @@ void OriginalGame::SetHeight(int Height)
 	frameBuffer->GenerateFBO(m_Width, m_Height);
 }
 
-OriginalGame::OriginalGame()
+ImgnViewport::ImgnViewport()
 {
 
 }
 
 
-OriginalGame::~OriginalGame()
+ImgnViewport::~ImgnViewport()
 {
 	glDeleteVertexArrays(1, &quad_VertexArrayID);
 	glDeleteBuffers(1, &quad_vertexbuffer);
 }
 
-void OriginalGame::SendDataToOpenGL()
+void ImgnViewport::SendDataToOpenGL()
 {
 	mat4 projectionMatrix = glm::perspective(90.0f, ((float)m_Width) / m_Height, 1.0f, 180.0f);
 	TransformInfo::projectionMatrix = projectionMatrix;
@@ -87,7 +87,7 @@ void OriginalGame::SendDataToOpenGL()
 	entityManager.SendDataToOpenGL();
 }
 
-void OriginalGame::InitializeGl()
+void ImgnViewport::InitializeGl()
 {
 	glewInit();
 	m_Width = 1920;
@@ -107,7 +107,7 @@ void OriginalGame::InitializeGl()
 	SendDataToOpenGL();
 }
 
-bool OriginalGame::Initialize()
+bool ImgnViewport::Initialize()
 {
 	isPlaying = false;
 
@@ -121,7 +121,7 @@ bool OriginalGame::Initialize()
 	return true;
 }
 
-void OriginalGame::Update(bool focus)
+void ImgnViewport::Update(bool focus)
 {
 	gametime.newFrame();
 	float dt = gametime.timeElapsedLastFrame();
@@ -134,22 +134,22 @@ void OriginalGame::Update(bool focus)
 	Draw(dt);
 }
 
-void OriginalGame::ProcessKeys(float m_dt)
+void ImgnViewport::ProcessKeys(float m_dt)
 {
 	entityManager.ProcessKeys(m_dt);
 }
 
-void OriginalGame::ProcessMouseMove(QMouseEvent* e)
+void ImgnViewport::ProcessMouseMove(QMouseEvent* e)
 {
 	entityManager.ProcessMouseMove(e);
 }
 
-void OriginalGame::ProcessMousePress(QMouseEvent * e)
+void ImgnViewport::ProcessMousePress(QMouseEvent * e)
 {
 	entityManager.ProcessMousePress(e);
 }
 
-void OriginalGame::Draw(float dt)
+void ImgnViewport::Draw(float dt)
 {
 	frameBuffer->Bind();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

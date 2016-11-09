@@ -4,7 +4,7 @@
 #include "ConfigReader.h"
 #include "GameLogger.h"
 #include <windows.h>
-#include "OriginalGame.h"
+#include "ImgnViewport.h"
 #include "ImgnProperties.h"
 #include "ImgnComponent.h"
 #include "Physics/PhysicsTypeDefs.hpp"
@@ -184,7 +184,7 @@ bool SaveLogger::shutdownLog()
 {
 	if (autoSave)
 	{
-		OriginalGame::entityManager.SaveEntities();
+		ImgnViewport::entityManager.SaveEntities();
 		if ( !WriteToSaveFile() ) 
 		{
 			return false;
@@ -402,7 +402,7 @@ void SaveLogger::AddObj(string SceneName, string ObjName)
 	componentNames[curNumEntities][1] = "MeshComponent";
 	curNumEntities++;
 	currentEntityDataType = index + 1;
-	OriginalGame::entityManager.AddEntity();
+	ImgnViewport::entityManager.AddEntity();
 }
 
 void SaveLogger::SetComponent(int ObjNum, int componentNum, ImgnComponent* component)

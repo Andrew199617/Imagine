@@ -1,5 +1,5 @@
 #include "GravityComponent.h"
-#include "OriginalGame.h"
+#include "ImgnViewport.h"
 #include "MeshComponent.h"
 #include "CollisionTester.h"
 #include "Vertex.h"
@@ -99,8 +99,8 @@ bool GravityComponent::Initialize()
 {
 	floorCollision = 0;
 	objSelectedMinT = FLT_MAX;
-	numMeshes = OriginalGame::entityManager.num_Objs;
-	meshes = OriginalGame::entityManager.entitieMeshs;
+	numMeshes = ImgnViewport::entityManager.num_Objs;
+	meshes = ImgnViewport::entityManager.entitieMeshs;
 	return true;
 }
 

@@ -225,9 +225,6 @@
     <ClCompile Include="PostProcessingModel.cpp">
       <Filter>Models</Filter>
     </ClCompile>
-    <ClCompile Include="MeWidget_moc.cpp">
-      <Filter>Source Files\moc</Filter>
-    </ClCompile>
     <ClCompile Include="RenderEngine\AnimationInfo.cpp">
       <Filter>RenderEngine\RenderEngine</Filter>
     </ClCompile>
@@ -235,9 +232,6 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Hierarchy.cpp">
-      <Filter>QT</Filter>
-    </ClCompile>
-    <ClCompile Include="MeWidget.cpp">
       <Filter>QT</Filter>
     </ClCompile>
     <ClCompile Include="MeGlWindow.cpp">
@@ -304,6 +298,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CollisionDetection\ImgnCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImgnMainWindow.cpp">
+      <Filter>QT</Filter>
+    </ClCompile>
+    <ClCompile Include="ImgnMainWindow_moc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -509,9 +509,6 @@
     <ClInclude Include="Hierarchy.h">
       <Filter>QT</Filter>
     </ClInclude>
-    <ClInclude Include="MeWidget.h">
-      <Filter>QT</Filter>
-    </ClInclude>
     <ClInclude Include="MeGlWindow.h">
       <Filter>QT</Filter>
     </ClInclude>
@@ -580,6 +577,9 @@
     </ClInclude>
     <ClInclude Include="ImgnConstants.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImgnMainWindow.h">
+      <Filter>QT</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

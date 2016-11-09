@@ -10,7 +10,7 @@
 #pragma warning (disable:4800)
 #include <QtOpenGL\qglwidget>
 #pragma warning(pop)
-class OriginalGame;
+class ImgnViewport;
 
 
 class MeGlWindow : public QGLWidget
@@ -26,10 +26,10 @@ protected:
 public:
 	void Initialize();
 	MeGlWindow(void);
-	MeGlWindow(QApplication*, OriginalGame*);
+	MeGlWindow(QApplication*, ImgnViewport*);
 	void shutdown();
 	bool forceShutdown();
-	OriginalGame* game;
+	ImgnViewport* viewport;
 
 
 	QApplication* app;

@@ -4,8 +4,7 @@ class QPushButton;
 class QVBoxLayout;
 #define MAX_OBJS 500
 
-class Hierarchy :
-	public ImgnFrame
+class Hierarchy : public ImgnFrame
 {
 	Q_OBJECT
 public:
