@@ -15,6 +15,7 @@
 #include "ImgnViewport.h"
 #include "ImgnToolBar.h"
 #include "ImgnTool.h"
+#include "ContentBrowser.h"
 
 ImgnMainWindow::ImgnMainWindow(MeGlWindow* meGl)
 {
@@ -31,9 +32,12 @@ ImgnMainWindow::ImgnMainWindow(MeGlWindow* meGl)
 	AddHierarchy();
 	AddGlWindow();
 	AddObjectDetails();	
+	AddContentBrowser();
 
 	CreateActions();
 	CreateMenus();
+
+	this->setStyleSheet("QMainWindow {background: solid white}");
 
 	setWindowTitle(tr("Imagine"));
 }
@@ -115,7 +119,7 @@ void ImgnMainWindow::CreateMenus()
 void ImgnMainWindow::AddTools()
 {
 	imgnToolBar = new ImgnToolBar;
-	mainLayout->addWidget(imgnToolBar, 1, 2);
+	mainLayout->addWidget(imgnToolBar, 1, 2, Qt::AlignHCenter);
 	playButton = new QPushButton;
 	ImgnTool* tool = new ImgnTool(playButton,new QPushButton("^"));
 	imgnToolBar->AddTool(tool);
@@ -150,7 +154,7 @@ void ImgnMainWindow::AddGlWindow()
 
 void ImgnMainWindow::AddObjectDetails()
 {
-	mainLayout->addWidget(DetailsLayout::Instance(), 2, 3);
+	mainLayout->addWidget(DetailsLayout::Instance(), 1, 3,3,1);
 	DetailsLayout::Instance()->setMinimumWidth(250);
 	DetailsLayout::Instance()->setMaximumWidth(320);
 	
@@ -159,16 +163,26 @@ void ImgnMainWindow::AddObjectDetails()
 void ImgnMainWindow::AddHierarchy()
 {
 	hierarchyLayout = new Hierarchy;
-	mainLayout->addWidget(hierarchyLayout->GetWidget(), 2, 1);
-	hierarchyLayout->GetWidget()->sizePolicy().setHorizontalPolicy(QSizePolicy::Policy::Maximum);
-	hierarchyLayout->GetWidget()->setMinimumWidth(250);
-	hierarchyLayout->GetWidget()->setMaximumWidth(320);
-	hierarchyLayout->setHidden(true);
+	mainLayout->addWidget(hierarchyLayout, 1, 1,2,1);
+	hierarchyLayout->sizePolicy().setHorizontalPolicy(QSizePolicy::Policy::Maximum);
+	hierarchyLayout->setMinimumWidth(250);
+	hierarchyLayout->setMaximumWidth(320);
+	hierarchyLayout->SetHidden(true);
+}
+
+void ImgnMainWindow::AddContentBrowser()
+{
+	contentBrowser = new ContentBrowser();
+	mainLayout->addWidget(contentBrowser, 3, 1, 1, 2);
 }
 
 void ImgnMainWindow::mousePressEvent(QMouseEvent *)
 {
 	DetailsLayout::Instance()->ClearFocus();
+
+	//DELETE
+	contentBrowser->ResetQssFile();
+
 	if (focusWidget() != meGlWindow && focusWidget() != playButton)
 	{
 		meGlWindow->clearFocus();
@@ -199,7 +213,7 @@ void ImgnMainWindow::WindowsShowEvent()
 	}
 	else if (objectName == "ShowTools")
 	{
-		playButton->setHidden(!playButton->isHidden());
+		imgnToolBar->setHidden(!imgnToolBar->isHidden());
 	}
 	else if (objectName == "ShowHierarchy")
 	{

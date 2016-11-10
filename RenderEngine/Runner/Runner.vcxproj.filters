@@ -22,5 +22,6 @@
   <ItemGroup>
     <None Include="CSS\ImgnToolBar.qss" />
     <None Include="CSS\QMenu.qss" />
+    <None Include="CSS\ContentBrowser.qss" />
   </ItemGroup>
 </Project>

@@ -11,6 +11,7 @@ class QIcon;
 class Hierarchy;
 class DetailsLayout;
 class ImgnToolBar;
+class ContentBrowser;
 
 class ImgnMainWindow : public QMainWindow
 {
@@ -25,6 +26,8 @@ class ImgnMainWindow : public QMainWindow
 	QPushButton* playButton;
 	QIcon* playIcon;
 	QIcon* pauseIcon;
+
+	ContentBrowser* contentBrowser;
 
 	Hierarchy* hierarchyLayout;
 
@@ -54,6 +57,7 @@ private:
 	void AddGlWindow();
 	void AddObjectDetails();
 	void AddHierarchy();
+	void AddContentBrowser();
 	
 protected:
 	void mousePressEvent(QMouseEvent*) override;

@@ -4,15 +4,19 @@
 #include "Qt\qdir.h"
 #include "Qt\qfile.h"
 
-class ImgnFrame :
-	public QFrame
+class ImgnFrame : public QFrame
 {
 public:
-	ImgnFrame() {}
-	~ImgnFrame(){}
-protected:
-	virtual void mousePressEvent(QMouseEvent*)
+	ImgnFrame() : QFrame() {}
+	~ImgnFrame() {}
+	void ResetQssFile()
 	{
+		SetQssFile("\\CSS\\ContentBrowser.qss");
+	}
+protected:
+	virtual void mousePressEvent(QMouseEvent* qm)
+	{
+		QFrame::mousePressEvent(qm);
 		setFocus();
 	}
 	virtual void Initialize() = 0;

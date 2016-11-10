@@ -90,11 +90,13 @@
   <ItemGroup>
     <ClCompile Include="AIEntity.cpp" />
     <ClCompile Include="ArrivalComponent.cpp" />
+    <ClCompile Include="CBDirectory.cpp" />
     <ClCompile Include="CollisionDetection\BoxCollider.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="CollisionDetection\ImgnCollider.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ConfigReader.cpp" />
+    <ClCompile Include="ContentBrowser.cpp" />
     <ClCompile Include="DetailsLayout.cpp" />
     <ClCompile Include="DetailsLayout_moc.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -111,12 +113,15 @@
     <ClCompile Include="ImgnComponent_moc.cpp" />
     <ClCompile Include="ImgnCreateComponent.cpp" />
     <ClCompile Include="ImgnCreateComponent_moc.cpp" />
+    <ClCompile Include="ImgnFolder.cpp" />
+    <ClCompile Include="ImgnFolder_moc.cpp" />
     <ClCompile Include="ImgnLineEdit.cpp" />
     <ClCompile Include="ImgnMainWindow_moc.cpp" />
     <ClCompile Include="ImgnProperties.cpp" />
     <ClCompile Include="ImgnTool.cpp" />
     <ClCompile Include="ImgnToolBar.cpp" />
     <ClCompile Include="ImgnToolBar_moc.cpp" />
+    <ClCompile Include="ImgnWidget.cpp" />
     <ClCompile Include="KeyboardComponent.cpp" />
     <ClCompile Include="Physics\Matrix4.cpp" />
     <ClCompile Include="Physics\Matrix3.cpp" />
@@ -142,7 +147,7 @@
     <ClCompile Include="GameTime.cpp" />
     <ClCompile Include="MeGlWindow.cpp" />
     <ClCompile Include="ImgnMainWindow.cpp" />
-    <ClCompile Include="OriginalGame.cpp" />
+    <ClCompile Include="ImgnViewport.cpp" />
     <ClCompile Include="RenderEngine\FrameBuffer.cpp" />
     <ClCompile Include="RenderEngine\Geometry.cpp" />
     <ClCompile Include="RenderEngine\RenderEngine.cpp" />
@@ -172,13 +177,16 @@
     <ClInclude Include="AIEntity.h" />
     <ClInclude Include="Area.h" />
     <ClInclude Include="ArrivalComponent.h" />
+    <ClInclude Include="CBDirectory.h" />
     <ClInclude Include="CollisionDetection\BoxCollider.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="CollisionDetection\ImgnCollider.h" />
     <ClInclude Include="CollisionInfo.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ConfigReader.h" />
+    <ClInclude Include="ContentBrowser.h" />
     <ClInclude Include="DetailsLayout.h" />
+    <ClInclude Include="dirent.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityData.h" />
     <ClInclude Include="EntityManager.h" />
@@ -193,12 +201,14 @@
     <ClInclude Include="ImgnComponent.h" />
     <ClInclude Include="ImgnConstants.hpp" />
     <ClInclude Include="ImgnCreateComponent.h" />
+    <ClInclude Include="ImgnFolder.h" />
     <ClInclude Include="ImgnFrame.h" />
     <ClInclude Include="ImgnFwd.hpp" />
     <ClInclude Include="ImgnLineEdit.h" />
     <ClInclude Include="ImgnProperties.h" />
     <ClInclude Include="ImgnTool.h" />
     <ClInclude Include="ImgnToolBar.h" />
+    <ClInclude Include="ImgnWidget.h" />
     <ClInclude Include="KeyboardComponent.h" />
     <ClInclude Include="Physics\Matrix4.h" />
     <ClInclude Include="Physics\Matrix3.h" />
@@ -228,7 +238,7 @@
     <ClInclude Include="MeGlWindow.h" />
     <ClInclude Include="MeModel.h" />
     <ClInclude Include="ImgnMainWindow.h" />
-    <ClInclude Include="OriginalGame.h" />
+    <ClInclude Include="ImgnViewport.h" />
     <ClInclude Include="OriginalGameIncludes.h" />
     <ClInclude Include="RenderEngine\FrameBuffer.h" />
     <ClInclude Include="RenderEngine\Geometry.h" />
@@ -262,8 +272,6 @@
     <ClInclude Include="WeaponEntity.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="CSS\ImgnToolBar.qss" />
-    <None Include="CSS\QMenu.qss" />
     <None Include="Shader\ctFragmentShaderCode.glsl" />
     <None Include="Shader\fColliderFragmentShader.glsl" />
     <None Include="Shader\fErosion.glsl" />

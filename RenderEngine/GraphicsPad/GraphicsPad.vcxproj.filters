@@ -81,9 +81,6 @@
     <ClCompile Include="ConfigReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OriginalGame.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RenderEngine\VertexShaderInfo.cpp">
       <Filter>RenderEngine\RenderEngine</Filter>
     </ClCompile>
@@ -273,9 +270,6 @@
     <ClCompile Include="Physics\RigidBody.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ImgnComponent_moc.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Physics\Vector3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -303,7 +297,28 @@
     <ClCompile Include="ImgnMainWindow.cpp">
       <Filter>QT</Filter>
     </ClCompile>
+    <ClCompile Include="ImgnViewport.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ContentBrowser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImgnFolder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImgnComponent_moc.cpp">
+      <Filter>Source Files\moc</Filter>
+    </ClCompile>
     <ClCompile Include="ImgnMainWindow_moc.cpp">
+      <Filter>Source Files\moc</Filter>
+    </ClCompile>
+    <ClCompile Include="CBDirectory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImgnWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImgnFolder_moc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -325,9 +340,6 @@
     </ClInclude>
     <ClInclude Include="Vertex.h">
       <Filter>structs/enums</Filter>
-    </ClInclude>
-    <ClInclude Include="OriginalGame.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OriginalGameIncludes.h">
       <Filter>Header Files</Filter>
@@ -581,6 +593,24 @@
     <ClInclude Include="ImgnMainWindow.h">
       <Filter>QT</Filter>
     </ClInclude>
+    <ClInclude Include="ImgnViewport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ContentBrowser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImgnFolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dirent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CBDirectory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImgnWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\vRippledSurfaceShader.glsl">
@@ -630,12 +660,6 @@
     </None>
     <None Include="Shader\vPassThrough.glsl">
       <Filter>glsl\Vertex</Filter>
-    </None>
-    <None Include="CSS\QMenu.qss">
-      <Filter>QT\QSS</Filter>
-    </None>
-    <None Include="CSS\ImgnToolBar.qss">
-      <Filter>QT\QSS</Filter>
     </None>
     <None Include="Shader\vColliderVertexShader.glsl" />
     <None Include="Shader\fColliderFragmentShader.glsl" />

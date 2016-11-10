@@ -16,7 +16,6 @@ public:
 	void SetHidden(bool);
 
 	inline bool IsHidden() { return isHidden; }
-	inline QFrame* GetWidget() { return this; }
 
 protected:
 private:
