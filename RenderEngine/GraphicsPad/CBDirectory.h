@@ -13,6 +13,7 @@ namespace Imgn
 
 class CBDirectory : public ImgnFrame
 {
+	Q_OBJECT
 public:
 	CBDirectory(std::string Location);
 	CBDirectory();
@@ -24,7 +25,10 @@ protected:
 
 	void GetDirectory();
 	void AddFolder(struct dirent * entry);
-	int isDirectory(const char *path);
+
+private slots:
+	void ShowFolderData(std::string objectName);
+
 private:
 	std::string location;
 	QVBoxLayout* m_Layout;

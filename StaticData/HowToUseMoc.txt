@@ -1,2 +1,2 @@
 cd C:\Users\Andrew\Documents\Neumont\Imagine\RenderEngine\GraphicsPad
-c:\moc.exe ImgnMainWindow.h > ImgnMainWindow_moc.cpp
+c:\moc.exe Imgn.h > Imgn_moc.cpp

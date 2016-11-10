@@ -63,6 +63,7 @@ void SpatialComponent::SetRotate(glm::quat val)
 
 void SpatialComponent::Awake() 
 {
+	rotate = glm::quat();
 	transformInfo = 0;
 }
 

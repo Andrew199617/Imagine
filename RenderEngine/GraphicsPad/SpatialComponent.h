@@ -8,7 +8,7 @@ class SpatialComponent : public ImgnComponent
 	IMGN_GENERATE(SpatialComponent)
 	IMGN_PROPERTY(position,glm::vec3(0, 0, 0))
 	IMGN_PROPERTY(rotation, glm::vec3(0, 0, 0))
-	IMGN_PROPERTY(scale, glm::vec3(0, 0, 0))
+	IMGN_PROPERTY(scale, glm::vec3(1, 1, 1))
 	IMGN_END(SpatialComponent)
 public:
 	void UpdatePosition();

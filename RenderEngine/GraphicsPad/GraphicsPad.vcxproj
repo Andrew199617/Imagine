@@ -91,6 +91,7 @@
     <ClCompile Include="AIEntity.cpp" />
     <ClCompile Include="ArrivalComponent.cpp" />
     <ClCompile Include="CBDirectory.cpp" />
+    <ClCompile Include="CBDirectory_moc.cpp" />
     <ClCompile Include="CollisionDetection\BoxCollider.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="CollisionDetection\ImgnCollider.cpp" />
@@ -104,11 +105,14 @@
     <ClCompile Include="EvasionComponent.cpp" />
     <ClCompile Include="FleeBehaviorComponent.cpp" />
     <ClCompile Include="FlockingComponent.cpp" />
+    <ClCompile Include="FolderButton.cpp" />
+    <ClCompile Include="ImgnButton.cpp" />
     <ClCompile Include="GameLogger.cpp" />
     <ClCompile Include="GravityComponent.cpp" />
     <ClCompile Include="Hierarchy.cpp" />
     <ClCompile Include="Hierarchy_moc.cpp" />
     <ClCompile Include="ImgnAction.cpp" />
+    <ClCompile Include="ImgnButton_moc.cpp" />
     <ClCompile Include="ImgnComponent.cpp" />
     <ClCompile Include="ImgnComponent_moc.cpp" />
     <ClCompile Include="ImgnCreateComponent.cpp" />
@@ -193,6 +197,8 @@
     <ClInclude Include="EvasionComponent.h" />
     <ClInclude Include="FleeBehaviorComponent.h" />
     <ClInclude Include="FlockingComponent.h" />
+    <ClInclude Include="FolderButton.h" />
+    <ClInclude Include="ImgnButton.h" />
     <ClInclude Include="GameLogger.h" />
     <ClInclude Include="GravityComponent.h" />
     <ClInclude Include="HealthEntity.h" />

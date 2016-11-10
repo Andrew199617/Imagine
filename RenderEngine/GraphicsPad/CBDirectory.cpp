@@ -2,6 +2,7 @@
 #include "Qt/qboxlayout.h"
 #include "dirent.h"
 #include "ImgnFolder.h"
+#include "FolderButton.h"
 
 
 CBDirectory::CBDirectory()
@@ -36,13 +37,6 @@ void CBDirectory::Initialize()
 	}
 }
 
-int CBDirectory::isDirectory(const char *path) {
-	struct stat statbuf;
-	if (stat(path, &statbuf) != 0)
-		return 0;
-	return S_ISDIR(statbuf.st_mode);
-}
-
 void CBDirectory::GetDirectory()
 {
 	curFolder = 0;
@@ -67,7 +61,28 @@ void CBDirectory::GetDirectory()
 void CBDirectory::AddFolder(struct dirent * entry)
 {
 	folders[curFolder] = new ImgnFolder(entry, 0,location + "/" + entry->d_name);
+	connect(folders[curFolder],SIGNAL(pressed(std::string)), this, SLOT(ShowFolderData(std::string)));
 	m_Layout->addWidget(folders[curFolder], 0, Qt::AlignLeft);
 
 	curFolder++;
+}
+
+void CBDirectory::ShowFolderData(std::string objectName)
+{
+
+	for (int i = 0; i < curFolder; ++i)
+	{
+		if (folders[i]->objectName() != objectName.c_str())
+		{
+			folders[i]->UnCheck(objectName);
+		}
+		else
+		{
+			folders[i]->ShowFolderData();
+			if (folders[i]->HasChildren())
+			{
+				folders[i]->UnCheck();
+			}
+		}
+	}
 }

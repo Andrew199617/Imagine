@@ -37,7 +37,7 @@ ImgnMainWindow::ImgnMainWindow(MeGlWindow* meGl)
 	CreateActions();
 	CreateMenus();
 
-	this->setStyleSheet("QMainWindow {background: solid white}");
+	this->setStyleSheet("QMainWindow {background: solid gray}");
 
 	setWindowTitle(tr("Imagine"));
 }

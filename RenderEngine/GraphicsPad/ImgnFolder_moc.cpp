@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ImgnFolder.h'
 **
-** Created: Wed Nov 9 17:58:22 2016
+** Created: Wed Nov 9 21:29:51 2016
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,26 +23,43 @@ static const qtuint qt_meta_data_ImgnFolder[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       0,    0, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       1,       // signalCount
+
+ // signals: signature, parameters, type, tag, flags
+      23,   12,   11,   11, 0x05,
+
+ // slots: signature, parameters, type, tag, flags
+      44,   11,   11,   11, 0x08,
+      62,   11,   11,   11, 0x08,
+      72,   12,   11,   11, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_ImgnFolder[] = {
-    "ImgnFolder\0"
+    "ImgnFolder\0\0objectName\0pressed(std::string)\0"
+    "UpdateDirectory()\0Pressed()\0"
+    "Pressed(std::string)\0"
 };
 
 void ImgnFolder::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
-    Q_UNUSED(_o);
-    Q_UNUSED(_id);
-    Q_UNUSED(_c);
-    Q_UNUSED(_a);
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        Q_ASSERT(staticMetaObject.cast(_o));
+        ImgnFolder *_t = static_cast<ImgnFolder *>(_o);
+        switch (_id) {
+        case 0: _t->pressed((*reinterpret_cast< std::string(*)>(_a[1]))); break;
+        case 1: _t->UpdateDirectory(); break;
+        case 2: _t->Pressed(); break;
+        case 3: _t->Pressed((*reinterpret_cast< std::string(*)>(_a[1]))); break;
+        default: ;
+        }
+    }
 }
 
 const QMetaObjectExtraData ImgnFolder::staticMetaObjectExtraData = {
@@ -76,6 +93,18 @@ int ImgnFolder::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     _id = ImgnWidget::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        if (_id < 4)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 4;
+    }
     return _id;
+}
+
+// SIGNAL 0
+void ImgnFolder::pressed(std::string _t1)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_END_MOC_NAMESPACE

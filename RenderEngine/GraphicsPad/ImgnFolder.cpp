@@ -3,6 +3,8 @@
 #include "Qt\qpushbutton.h"
 #include "dirent.h"
 #include "Qt/qsizepolicy.h"
+#include "ImgnButton.h"
+#include "FolderButton.h"
 
 ImgnFolder::ImgnFolder(dirent * CurrentFolder, int FolderLevel, std::string fileLocation)
 {
@@ -21,52 +23,150 @@ ImgnFolder::~ImgnFolder()
 
 void ImgnFolder::Initialize()
 {
+	showingDirectory = 0;
+	hasChildren = 0;
+	curFolder = 0;
 	m_Layout = new QVBoxLayout;
+
 	m_Layout->setSpacing(0);
 	m_Layout->setContentsMargins(0, 0, 0, 0);
 	this->setLayout(m_Layout);
-	m_Layout->addWidget(folder = new QPushButton, 0, Qt::AlignTop);
-	setMaximumWidth(200);
-	sizePolicy().setHorizontalPolicy(QSizePolicy::Policy::Expanding);							\
-	sizePolicy().setVerticalPolicy(QSizePolicy::Policy::Minimum);
-	folder->setText(objectName());
 
-	setContentsMargins(folderLevel * 25, 0, 0, 0);
+	m_Layout->addWidget(folder = new FolderButton, 0, Qt::AlignTop);
+	folder->setObjectName(objectName());
+	folder->setText(objectName());
+	connect(folder, SIGNAL(DoubleClicked()), this, SLOT(UpdateDirectory()));
+	connect(folder, SIGNAL(pressed()), this, SLOT(Pressed()));
+
+	setMinimumWidth(250);
+	sizePolicy().setHorizontalPolicy(QSizePolicy::Policy::Expanding);							
+	sizePolicy().setVerticalPolicy(QSizePolicy::Policy::Minimum);
+
+	std::string str = std::to_string(folderLevel * 25 + 20) + ";}";
+	std::string menuIndicatorStyle = "QPushButton::menu-indicator { left: " + std::to_string(folderLevel * 25 + 5) + ";}";
+	folder->setStyleSheet(folder->styleSheet() + ("QPushButton { padding-left: " + str + menuIndicatorStyle).c_str());
+	
 }
 
-int ImgnFolder::isDirectory(const char *path) {
-	struct stat statbuf;
-	if (stat(path, &statbuf) != 0)
-		return 0;
-	return S_ISDIR(statbuf.st_mode);
+void ImgnFolder::UpdateDirectory()
+{
+	if (!showingDirectory)
+	{
+		ShowDirectory();
+		folder->SetCheckedMenu(true);
+	}
+	else
+	{
+		HideDirectory();
+		folder->SetCheckedMenu(false);
+	}
+	showingDirectory = !showingDirectory;
 }
 
 void ImgnFolder::ShowDirectory()
 {
-	curFolder = 0;
-	DIR *pDIR;
-	struct dirent *entry;
-	if (pDIR = opendir(location.c_str()))
+	
+	if (curFolder == 0)
 	{
-		while (entry = readdir(pDIR))
+		DIR *pDIR;
+		struct dirent *entry;
+		if (pDIR = opendir(location.c_str()))
 		{
-			if (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0)
+			while (entry = readdir(pDIR))
 			{
-				if (entry->d_type == DT_DIR)
+				if (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0)
 				{
-					AddFolder(entry);
+					if (entry->d_type == DT_DIR)
+					{
+						AddFolder(entry);
+					}
 				}
 			}
+			closedir(pDIR);
 		}
-		closedir(pDIR);
+		for (int i = 0; i < curFolder; ++i)
+		{
+			subFolders[i]->setVisible(true);
+		}
 	}
+	else
+	{
+		for (int i = 0; i < curFolder; ++i)
+		{
+			subFolders[i]->setVisible(true);
+		}
+	}
+}
+
+void ImgnFolder::Pressed()
+{
+	QObject* sender = QObject::sender();
+	std::string objectName = sender->objectName().toLocal8Bit().constData();
+	emit pressed(objectName);
+}
+
+void ImgnFolder::Pressed(std::string objectName)
+{
+	emit pressed(objectName);
+}
+
+void ImgnFolder::UnCheck(std::string objectName)
+{
+	folder->setChecked(false);
+	for (int i = 0; i < curFolder; ++i)
+	{
+		if (subFolders[i]->objectName() != objectName.c_str())
+		{
+			subFolders[i]->UnCheck(objectName);
+		}
+		else
+		{
+			subFolders[i]->ShowFolderData();
+			if (subFolders[i]->HasChildren())
+			{
+				subFolders[i]->UnCheck();
+			}
+		}
+	}
+}
+
+void ImgnFolder::UnCheck()
+{
+	for (int i = 0; i < curFolder; ++i)
+	{
+		subFolders[i]->GetFolder()->setChecked(false);
+		if (subFolders[i]->HasChildren())
+		{
+			subFolders[i]->UnCheck();
+		}
+	}
+}
+
+void ImgnFolder::HideDirectory()
+{
+	for (int i = 0; i < curFolder; ++i)
+	{
+		subFolders[i]->setVisible(false);
+	}
+}
+
+void ImgnFolder::ShowFolderData()
+{	
+
+}
+
+bool ImgnFolder::HasChildren()
+{
+	return hasChildren;
 }
 
 void ImgnFolder::AddFolder(struct dirent * entry)
 {
 	subFolders[curFolder] = new ImgnFolder(entry, folderLevel + 1 , location + "/" + entry->d_name);
+	connect(subFolders[curFolder], SIGNAL(pressed(std::string)), this, SLOT(Pressed(std::string)));
 	m_Layout->addWidget(subFolders[curFolder], 0, Qt::AlignLeft);
 
+	hasChildren = true;
 	curFolder++;
 }
 

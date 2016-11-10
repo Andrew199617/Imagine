@@ -125,14 +125,17 @@ bool EntityManager::UpdateSaveLoggerObjects()
 	int pastNumObjs = num_Objs;
 	num_Objs = saveLogger->GetNumObjs();
 
-	SpatialComponent* spatial = new SpatialComponent;
-	entitieMeshs[pastNumObjs] = new MeshComponent;
-
 	entities[pastNumObjs].SetName(saveLogger->GetName(pastNumObjs));
-	entities[pastNumObjs].AddComponent(entitieMeshs[pastNumObjs], "Mesh");
+
+	SpatialComponent* spatial = new SpatialComponent;
 	entities[pastNumObjs].AddComponent(spatial, "SpatialComponent");
 	saveLogger->SetComponent(pastNumObjs, 2, spatial);
+
+
+	entitieMeshs[pastNumObjs] = new MeshComponent;
+	entities[pastNumObjs].AddComponent(entitieMeshs[pastNumObjs], "Mesh");
 	entitieMeshs[pastNumObjs]->setTransformInfo();
+
 	if (!entities[pastNumObjs].Initialize())
 	{
 		string s = ": did not initialize";

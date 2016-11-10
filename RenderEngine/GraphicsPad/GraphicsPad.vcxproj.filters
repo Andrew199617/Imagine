@@ -321,6 +321,18 @@
     <ClCompile Include="ImgnFolder_moc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ImgnButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImgnButton_moc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FolderButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CBDirectory_moc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameTime.h">
@@ -609,6 +621,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ImgnWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImgnButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FolderButton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

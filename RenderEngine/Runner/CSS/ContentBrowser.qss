@@ -1,40 +1,37 @@
 QFrame {
 	border: 3px outset lightgray;
-	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(104,145,155), stop: 1 rgb(4,45,55)); 
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(204,245,255), stop: 1 rgb(154,195,205)); 
 }
 
 QPushButton:enabled { 
-	border: 2px solid white; 
-	background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(120,120,120), stop: 1 rgb(20,20,20)); 
-	border-radius:4px; 
-	padding: 2.5px;
+	border: 0px;
+	padding: 3.5px;
 }
 
-QPushButton:pressed { 
-	border: 3px solid white; 
+QPushButton:checked { 
+	/*border: 3px solid white; */
 	background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(100,100,100), stop: 1 rgb(0,0,0)); 
-	border-radius:6px; 
-	padding: 2.5px;
 }
 	
 QPushButton {
-	margin: 2px;
-	margin-left: 2px;
+	margin-left: 0px;
 	font-size: 12px;
+	text-align: left;
 	color: white;
-	subcontrol-position: 
-	bottom center;
 }
 	
-QPushButton::menu-indicator{ 
-	subcontrol-position: right center; 
+QPushButton::menu-indicator { 
+	subcontrol-position: left center; 
 	subcontrol-origin: padding; 
-	left: -5px;
+	left: 5 px;
+	top: 1px;
+	image: url(C:/Users/Andrew/Documents/Neumont/Imagine/StaticData/Images/Down_Arrow.png);
 }
 
 QFrame#Directory {
-	margin: 2px;
-	padding: 5px;
-	border: 2px solid black;
-	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(104,145,155), stop: 1 rgb(4,45,55)); 
+	margin: 0px;
+	padding: 0px;
+	padding-right: 0px;
+	border: 2px groove white;
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(54,95,105), stop: 1 rgb(4,45,55)); 
 }
