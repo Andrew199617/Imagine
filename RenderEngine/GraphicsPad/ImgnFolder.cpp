@@ -5,6 +5,7 @@
 #include "Qt/qsizepolicy.h"
 #include "ImgnButton.h"
 #include "FolderButton.h"
+#include "CBFolderData.h"
 
 ImgnFolder::ImgnFolder(dirent * CurrentFolder, int FolderLevel, std::string fileLocation)
 {
@@ -16,6 +17,14 @@ ImgnFolder::ImgnFolder(dirent * CurrentFolder, int FolderLevel, std::string file
 }
 
 
+ImgnFolder::ImgnFolder(std::string name, std::string fileLocation)
+{
+	location = fileLocation;
+	folderLevel = 0;
+	setObjectName(name.c_str());
+	Initialize();
+}
+
 ImgnFolder::~ImgnFolder()
 {
 
@@ -23,6 +32,7 @@ ImgnFolder::~ImgnFolder()
 
 void ImgnFolder::Initialize()
 {
+	showingFolderData = 0;
 	showingDirectory = 0;
 	hasChildren = 0;
 	curFolder = 0;
@@ -38,7 +48,7 @@ void ImgnFolder::Initialize()
 	connect(folder, SIGNAL(DoubleClicked()), this, SLOT(UpdateDirectory()));
 	connect(folder, SIGNAL(pressed()), this, SLOT(Pressed()));
 
-	setMinimumWidth(250);
+	setMinimumWidth(300);
 	sizePolicy().setHorizontalPolicy(QSizePolicy::Policy::Expanding);							
 	sizePolicy().setVerticalPolicy(QSizePolicy::Policy::Minimum);
 
@@ -84,10 +94,10 @@ void ImgnFolder::ShowDirectory()
 			}
 			closedir(pDIR);
 		}
-		for (int i = 0; i < curFolder; ++i)
+		/*for (int i = 0; i < curFolder; ++i)
 		{
 			subFolders[i]->setVisible(true);
-		}
+		}*/
 	}
 	else
 	{
@@ -110,18 +120,18 @@ void ImgnFolder::Pressed(std::string objectName)
 	emit pressed(objectName);
 }
 
-void ImgnFolder::UnCheck(std::string objectName)
+void ImgnFolder::UnCheck(std::string objectName, CBFolderData* FolderData)
 {
 	folder->setChecked(false);
 	for (int i = 0; i < curFolder; ++i)
 	{
 		if (subFolders[i]->objectName() != objectName.c_str())
 		{
-			subFolders[i]->UnCheck(objectName);
+			subFolders[i]->UnCheck(objectName, FolderData);
 		}
 		else
 		{
-			subFolders[i]->ShowFolderData();
+			subFolders[i]->ShowFolderData(FolderData);
 			if (subFolders[i]->HasChildren())
 			{
 				subFolders[i]->UnCheck();
@@ -150,9 +160,25 @@ void ImgnFolder::HideDirectory()
 	}
 }
 
-void ImgnFolder::ShowFolderData()
+void ImgnFolder::ShowFolderData(CBFolderData* FolderData)
 {	
-
+	if (!showingFolderData)
+	{
+		DIR *pDIR;
+		struct dirent *entry;
+		if (pDIR = opendir(location.c_str()))
+		{
+			while (entry = readdir(pDIR))
+			{
+				if (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0)
+				{
+					FolderData->AddFile(entry);
+				}
+			}
+			closedir(pDIR);
+		}
+	}
+	showingFolderData = true;
 }
 
 bool ImgnFolder::HasChildren()
@@ -164,7 +190,7 @@ void ImgnFolder::AddFolder(struct dirent * entry)
 {
 	subFolders[curFolder] = new ImgnFolder(entry, folderLevel + 1 , location + "/" + entry->d_name);
 	connect(subFolders[curFolder], SIGNAL(pressed(std::string)), this, SLOT(Pressed(std::string)));
-	m_Layout->addWidget(subFolders[curFolder], 0, Qt::AlignLeft);
+	m_Layout->addWidget(subFolders[curFolder], 0, Qt::AlignTop);
 
 	hasChildren = true;
 	curFolder++;

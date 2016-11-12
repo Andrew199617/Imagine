@@ -1,7 +1,8 @@
 #pragma once
 #include "ImgnFrame.h"
-class QVBoxLayout;
+class QBoxLayout;
 class ImgnFolder;
+class CBFolderData;
 
 namespace Imgn
 {
@@ -19,21 +20,20 @@ public:
 	CBDirectory();
 	~CBDirectory();
 
-	QVBoxLayout* GetLayout() const { return m_Layout; }
+	QBoxLayout* GetLayout() const { return m_Layout; }
+	void SetCBFolderData(CBFolderData* FolderData);
 protected:
 	virtual void Initialize() override;
-
-	void GetDirectory();
-	void AddFolder(struct dirent * entry);
+	void AddFolder();
 
 private slots:
 	void ShowFolderData(std::string objectName);
 
 private:
 	std::string location;
-	QVBoxLayout* m_Layout;
-	ImgnFolder* folders[Imgn::MAX_FOLDERS];
-	int curFolder;
+	QBoxLayout* m_Layout;
+	ImgnFolder* folder;
+	CBFolderData* folderData;
 
 };
 

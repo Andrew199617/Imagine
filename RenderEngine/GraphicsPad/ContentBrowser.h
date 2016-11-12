@@ -4,14 +4,7 @@ class QVBoxLayout;
 class QHBoxLayout;
 class ImgnFolder;
 class CBDirectory;
-
-namespace Imgn
-{
-	enum
-	{
-		MAX_FILES_COLUMN = 6,
-	};
-}
+class CBFolderData;
 
 class ContentBrowser :
 	public ImgnFrame
@@ -25,8 +18,7 @@ protected:
 private:
 	QHBoxLayout* m_Layout;
 	CBDirectory* directory;
-	QVBoxLayout* filesHolder;
-	QHBoxLayout* files[Imgn::MAX_FILES_COLUMN];
+	CBFolderData* folderData;
 
 	std::string fileLocation;
 

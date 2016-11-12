@@ -92,6 +92,9 @@
     <ClCompile Include="ArrivalComponent.cpp" />
     <ClCompile Include="CBDirectory.cpp" />
     <ClCompile Include="CBDirectory_moc.cpp" />
+    <ClCompile Include="CBFile.cpp" />
+    <ClCompile Include="CBFilesButton.cpp" />
+    <ClCompile Include="CBFolderData.cpp" />
     <ClCompile Include="CollisionDetection\BoxCollider.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="CollisionDetection\ImgnCollider.cpp" />
@@ -182,6 +185,9 @@
     <ClInclude Include="Area.h" />
     <ClInclude Include="ArrivalComponent.h" />
     <ClInclude Include="CBDirectory.h" />
+    <ClInclude Include="CBFile.h" />
+    <ClInclude Include="CBFilesButton.h" />
+    <ClInclude Include="CBFolderData.h" />
     <ClInclude Include="CollisionDetection\BoxCollider.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="CollisionDetection\ImgnCollider.h" />

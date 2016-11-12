@@ -3,10 +3,13 @@
 
 
 
-FolderButton::FolderButton()
+FolderButton::FolderButton(bool hasMenu)
 {
 	setCheckable(true);
-	setMenu(menu = new QMenu);
+	if (hasMenu)
+	{
+		setMenu(menu = new QMenu);
+	}
 }
 
 
@@ -38,9 +41,4 @@ void FolderButton::mousePressEvent(QMouseEvent *qme)
 	setFocus();
 	setChecked(true);
 	emit pressed();
-}
-
-void FolderButton::mouseDoubleClickEvent(QMouseEvent *qme)
-{
-	ImgnButton::mouseDoubleClickEvent(qme);
 }

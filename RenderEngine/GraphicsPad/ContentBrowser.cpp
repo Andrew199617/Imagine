@@ -6,6 +6,7 @@
 #include "Qt\qboxlayout.h"
 #include "Qt\qpushbutton.h"
 #include "CBDirectory.h"
+#include "CBFolderData.h"
 
 
 ContentBrowser::ContentBrowser() : ImgnFrame()
@@ -26,10 +27,9 @@ void ContentBrowser::Initialize()
 	m_Layout->setContentsMargins(0, 0, 0, 0);
 	directory = new CBDirectory("../../StaticData");
 	m_Layout->addWidget(directory,1);
-	
-	m_Layout->addLayout(filesHolder = new QVBoxLayout, 5);
+	m_Layout->addWidget(folderData = new CBFolderData, 5);
+	directory->SetCBFolderData(folderData);
 	setLayout(m_Layout);
 
 	SetQssFile("\\CSS\\ContentBrowser.qss");
-	//GetData();
 }

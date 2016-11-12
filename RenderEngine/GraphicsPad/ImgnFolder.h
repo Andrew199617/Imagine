@@ -1,6 +1,7 @@
 #pragma once
 #include "ImgnWidget.h"
 #include "CBDirectory.h"
+class CBFolderData;
 class FolderButton;
 class QVBoxLayout;
 class QMenu;
@@ -10,15 +11,16 @@ class ImgnFolder : public ImgnWidget
 {
 	Q_OBJECT
 public:
+	ImgnFolder(std::string name, std::string fileLocation = "../../StaticData");
 	ImgnFolder(dirent * CurrentFolder, int FolderLevel, std::string fileLocation = "../../StaticData");
 	~ImgnFolder();
 
 	FolderButton* GetFolder() const { return folder; }
-	//If you don't want to check a specific child
-	void UnCheck(std::string objectName);
-	//if you don't want to uncheck this folder but want to uncheck its children.
+	//Used to find child folder that was pressed.
+	void UnCheck(std::string objectName, CBFolderData* FolderData);
+	//This folder was pressed but needs to uncheck all its children.
 	void UnCheck();
-	void ShowFolderData();
+	void ShowFolderData(CBFolderData* FolderData);
 	int GetFolderLevel() const { return folderLevel; }
 	bool HasChildren();
 protected:
@@ -52,5 +54,6 @@ private:
 	bool showingDirectory;
 	bool hasChildren;
 
+	bool showingFolderData;
 };
 

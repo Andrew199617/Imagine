@@ -2,16 +2,18 @@
 1. Config file loaded
 2. Imgn::Entity Manager Initialized
 3. Original Game initialized
-4. No value found for key: AIWorld.imgnasset
-5. No value found for key: AIWorldVertexShader
-6. No value found for key: AIWorldFragmentShader
-7. No value found for key: Cube.imgnasset
-8. No value found for key: CubeTexture
-9. No value found for key: CubeVertexShader
-10. No value found for key: CubeFragmentShader
-11. No value found for key: CubeBumpMap
-12. No value found for key: Sphere.imgnasset
-13. No value found for key: SphereTexture
-14. No value found for key: SphereVertexShader
-15. No value found for key: SphereFragmentShader
-16. No value found for key: SphereBumpMap
+4. No value found for key: Plane.imgnasset
+5. No value found for key: PlaneTexture
+6. No value found for key: PlaneVertexShader
+7. No value found for key: PlaneFragmentShader
+8. No value found for key: PlaneBumpMap
+9. No value found for key: Cube.imgnasset
+10. No value found for key: CubeTexture
+11. No value found for key: CubeVertexShader
+12. No value found for key: CubeFragmentShader
+13. No value found for key: CubeBumpMap
+14. No value found for key: Sphere.imgnasset
+15. No value found for key: SphereTexture
+16. No value found for key: SphereVertexShader
+17. No value found for key: SphereFragmentShader
+18. No value found for key: SphereBumpMap

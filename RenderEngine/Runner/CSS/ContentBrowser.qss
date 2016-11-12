@@ -35,3 +35,38 @@ QFrame#Directory {
 	border: 2px groove white;
 	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(54,95,105), stop: 1 rgb(4,45,55)); 
 }
+
+QFrame#FolderData {
+	margin: 0px;
+	padding: 0px;
+	padding-left: 55px;
+	border: 2px groove white;
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(54,95,105), stop: 1 rgb(4,45,55)); 
+}
+
+QPushButton#FilesButton:enabled { 
+	border: 0px;
+	padding: 0px;
+	background: transparent;
+}
+
+QPushButton#FilesButton {
+	margin-left: 0px;
+	font-size: 12px;
+	text-align: top center;
+	color: black;
+}
+
+QPushButton#FilesButton:checked {
+	border: 2px groove black;
+	padding: 1.5px;
+	padding-left: 0px;
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(54,95,105), stop: 1 rgb(4,45,55)); 
+}
+
+QLabel{
+	border: 0px;
+	background: transparent;
+	color: white;
+	text-align: center;
+}

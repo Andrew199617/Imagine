@@ -232,16 +232,13 @@ ImgnComponent ** EntityManager::GetComponents(int objNum)
 	Imgn::DisplayData* displayData;
 	int iVar = 0;
 
-	if (name == "AIWorld")
+	if (name == "Grid")
 	{																		
 	components = new ImgnComponent*[3];
 		components[numComponents] = new BoxCollider();
 		displayData = components[numComponents]->GetDisplayData();
 		if (displayData)
 		{
-			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)0;
-			iVar = 1; glm::detail::tvec3<float>* val1 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val1 = glm::vec3(0.000000,-0.100000,0.000000);
-			iVar = 2; glm::detail::tvec3<float>* val2 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val2 = glm::vec3(333.000000,0.200000,280.000000);
 		}
 		numComponents++;
 	}
@@ -299,7 +296,7 @@ ImgnComponent ** EntityManager::GetComponents(int objNum)
 		{
 			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)0;
 			iVar = 1; glm::detail::tvec3<float>* val1 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val1 = glm::vec3(0.000000,0.000000,0.000000);
-			iVar = 2; float* val2 = reinterpret_cast<float*>(displayData->values[iVar]); *val2 = (float)1.000000;
+			iVar = 2; float* val2 = reinterpret_cast<float*>(displayData->values[iVar]); *val2 = (float)1.100000;
 		}
 		numComponents++;
 	}
