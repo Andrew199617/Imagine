@@ -162,12 +162,11 @@ void ImgnMainWindow::AddObjectDetails()
 
 void ImgnMainWindow::AddHierarchy()
 {
-	hierarchyLayout = new Hierarchy;
+	hierarchyLayout = Hierarchy::Instance();
 	mainLayout->addWidget(hierarchyLayout, 1, 1,2,1);
 	hierarchyLayout->sizePolicy().setHorizontalPolicy(QSizePolicy::Policy::Maximum);
 	hierarchyLayout->setMinimumWidth(250);
 	hierarchyLayout->setMaximumWidth(320);
-	hierarchyLayout->SetHidden(true);
 }
 
 void ImgnMainWindow::AddContentBrowser()
@@ -181,7 +180,7 @@ void ImgnMainWindow::mousePressEvent(QMouseEvent *)
 	DetailsLayout::Instance()->ClearFocus();
 
 	//DELETE
-	contentBrowser->ResetQssFile();
+	hierarchyLayout->ResetQssFile();
 
 	if (focusWidget() != meGlWindow && focusWidget() != playButton)
 	{

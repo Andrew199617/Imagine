@@ -17,6 +17,7 @@ public:
 	void setUpFragmentVertexShader();
 	void makeShaderInfo(int vertexFormat, string objname);
 	void setTransformInfo();
+	void setTransformInfo(glm::vec3,glm::vec3,glm::quat);
 	void setRenderInfo(string objname);
 	void setNodeRenderInfo(string objname, float radius);
 	void setRenderInfo_Line(glm::vec3 point1, glm::vec3 point2);
@@ -36,5 +37,9 @@ public:
 	// Inherited via ImgnComponent
 	virtual void ClearFocus() override;
 	virtual void SetHidden(bool) override;
+
+	virtual void Disable(bool enabled = false) override;
+	virtual void Enable(bool enabled = true) override;
+
 };
 

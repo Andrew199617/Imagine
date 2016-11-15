@@ -155,6 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CSS\ContentBrowser.qss" />
+    <None Include="CSS\Hierarchy.qss" />
     <None Include="CSS\ImgnToolBar.qss" />
     <None Include="CSS\QMenu.qss" />
   </ItemGroup>

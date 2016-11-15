@@ -8,6 +8,10 @@ QPushButton:enabled {
 	padding: 3.5px;
 }
 
+QPushButton:hover { 
+	background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgba(200,200,200,100), stop: 1 rgba(100,100,100,100)); 
+}
+
 QPushButton:checked { 
 	/*border: 3px solid white; */
 	background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(100,100,100), stop: 1 rgb(0,0,0)); 
@@ -41,13 +45,17 @@ QFrame#FolderData {
 	padding: 0px;
 	padding-left: 55px;
 	border: 2px groove white;
-	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(54,95,105), stop: 1 rgb(4,45,55)); 
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(204,245,255), stop: 1 rgb(154,195,205)); 
 }
 
 QPushButton#FilesButton:enabled { 
 	border: 0px;
 	padding: 0px;
 	background: transparent;
+}
+
+QPushButton#FilesButton:hover { 
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(154,195,205), stop: 1 rgb(104,145,155));
 }
 
 QPushButton#FilesButton {
@@ -67,6 +75,6 @@ QPushButton#FilesButton:checked {
 QLabel{
 	border: 0px;
 	background: transparent;
-	color: white;
+	color: black;
 	text-align: center;
 }

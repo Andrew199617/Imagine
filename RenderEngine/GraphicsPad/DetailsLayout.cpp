@@ -104,6 +104,7 @@ void DetailsLayout::SetEntity(Imgn::Entity* entity)
 	}
 
 	currentEntity = entity;
+	//AddEntityData(entity);
 	components = currentEntity->GetComponents();
 	numComponents = currentEntity->GetNumComponents();
 	
@@ -146,7 +147,10 @@ void DetailsLayout::AddComponent(char*, ImgnComponent* widget,int)
 	}
 }
 
-
+void DetailsLayout::AddEntityData(Imgn::Entity* entity)
+{
+	
+}
 
 void DetailsLayout::CreateActions()
 {

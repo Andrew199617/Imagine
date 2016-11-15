@@ -37,6 +37,21 @@ void CBFilesButton::Initialize()
 			pixmap.load("../EngineData/Icons/ImgnAsset.png");
 			icon.addPixmap(pixmap);
 		}
+		else if (fileType == "png")
+		{
+			pixmap.load("../EngineData/Icons/Image.png");
+			icon.addPixmap(pixmap);
+		}
+		else if (fileType == "bmp")
+		{
+			pixmap.load("../EngineData/Icons/Image.png");
+			icon.addPixmap(pixmap);
+		}
+		else
+		{
+			pixmap.load("../EngineData/Icons/Txt.png");
+			icon.addPixmap(pixmap);
+		}
 	}
 	else
 	{

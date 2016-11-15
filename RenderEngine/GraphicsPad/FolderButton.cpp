@@ -34,7 +34,6 @@ void FolderButton::SetCheckedMenu(bool checked)
 	}
 }
 
-
 void FolderButton::mousePressEvent(QMouseEvent *qme)
 {
 	QWidget::mousePressEvent(qme);

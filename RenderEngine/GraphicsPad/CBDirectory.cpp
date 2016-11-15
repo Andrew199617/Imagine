@@ -46,14 +46,14 @@ void CBDirectory::ShowFolderData(std::string objectName)
 {
 	if (folder->objectName() != objectName.c_str())
 	{
-		folder->UnCheck(objectName,folderData);
+		folder->UnCheck(objectName, folderData);
 	}
 	else
 	{
-		folder->ShowFolderData(folderData);
-		if (folder->HasChildren())
+		folder->UnCheckChildren(folderData);
+		if (!folder->GetShowingFolderData())
 		{
-			folder->UnCheck();
+			folder->UpdateFolderData(folderData);
 		}
 	}
 }

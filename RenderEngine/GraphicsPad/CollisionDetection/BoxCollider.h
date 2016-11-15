@@ -6,7 +6,7 @@ class BoxCollider : public ImgnCollider
 	IMGN_GENERATE(BoxCollider)
 	IMGN_PROPERTY(isTrigger, false)
 	IMGN_PROPERTY(center, glm::vec3())
-	IMGN_PROPERTY_DEFAULT(size)
+	IMGN_PROPERTY(size,glm::vec3(1,1,1))
 	IMGN_END(BoxCollider)
 private:
 	bool Initialize() override;

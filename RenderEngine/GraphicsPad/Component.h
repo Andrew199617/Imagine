@@ -14,8 +14,8 @@ public:
 	virtual bool Initialize() { return true; }
 	virtual void Update(float dt) { dt; }
 	virtual bool Draw() { return true; }
-	void Enable(bool enabled = true) { m_enabled = enabled; }
-	void Disable(bool enabled = false) { m_enabled = enabled; }
+	virtual void Enable(bool enabled = true) { m_enabled = enabled; }
+	virtual void Disable(bool enabled = false) { m_enabled = enabled; }
 	bool IsEnabled() const { return m_enabled; }
 	bool IsDisabled() const { return !m_enabled; }
 	bool IsSaved() const { return saved; }

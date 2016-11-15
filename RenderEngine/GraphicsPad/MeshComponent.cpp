@@ -77,6 +77,11 @@ void MeshComponent::setTransformInfo()
 	}
 }
 
+void MeshComponent::setTransformInfo(glm::vec3 position, glm::vec3 scale, glm::quat rotation)
+{
+	renderinfo.setTransfromInfo(new TransformInfo(position, scale, rotation));
+}
+
 void MeshComponent::setRenderInfo(string objname)
 {
 	renderinfo.setGeometry(ShapeGenerator::readScene(objname));
@@ -111,7 +116,6 @@ void MeshComponent::setRenderInfo_Line(glm::vec3 point1, glm::vec3 point2)
 
 void MeshComponent::Update(float)
 {
-	//renderinfo.getTransformInfo()->m_translateTransform = glm::translate(GetSiblingComponent<SpatialComponent>()->GetPosition());
 }
 
 void MeshComponent::ClearFocus()
@@ -120,4 +124,14 @@ void MeshComponent::ClearFocus()
 
 void MeshComponent::SetHidden(bool)
 {
+}
+
+void MeshComponent::Disable(bool enabled /*= false*/)
+{
+	renderinfo.isEnabled = enabled;
+}
+
+void MeshComponent::Enable(bool enabled /*= true*/)
+{
+	renderinfo.isEnabled = enabled;
 }

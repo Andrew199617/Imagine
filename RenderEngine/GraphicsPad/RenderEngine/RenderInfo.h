@@ -39,6 +39,7 @@ public:
 	RenderInfo* Next() const { return next; }
 	void Next(RenderInfo* val) { next = val; }
 	bool isEnabled;
+	glm::vec3 color;
 private:
 	Geometry* m_mesh = 0;
 	TransformInfo* m_transformInfo = 0;

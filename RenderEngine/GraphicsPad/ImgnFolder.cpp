@@ -7,6 +7,8 @@
 #include "FolderButton.h"
 #include "CBFolderData.h"
 
+ImgnFolder* ImgnFolder::curFolderData = 0;
+
 ImgnFolder::ImgnFolder(dirent * CurrentFolder, int FolderLevel, std::string fileLocation)
 {
 	folderLevel = FolderLevel;
@@ -94,10 +96,6 @@ void ImgnFolder::ShowDirectory()
 			}
 			closedir(pDIR);
 		}
-		/*for (int i = 0; i < curFolder; ++i)
-		{
-			subFolders[i]->setVisible(true);
-		}*/
 	}
 	else
 	{
@@ -107,6 +105,7 @@ void ImgnFolder::ShowDirectory()
 		}
 	}
 }
+
 
 void ImgnFolder::Pressed()
 {
@@ -122,7 +121,12 @@ void ImgnFolder::Pressed(std::string objectName)
 
 void ImgnFolder::UnCheck(std::string objectName, CBFolderData* FolderData)
 {
-	folder->setChecked(false);
+	if (folder->isChecked())
+	{
+		folder->setChecked(false);
+		UpdateFolderData(FolderData);
+	}
+	int folderDataToShow = -1;
 	for (int i = 0; i < curFolder; ++i)
 	{
 		if (subFolders[i]->objectName() != objectName.c_str())
@@ -131,24 +135,34 @@ void ImgnFolder::UnCheck(std::string objectName, CBFolderData* FolderData)
 		}
 		else
 		{
-			subFolders[i]->ShowFolderData(FolderData);
-			if (subFolders[i]->HasChildren())
-			{
-				subFolders[i]->UnCheck();
-			}
+			folderDataToShow = i;
+		}
+	}
+	if (folderDataToShow != -1)
+	{
+		
+		subFolders[folderDataToShow]->UnCheckChildren(FolderData);
+		if (!subFolders[folderDataToShow]->showingFolderData)
+		{
+			subFolders[folderDataToShow]->UpdateFolderData(FolderData);
 		}
 	}
 }
 
-void ImgnFolder::UnCheck()
+void ImgnFolder::UnCheckChildren(CBFolderData* FolderData)
 {
+	if (!HasChildren())
+	{
+		return;
+	}
 	for (int i = 0; i < curFolder; ++i)
 	{
-		subFolders[i]->GetFolder()->setChecked(false);
-		if (subFolders[i]->HasChildren())
+		if (subFolders[i]->GetFolder()->isChecked())
 		{
-			subFolders[i]->UnCheck();
+			subFolders[i]->GetFolder()->setChecked(false);
+			subFolders[i]->UpdateFolderData(FolderData);
 		}
+		subFolders[i]->UnCheckChildren(FolderData);
 	}
 }
 
@@ -160,10 +174,15 @@ void ImgnFolder::HideDirectory()
 	}
 }
 
-void ImgnFolder::ShowFolderData(CBFolderData* FolderData)
+void ImgnFolder::UpdateFolderData(CBFolderData* FolderData)
 {	
 	if (!showingFolderData)
 	{
+		if (FolderData->CurFile() != 0)
+		{
+			curFolderData = this;
+			return;
+		}
 		DIR *pDIR;
 		struct dirent *entry;
 		if (pDIR = opendir(location.c_str()))
@@ -177,8 +196,18 @@ void ImgnFolder::ShowFolderData(CBFolderData* FolderData)
 			}
 			closedir(pDIR);
 		}
+		showingFolderData = true;
+		curFolderData = 0;
 	}
-	showingFolderData = true;
+	else if(!folder->isChecked())
+	{
+		FolderData->DeleteData();
+		if (curFolderData)
+		{
+			curFolderData->UpdateFolderData(FolderData);
+		}
+		showingFolderData = false;
+	}
 }
 
 bool ImgnFolder::HasChildren()

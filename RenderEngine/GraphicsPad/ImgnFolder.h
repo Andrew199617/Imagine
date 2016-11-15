@@ -19,10 +19,11 @@ public:
 	//Used to find child folder that was pressed.
 	void UnCheck(std::string objectName, CBFolderData* FolderData);
 	//This folder was pressed but needs to uncheck all its children.
-	void UnCheck();
-	void ShowFolderData(CBFolderData* FolderData);
+	void UnCheckChildren(CBFolderData* FolderData);
+	void UpdateFolderData(CBFolderData* FolderData);
 	int GetFolderLevel() const { return folderLevel; }
 	bool HasChildren();
+	bool GetShowingFolderData() const { return showingFolderData; }
 protected:
 	void Initialize();
 signals:
@@ -49,6 +50,7 @@ private:
 	QMenu* folderMenu;
 	ImgnFolder* subFolders[Imgn::MAX_FOLDERS];
 
+	static ImgnFolder* curFolderData;
 	dirent* currentFolder;
 	int curFolder;
 	bool showingDirectory;

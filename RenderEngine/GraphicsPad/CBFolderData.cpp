@@ -16,27 +16,48 @@ CBFolderData::~CBFolderData()
 
 void CBFolderData::AddFile(struct dirent * Entry)
 {
-	static int i = 0;
-	if (curFile == Imgn::MAX_FILES_ROW * i)
+	if (curFile == Imgn::MAX_FILES_ROW * numLayouts)
 	{
-		filesHolder->addLayout(filesLayout[i] = new QHBoxLayout, 0);
+		filesLayoutHolder->addLayout(filesLayout[numLayouts] = new QHBoxLayout, 0);
+		filesLayout[numLayouts]->setSpacing(0);
+		filesLayout[numLayouts]->setContentsMargins(0, 0, 0, 0);
+		numLayouts++;
 	}
-	filesLayout[i]->addWidget(files[curFile] = new CBFile(Entry), 0, Qt::AlignLeft);
+	filesLayout[numLayouts-1]->addWidget(files[curFile] = new CBFile(Entry), 0, Qt::AlignLeft);
 	curFile++;
-	
+}
+
+int CBFolderData::CurFile()
+{
+	return curFile;
 }
 
 void CBFolderData::Initialize()
 {
+	numLayouts = 0;
 	curFile = 0;
-	filesHolder = new QVBoxLayout;
-	filesHolder->setSpacing(0);
-	filesHolder->setContentsMargins(0, 5, 0, 5);
+	filesLayoutHolder = new QVBoxLayout;
+	filesLayoutHolder->setSpacing(0);
+	filesLayoutHolder->setContentsMargins(0, 0, 0, 0);
 	
-	setLayout(filesHolder);
+	setLayout(filesLayoutHolder);
 
 	sizePolicy().setHorizontalPolicy(QSizePolicy::Expanding);
 	sizePolicy().setVerticalPolicy(QSizePolicy::Expanding);
 	setObjectName("FolderData");
-	filesHolder->setObjectName("FolderData");
+	filesLayoutHolder->setObjectName("FolderData");
+}
+
+void CBFolderData::DeleteData()
+{
+	for (int i = 0; i < numLayouts;++i)
+	{
+		for (int j = i * Imgn::MAX_FILES_ROW; j < curFile && j < (i+1) * Imgn::MAX_FILES_ROW; ++j)
+		{
+			filesLayout[i]->removeWidget(files[j]);
+			delete files[j];
+		}
+	}
+	numLayouts = 0;
+	curFile = 0;
 }

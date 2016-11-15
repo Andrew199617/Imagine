@@ -135,6 +135,7 @@ void RenderInfo::SendUniformData(float, bool isPlaying)
 	glUniformMatrix4fv(m_vertexShaderInfo->uModelViewMatrixUL, 1, GL_FALSE, &ModelViewMatrix[0][0]);
 	glUniformMatrix4fv(m_vertexShaderInfo->uProjectionMatrixUL, 1, GL_FALSE, &mat[0][0]);
 
+	glUniform3fv(m_vertexShaderInfo->uObjectColor, 1, &color[0]);
 	glUniform1fv(m_vertexShaderInfo->uMaxUL, 1, &VertexShaderInfo::uMax);
 	glUniform1fv(m_vertexShaderInfo->uMinUL, 1, &VertexShaderInfo::uMin);
 	glUniform1i(m_vertexShaderInfo->uIsBumpedUL, m_textureInfo->IsBumped());

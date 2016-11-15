@@ -39,6 +39,10 @@ void BoxCollider::Update(float dt)
 			for (int jCurCollider = 0; (jCurCollider < collisionData->numSameComponents[iCurComponent] && jCurCollider != GetComponentTypeNum()); ++jCurCollider)
 			{
 				BoxCollider* collider = reinterpret_cast<BoxCollider*>(collisionData->components[iCurComponent][jCurCollider]);
+				if (collider->IsDisabled())
+				{
+					continue;
+				}
 				SpatialComponent* colliderSpatial = collider->GetSiblingComponent<SpatialComponent>();
 
 				glm::vec3 colliderCenter = collider->center + colliderSpatial->GetPosition();
@@ -70,6 +74,10 @@ void BoxCollider::Update(float dt)
 			for (int jCurCollider = 0; (jCurCollider < collisionData->numSameComponents[iCurComponent] && jCurCollider != GetComponentTypeNum()); ++jCurCollider)
 			{
 				SphereCollider* sphere = reinterpret_cast<SphereCollider*>(collisionData->components[iCurComponent][jCurCollider]);
+				if (sphere->IsDisabled())
+				{
+					continue;
+				}
 				SpatialComponent* sphereSpatial = sphere->GetSiblingComponent<SpatialComponent>();
 
 				glm::vec3 sphereCenter = sphere->GetCenter() + sphereSpatial->GetPosition();

@@ -4,8 +4,6 @@
 #include "CBFilesButton.h"
 #include "dirent.h"
 
-
-
 CBFile::CBFile()
 {
 }
@@ -28,10 +26,10 @@ void CBFile::Initialize()
 
 	m_layout->addWidget(button = new CBFilesButton(entry),5, Qt::AlignCenter);
 
-	m_layout->addWidget(fileName = new QLabel, 1, Qt::AlignBottom);
+	m_layout->addWidget(fileName = new QLabel, 1, Qt::AlignBottom | Qt::AlignHCenter);
 	fileName->setText(name.c_str());
 
 	this->setObjectName("File");
 
-	fileName->sizePolicy().setHorizontalPolicy(QSizePolicy::Expanding);
+	this->setFixedHeight(90);
 }

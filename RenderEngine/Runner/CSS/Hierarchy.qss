@@ -1,0 +1,49 @@
+QFrame#Hierarchy 
+{ 
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: .5, stop: 0 rgb(224,255,255), stop: .5 rgb(214,250,255));
+	background: qlineargradient(x1: 0, y1: .5, x2: 0, y2: 1, stop: .5 rgb(204, 245, 255), stop: 1 rgb(194, 240, 255)); 
+} 
+
+QPushButton#HierarchyButton:enabled { 
+	border: 0px;
+	padding: 8px;
+	background: transparent;
+}
+
+QPushButton#HierarchyButton:hover { 
+	border: 0px;
+	padding: 8px;
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(204,245,255), stop: 1 rgb(154,195,205)); 
+}
+
+QPushButton#HierarchyButton {
+	margin-left: 0px;
+	font-size: 14px;
+	text-align: center;
+	color: black;
+}
+
+QPushButton#HierarchyButton:checked {
+	border: 0px groove white;
+	padding: 8px;
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(104,145,155), stop: 1 rgb(54,95,105)); 
+	color: white;
+}
+
+QPushButton#VisibleButton:enabled { 
+	border: 0px;
+	padding: 0px;
+	border-image: url(../EngineData/Icons/ClosedEye.png);
+}
+
+QPushButton#VisibleButton:hover {
+	border: 0px;
+	padding: 0px;
+	background: rgba(255,255,255,100);
+}
+
+QPushButton#VisibleButton:checked {
+	border: 0px;
+	padding: 0px;
+	border-image: url(../EngineData/Icons/OpenEye.png);
+}

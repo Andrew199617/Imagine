@@ -1,15 +1,15 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'Hierarchy.h'
+** Meta object code from reading C++ file 'HierarchyButton.h'
 **
-** Created: Sun Nov 13 18:54:54 2016
+** Created: Sun Nov 13 21:36:53 2016
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.2)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "Hierarchy.h"
+#include "HierarchyButton.h"
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'Hierarchy.h' doesn't include <QObject>."
+#error "The header file 'HierarchyButton.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 63
 #error "This file was generated using the moc from 4.8.2. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -17,7 +17,7 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-static const qtuint qt_meta_data_Hierarchy[] = {
+static const qtuint qt_meta_data_HierarchyButton[] = {
 
  // content:
        6,       // revision
@@ -31,57 +31,57 @@ static const qtuint qt_meta_data_Hierarchy[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      11,   10,   10,   10, 0x08,
+      17,   16,   16,   16, 0x08,
 
        0        // eod
 };
 
-static const char qt_meta_stringdata_Hierarchy[] = {
-    "Hierarchy\0\0OnObjectPressed()\0"
+static const char qt_meta_stringdata_HierarchyButton[] = {
+    "HierarchyButton\0\0ViewablePressed()\0"
 };
 
-void Hierarchy::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void HierarchyButton::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
         Q_ASSERT(staticMetaObject.cast(_o));
-        Hierarchy *_t = static_cast<Hierarchy *>(_o);
+        HierarchyButton *_t = static_cast<HierarchyButton *>(_o);
         switch (_id) {
-        case 0: _t->OnObjectPressed(); break;
+        case 0: _t->ViewablePressed(); break;
         default: ;
         }
     }
     Q_UNUSED(_a);
 }
 
-const QMetaObjectExtraData Hierarchy::staticMetaObjectExtraData = {
+const QMetaObjectExtraData HierarchyButton::staticMetaObjectExtraData = {
     0,  qt_static_metacall 
 };
 
-const QMetaObject Hierarchy::staticMetaObject = {
-    { &ImgnFrame::staticMetaObject, qt_meta_stringdata_Hierarchy,
-      qt_meta_data_Hierarchy, &staticMetaObjectExtraData }
+const QMetaObject HierarchyButton::staticMetaObject = {
+    { &ImgnButton::staticMetaObject, qt_meta_stringdata_HierarchyButton,
+      qt_meta_data_HierarchyButton, &staticMetaObjectExtraData }
 };
 
 #ifdef Q_NO_DATA_RELOCATION
-const QMetaObject &Hierarchy::getStaticMetaObject() { return staticMetaObject; }
+const QMetaObject &HierarchyButton::getStaticMetaObject() { return staticMetaObject; }
 #endif //Q_NO_DATA_RELOCATION
 
-const QMetaObject *Hierarchy::metaObject() const
+const QMetaObject *HierarchyButton::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
 }
 
-void *Hierarchy::qt_metacast(const char *_clname)
+void *HierarchyButton::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_Hierarchy))
-        return static_cast<void*>(const_cast< Hierarchy*>(this));
-    return ImgnFrame::qt_metacast(_clname);
+    if (!strcmp(_clname, qt_meta_stringdata_HierarchyButton))
+        return static_cast<void*>(const_cast< HierarchyButton*>(this));
+    return ImgnButton::qt_metacast(_clname);
 }
 
-int Hierarchy::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int HierarchyButton::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = ImgnFrame::qt_metacall(_c, _id, _a);
+    _id = ImgnButton::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {

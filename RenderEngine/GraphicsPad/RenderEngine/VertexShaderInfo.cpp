@@ -144,6 +144,7 @@ void VertexShaderInfo::installShader(GLuint fragmentShaderID)
 	frequencyUniformLocation = glGetUniformLocation(programID, "uR");
 	uDUniformLocation = glGetUniformLocation(programID, "uD");
 
+	uObjectColor = glGetUniformLocation(programID, "objectColor");
 	uMaxUL = glGetUniformLocation(programID, "uMax");
 	uMinUL = glGetUniformLocation(programID, "uMin");
 	uIsBumpedUL = glGetUniformLocation(programID, "isBumped");

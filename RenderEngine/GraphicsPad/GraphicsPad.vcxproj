@@ -109,6 +109,8 @@
     <ClCompile Include="FleeBehaviorComponent.cpp" />
     <ClCompile Include="FlockingComponent.cpp" />
     <ClCompile Include="FolderButton.cpp" />
+    <ClCompile Include="HierarchyButton.cpp" />
+    <ClCompile Include="HierarchyButton_moc.cpp" />
     <ClCompile Include="ImgnButton.cpp" />
     <ClCompile Include="GameLogger.cpp" />
     <ClCompile Include="GravityComponent.cpp" />
@@ -130,6 +132,7 @@
     <ClCompile Include="ImgnToolBar_moc.cpp" />
     <ClCompile Include="ImgnWidget.cpp" />
     <ClCompile Include="KeyboardComponent.cpp" />
+    <ClCompile Include="ObjTransformerEntity.cpp" />
     <ClCompile Include="Physics\Matrix4.cpp" />
     <ClCompile Include="Physics\Matrix3.cpp" />
     <ClCompile Include="MeGLWindow_moc.cpp" />
@@ -204,6 +207,7 @@
     <ClInclude Include="FleeBehaviorComponent.h" />
     <ClInclude Include="FlockingComponent.h" />
     <ClInclude Include="FolderButton.h" />
+    <ClInclude Include="HierarchyButton.h" />
     <ClInclude Include="ImgnButton.h" />
     <ClInclude Include="GameLogger.h" />
     <ClInclude Include="GravityComponent.h" />
@@ -222,6 +226,7 @@
     <ClInclude Include="ImgnToolBar.h" />
     <ClInclude Include="ImgnWidget.h" />
     <ClInclude Include="KeyboardComponent.h" />
+    <ClInclude Include="ObjTransformerEntity.h" />
     <ClInclude Include="Physics\Matrix4.h" />
     <ClInclude Include="Physics\Matrix3.h" />
     <ClInclude Include="MeshComponent.h" />

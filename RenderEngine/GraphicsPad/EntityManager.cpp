@@ -16,6 +16,7 @@
 #include "MovementComponent.h"
 #include "RenderEngine\RenderEngine.h"
 #include "Physics\PhysicsTypeDefs.hpp"
+#include "Hierarchy.h"
 
 EntityManager::EntityManager()
 {
@@ -31,6 +32,13 @@ EntityManager::~EntityManager()
 	delete objController;
 }
 
+void EntityManager::SetCurrentlySelectedObject(int ObjSelected)
+{
+	currentlySelectedObject = ObjSelected;
+	DetailsLayout::Instance()->SetEntity(&entities[ObjSelected]);
+	Hierarchy::Instance()->SetEntity(entities[ObjSelected].GetName());
+}
+
 bool EntityManager::Initialize()
 {
 	saveLogger = SaveLogger::Instance();
@@ -43,6 +51,13 @@ bool EntityManager::Initialize()
 	player.AddComponent(playerMove = new MovementComponent, "PlayerMovementComponent");
 	player.AddComponent(objController = new ObjectSelectorComponent, "PlayerShootingComponent");
 	if (!player.Initialize())
+	{
+		string s = ": did not initialize";
+		GameLogger::log(player.GetName() + s);
+		return false;
+	}
+
+	if (!objectTransformer.Initialize())
 	{
 		string s = ": did not initialize";
 		GameLogger::log(player.GetName() + s);
@@ -203,6 +218,7 @@ void EntityManager::ProcessMousePress(QMouseEvent * e)
 void EntityManager::SendDataToOpenGL()
 {
 	TransformInfo::WorldToViewMatrix = playerCamera->getWorldToViewMatrix();
+	objectTransformer.SendDataToOpenGl();
 	for (int i = 0; i < num_Objs; i++)
 	{
 		entitieMeshs[i]->setRenderInfo(saveLogger->GetSceneName(i));
@@ -239,6 +255,9 @@ ImgnComponent ** EntityManager::GetComponents(int objNum)
 		displayData = components[numComponents]->GetDisplayData();
 		if (displayData)
 		{
+			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)0;
+			iVar = 1; glm::detail::tvec3<float>* val1 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val1 = glm::vec3(0.000000,-0.100000,0.000000);
+			iVar = 2; glm::detail::tvec3<float>* val2 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val2 = glm::vec3(10.000000,0.200000,10.000000);
 		}
 		numComponents++;
 	}

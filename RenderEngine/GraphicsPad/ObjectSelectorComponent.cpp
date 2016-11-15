@@ -52,11 +52,9 @@ void ObjectSelectorComponent::ProcessMousePress(QMouseEvent * e,EntityManager* e
 		GetVerts(e);
 		if (objSelected != -1)
 		{
-			if (entityManager->currentlySelectedObject != objSelected)
+			if (entityManager->CurrentlySelectedObject() != objSelected)
 			{
-				entityManager->currentlySelectedObject = objSelected;
-				//entityManager->entitieSpatials[objSelected].SetTextBoxValues();
-				DetailsLayout::Instance()->SetEntity(&entityManager->entities[objSelected]);
+				entityManager->SetCurrentlySelectedObject(objSelected);
 			}
 			objSelected = -1;
 			objSelectedMinT = FLT_MAX;

@@ -2,6 +2,7 @@
 #include "Entity.h"
 #include "ImgnFwd.hpp"
 #include "SpatialComponent.h"
+#include "ObjTransformerEntity.h"
 class NoiseGenerator;
 class NodeMap;
 class QMouseEvent;
@@ -15,6 +16,8 @@ public:
 	EntityManager();
 	~EntityManager();
 
+	int CurrentlySelectedObject() const { return currentlySelectedObject; }
+	void SetCurrentlySelectedObject(int ObjSelected);
 public:
 	bool Initialize();
 	bool InitializeSaveLoggerObjects();
@@ -41,6 +44,8 @@ public:
 	MeshComponent* entitieMeshs[MAX_OBJS];
 	ImgnComponent** entitieComponents[MAX_OBJS];
 	int numComponent[MAX_OBJS];
+
+private:
 	int currentlySelectedObject;
 
 private:
@@ -49,15 +54,16 @@ private:
 	/************************************************************************/
 	ImgnComponent** GetComponents(int objNum);
 	SaveLogger* saveLogger;
+
 	Imgn::Entity player;
 	CameraComponent* playerCamera;
 	KeyboardComponent* playerKeyboard;
 	MovementComponent* playerMove;
 	MouseComponent* playerMouse;
 	SpatialComponent* playerSpatial;
-	GravityComponent* playerGravity;
-	ShootingComponent* playerShoot;
 	ObjectSelectorComponent* objController;
+
+	ObjTransformerEntity objectTransformer;
 
 };
 

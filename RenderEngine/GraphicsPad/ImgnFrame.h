@@ -11,7 +11,7 @@ public:
 	~ImgnFrame() {}
 	void ResetQssFile()
 	{
-		SetQssFile("\\CSS\\ContentBrowser.qss");
+		SetQssFile("\\CSS\\Hierarchy.qss");
 	}
 protected:
 	virtual void mousePressEvent(QMouseEvent* qm)

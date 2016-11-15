@@ -23,7 +23,7 @@ namespace Imgn
 	{
 		for (int i = 0; i < MAX_COMPONENTS_PERENTITY; i++)
 		{
-			if (m_components[i] && m_components[i]->isEnabled())
+			if (m_components[i] && m_components[i]->IsEnabled())
 			{
 				m_components[i]->Update(dt);
 			}
@@ -102,6 +102,28 @@ namespace Imgn
 			}
 		}
 		return added;
+	}
+
+	void Entity::Disable()
+	{
+		for (int i = 0; i < MAX_COMPONENTS_PERENTITY; ++i)
+		{
+			if (m_components[i])
+			{
+				m_components[i]->Disable();
+			}
+		}
+	}
+
+	void Entity::Enable()
+	{
+		for (int i = 0; i < MAX_COMPONENTS_PERENTITY; ++i)
+		{
+			if (m_components[i])
+			{
+				m_components[i]->Enable();
+			}
+		}
 	}
 
 	bool Entity::Initialize()

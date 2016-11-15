@@ -37,7 +37,8 @@ public:
 
 	static float uR;
 	static float uD;
-	
+
+	GLuint uObjectColor;
 	GLint uDUniformLocation;
 	GLint uMinUL, uMaxUL;
 	GLint uTexCoordOffsetUL;

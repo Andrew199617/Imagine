@@ -22,8 +22,10 @@ namespace Imgn
 		bool AddComponent(ImgnComponent* c, string name, string componentName);
 		bool AddComponent(void* c, string name);
 		template <class T> T* GetComponentByType() const;
+		void Disable();
+		void Enable();
 
-		bool Initialize();
+		virtual bool Initialize();
 		void Collided(Entity* entity);
 
 		inline ImgnComponent** GetComponents() { return m_components; }
