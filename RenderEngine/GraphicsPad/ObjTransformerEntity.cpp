@@ -34,6 +34,7 @@ bool ObjTransformerEntity::Initialize()
 void ObjTransformerEntity::SendDataToOpenGl()
 {
 	xMesh->renderinfo.setGeometry(ShapeGenerator::readScene("Arrow"));
+	xMesh->renderinfo.getGeometry()->VertexFormat = HasPosition;
 	xMesh->vertexShaderInfo = VertexShaderInfo();
 	xMesh->fragmentShaderInfo = FragmentShaderInfo("..\\Graphicspad\\Shader\\ctFragmentShaderCode.glsl");
 	xMesh->setUpFragmentVertexShader();
@@ -45,6 +46,7 @@ void ObjTransformerEntity::SendDataToOpenGl()
 	xMesh->setTransformInfo(position + (glm::vec3(5, 0, 0) * scale), scale, glm::quat(rotateInRadians));
 
 	yMesh->renderinfo.setGeometry(ShapeGenerator::readScene("Arrow"));
+	yMesh->renderinfo.getGeometry()->VertexFormat = HasPosition;
 	yMesh->vertexShaderInfo = VertexShaderInfo();
 	yMesh->fragmentShaderInfo = FragmentShaderInfo("..\\Graphicspad\\Shader\\ctFragmentShaderCode.glsl");
 	yMesh->setUpFragmentVertexShader();

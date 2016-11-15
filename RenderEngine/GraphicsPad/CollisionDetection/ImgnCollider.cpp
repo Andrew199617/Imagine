@@ -19,6 +19,8 @@ void ImgnCollider::DisplayCollider(std::string objName)
 	{
 		renderInfo = new RenderInfo();
 		renderInfo->setGeometry(ShapeGenerator::readScene(objName));
+		renderInfo->getGeometry()->VertexFormat = 5;
+		renderInfo->color = glm::vec3(1, 1, 1);
 		SpatialComponent* spatial = GetSiblingComponent<SpatialComponent>();
 		if (spatial)
 		{

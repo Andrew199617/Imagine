@@ -63,48 +63,40 @@ void RenderInfo::Draw(float dt, bool isPlaying)
 void RenderInfo::SendAttributeData()
 {
 	
-	int VERTEX_BYTE_SIZE;
+	int VERTEX_BYTE_SIZE = m_mesh->m_vertexStride;
 	switch (m_mesh->VertexFormat)
 	{
 	case PositionOnly:
-		VERTEX_BYTE_SIZE = sizeof(vPosition);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (void*)(m_mesh->m_vertexByteOffset));
 		break;
 	case PositionColor:
-		VERTEX_BYTE_SIZE = sizeof(vPositionColor);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (void*)(m_mesh->m_vertexByteOffset));
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (void*)(m_mesh->m_vertexByteOffset + sizeof(float) * 3));
 		break;
 	case PositionColorNormal:
-		VERTEX_BYTE_SIZE = sizeof(vPositionColorNormal);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (void*)(m_mesh->m_vertexByteOffset));
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (void*)(m_mesh->m_vertexByteOffset + sizeof(float) * 3));
 		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (void*)(m_mesh->m_vertexByteOffset + sizeof(float) * 6));
 		break;
 	case PositionColorTexture:
-		VERTEX_BYTE_SIZE = sizeof(vPositionColorTexture);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (void*)(m_mesh->m_vertexByteOffset));
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (void*)(m_mesh->m_vertexByteOffset + sizeof(float) * 3));
 		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (void*)(m_mesh->m_vertexByteOffset + sizeof(float) * 6));
 		break;
 	case PositionTexture:
-		VERTEX_BYTE_SIZE = sizeof(vPositionTexture);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (void*)(m_mesh->m_vertexByteOffset));
 		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (void*)(m_mesh->m_vertexByteOffset + sizeof(float) * 3));
 		break;
 	case PositionNormal:
-		VERTEX_BYTE_SIZE = sizeof(vPositionNormal);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (void*)(m_mesh->m_vertexByteOffset));
 		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (void*)(m_mesh->m_vertexByteOffset + sizeof(float) * 3));
 		break;
 	case PositionTextureNormal:
-		VERTEX_BYTE_SIZE = sizeof(vPositionTextureNormal);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (void*)(m_mesh->m_vertexByteOffset));
 		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (void*)(m_mesh->m_vertexByteOffset + sizeof(float) * 3));
 		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (void*)(m_mesh->m_vertexByteOffset + sizeof(float) * 5));
 		break;
 	case PositionColorTextureNormal:
-		VERTEX_BYTE_SIZE = sizeof(vPositionColorTextureNormal);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (void*)(m_mesh->m_vertexByteOffset));
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (void*)(m_mesh->m_vertexByteOffset + sizeof(float) * 3));
 		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (void*)(m_mesh->m_vertexByteOffset + sizeof(float) * 6));

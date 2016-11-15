@@ -5,6 +5,8 @@ layout(location = 0) out vec3 daColor;
 in vec3 theVertexColor;
 in vec2 UV;
 
+uniform vec3 objectColor;
+
 float density = .3f;
 float frequency = 50.0f;
  
@@ -14,5 +16,5 @@ void main()
 	float tf = UV.t * frequency;
 	if( fract( sf ) >= density && fract( tf ) >= density )
 	discard;
-	daColor = theVertexColor.rgb;	
+	daColor = objectColor.rgb;	
 };

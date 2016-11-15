@@ -1,0 +1,28 @@
+0. Save Logger file loaded
+1. Config file loaded
+2. Imgn::Entity Manager Initialized
+3. Original Game initialized
+4. No value found for key: Arrow.imgnasset
+5. No value found for key: ArrowTexture
+6. No value found for key: 0BumpMap
+7. No value found for key: Arrow.imgnasset
+8. No value found for key: ArrowTexture
+9. No value found for key: 0BumpMap
+10. No value found for key: Arrow.imgnasset
+11. No value found for key: ArrowTexture
+12. No value found for key: 0BumpMap
+13. No value found for key: Plane.imgnasset
+14. No value found for key: PlaneTexture
+15. No value found for key: PlaneVertexShader
+16. No value found for key: PlaneFragmentShader
+17. No value found for key: PlaneBumpMap
+18. No value found for key: Cube.imgnasset
+19. No value found for key: CubeTexture
+20. No value found for key: CubeVertexShader
+21. No value found for key: CubeFragmentShader
+22. No value found for key: CubeBumpMap
+23. No value found for key: Sphere.imgnasset
+24. No value found for key: SphereTexture
+25. No value found for key: SphereVertexShader
+26. No value found for key: SphereFragmentShader
+27. No value found for key: SphereBumpMap

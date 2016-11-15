@@ -9,6 +9,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include "ObjectSelectorComponent.h"
 
 using glm::mat4;
 
@@ -34,6 +35,7 @@ EntityManager ImgnViewport::entityManager;
 void ImgnViewport::SetWidth(int Width)
 {
 	m_Width = Width; 
+	ObjectSelectorComponent::screenWidth = m_Width;
 	if(frameBuffer)
 		delete frameBuffer; 
 	frameBuffer = new FrameBuffer; 
@@ -42,7 +44,8 @@ void ImgnViewport::SetWidth(int Width)
 
 void ImgnViewport::SetHeight(int Height)
 {
-	m_Height = Height; 
+	m_Height = Height;
+	ObjectSelectorComponent::screenHeight = m_Height;
 	if (frameBuffer)
 		delete frameBuffer; 
 	frameBuffer = new FrameBuffer; 

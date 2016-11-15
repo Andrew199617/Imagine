@@ -31,6 +31,8 @@ public:
 		this->meshes = m_Meshes;
 	}
 
+	static float screenWidth;
+	static float screenHeight;
 private:
 	CollisionTester collisionTester;
 	CollisionInfo* info;

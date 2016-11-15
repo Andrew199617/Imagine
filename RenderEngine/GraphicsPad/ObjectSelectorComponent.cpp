@@ -6,6 +6,9 @@
 #include <QtGui\qmouseevent>
 #include "Vertex.h"
 #include "CameraComponent.h"
+#include "Physics\Vector3.h"
+#include "gtc\matrix_transform.hpp"
+#include "gtx\transform.hpp"
 #define Q 81
 #define W 87
 #define R 82
@@ -179,14 +182,38 @@ void ObjectSelectorComponent::GetVerts(QMouseEvent * e)
 	}
 }
 
-bool ObjectSelectorComponent::CastRayFromMousePosition(QMouseEvent *, glm::vec3 pos0, glm::vec3 pos1, glm::vec3 pos2)
+bool ObjectSelectorComponent::CastRayFromMousePosition(QMouseEvent * qme, glm::vec3 pos0, glm::vec3 pos1, glm::vec3 pos2)
 {
 	CameraComponent* camera = GetSiblingComponent<CameraComponent>();
 	SpatialComponent* spatial = GetSiblingComponent<SpatialComponent>();
-	glm::vec3 Direction = camera->viewDirection;
-	glm::vec3 Position = spatial->GetPosition();
+	Imgn::Vector3 Direction = camera->viewDirection;
+	Imgn::Vector3 Position = spatial->GetPosition();
 
-	float tempMinT = CollisionTester::rayTriangleIntersect(Position, Direction, pos0, pos1, pos2, info->minT);
+	float x = qme->pos().x();
+	float y = 0 - (qme->pos().y() - screenHeight);
+	x = x / screenWidth * 2 - 1.0f;
+	y = y / screenHeight * 2 - 1.0f;
+
+	Imgn::Vector3 screenHoritzontally = glm::cross(Direction, glm::vec3(0,1,0));
+	screenHoritzontally.normalize();
+	Imgn::Vector3 screenVertically = glm::cross(screenHoritzontally, Direction);
+	screenVertically.normalize();
+
+	//should only be called when screen changes.
+	float fov = 90;
+	float nearClippingPlane = 1.0f;
+	float radians = (float)(fov * R_PI / 180.0f);
+	float halfHeight = (float)(tan(radians / 2) * nearClippingPlane);
+	float halfScaledAspectRatio = halfHeight * (screenWidth/screenHeight);
+
+	screenVertically *= halfHeight;
+	screenHoritzontally *= halfScaledAspectRatio;
+
+	Imgn::Vector3 pos = Position + Direction;
+	pos += (screenVertically*y + screenHoritzontally*x);
+	Imgn::Vector3 dir = pos - Position;
+
+	float tempMinT = CollisionTester::rayTriangleIntersect(Position, dir, pos0, pos1, pos2, info->minT);
 	if (tempMinT < info->minT)
 	{
 		info->minT = tempMinT;
@@ -198,4 +225,7 @@ bool ObjectSelectorComponent::CastRayFromMousePosition(QMouseEvent *, glm::vec3 
 
 	return false;
 }
+
+float ObjectSelectorComponent::screenWidth = 0;
+float ObjectSelectorComponent::screenHeight = 0;
 
