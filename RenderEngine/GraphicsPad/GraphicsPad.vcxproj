@@ -132,6 +132,7 @@
     <ClCompile Include="ImgnToolBar_moc.cpp" />
     <ClCompile Include="ImgnWidget.cpp" />
     <ClCompile Include="KeyboardComponent.cpp" />
+    <ClCompile Include="MeshComponent_moc.cpp" />
     <ClCompile Include="ObjTransformerEntity.cpp" />
     <ClCompile Include="Physics\Matrix4.cpp" />
     <ClCompile Include="Physics\Matrix3.cpp" />

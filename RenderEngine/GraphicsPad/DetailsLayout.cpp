@@ -17,6 +17,9 @@
 #include "CollisionDetection\SphereCollider.h"
 typedef void* (*ADDCOMPONENTS)(string*);
 
+using std::cout;
+using std::endl;
+
 DetailsLayout* DetailsLayout::detailsLayout = 0;
 
 DetailsLayout::DetailsLayout()

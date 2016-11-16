@@ -36,10 +36,10 @@ void ObjTransformerEntity::SendDataToOpenGl()
 {
 	xMesh->renderinfo.setGeometry(ShapeGenerator::readScene("Arrow"));
 	xMesh->renderinfo.getGeometry()->VertexFormat = HasPosition;
-	xMesh->vertexShaderInfo = VertexShaderInfo();
-	xMesh->fragmentShaderInfo = FragmentShaderInfo("..\\Graphicspad\\Shader\\ctFragmentShaderCode.glsl");
+	xMesh->vertexShaderInfo = new VertexShaderInfo();
+	xMesh->fragmentShaderInfo = new FragmentShaderInfo("..\\Graphicspad\\Shader\\ctFragmentShaderCode.glsl");
 	xMesh->setUpFragmentVertexShader();
-	xMesh->renderinfo.setVertexShaderInfo(&xMesh->vertexShaderInfo);
+	xMesh->renderinfo.setVertexShaderInfo(xMesh->vertexShaderInfo);
 	xMesh->renderinfo.setTextureInfo(new TextureInfo());
 	xMesh->renderinfo.color = glm::vec3(1, 0, 0);
 	
@@ -48,20 +48,20 @@ void ObjTransformerEntity::SendDataToOpenGl()
 
 	yMesh->renderinfo.setGeometry(ShapeGenerator::readScene("Arrow"));
 	yMesh->renderinfo.getGeometry()->VertexFormat = HasPosition;
-	yMesh->vertexShaderInfo = VertexShaderInfo();
-	yMesh->fragmentShaderInfo = FragmentShaderInfo("..\\Graphicspad\\Shader\\ctFragmentShaderCode.glsl");
+	yMesh->vertexShaderInfo = new VertexShaderInfo();
+	yMesh->fragmentShaderInfo = new FragmentShaderInfo("..\\Graphicspad\\Shader\\ctFragmentShaderCode.glsl");
 	yMesh->setUpFragmentVertexShader();
-	yMesh->renderinfo.setVertexShaderInfo(&xMesh->vertexShaderInfo);
+	yMesh->renderinfo.setVertexShaderInfo(xMesh->vertexShaderInfo);
 	yMesh->renderinfo.setTextureInfo(new TextureInfo());
 	yMesh->renderinfo.color = glm::vec3(0, 1, 0);
 	yMesh->setTransformInfo(position + (glm::vec3(0, 5, 0) * scale), scale, glm::quat(glm::vec3()));
 
 	zMesh->renderinfo.setGeometry(ShapeGenerator::readScene("Arrow"));
 	zMesh->renderinfo.getGeometry()->VertexFormat = HasPosition;
-	zMesh->vertexShaderInfo = VertexShaderInfo();
-	zMesh->fragmentShaderInfo = FragmentShaderInfo("..\\Graphicspad\\Shader\\ctFragmentShaderCode.glsl");
+	zMesh->vertexShaderInfo = new VertexShaderInfo();
+	zMesh->fragmentShaderInfo = new FragmentShaderInfo("..\\Graphicspad\\Shader\\ctFragmentShaderCode.glsl");
 	zMesh->setUpFragmentVertexShader();
-	zMesh->renderinfo.setVertexShaderInfo(&xMesh->vertexShaderInfo);
+	zMesh->renderinfo.setVertexShaderInfo(xMesh->vertexShaderInfo);
 	zMesh->renderinfo.setTextureInfo(new TextureInfo());
 	zMesh->renderinfo.color = glm::vec3(0, 0, 1);
 

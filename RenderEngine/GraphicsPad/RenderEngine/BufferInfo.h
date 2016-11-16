@@ -19,7 +19,6 @@ public:
 	int VertexFormat;
 	void push(RenderInfo*);
 	void remove(RenderInfo*);
-	const void pop();
 	bool isEmpty() const
 	{
 		return (top == 0);

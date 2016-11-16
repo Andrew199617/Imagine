@@ -10,6 +10,7 @@
 
 class MeshComponent : public ImgnComponent
 {
+	Q_OBJECT
 public:
 	MeshComponent();
 	~MeshComponent();
@@ -28,8 +29,8 @@ public:
 	}
 
 	RenderInfo renderinfo;
-	FragmentShaderInfo fragmentShaderInfo;
-	VertexShaderInfo vertexShaderInfo;
+	FragmentShaderInfo* fragmentShaderInfo = 0;
+	VertexShaderInfo* vertexShaderInfo = 0;
 	string vertexShaderLocation;
 	string fragmentShaderLocation;
 
@@ -42,12 +43,12 @@ public:
 
 
 	virtual void CreateWidgets() override;
-
-
 	virtual void DeleteWidgets() override;
 
 protected:
 	virtual bool Initialize() override;
 
+private slots:
+	void UpdateTextureInfo();
 };
 

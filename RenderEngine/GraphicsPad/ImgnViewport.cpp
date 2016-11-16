@@ -35,7 +35,7 @@ EntityManager ImgnViewport::entityManager;
 void ImgnViewport::SetWidth(int Width)
 {
 	m_Width = Width; 
-	ObjectSelectorComponent::screenWidth = m_Width;
+	ObjectSelectorComponent::screenWidth = (float)m_Width;
 	if(frameBuffer)
 		delete frameBuffer; 
 	frameBuffer = new FrameBuffer; 
@@ -45,7 +45,7 @@ void ImgnViewport::SetWidth(int Width)
 void ImgnViewport::SetHeight(int Height)
 {
 	m_Height = Height;
-	ObjectSelectorComponent::screenHeight = m_Height;
+	ObjectSelectorComponent::screenHeight = (float)m_Height;
 	if (frameBuffer)
 		delete frameBuffer; 
 	frameBuffer = new FrameBuffer; 

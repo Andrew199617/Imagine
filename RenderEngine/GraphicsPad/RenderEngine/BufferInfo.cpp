@@ -12,9 +12,6 @@ BufferInfo::BufferInfo()
 
 BufferInfo::~BufferInfo()
 {
-	while (!isEmpty()){
-		pop();
-	}
 }
 
 bool BufferInfo::HasRoomForVertices(unsigned totalBytes)
@@ -60,16 +57,5 @@ void BufferInfo::remove(RenderInfo * info)
 			delete tempTop;
 			break;
 		}
-	}
-}
-
-const void BufferInfo::pop()
-{
-	if (top)
-	{
-		RenderInfo* nextTop = top->Next();
-		
-		//delete top;
-		top = nextTop;
 	}
 }

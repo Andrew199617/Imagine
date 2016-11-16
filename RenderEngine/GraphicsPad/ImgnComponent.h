@@ -80,6 +80,9 @@ protected:
 	Imgn::Entity* m_owner;
 	bool isHidden;
 
+	//holds the data that will be displayed in the editor
+	QHBoxLayout* properties[Imgn::MAX_VARIABLES];
+	QLabel* propertyNames[Imgn::MAX_VARIABLES];
 private:
 	void DisplayInEngine();
 	void AddVec3(int i);
@@ -93,11 +96,4 @@ private:
 
 	int componentType;
 	int componentTypeNum;
-
-	//holds the data that will be displayed in the editor
-	QHBoxLayout* properties[Imgn::MAX_VARIABLES];
-	QLabel* propertyNames[Imgn::MAX_VARIABLES];
-	int numProp;
-
-	
 };

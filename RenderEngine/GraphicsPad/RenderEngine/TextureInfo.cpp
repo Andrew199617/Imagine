@@ -4,13 +4,13 @@
 #include "VertexShaderInfo.h"
 #include "..\GameLogger.h"
 
-TextureInfo::TextureInfo(string FileLocation, string objName)
+TextureInfo::TextureInfo(string TexLocation, string objName)
 {
 	InitializeValues();
 
-	if (FileLocation != "0")
+	if (TexLocation != "0")
 	{
-		loadBMP_customFile(FileLocation);
+		loadBMP_customFile(TexLocation);
 		textured = true;
 	}
 	string bumpPath = ConfigReader::Instance()->findValueForKey(objName + "BumpMap");
@@ -23,8 +23,9 @@ TextureInfo::TextureInfo(string FileLocation, string objName)
 
 void TextureInfo::InitializeValues()
 {
-	bumped = false;
-	textured = false;
+	bumped = false;	textured = false;
+	texPath = ""; bumpPath = "";
+
 	static int texLocS = 0;
 	static int bumpLocS = 1;
 	texLoc = texLocS;
@@ -38,7 +39,7 @@ TextureInfo::~TextureInfo()
 
 void TextureInfo::loadBMP_customFile(string texpath)
 {
-	
+	texPath = texpath;
 	const char* imagepath = texpath.c_str();
 #pragma warning(push)
 #pragma warning (disable:4996)
@@ -76,8 +77,9 @@ void TextureInfo::loadBMP_customFile(string texpath)
 	fclose(file);
 }
 
-void TextureInfo::loadBMP_customFileBumpMap(string bumpPath)
+void TextureInfo::loadBMP_customFileBumpMap(string bumppath)
 {
+	bumpPath = bumppath;
 	const char* imagepath = bumpPath.c_str();
 #pragma warning(push)
 #pragma warning (disable:4996)

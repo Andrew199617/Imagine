@@ -199,6 +199,9 @@ void ImgnMainWindow::closeEvent(QCloseEvent * ce)
 	{
 		ce->ignore();
 	}
+	ce->accept();
+	QMainWindow::closeEvent(ce);
+	exit(0);
 }
 
 void ImgnMainWindow::WindowsShowEvent()
