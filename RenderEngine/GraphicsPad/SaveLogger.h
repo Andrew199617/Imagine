@@ -44,7 +44,8 @@ public:
 	void AddComponentData(int ObjNum, string ComponentName, Imgn::DisplayData* DisplayData);
 	string GetComponentName(int objNum, int componentNum);
 
-	glm::vec3 GetComponentData(int curEntity, int CurComponent, int CurDataNum);
+	glm::vec3 GetSpatialData(int curEntity, int CurDataNum);
+	string GetMeshData(int curEntity, int CurDataNum);
 	glm::vec3 GetVec3FromString(string vec);
 private:
 	void LoadEntityData(string &word);
@@ -63,7 +64,7 @@ private:
 	string currentFilename;
 	bool autoSave;
 
-	string entities[Imgn::MAX_ENTITIES * Imgn::MAXENTITYDATA][5];
+	string entities[Imgn::MAX_ENTITIES * Imgn::MAXENTITYDATA][2];
 	string componentNames[Imgn::MAX_ENTITIES][Imgn::MAX_COMPONENTS_PERENTITY + 1];
 	ImgnComponent* components[Imgn::MAX_ENTITIES][Imgn::MAX_COMPONENTS_PERENTITY + 1];
 	string componentsData[Imgn::MAX_ENTITIES][Imgn::MAX_COMPONENTS_PERENTITY + 1][Imgn::MAX_VARIABLES];

@@ -7,10 +7,6 @@
 #include "Qt\qpushbutton.h"
 #include "OpenFileDialog.h"
 
-MeshComponent::MeshComponent() : ImgnComponent()
-{
-}
-
 MeshComponent::~MeshComponent()
 {
 	if (fragmentShaderInfo)
@@ -95,7 +91,14 @@ void MeshComponent::setRenderInfo(string objname)
 	makeShaderInfo(renderinfo.getGeometry()->VertexFormat, objname);
 	setUpFragmentVertexShader();
 	renderinfo.setVertexShaderInfo(vertexShaderInfo);
-	renderinfo.setTextureInfo(new TextureInfo(renderinfo.getGeometry()->texturePath,objname));
+	if (texPath == "")
+	{
+		renderinfo.setTextureInfo(new TextureInfo(renderinfo.getGeometry()->texturePath, objname));
+	}
+	else
+	{
+		renderinfo.setTextureInfo(new TextureInfo(texPath, objname));
+	}
 	renderinfo.getTextureInfo()->SendData();
 }
 
@@ -193,6 +196,8 @@ void MeshComponent::UpdateTextureInfo()
 	OpenFileDialog openFileDialog;
 	string str = openFileDialog.GetFile();
 
+	texPath = str.c_str();
 	renderinfo.getTextureInfo()->loadBMP_customFile(str);
 	renderinfo.getTextureInfo()->SendData();
+	SetSaved(false);
 }

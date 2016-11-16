@@ -445,7 +445,7 @@ void SaveLogger::AddComponentData(int ObjNum, string ComponentName, Imgn::Displa
 	}
 	int numComponents = std::stoi(componentNames[ObjNum][0]);
 	int j = 0;
-	for (int i = 2; i < numComponents+1; ++i)
+	for (int i = 1; i < numComponents+1; ++i)
 	{
 		if (componentNames[ObjNum][i] == ComponentName)
 		{
@@ -463,10 +463,10 @@ void SaveLogger::AddComponentData(int ObjNum, string ComponentName, Imgn::Displa
 		else SETCOMPONENTDATA(short)
 		else SETCOMPONENTDATA(unsigned int)
 		else SETCOMPONENTDATA(bool)
-		else if (name == typeid(char**).name())
+		else if (name == typeid(string*).name())
 		{
-			char** c = reinterpret_cast<char**>(DisplayData->values[iVar]);
-			componentsData[ObjNum][j][iVar] = string(*c);
+			string* c = reinterpret_cast<string*>(DisplayData->values[iVar]);
+			componentsData[ObjNum][j][iVar] = *c;
 		}
 		else if (name == typeid(glm::vec3*).name())
 		{
@@ -483,9 +483,14 @@ string SaveLogger::GetComponentName(int objNum, int componentNum)
 	return componentNames[objNum][componentNum];
 }
 
-glm::vec3 SaveLogger::GetComponentData(int curEntity, int CurComponent, int CurDataNum)
+glm::vec3 SaveLogger::GetSpatialData(int curEntity, int CurDataNum)
 {
-	return glm::vec3(GetVec3FromString(componentsData[curEntity][CurComponent][CurDataNum]));
+	return glm::vec3(GetVec3FromString(componentsData[curEntity][2][CurDataNum]));
+}
+
+string SaveLogger::GetMeshData(int curEntity, int CurDataNum)
+{
+	return componentsData[curEntity][1][CurDataNum];
 }
 
 glm::vec3 SaveLogger::GetVec3FromString(string vec)

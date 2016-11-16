@@ -151,8 +151,9 @@ namespace Imgn {
 		int currentComponent;
 		int numSameComponent[MAX_COMPONENTCLASS];
 	private:
-		DisplayData* datas[MAX_COMPONENTCLASS][MAX_SAME_COMPONENT];
 		static ImgnProperties* props;
+		DisplayData* datas[MAX_COMPONENTCLASS][MAX_SAME_COMPONENT];
+
 		ImgnComponent* components[MAX_COMPONENTCLASS][MAX_SAME_COMPONENT];
 		std::string componentNames[MAX_COMPONENTCLASS];
 		int numComponents;

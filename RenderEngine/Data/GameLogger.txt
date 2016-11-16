@@ -32,3 +32,8 @@
 31. No value found for key: PollCueVertexShader
 32. No value found for key: PollCueFragmentShader
 33. No value found for key: PollCueBumpMap
+34. No value found for key: PollCue.imgnasset
+35. No value found for key: PollCueTexture
+36. No value found for key: PollCueVertexShader
+37. No value found for key: PollCueFragmentShader
+38. No value found for key: PollCueBumpMap

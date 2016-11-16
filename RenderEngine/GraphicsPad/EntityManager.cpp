@@ -97,14 +97,16 @@ bool EntityManager::InitializeSaveLoggerObjects()
 		entities[i].SetName(saveLogger->GetName(i));
 
 		SpatialComponent* spatial = new SpatialComponent;
-		spatial->SetPosition(saveLogger->GetComponentData(i, 2, 0));
-		spatial->SetRotation(saveLogger->GetComponentData(i, 2, 1));
-		spatial->SetScale(saveLogger->GetComponentData(i, 2, 2));
+		spatial->SetPosition(saveLogger->GetSpatialData(i, 0));
+		spatial->SetRotation(saveLogger->GetSpatialData(i, 1));
+		spatial->SetScale(saveLogger->GetSpatialData(i, 2));
 		entitieComponents[i][0] = spatial;
 		entities[i].AddComponent(entitieComponents[i][0], "SpatialComponent");
 		saveLogger->SetComponent(i, 2, entitieComponents[i][0]);
 
-		entities[i].AddComponent(entitieMeshs[i], "Mesh");
+		entities[i].AddComponent(entitieMeshs[i], "MeshComponent");
+		entitieMeshs[i]->SetTexPath(saveLogger->GetMeshData(i, 0));
+		saveLogger->SetComponent(i, 1, entitieMeshs[i]);
 
 		for (int j = 1; j < numComponent[i]; ++j)
 		{
@@ -147,11 +149,11 @@ bool EntityManager::UpdateSaveLoggerObjects()
 
 	SpatialComponent* spatial = new SpatialComponent;
 	entities[pastNumObjs].AddComponent(spatial, "SpatialComponent","SpatialComponent");
-	saveLogger->SetComponent(pastNumObjs, 2, spatial);
-
+	saveLogger->AddComponentData(pastNumObjs,"SpatialComponent",spatial->GetDisplayData());
 
 	entitieMeshs[pastNumObjs] = new MeshComponent;
-	entities[pastNumObjs].AddComponent(entitieMeshs[pastNumObjs], "Mesh");
+	entities[pastNumObjs].AddComponent(entitieMeshs[pastNumObjs], "MeshComponent");
+	saveLogger->SetComponent(pastNumObjs, 1, entitieMeshs[pastNumObjs]);
 	entitieMeshs[pastNumObjs]->setTransformInfo();
 
 	if (!entities[pastNumObjs].Initialize())
@@ -179,7 +181,9 @@ void EntityManager::SaveEntities()
 				{
 					displayData = components[iComponent]->GetDisplayData();
 					if (displayData)
+					{
 						saveLogger->AddComponentData(i, components[iComponent]->GetName(), displayData);
+					}
 					components[iComponent]->SetSaved(true);
 				}
 			}
@@ -324,6 +328,10 @@ ImgnComponent ** EntityManager::GetComponents(int objNum)
 		numComponents++;
 	}
 	if (name == "DefaultObject4")
+	{																		
+	components = new ImgnComponent*[2];
+	}
+	if (name == "DefaultObject5")
 	{																		
 	components = new ImgnComponent*[2];
 	}

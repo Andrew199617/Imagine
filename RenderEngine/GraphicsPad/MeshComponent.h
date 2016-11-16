@@ -11,9 +11,13 @@
 class MeshComponent : public ImgnComponent
 {
 	Q_OBJECT
+
 public:
-	MeshComponent();
-	~MeshComponent();
+	IMGN_GENERATE(MeshComponent)
+	IMGN_PROPERTY(texPath,"")
+	IMGN_END(MeshComponent)
+
+public:
 	void setUpFragmentVertexShader();
 	void makeShaderInfo(int vertexFormat, string objname);
 	void setTransformInfo();
@@ -44,6 +48,11 @@ public:
 
 	virtual void CreateWidgets() override;
 	virtual void DeleteWidgets() override;
+
+	string GetTexPath() const { return texPath; }
+	void SetTexPath(string val) { texPath = val; }
+private:
+	string texPath;
 
 protected:
 	virtual bool Initialize() override;
