@@ -75,3 +75,15 @@ Components 4 {
     }
 }
 
+Name DefaultObject4
+SceneName PollCue
+Components 2 {
+    MeshComponent
+    SpatialComponent
+    {
+        (0.000000,10.000000,0.000000)
+        (0.000000,0.000000,0.000000)
+        (1.000000,1.000000,1.000000)
+    }
+}
+

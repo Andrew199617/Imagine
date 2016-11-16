@@ -2,6 +2,7 @@
 #include "MeshComponent.h"
 #include "RenderEngine\RenderEngine.h"
 #include "Physics\PhysicsTypeDefs.hpp"
+#include "gtx\transform.hpp"
 
 
 
@@ -70,4 +71,35 @@ void ObjTransformerEntity::SendDataToOpenGl()
 	RenderEngine::AddRenderInfo(&xMesh->renderinfo);
 	RenderEngine::AddRenderInfo(&yMesh->renderinfo);
 	RenderEngine::AddRenderInfo(&zMesh->renderinfo);
+}
+
+void ObjTransformerEntity::SetSpatial(SpatialComponent* spatial)
+{
+	position = spatial->GetPosition();
+	scale = spatial->GetScale();
+	xMesh->renderinfo.getTransformInfo()->m_translateTransform = glm::translate(position + (glm::vec3(5, 0, 0) * scale));
+	yMesh->renderinfo.getTransformInfo()->m_translateTransform = glm::translate(position + (glm::vec3(0, 5, 0) * scale));
+	zMesh->renderinfo.getTransformInfo()->m_translateTransform = glm::translate(position + (glm::vec3(0, 0, 5) * scale));
+	xMesh->renderinfo.getTransformInfo()->m_scaleTransform = glm::scale(scale);
+	yMesh->renderinfo.getTransformInfo()->m_scaleTransform = glm::scale(scale);
+	zMesh->renderinfo.getTransformInfo()->m_scaleTransform = glm::scale(scale);
+}
+
+void ObjTransformerEntity::SetPosition(glm::vec3 val)
+{
+	position = val;
+	xMesh->renderinfo.getTransformInfo()->m_translateTransform = glm::translate(position + (glm::vec3(5, 0, 0) * scale));
+	yMesh->renderinfo.getTransformInfo()->m_translateTransform = glm::translate(position + (glm::vec3(0, 5, 0) * scale));
+	zMesh->renderinfo.getTransformInfo()->m_translateTransform = glm::translate(position + (glm::vec3(0, 0, 5) * scale));
+}
+
+void ObjTransformerEntity::SetScale(glm::vec3 val)
+{
+	scale = val;
+	xMesh->renderinfo.getTransformInfo()->m_scaleTransform = glm::scale(scale);
+	yMesh->renderinfo.getTransformInfo()->m_scaleTransform = glm::scale(scale);
+	zMesh->renderinfo.getTransformInfo()->m_scaleTransform = glm::scale(scale);
+	xMesh->renderinfo.getTransformInfo()->m_translateTransform = glm::translate(position + (glm::vec3(5, 0, 0) * scale));
+	yMesh->renderinfo.getTransformInfo()->m_translateTransform = glm::translate(position + (glm::vec3(0, 5, 0) * scale));
+	zMesh->renderinfo.getTransformInfo()->m_translateTransform = glm::translate(position + (glm::vec3(0, 0, 5) * scale));
 }

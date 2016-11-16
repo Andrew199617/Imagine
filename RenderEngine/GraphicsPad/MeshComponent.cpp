@@ -135,3 +135,18 @@ void MeshComponent::Enable(bool enabled /*= true*/)
 {
 	renderinfo.isEnabled = enabled;
 }
+
+void MeshComponent::CreateWidgets()
+{
+	throw std::logic_error("The method or operation is not implemented.");
+}
+
+void MeshComponent::DeleteWidgets()
+{
+	throw std::logic_error("The method or operation is not implemented.");
+}
+
+bool MeshComponent::Initialize()
+{
+	throw std::logic_error("The method or operation is not implemented.");
+}

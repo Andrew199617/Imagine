@@ -8,8 +8,7 @@
 #include "ShapeGenerator.h"
 #include "VertexFormats.h"
 
-class MeshComponent :
-	public ImgnComponent
+class MeshComponent : public ImgnComponent
 {
 public:
 	MeshComponent();
@@ -40,6 +39,15 @@ public:
 
 	virtual void Disable(bool enabled = false) override;
 	virtual void Enable(bool enabled = true) override;
+
+
+	virtual void CreateWidgets() override;
+
+
+	virtual void DeleteWidgets() override;
+
+protected:
+	virtual bool Initialize() override;
 
 };
 

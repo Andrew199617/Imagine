@@ -1,5 +1,6 @@
 #pragma once
 #include "ImgnFrame.h"
+#include "Entity.h"
 class HierarchyButton;
 class QVBoxLayout;
 #define MAX_OBJS 500
@@ -32,5 +33,7 @@ private:
 	HierarchyButton* objectsInScene[MAX_OBJS];
 
 	bool isHidden;
+public:
+	void AddEntity(Imgn::Entity entities);
 };
 

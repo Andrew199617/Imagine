@@ -10,6 +10,7 @@
 #include "TextureInfo.h"
 #include "..\VertexFormats.h"
 #include "..\Vertex.h"
+#include "gtx\transform.hpp"
 
 RenderInfo::RenderInfo(RenderInfo* me, RenderInfo* next)
 {
@@ -107,7 +108,17 @@ void RenderInfo::SendAttributeData()
 
 void RenderInfo::SendUniformData(float, bool isPlaying)
 {
-	glm::mat4 mat = m_transformInfo->m_translateTransform * m_transformInfo->m_rotateTransform * m_transformInfo->m_scaleTransform;
+	glm::mat4 mat;
+	if (m_mesh->centerOfMass)
+	{
+		glm::mat4 COM = glm::translate(glm::vec3(m_transformInfo->m_translateTransform[3][0], m_transformInfo->m_translateTransform[3][1], m_transformInfo->m_translateTransform[3][2]) - *m_mesh->centerOfMass);
+		mat = COM * m_transformInfo->m_rotateTransform * m_transformInfo->m_scaleTransform;
+	}
+	else
+	{
+		mat = m_transformInfo->m_translateTransform * m_transformInfo->m_rotateTransform * m_transformInfo->m_scaleTransform;
+	}
+
 	if (m_mesh->m_animationInfo.hasAnimation && isPlaying)
 	{
 		mat *= m_mesh->m_animationInfo.animationData[m_mesh->m_animationInfo.currentFrame];

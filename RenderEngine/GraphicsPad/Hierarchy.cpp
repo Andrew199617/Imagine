@@ -10,6 +10,14 @@
 
 Hierarchy* Hierarchy::instance = 0;
 
+void Hierarchy::AddEntity(Imgn::Entity entities)
+{
+	int i = ImgnViewport::entityManager.num_Objs - 1;
+	m_Layout->addWidget(objectsInScene[i] = new HierarchyButton(entities.GetName()),0 , Qt::AlignTop);
+	connect(objectsInScene[i], SIGNAL(pressed()), this, SLOT(OnObjectPressed()));
+	m_Layout->insertStretch(-1, 1);
+}
+
 Hierarchy::Hierarchy()
 {
 	memset(objectsInScene, 0, sizeof(objectsInScene));
@@ -47,7 +55,7 @@ void Hierarchy::Initialize()
 
 	for (int i = 0; i < ImgnViewport::entityManager.num_Objs; i++)
 	{
-		m_Layout->addWidget(objectsInScene[i] = new HierarchyButton(ImgnViewport::entityManager.entities[i].GetName()));
+		m_Layout->addWidget(objectsInScene[i] = new HierarchyButton(ImgnViewport::entityManager.entities[i].GetName()), 0, Qt::AlignTop);
 		connect(objectsInScene[i], SIGNAL(pressed()), this, SLOT(OnObjectPressed()));
 	}
 

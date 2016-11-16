@@ -37,6 +37,8 @@ void EntityManager::SetCurrentlySelectedObject(int ObjSelected)
 	currentlySelectedObject = ObjSelected;
 	DetailsLayout::Instance()->SetEntity(&entities[ObjSelected]);
 	Hierarchy::Instance()->SetEntity(entities[ObjSelected].GetName());
+	SpatialComponent* spatial = entities[ObjSelected].GetComponentByType<SpatialComponent>();
+	objectTransformer.SetPosition(spatial->GetPosition());
 }
 
 bool EntityManager::Initialize()
@@ -133,6 +135,7 @@ void EntityManager::AddEntity()
 
 	objController->SetMeshs(num_Objs, entitieMeshs);
 	SendNewDataToOpenGL();
+	Hierarchy::Instance()->AddEntity(entities[num_Objs-1]);
 }
 
 bool EntityManager::UpdateSaveLoggerObjects()
@@ -143,7 +146,7 @@ bool EntityManager::UpdateSaveLoggerObjects()
 	entities[pastNumObjs].SetName(saveLogger->GetName(pastNumObjs));
 
 	SpatialComponent* spatial = new SpatialComponent;
-	entities[pastNumObjs].AddComponent(spatial, "SpatialComponent");
+	entities[pastNumObjs].AddComponent(spatial, "SpatialComponent","SpatialComponent");
 	saveLogger->SetComponent(pastNumObjs, 2, spatial);
 
 
@@ -218,6 +221,7 @@ void EntityManager::ProcessMousePress(QMouseEvent * e)
 void EntityManager::SendDataToOpenGL()
 {
 	TransformInfo::WorldToViewMatrix = playerCamera->getWorldToViewMatrix();
+	objController->SendDataToOpenGl();
 	objectTransformer.SendDataToOpenGl();
 	for (int i = 0; i < num_Objs; i++)
 	{
@@ -318,6 +322,10 @@ ImgnComponent ** EntityManager::GetComponents(int objNum)
 			iVar = 2; float* val2 = reinterpret_cast<float*>(displayData->values[iVar]); *val2 = (float)1.100000;
 		}
 		numComponents++;
+	}
+	if (name == "DefaultObject4")
+	{																		
+	components = new ImgnComponent*[2];
 	}
 
 	if(numComponents == 1){ components = new ImgnComponent*[1]; }
