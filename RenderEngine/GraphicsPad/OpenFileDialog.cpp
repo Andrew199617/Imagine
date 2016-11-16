@@ -38,7 +38,7 @@ bool OpenFileDialog::ShowDialog()
 	return true;
 }
 
-string OpenFileDialog::getFile()
+string OpenFileDialog::GetFile()
 {
 	this->ShowDialog();
 	wchar_t* name = this->FileName;
@@ -48,3 +48,9 @@ string OpenFileDialog::getFile()
 	return str;
 
 }
+
+string OpenFileDialog::GetExtension(string filePath)
+{
+	return string();
+}
+

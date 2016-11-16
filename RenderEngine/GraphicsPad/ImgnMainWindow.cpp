@@ -225,7 +225,7 @@ void ImgnMainWindow::WindowsShowEvent()
 
 void ImgnMainWindow::openingFile()
 {
-	string str = openFileDialog.getFile();
+	string str = openFileDialog.GetFile();
 	saveLogger->Open(str.c_str());
 }
 
@@ -234,7 +234,7 @@ void ImgnMainWindow::AddObject()
 	SceneReader* scenereader = new SceneReader;
 	FbxFileReader fileReader;
 
-	string str = openFileDialog.getFile();
+	string str = openFileDialog.GetFile();
 	string ObjName = fileReader.GetName(str);
 	string sceneName = "..\\..\\StaticData\\Scenes\\" + ObjName + ".imgnasset";
 
@@ -265,7 +265,7 @@ void ImgnMainWindow::AddPlane()
 
 void ImgnMainWindow::OnPlayButtonPress()
 {
-	if (!meGlWindow->viewport->isPlaying)
+	if (!meGlWindow->viewport->IsPlaying())
 	{
 		playButton->setIcon(*pauseIcon);
 	}
@@ -274,7 +274,7 @@ void ImgnMainWindow::OnPlayButtonPress()
 		playButton->setIcon(*playIcon);
 	}
 	meGlWindow->setFocus();
-	meGlWindow->viewport->isPlaying = !meGlWindow->viewport->isPlaying;
+	meGlWindow->viewport->SetIsPlaying(!meGlWindow->viewport->IsPlaying());
 }
 
 void ImgnMainWindow::Save()

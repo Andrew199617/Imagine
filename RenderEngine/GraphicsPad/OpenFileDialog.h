@@ -10,7 +10,8 @@ class OpenFileDialog
 {
 public:
 	OpenFileDialog(void);
-	string getFile();
+	string GetFile();
+	string GetExtension(string filePath);
 
 	TCHAR*DefaultExtension;
 	TCHAR*FileName;

@@ -11,7 +11,7 @@ class OpenFileDialog
 {
 public:
 	OpenFileDialog(void);
-	string getFile();
+	string GetFile();
 
 	TCHAR*DefaultExtension;
 	TCHAR*FileName;

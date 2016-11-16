@@ -37,7 +37,7 @@ bool OpenFileDialog::ShowDialog()
 	return true;
 }
 
-string OpenFileDialog::getFile()
+string OpenFileDialog::GetFile()
 {
 
 	this->ShowDialog();

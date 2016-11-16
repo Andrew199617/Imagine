@@ -371,7 +371,7 @@ int main()
 	con.Initialize();
 	OpenFileDialog openFileDialog1;
 	
-	string obj2 = openFileDialog1.getFile();
+	string obj2 = openFileDialog1.GetFile();
 
 	SIZEOFINDICIES = findOutNumberOfIndicies(obj2);
 	Configure(&con, obj2);

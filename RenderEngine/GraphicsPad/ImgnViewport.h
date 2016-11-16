@@ -23,10 +23,12 @@ public:
 	void SetHeight(int Height);
 	inline int GetHeight() { return m_Height; }
 
-	bool isPlaying;
 	int xOffset;
 	int yOffset;
+	bool IsPlaying() const { return isPlaying; }
+	void SetIsPlaying(bool val) { isPlaying = val; }
 private:
+	bool isPlaying;
 	FrameBuffer* frameBuffer;
 	int m_Width;
 	int m_Height;

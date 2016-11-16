@@ -5,6 +5,7 @@
 #include "Qt\qboxlayout.h"
 #include "QtGui\QLabel"
 #include "Qt\qpushbutton.h"
+#include "OpenFileDialog.h"
 
 MeshComponent::MeshComponent() : ImgnComponent()
 {
@@ -189,5 +190,9 @@ bool MeshComponent::Initialize()
 
 void MeshComponent::UpdateTextureInfo()
 {
-	int test = 0;
+	OpenFileDialog openFileDialog;
+	string str = openFileDialog.GetFile();
+
+	renderinfo.getTextureInfo()->loadBMP_customFile(str);
+	renderinfo.getTextureInfo()->SendData();
 }
