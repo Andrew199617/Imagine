@@ -32,14 +32,18 @@ public:
 	void Open(const char* filename = "..\\Data\\SaveLogger.txt");
 	bool shutdownLog();
 
-
 	int GetNumObjs();
+	void SetEntityName(string oldName,string name);
 	string GetName(int);
 	string GetSceneName(int objId);
 	void AddObj(string, string ObjName = " ");
+	void RemoveEntity(int EntityToRemove);
 	void SetComponent(int ObjNum, int componentNum, ImgnComponent* component);
 	void AddComponent(string ObjName, string ComponentName, ImgnComponent* Component);
 	void AddComponent(int ObjNum, string ComponentName, ImgnComponent* Component);
+
+	int GetObjNum(string objName);
+
 	//Can be used to Add Component data for the first time or to update the already existing data.
 	void AddComponentData(int ObjNum, string ComponentName, Imgn::DisplayData* DisplayData);
 	string GetComponentName(int objNum, int componentNum);

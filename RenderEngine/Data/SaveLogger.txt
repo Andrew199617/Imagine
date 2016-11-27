@@ -1,94 +1,8 @@
-Name Grid
-SceneName Plane
-Components 3 {
-    MeshComponent
-    {
-    }
-    SpatialComponent
-    {
-        (0.000000,0.000000,0.000000)
-        (0.000000,0.000000,0.000000)
-        (10.000000,10.000000,10.000000)
-    }
-    BoxCollider
-    {
-        0
-        (0.000000,-0.100000,0.000000)
-        (10.000000,0.200000,10.000000)
-    }
-}
-
-Name Cube
-SceneName Cube
-Components 5 {
-    MeshComponent
-    {
-        C:\Users\Andrew\Documents\Neumont\Imagine\StaticData\Texture\brick.bmp
-    }
-    SpatialComponent
-    {
-        (0.000000,3.000000,0.000000)
-        (0.000000,0.000000,0.000000)
-        (2.000000,2.000000,2.000000)
-    }
-    MovementComponent
-    {
-    }
-    Imgn::RigidBody
-    {
-        1
-        1.000000
-        0.050000
-        0.050000
-        (0.000000,-9.800000,0.000000)
-        1
-        0
-    }
-    BoxCollider
-    {
-        0
-        (0.000000,0.000000,0.000000)
-        (3.000000,3.000000,3.000000)
-    }
-}
-
-Name Sphere3
-SceneName Sphere
-Components 4 {
-    MeshComponent
-    {
-        C:\Users\Andrew\Documents\Neumont\Imagine\StaticData\Texture\water.bmp
-    }
-    SpatialComponent
-    {
-        (0.000000,6.500000,0.000000)
-        (0.000000,0.000000,0.000000)
-        (1.000000,1.000000,1.000000)
-    }
-    Imgn::RigidBody
-    {
-        1
-        1.000000
-        0.050000
-        0.050000
-        (0.000000,-18.799999,0.000000)
-        1
-        0
-    }
-    SphereCollider
-    {
-        0
-        (0.000000,0.000000,0.000000)
-        1.100000
-    }
-}
-
-Name DefaultObject4
-SceneName PollCue
+Name DefaultObject_1
+SceneName PoolBall
 Components 2 {
     MeshComponent
     {
-        C:\Users\Andrew\Documents\Neumont\Imagine\StaticData\Texture\Cue_Stick.bmp
     }
     SpatialComponent
     {
@@ -98,18 +12,31 @@ Components 2 {
     }
 }
 
-Name DefaultObject5
-SceneName PollCue
+Name DefaultObject_2
+SceneName PoolRack
 Components 2 {
     MeshComponent
     {
-        C:\Users\Andrew\Documents\Neumont\Imagine\StaticData\Texture\Cue_Stick_2.bmp
     }
     SpatialComponent
     {
-        (5.000000,10.000000,0.000000)
+        (0.000000,0.000000,0.000000)
         (0.000000,0.000000,0.000000)
         (1.000000,1.000000,1.000000)
+    }
+}
+
+Name Cube_3
+SceneName Cube
+Components 2 {
+    MeshComponent
+    {
+    }
+    SpatialComponent
+    {
+        (0.000000, 0.000000, 0.000000)
+        (0.000000, 0.000000, 0.000000)
+        (1.000000, 1.000000, 1.000000)
     }
 }
 

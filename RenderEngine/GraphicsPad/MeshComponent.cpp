@@ -138,11 +138,13 @@ void MeshComponent::SetHidden(bool)
 
 void MeshComponent::Disable(bool enabled /*= false*/)
 {
+	Component::Disable(enabled);
 	renderinfo.isEnabled = enabled;
 }
 
 void MeshComponent::Enable(bool enabled /*= true*/)
 {
+	Component::Enable(enabled);
 	renderinfo.isEnabled = enabled;
 }
 

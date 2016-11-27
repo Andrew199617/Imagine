@@ -35,6 +35,10 @@ class ImgnMainWindow : public QMainWindow
 	QAction* openAct;
 	QAction* saveAct;
 
+	QMenu* editMenu;
+	QAction* duplicateObjectAct;
+	QAction* deleteObjectAct;
+
 	QMenu* gameObjectMenu;
 	QAction* addObjectAct;
 	QAction* addCubeAct;
@@ -64,9 +68,11 @@ protected:
 	void leaveEvent(QEvent*) override;
 	void closeEvent(QCloseEvent *) override;
 
-	private slots:
+private slots:
 	void WindowsShowEvent();
 	void openingFile();
+	void DuplicateObject();
+	void DeleteObject();
 	void AddObject();
 	void AddCube();
 	void AddSphere();

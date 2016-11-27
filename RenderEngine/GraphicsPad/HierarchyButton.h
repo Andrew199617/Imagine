@@ -12,6 +12,7 @@ public:
 	void Initialize();
 	void SetAsActiveButton();
 
+	void SetCurPressedButton(HierarchyButton* val) { curPressedButton = val; }
 protected:
 	virtual void mousePressEvent(QMouseEvent *) override;
 

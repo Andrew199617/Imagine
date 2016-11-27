@@ -51,67 +51,45 @@ void BufferManager::Shutdown()
 
 }
 
-void BufferManager::AddGeometry(void* vertices, unsigned vertexCount, unsigned vertexSize, Geometry& mesh)
+void BufferManager::AddGeometry(void* vertices, unsigned vertexSize, void* indices, unsigned indexSize, Geometry& mesh)
 {
-	vertexCount;
-	if (!m_bufferPool[m_numVertexBuffers].HasRoomForVertices(vertexSize))
+	int currentBuffer = -1;
+	for (int i = 0; i < m_numVertexBuffers; ++i)
+	{
+		if (m_bufferPool[i].HasRoomForVertices(vertexSize) && m_bufferPool[i].HasRoomForIndices(indexSize) && m_bufferPool[i].VertexFormat == mesh.VertexFormat)
+		{
+			currentBuffer = i;
+			break;
+		}
+	}
+	if (currentBuffer == -1)
 	{
 		m_numVertexBuffers++;
 		m_numIndexBuffers++;
+		currentBuffer = m_numVertexBuffers;
 		Initialize();
 	}
 
-	mesh.m_vertexId = m_bufferPool[m_numVertexBuffers].m_vert_ID;
-	glBindBuffer(GL_ARRAY_BUFFER, m_bufferPool[m_numVertexBuffers].m_vert_ID);
-	glBufferSubData(GL_ARRAY_BUFFER, m_bufferPool[m_numVertexBuffers].m_vert_currentByteOffset, vertexSize, vertices);
-	mesh.m_vertexByteOffset = m_bufferPool[m_numVertexBuffers].m_vert_currentByteOffset;
-	m_bufferPool[m_numVertexBuffers].m_vert_currentByteOffset += vertexSize;
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-	glEnableVertexAttribArray(2);
-	glEnableVertexAttribArray(3);
-}
-
-void BufferManager::AddGeometry(void* vertices, unsigned vertexCount, unsigned vertexSize, void* indices, unsigned indexCount, unsigned indexSize, Geometry& mesh)
-{
-	vertexCount;
-	indexCount;
-	if (!m_bufferPool[m_numVertexBuffers].HasRoomForVertices(vertexSize) ||
-		!m_bufferPool[m_numIndexBuffers].HasRoomForIndices(indexSize) ||
-		m_bufferPool[m_numVertexBuffers].VertexFormat != mesh.VertexFormat )
+	if (m_bufferPool[currentBuffer].VertexFormat == 0)
 	{
-		m_numVertexBuffers++;
-		m_numIndexBuffers++;
-		Initialize();
-	}
-
-	if (m_bufferPool[m_numVertexBuffers].VertexFormat == 0)
-	{
-		m_bufferPool[m_numVertexBuffers].VertexFormat = mesh.VertexFormat;
-
-		
-	}
-
-	if (mesh.VertexFormat & HasTexture)
-	{
-		
+		m_bufferPool[currentBuffer].VertexFormat = mesh.VertexFormat;
 	}
 	
-	mesh.m_vertexId = m_bufferPool[m_numVertexBuffers].m_vert_ID;
-	glBindBuffer(GL_ARRAY_BUFFER, m_bufferPool[m_numVertexBuffers].m_vert_ID);
-	glBufferSubData(GL_ARRAY_BUFFER, m_bufferPool[m_numVertexBuffers].m_vert_currentByteOffset, vertexSize, vertices);
-	mesh.m_vertexByteOffset = m_bufferPool[m_numVertexBuffers].m_vert_currentByteOffset;
-	m_bufferPool[m_numVertexBuffers].m_vert_currentByteOffset += vertexSize;
+	mesh.m_vertexId = m_bufferPool[currentBuffer].m_vert_ID;
+	glBindBuffer(GL_ARRAY_BUFFER, m_bufferPool[currentBuffer].m_vert_ID);
+	glBufferSubData(GL_ARRAY_BUFFER, m_bufferPool[currentBuffer].m_vert_currentByteOffset, vertexSize, vertices);
+	mesh.m_vertexByteOffset = m_bufferPool[currentBuffer].m_vert_currentByteOffset;
+	m_bufferPool[currentBuffer].m_vert_currentByteOffset += vertexSize;
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2);
 	glEnableVertexAttribArray(3);
 
-	mesh.m_indexId = m_bufferPool[m_numIndexBuffers].M_index_ID;
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_bufferPool[m_numIndexBuffers].M_index_ID);
-	glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, m_bufferPool[m_numIndexBuffers].m_index_currentByteOffset, indexSize, indices);
-	mesh.m_indexByteOffset = m_bufferPool[m_numIndexBuffers].m_index_currentByteOffset;
-	m_bufferPool[m_numIndexBuffers].m_index_currentByteOffset += indexSize;
+	mesh.m_indexId = m_bufferPool[currentBuffer].M_index_ID;
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_bufferPool[currentBuffer].M_index_ID);
+	glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, m_bufferPool[currentBuffer].m_index_currentByteOffset, indexSize, indices);
+	mesh.m_indexByteOffset = m_bufferPool[currentBuffer].m_index_currentByteOffset;
+	m_bufferPool[currentBuffer].m_index_currentByteOffset += indexSize;
 	
 }
 
@@ -139,21 +117,6 @@ void BufferManager::RemoveRenderInfo(RenderInfo* info)
 	}
 }
 
-void BufferManager::RemoveRenderInfo()
-{
-	for (int i = 0; i < m_numVertexBuffers; i++)
-	{
-		glDeleteBuffers(1, &m_bufferPool[i].m_vert_ID);
-	}
-	for (int i = 0; i < m_numIndexBuffers; i++)
-	{
-		glDeleteBuffers(1, &m_bufferPool[i].M_index_ID);
-		m_bufferPool[i] = BufferInfo();
-	}
-	m_numVertexBuffers = 0;
-	m_numIndexBuffers = 0;
-	//Initialize();
-}
 
 
 

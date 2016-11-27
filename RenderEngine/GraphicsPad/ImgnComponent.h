@@ -36,6 +36,7 @@ public:
 	void SetOwner(Imgn::Entity* owner) { m_owner = owner; }
 	Imgn::Entity* GetOwner() { return m_owner; }
 
+	void LoadComponentData();
 	virtual void CreateWidgets();
 	virtual void ClearFocus() {}
 	virtual void SetHidden(bool IsHidden) { isHidden = IsHidden; }

@@ -15,6 +15,10 @@
 #include <windows.h>
 #include "CollisionDetection\BoxCollider.h"
 #include "CollisionDetection\SphereCollider.h"
+#include "QtGui\QLabel"
+#include "Qt\qlineedit.h"
+#include "SaveLogger.h"
+#include "Hierarchy.h"
 typedef void* (*ADDCOMPONENTS)(string*);
 
 using std::cout;
@@ -45,6 +49,13 @@ void DetailsLayout::Initialize()
 
 	addComponentButton = new QPushButton("Add Component",this);
 	componentMenu = new QMenu();
+
+	QHBoxLayout* nameLayout = new QHBoxLayout;
+	nameLayout->addWidget(new QLabel("Entity Name: "), 0, Qt::AlignHCenter);
+	nameLayout->addWidget(entityName = new QLineEdit(""), 0, Qt::AlignLeft);
+	connect(entityName, SIGNAL(returnPressed()), this, SLOT(ChangeName()));
+	m_Layout->addLayout(nameLayout);
+	m_Layout->addSpacing(15);
 
 	m_Layout->addWidget(addComponentButton);
 	addComponentButton->setStyleSheet("QPushButton:enabled { border: 1px solid black; background-color:"
@@ -108,6 +119,7 @@ void DetailsLayout::SetEntity(Imgn::Entity* entity)
 
 	currentEntity = entity;
 	//AddEntityData(entity);
+	entityName->setText(currentEntity->GetName());
 	components = currentEntity->GetComponents();
 	numComponents = currentEntity->GetNumComponents();
 	
@@ -148,11 +160,6 @@ void DetailsLayout::AddComponent(char*, ImgnComponent* widget,int)
 		widget->setParent(this);
 		widget->setVisible(true);
 	}
-}
-
-void DetailsLayout::AddEntityData(Imgn::Entity* entity)
-{
-	
 }
 
 void DetailsLayout::CreateActions()
@@ -225,6 +232,14 @@ void DetailsLayout::CreateNewComponent()
 void DetailsLayout::ResizeMenu()
 {
 	componentMenu->setFixedWidth(addComponentButton->width());
+}
+
+void DetailsLayout::ChangeName()
+{
+	string newName = entityName->text().toLocal8Bit().data();
+	SaveLogger::Instance()->SetEntityName(currentEntity->GetName(), newName);
+	Hierarchy::Instance()->SetEntityName(currentEntity, newName);
+	currentEntity->SetName(newName);
 }
 
 void DetailsLayout::ButtonPressed()

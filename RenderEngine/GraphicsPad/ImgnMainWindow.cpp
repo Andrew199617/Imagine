@@ -16,6 +16,7 @@
 #include "ImgnToolBar.h"
 #include "ImgnTool.h"
 #include "ContentBrowser.h"
+#include "MeshComponent.h"
 
 ImgnMainWindow::ImgnMainWindow(MeGlWindow* meGl)
 {
@@ -50,12 +51,20 @@ void ImgnMainWindow::CreateActions()
 	connect(openAct, SIGNAL(triggered()), this, SLOT(openingFile()));
 
 	saveAct = new QAction(tr("&Save"), this);
-	saveAct->setShortcuts(QKeySequence::Save);
+	saveAct->setShortcut(QKeySequence::Save);
 	saveAct->setStatusTip(tr("Save your game"));
 	connect(saveAct, SIGNAL(triggered()), this, SLOT(Save()));
 
+	duplicateObjectAct = new QAction(tr("&Duplicate Object"), this);
+	duplicateObjectAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_D));
+	connect(duplicateObjectAct, SIGNAL(triggered()), this, SLOT(DuplicateObject()));
+
+	deleteObjectAct = new QAction(tr("&Delete Object"), this);
+	deleteObjectAct->setShortcut(QKeySequence::Delete);
+	connect(deleteObjectAct, SIGNAL(triggered()), this, SLOT(DeleteObject()));
+
 	addObjectAct = new QAction(tr("&Add Object"), this);
-	addObjectAct->setShortcuts(QKeySequence::AddTab);
+	addObjectAct->setShortcut(QKeySequence::AddTab);
 	addObjectAct->setStatusTip(tr("Open a new Obj"));
 	connect(addObjectAct, SIGNAL(triggered()), this, SLOT(AddObject()));
 
@@ -93,6 +102,10 @@ void ImgnMainWindow::CreateMenus()
 	fileMenu->addAction(openAct);
 	fileMenu->addAction(saveAct);
 
+	editMenu = menuBar()->addMenu("&Edit");
+	editMenu->addAction(duplicateObjectAct);
+	editMenu->addAction(deleteObjectAct);
+
 	gameObjectMenu = menuBar()->addMenu(tr("&GameObject"));
 	gameObjectMenu->addAction(addObjectAct);
 	gameObjectMenu->addAction(addCubeAct);
@@ -109,6 +122,8 @@ void ImgnMainWindow::CreateMenus()
 	palette.setColor(foregroundRole(), QColor(224, 255, 255));
 	fileMenu->setPalette(palette);
 	fileMenu->setAutoFillBackground(true);
+	editMenu->setPalette(palette);
+	editMenu->setAutoFillBackground(true);
 	gameObjectMenu->setPalette(palette);
 	gameObjectMenu->setAutoFillBackground(true);
 	windowMenu->setPalette(palette);
@@ -229,21 +244,39 @@ void ImgnMainWindow::openingFile()
 	saveLogger->Open(str.c_str());
 }
 
+void ImgnMainWindow::DuplicateObject()
+{
+	Imgn::Entity curEntity = ImgnViewport::entityManager.entities[ImgnViewport::entityManager.CurrentlySelectedObject()];
+	MeshComponent* curMesh = ImgnViewport::entityManager.entitieMeshs[ImgnViewport::entityManager.CurrentlySelectedObject()];
+	std::string s = curMesh->renderinfo.getGeometry()->objName;
+	saveLogger->AddObj(s, curEntity.GetName());
+	/*SpatialComponent* curSpatial = ImgnViewport::entityManager.entities[ImgnViewport::entityManager.num_Objs - 1].GetComponentByType<SpatialComponent>();
+	curSpatial->SetPosition(curEntity.GetComponentByType<SpatialComponent>()->GetPosition());
+	curSpatial->UpdatePosition();*/
+}
+
+void ImgnMainWindow::DeleteObject()
+{
+	Imgn::Entity curEntity = ImgnViewport::entityManager.entities[ImgnViewport::entityManager.CurrentlySelectedObject()];
+	hierarchyLayout->RemoveEntity(curEntity.GetName());
+	ImgnViewport::entityManager.RemoveEntity(ImgnViewport::entityManager.CurrentlySelectedObject());
+}
+
 void ImgnMainWindow::AddObject()
 {
 	SceneReader* scenereader = new SceneReader;
 	FbxFileReader fileReader;
 
 	string str = openFileDialog.GetFile();
-	string ObjName = fileReader.GetName(str);
-	string sceneName = "..\\..\\StaticData\\Scenes\\" + ObjName + ".imgnasset";
+	string sceneName = fileReader.GetName(str);
+	string scenePath = "..\\..\\StaticData\\Scenes\\" + sceneName + ".imgnasset";
 
-	Scene* scene = scenereader->ReadSceneFile(sceneName);
+	Scene* scene = scenereader->ReadSceneFile(scenePath);
 	if (!scene)
 	{
 		fileReader.Initialize(str);
 	}
-	saveLogger->AddObj(ObjName);
+	saveLogger->AddObj(sceneName);
 	delete scenereader;
 	
 }

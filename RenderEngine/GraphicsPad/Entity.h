@@ -30,7 +30,6 @@ namespace Imgn
 
 		inline ImgnComponent** GetComponents() { return m_components; }
 		inline int GetNumComponents() { return numComponents; }
-		bool alreadyAdded;
 		bool IsSaved() const { return saved; }
 		void SetSaved(bool val) { saved = val; }
 	protected:

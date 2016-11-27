@@ -10,6 +10,7 @@ class QPushButton;
 class ImgnComponent;
 class QScrollArea;
 class Entity;
+class QLineEdit;
 
 class DetailsLayout :
 	public ImgnFrame
@@ -44,6 +45,10 @@ private slots:
 	void ButtonPressed();
 	void CreateNewComponent();
 	void ResizeMenu();
+	void ChangeName();
+
+private:
+	QLineEdit* entityName;
 
 private:
 	static DetailsLayout* detailsLayout;

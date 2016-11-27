@@ -15,6 +15,7 @@ public:
 	~Hierarchy();
 
 	void SetEntity(std::string name);
+	void RemoveEntity(const char * EntityName);
 public:
 	static Hierarchy* Instance() { if (!instance) instance = new Hierarchy; return instance; }
 	void Initialize();
@@ -35,5 +36,6 @@ private:
 	bool isHidden;
 public:
 	void AddEntity(Imgn::Entity entities);
+	void SetEntityName(Imgn::Entity* currentEntity, std::string newName);
 };
 

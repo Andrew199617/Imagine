@@ -27,15 +27,10 @@ void RenderEngine::Shutdown()
 	BufferManager::Shutdown();
 }
 
-void RenderEngine::AddGeometry(void* vertices, unsigned vertexCount, unsigned vertexSize, Geometry& mesh)
+void RenderEngine::AddGeometry(void* vertices, unsigned vertexSize, void* indices
+	, unsigned indexSize, Geometry& mesh)
 {
-	BufferManager::AddGeometry(vertices, vertexCount, vertexSize, mesh);
-}
-
-void RenderEngine::AddGeometry(void* vertices, unsigned vertexCount, unsigned vertexSize, void* indices
-	, unsigned indexCount, unsigned indexSize, Geometry& mesh)
-{
-	BufferManager::AddGeometry(vertices, vertexCount, vertexSize,indices,indexCount,indexSize, mesh);
+	BufferManager::AddGeometry(vertices, vertexSize,indices,indexSize, mesh);
 
 }
 
@@ -44,9 +39,9 @@ void RenderEngine::AddRenderInfo(RenderInfo* info)
 	BufferManager::AddRenderInfo(info);
 }
 
-void RenderEngine::RemoveRenderInfo()
+void RenderEngine::RemoveRenderInfo(RenderInfo* info)
 {
-	BufferManager::RemoveRenderInfo();
+	BufferManager::RemoveRenderInfo(info);
 }
 
 void RenderEngine::Draw(float dt,bool isPlaying)

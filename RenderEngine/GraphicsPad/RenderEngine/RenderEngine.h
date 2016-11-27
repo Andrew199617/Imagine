@@ -8,12 +8,10 @@ class RenderEngine
 public:
 	static void initialize();
 	static void Shutdown();
-	static void AddGeometry(void* vertices, unsigned vertexCount, unsigned vertexSize
-		, Geometry& mesh);
-	static void AddGeometry(void* vertices, unsigned vertexCount, unsigned vertexSize, void* indices
-		, unsigned indexCount, unsigned indexSize, Geometry& mesh);
+	static void AddGeometry(void* vertices, unsigned vertexSize, void* indices
+		, unsigned indexSize, Geometry& mesh);
 	static void AddRenderInfo(RenderInfo* info);
-	static void RemoveRenderInfo();
+	static void RemoveRenderInfo(RenderInfo* info);
 	static void Draw(float dt, bool isPlaying);
 private:
 	RenderEngine();

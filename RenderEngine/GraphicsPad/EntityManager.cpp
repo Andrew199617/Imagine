@@ -191,6 +191,43 @@ void EntityManager::SaveEntities()
 	}
 }
 
+void EntityManager::RemoveEntity(int EntityToRemove)
+{
+	if (currentlySelectedObject == EntityToRemove)
+	{
+		for (int i = 0; i < num_Objs; ++i)
+		{
+			if (i != EntityToRemove)
+			{
+				SetCurrentlySelectedObject(i);
+				break;
+			}
+		}
+	}
+	entities[EntityToRemove].Disable();
+	RenderEngine::RemoveRenderInfo(&entitieMeshs[EntityToRemove]->renderinfo);
+	for (int jNumComponents = 0; jNumComponents < numComponent[EntityToRemove]; ++jNumComponents)
+	{
+		delete entitieComponents[EntityToRemove][jNumComponents];
+	}
+	for (int iCurEntity = EntityToRemove; iCurEntity < num_Objs - 1; ++iCurEntity)
+	{
+		entities[iCurEntity] = entities[iCurEntity+1];
+		entitieMeshs[iCurEntity] = entitieMeshs[iCurEntity + 1];
+		int biggerNumComponents = (numComponent[iCurEntity + 1] > numComponent[iCurEntity]) ? numComponent[iCurEntity + 1] : numComponent[iCurEntity];
+		for (int jNumComponents = 0; jNumComponents < biggerNumComponents; ++jNumComponents)
+		{
+			entitieComponents[iCurEntity][jNumComponents] = entitieComponents[iCurEntity + 1][jNumComponents];
+		}
+	}
+	entities[num_Objs - 1] = Imgn::Entity();
+	entitieMeshs[num_Objs - 1] = 0; 
+	memset(entitieComponents[num_Objs - 1], 0, sizeof(entitieComponents[num_Objs - 1]));
+	num_Objs--;
+	objController->SetMeshs(num_Objs, entitieMeshs);
+	saveLogger->RemoveEntity(EntityToRemove);
+}
+
 void EntityManager::Update(float dt, bool isPlaying)
 {
 	TransformInfo::WorldToViewMatrix = playerCamera->getWorldToViewMatrix();
@@ -243,10 +280,6 @@ void EntityManager::SendNewDataToOpenGL()
 
 //DO NOT REMOVE THESE COMMENTS
 //Add Here
-#include "CollisionDetection/BoxCollider.h"
-#include "Physics/RigidBody.h"
-#include "MovementComponent.h"
-#include "CollisionDetection/SphereCollider.h"
 
 ImgnComponent ** EntityManager::GetComponents(int objNum)
 {
@@ -256,85 +289,6 @@ ImgnComponent ** EntityManager::GetComponents(int objNum)
 	Imgn::DisplayData* displayData;
 	int iVar = 0;
 
-	if (name == "Grid")
-	{																		
-	components = new ImgnComponent*[3];
-		components[numComponents] = new BoxCollider();
-		displayData = components[numComponents]->GetDisplayData();
-		if (displayData)
-		{
-			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)0;
-			iVar = 1; glm::detail::tvec3<float>* val1 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val1 = glm::vec3(0.000000,-0.100000,0.000000);
-			iVar = 2; glm::detail::tvec3<float>* val2 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val2 = glm::vec3(10.000000,0.200000,10.000000);
-		}
-		numComponents++;
-	}
-	if (name == "Cube")
-	{																		
-	components = new ImgnComponent*[5];
-		components[numComponents] = new MovementComponent();
-		displayData = components[numComponents]->GetDisplayData();
-		if (displayData)
-		{
-		}
-		numComponents++;
-		components[numComponents] = new Imgn::RigidBody();
-		displayData = components[numComponents]->GetDisplayData();
-		if (displayData)
-		{
-			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)1;
-			iVar = 1; double* val1 = reinterpret_cast<double*>(displayData->values[iVar]); *val1 = (double)1.000000;
-			iVar = 2; float* val2 = reinterpret_cast<float*>(displayData->values[iVar]); *val2 = (float)0.050000;
-			iVar = 3; float* val3 = reinterpret_cast<float*>(displayData->values[iVar]); *val3 = (float)0.050000;
-			iVar = 4; glm::detail::tvec3<float>* val4 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val4 = glm::vec3(0.000000,-9.800000,0.000000);
-			iVar = 5; bool* val5 = reinterpret_cast<bool*>(displayData->values[iVar]); *val5 = (bool)1;
-			iVar = 6; bool* val6 = reinterpret_cast<bool*>(displayData->values[iVar]); *val6 = (bool)0;
-		}
-		numComponents++;
-		components[numComponents] = new BoxCollider();
-		displayData = components[numComponents]->GetDisplayData();
-		if (displayData)
-		{
-			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)0;
-			iVar = 1; glm::detail::tvec3<float>* val1 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val1 = glm::vec3(0.000000,0.000000,0.000000);
-			iVar = 2; glm::detail::tvec3<float>* val2 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val2 = glm::vec3(3.000000,3.000000,3.000000);
-		}
-		numComponents++;
-	}
-	if (name == "Sphere3")
-	{																		
-	components = new ImgnComponent*[4];
-		components[numComponents] = new Imgn::RigidBody();
-		displayData = components[numComponents]->GetDisplayData();
-		if (displayData)
-		{
-			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)1;
-			iVar = 1; double* val1 = reinterpret_cast<double*>(displayData->values[iVar]); *val1 = (double)1.000000;
-			iVar = 2; float* val2 = reinterpret_cast<float*>(displayData->values[iVar]); *val2 = (float)0.050000;
-			iVar = 3; float* val3 = reinterpret_cast<float*>(displayData->values[iVar]); *val3 = (float)0.050000;
-			iVar = 4; glm::detail::tvec3<float>* val4 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val4 = glm::vec3(0.000000,-18.799999,0.000000);
-			iVar = 5; bool* val5 = reinterpret_cast<bool*>(displayData->values[iVar]); *val5 = (bool)1;
-			iVar = 6; bool* val6 = reinterpret_cast<bool*>(displayData->values[iVar]); *val6 = (bool)0;
-		}
-		numComponents++;
-		components[numComponents] = new SphereCollider();
-		displayData = components[numComponents]->GetDisplayData();
-		if (displayData)
-		{
-			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)0;
-			iVar = 1; glm::detail::tvec3<float>* val1 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val1 = glm::vec3(0.000000,0.000000,0.000000);
-			iVar = 2; float* val2 = reinterpret_cast<float*>(displayData->values[iVar]); *val2 = (float)1.100000;
-		}
-		numComponents++;
-	}
-	if (name == "DefaultObject4")
-	{																		
-	components = new ImgnComponent*[2];
-	}
-	if (name == "DefaultObject5")
-	{																		
-	components = new ImgnComponent*[2];
-	}
 
 	if(numComponents == 1){ components = new ImgnComponent*[1]; }
 	numComponent[objNum] += numComponents;

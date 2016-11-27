@@ -36,7 +36,6 @@ void BufferInfo::push(RenderInfo* var)
 {
 	RenderInfo* node = var;
 	node->Next(top);
-	node->isEnabled = true;
 	top = node;
 }
 
@@ -54,7 +53,6 @@ void BufferInfo::remove(RenderInfo * info)
 		if (tempTop == info)
 		{
 			last->Next(tempTop->Next());
-			delete tempTop;
 			break;
 		}
 	}

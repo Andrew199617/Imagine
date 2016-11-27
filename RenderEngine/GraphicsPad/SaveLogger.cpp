@@ -33,6 +33,47 @@ using std::ios;
 
 SaveLogger* SaveLogger::saveLogger = 0;
 
+void SaveLogger::RemoveEntity(int EntityToRemove)
+{
+	for (int j = EntityToRemove * Imgn::MAXENTITYDATA; j < currentEntityDataType - Imgn::MAXENTITYDATA; j+=Imgn::MAXENTITYDATA)
+	{
+		for (int k = j; k < j + Imgn::MAXENTITYDATA; ++k)
+		{
+			entities[k][1] = entities[k + Imgn::MAXENTITYDATA][1];
+		}
+	}
+	for (int iCurEntity = EntityToRemove; iCurEntity < curNumEntities-1; ++iCurEntity)
+	{
+		for (int jCurComponent = 0; jCurComponent < Imgn::MAX_COMPONENTS_PERENTITY; ++jCurComponent)
+		{
+			components[iCurEntity][jCurComponent] = components[iCurEntity + 1][jCurComponent];
+			componentNames[iCurEntity][jCurComponent] = componentNames[iCurEntity + 1][jCurComponent];
+			for (int kCurComponentData = 0; kCurComponentData < Imgn::MAX_VARIABLES; ++kCurComponentData)
+			{
+				componentsData[iCurEntity][jCurComponent][kCurComponentData] = componentsData[iCurEntity + 1][jCurComponent][kCurComponentData];
+			}
+		}
+	}
+	for (int k = (curNumEntities-1) * Imgn::MAXENTITYDATA; k < curNumEntities * Imgn::MAXENTITYDATA; ++k)
+	{
+		entities[k][0] = "";
+		entities[k][1] = "";
+	}
+	int iCurEntity = curNumEntities - 1;
+	for (int jCurComponent = 0; jCurComponent < Imgn::MAX_COMPONENTS_PERENTITY; ++jCurComponent)
+	{
+		components[iCurEntity][jCurComponent] = 0;
+		componentNames[iCurEntity][jCurComponent] = "";
+		for (int kCurComponentData = 0; kCurComponentData < Imgn::MAX_VARIABLES; ++kCurComponentData)
+		{
+			componentsData[iCurEntity][jCurComponent][kCurComponentData] = "";
+		}
+	}
+	curNumEntities--;
+	currentEntityDataType -= Imgn::MAXENTITYDATA;
+	
+}
+
 SaveLogger::SaveLogger()
 {
 	memset(components, 0, sizeof(components));
@@ -313,12 +354,23 @@ void SaveLogger::WriteComponentData(std::ofstream* meOutput)
 	for (int i = 0; i < curNumEntities; ++i)
 	{
 		int numComponents = std::stoi(componentNames[i][0]);
+		if (numComponents <= 2)
+		{
+			continue;
+		}
 		*meOutput << "	if (name == \"" << entities[i * Imgn::MAXENTITYDATA][1] << "\")" << "\n";
 		*meOutput << "	{																		" << "\n";
-		*meOutput << "	components = new ImgnComponent*[" << numComponents << "];" << "\n";
+		*meOutput << "		components = new ImgnComponent*[" << (numComponents - 1) << "];" << "\n";
 		for (int j = 3; j < numComponents + 1; ++j)
 		{
-			*meOutput << "		components[numComponents] = new " << componentNames[i][j] << "();" << "\n";
+			if (componentNames[i][j] == "RigidBody")
+			{
+				*meOutput << "		components[numComponents] = new " << "Imgn::" << componentNames[i][j] << "();" << "\n";
+			}
+			else
+			{
+				*meOutput << "		components[numComponents] = new " << componentNames[i][j] << "();" << "\n";
+			}
 			Imgn::DisplayData* displayData = components[i][j]->GetDisplayData();
 			if (displayData)
 			{
@@ -374,6 +426,12 @@ int SaveLogger::GetNumObjs()
 	return curNumEntities;
 }
 
+void SaveLogger::SetEntityName(string oldName, string name)
+{
+	int objNum = GetObjNum(oldName);
+	entities[objNum * Imgn::MAXENTITYDATA][1] = name;
+}
+
 string SaveLogger::GetName(int objId)
 {
 	int currentObjId = objId * Imgn::MAXENTITYDATA;
@@ -391,8 +449,8 @@ void SaveLogger::AddObj(string SceneName, string ObjName)
 	int index = curNumEntities * Imgn::MAXENTITYDATA;
 
 	entities[index][0] = "Name";
-	if(ObjName == " ") entities[index][1] = "DefaultObject" + std::to_string(curNumEntities + 1);
-	else entities[index][1] = ObjName + std::to_string(curNumEntities + 1);
+	if(ObjName == " ") entities[index][1] = "DefaultObject_" + std::to_string(curNumEntities + 1);
+	else entities[index][1] = ObjName + "_" + std::to_string(curNumEntities + 1);
 
 	index++;
 	entities[index][0] = "SceneName";
@@ -412,18 +470,8 @@ void SaveLogger::SetComponent(int ObjNum, int componentNum, ImgnComponent* compo
 
 void SaveLogger::AddComponent(string objName, string ComponentName, ImgnComponent* Component)
 {
-	int currentObjNum = -1;
-	for (int i = 0; i < currentEntityDataType; i += Imgn::MAXENTITYDATA)
-	{
-		if (entities[i][0] == "Name")
-		{
-			currentObjNum++;
-		}
-		if (entities[i][1] == objName)
-		{
-			break;
-		}
-	}
+	int currentObjNum = GetObjNum(objName);
+
 	AddComponent(currentObjNum, ComponentName,Component);
 }
 
@@ -435,6 +483,23 @@ void SaveLogger::AddComponent(int objNum, string ComponentName, ImgnComponent* C
 	componentNames[objNum][0] = std::to_string(numComponents);
 	componentNames[objNum][numComponents] = ComponentName;
 	components[objNum][numComponents] = Component;
+}
+
+int SaveLogger::GetObjNum(string objName)
+{
+	int currentObjNum = -1;
+	for (int i = 0; i < currentEntityDataType; i += Imgn::MAXENTITYDATA)
+	{
+		if (entities[i][0] == "Name")
+		{
+			currentObjNum++;
+		}
+		if (entities[i][1] == objName)
+		{
+			break;
+		}
+	}	
+	return currentObjNum;
 }
 
 void SaveLogger::AddComponentData(int ObjNum, string ComponentName, Imgn::DisplayData* DisplayData)

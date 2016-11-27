@@ -65,13 +65,17 @@ void HierarchyButton::mousePressEvent(QMouseEvent * event)
 
 void HierarchyButton::ViewablePressed()
 {
-	Imgn::Entity* entity;
+	Imgn::Entity* entity = 0;
 	for (int i = 0; i < ImgnViewport::entityManager.num_Objs; i++)
 	{
 		if (text() == ImgnViewport::entityManager.entities[i].GetName())
 		{
 			entity = &ImgnViewport::entityManager.entities[i];
 		}
+	}
+	if (!entity)
+	{
+		std::cout << "Could not find Entity";
 	}
 	if (!isViewable->isChecked())
 	{

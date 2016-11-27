@@ -13,6 +13,8 @@ namespace Imgn
 	{
 		memset(m_components, 0, MAX_COMPONENTS_PERENTITY * sizeof(m_components[0]));
 		numComponents = 0;
+		SetName("");
+		
 	}
 	
 	Entity::~Entity()

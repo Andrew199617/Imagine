@@ -26,6 +26,7 @@ public:
 
 public:
 	void SaveEntities();
+	void RemoveEntity(int EntityToRemove);
 
 public:
 	void Update(float dt, bool isPlaying);
@@ -64,6 +65,5 @@ private:
 	ObjectSelectorComponent* objController;
 
 	ObjTransformerEntity objectTransformer;
-
 };
 

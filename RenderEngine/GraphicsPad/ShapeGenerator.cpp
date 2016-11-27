@@ -24,31 +24,31 @@ float ranFloat()
 	return rand() / (float)RAND_MAX;
 }
 
-Geometry * ShapeGenerator::DrawQuad()
-{
-	static const GLfloat g_quad_vertex_buffer_data[] = {
-		-1.0f, -1.0f, 0.0f,
-		1.0f, -1.0f, 0.0f,
-		-1.0f,  1.0f, 0.0f,
-		-1.0f,  1.0f, 0.0f,
-		1.0f, -1.0f, 0.0f,
-		1.0f,  1.0f, 0.0f,
-	};
-
-	geoArray[numGeos].texturePath = "0";
-	geoArray[numGeos].objName = "Quad";
-	geoArray[numGeos].m_vertexCount = NUM_ARRAY_ELEMENTS(g_quad_vertex_buffer_data);
-	//geoArray[numGeos].vertices = &g_quad_vertex_buffer_data[0];
-	geoArray[numGeos].m_vertexStride = sizeof(vPositionColor);
-	geoArray[numGeos].m_vertexByteOffset = byteOffset;
-	byteOffset += geoArray[numGeos].m_vertexCount * geoArray[numGeos].m_vertexStride;
-
-	RenderEngine::AddGeometry(geoArray[numGeos].vertices, geoArray[numGeos].m_vertexCount, geoArray[numGeos].m_vertexCount * geoArray[numGeos].m_vertexStride, geoArray[numGeos]);
-
-	numGeos++;
-
-	return &geoArray[numGeos - 1];
-}
+//Geometry * ShapeGenerator::DrawQuad()
+//{
+//	static const GLfloat g_quad_vertex_buffer_data[] = {
+//		-1.0f, -1.0f, 0.0f,
+//		1.0f, -1.0f, 0.0f,
+//		-1.0f,  1.0f, 0.0f,
+//		-1.0f,  1.0f, 0.0f,
+//		1.0f, -1.0f, 0.0f,
+//		1.0f,  1.0f, 0.0f,
+//	};
+//
+//	geoArray[numGeos].texturePath = "0";
+//	geoArray[numGeos].objName = "Quad";
+//	geoArray[numGeos].m_vertexCount = NUM_ARRAY_ELEMENTS(g_quad_vertex_buffer_data);
+//	//geoArray[numGeos].vertices = &g_quad_vertex_buffer_data[0];
+//	geoArray[numGeos].m_vertexStride = sizeof(vPositionColor);
+//	geoArray[numGeos].m_vertexByteOffset = byteOffset;
+//	byteOffset += geoArray[numGeos].m_vertexCount * geoArray[numGeos].m_vertexStride;
+//
+//	RenderEngine::AddGeometry(geoArray[numGeos].vertices, geoArray[numGeos].m_vertexCount, geoArray[numGeos].m_vertexCount * geoArray[numGeos].m_vertexStride, geoArray[numGeos]);
+//
+//	numGeos++;
+//
+//	return &geoArray[numGeos - 1];
+//}
 
 Geometry * ShapeGenerator::makeLine(glm::vec3 point1, glm::vec3 point2)
 {
@@ -100,8 +100,8 @@ Geometry * ShapeGenerator::makeLine(glm::vec3 point1, glm::vec3 point2)
 	byteOffset += geoArray[numGeos].m_indexCount * geoArray[numGeos].m_indexStride;
 	geoArray[numGeos].VertexFormat = 3;
 
-	RenderEngine::AddGeometry(geoArray[numGeos].vertices, geoArray[numGeos].m_vertexCount, geoArray[numGeos].m_vertexCount * geoArray[numGeos].m_vertexStride, geoArray[numGeos].indices,
-		geoArray[numGeos].m_indexCount, geoArray[numGeos].m_indexCount * geoArray[numGeos].m_indexStride, geoArray[numGeos]);
+	RenderEngine::AddGeometry(geoArray[numGeos].vertices, geoArray[numGeos].m_vertexCount * geoArray[numGeos].m_vertexStride, geoArray[numGeos].indices,
+		geoArray[numGeos].m_indexCount * geoArray[numGeos].m_indexStride, geoArray[numGeos]);
 
 	numGeos++;
 
@@ -197,8 +197,8 @@ Geometry* ShapeGenerator::readScene(string ObjName)
 	byteOffset += geoArray[numGeos].m_indexCount * geoArray[numGeos].m_indexStride;
 	geoArray[numGeos].VertexFormat = scene->SceneOutputFormat;
 
-	RenderEngine::AddGeometry(geoArray[numGeos].vertices, geoArray[numGeos].m_vertexCount, geoArray[numGeos].m_vertexCount * geoArray[numGeos].m_vertexStride, geoArray[numGeos].indices,
-		geoArray[numGeos].m_indexCount, geoArray[numGeos].m_indexCount * geoArray[numGeos].m_indexStride, geoArray[numGeos]);
+	RenderEngine::AddGeometry(geoArray[numGeos].vertices, geoArray[numGeos].m_vertexCount * geoArray[numGeos].m_vertexStride, geoArray[numGeos].indices,
+		geoArray[numGeos].m_indexCount * geoArray[numGeos].m_indexStride, geoArray[numGeos]);
 
 	numGeos++;
 

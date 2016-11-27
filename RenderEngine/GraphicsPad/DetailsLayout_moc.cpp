@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'DetailsLayout.h'
 **
-** Created: Fri Oct 21 15:27:34 2016
+** Created: Wed Nov 16 15:24:18 2016
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const qtuint qt_meta_data_DetailsLayout[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -34,6 +34,7 @@ static const qtuint qt_meta_data_DetailsLayout[] = {
       15,   14,   14,   14, 0x08,
       31,   14,   14,   14, 0x08,
       52,   14,   14,   14, 0x08,
+      65,   14,   14,   14, 0x08,
 
        0        // eod
 };
@@ -41,6 +42,7 @@ static const qtuint qt_meta_data_DetailsLayout[] = {
 static const char qt_meta_stringdata_DetailsLayout[] = {
     "DetailsLayout\0\0ButtonPressed()\0"
     "CreateNewComponent()\0ResizeMenu()\0"
+    "ChangeName()\0"
 };
 
 void DetailsLayout::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -52,6 +54,7 @@ void DetailsLayout::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         case 0: _t->ButtonPressed(); break;
         case 1: _t->CreateNewComponent(); break;
         case 2: _t->ResizeMenu(); break;
+        case 3: _t->ChangeName(); break;
         default: ;
         }
     }
@@ -90,9 +93,9 @@ int DetailsLayout::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 4;
     }
     return _id;
 }

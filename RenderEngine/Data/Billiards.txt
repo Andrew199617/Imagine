@@ -1,0 +1,90 @@
+Name Cue_Stick
+SceneName PollCue
+Components 2 {
+    MeshComponent
+    {
+        C:\Users\Andrew\Documents\Neumont\Imagine\StaticData\Texture\Cue_Stick.bmp
+    }
+    SpatialComponent
+    {
+        (0.000000,10.000000,0.000000)
+        (0.000000,0.000000,0.000000)
+        (1.000000,1.000000,1.000000)
+    }
+}
+
+Name Cue_Stick_2
+SceneName PollCue
+Components 2 {
+    MeshComponent
+    {
+        C:\Users\Andrew\Documents\Neumont\Imagine\StaticData\Texture\Cue_Stick_2.bmp
+    }
+    SpatialComponent
+    {
+        (5.000000,10.000000,0.000000)
+        (0.000000,0.000000,0.000000)
+        (1.000000,1.000000,1.000000)
+    }
+}
+
+Name Cue_Ball
+SceneName PoolBall
+Components 2 {
+    MeshComponent
+    {
+        C:\Users\Andrew\Documents\Neumont\Imagine\StaticData\Texture\Cue_Ball.bmp
+    }
+    SpatialComponent
+    {
+        (-5.000000,10.000000,0.000000)
+        (0.000000,0.000000,0.000000)
+        (1.000000,1.000000,1.000000)
+    }
+}
+
+Name Ball_1
+SceneName PoolBall
+Components 2 {
+    MeshComponent
+    {
+        C:\Users\Andrew\Documents\Neumont\Imagine\StaticData\Texture\Cue_Ball_1.bmp
+    }
+    SpatialComponent
+    {
+        (-10.000000,10.000000,0.000000)
+        (0.000000,0.000000,0.000000)
+        (1.000000,1.000000,1.000000)
+    }
+}
+
+Name Ball_2
+SceneName PoolBall
+Components 2 {
+    MeshComponent
+    {
+        C:\Users\Andrew\Documents\Neumont\Imagine\StaticData\Texture\PoolBalls\pool_balls_2.bmp
+    }
+    SpatialComponent
+    {
+        (-15.000000,10.000000,0.000000)
+        (0.000000,0.000000,0.000000)
+        (1.000000,1.000000,1.000000)
+    }
+}
+
+Name PoolTable
+SceneName PoolTable
+Components 2 {
+    MeshComponent
+    {
+        C:\Users\Andrew\Documents\Neumont\Imagine\StaticData\Texture\PoolTable_Tex_D.bmp
+    }
+    SpatialComponent
+    {
+        (0.000000,0.000000,0.000000)
+        (0.000000,0.000000,0.000000)
+        (1.000000,1.000000,1.000000)
+    }
+}
+

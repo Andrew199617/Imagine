@@ -18,6 +18,17 @@ void Hierarchy::AddEntity(Imgn::Entity entities)
 	m_Layout->insertStretch(-1, 1);
 }
 
+void Hierarchy::SetEntityName(Imgn::Entity* currentEntity, std::string newName)
+{
+	for (int i = 0; i < ImgnViewport::entityManager.num_Objs; ++i)
+	{
+		if (objectsInScene[i] && objectsInScene[i]->text() == currentEntity->GetName())
+		{
+			objectsInScene[i]->setText(newName.c_str());
+		}
+	}
+}
+
 Hierarchy::Hierarchy()
 {
 	memset(objectsInScene, 0, sizeof(objectsInScene));
@@ -36,6 +47,20 @@ void Hierarchy::SetEntity(std::string name)
 		if (objectsInScene[i] && objectsInScene[i]->text() == name.c_str())
 		{
 			objectsInScene[i]->SetAsActiveButton();
+		}
+	}
+}
+
+void Hierarchy::RemoveEntity(const char * EntityName)
+{
+	for (int i = 0; i < ImgnViewport::entityManager.num_Objs; ++i)
+	{
+		if (objectsInScene[i] && objectsInScene[i]->text() == EntityName)
+		{
+			objectsInScene[i]->SetCurPressedButton(0);
+			m_Layout->removeWidget(objectsInScene[i]);
+			delete objectsInScene[i];
+			objectsInScene[i] = 0;
 		}
 	}
 }

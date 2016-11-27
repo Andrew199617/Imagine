@@ -58,6 +58,17 @@ Imgn::DisplayData* ImgnComponent::GetDisplayData()
 	else return 0;
 }
 
+void ImgnComponent::LoadComponentData()
+{
+	/*if (displayData && displayData->hasData)
+	{
+		for (int i = 0; i < displayData->numValues; ++i)
+		{
+
+		}
+	}*/
+}
+
 void ImgnComponent::CreateWidgets()
 {
 	DisplayInEngine();
