@@ -79,41 +79,41 @@ namespace Imgn
 		connect(cancelButton, SIGNAL(pressed()), this, SLOT(close()));
 		buttonLayout->addWidget(addButton);
 		buttonLayout->addWidget(cancelButton);
-		//this->setStyleSheet("QPushButton {}");
 	}
 
 	void ImgnCreateComponent::CreateClass()
 	{
-		std::string s = className->text().toLocal8Bit().constData();
-		ImgnToolBar::classesToCompile[0] = s;
-		std::ofstream outputFile(s + ".h");
+		std::string local_ClassName = className->text().toLocal8Bit().constData();
+		std::string outputDir = "C:/Users/Andrew/Documents/Neumont/Imagine/RenderEngine/GameName/";
+		ImgnToolBar::classesToCompile[0] = outputDir + local_ClassName;
+		std::ofstream outputFile(ImgnToolBar::classesToCompile[0] + ".h");
 
 		outputFile << "#pragma once" << std::endl;
 		outputFile << "#include \"ImgnComponent.h\"" << std::endl;
 		outputFile << "#include \"DetailsLayout.h\"" << std::endl;
 		outputFile << "#include \"ImgnProperties.h\"" << std::endl << std::endl;
-		outputFile << "class " << s << " :" << std::endl;
+		outputFile << "class " << local_ClassName << " :" << std::endl;
 		outputFile << "	public ImgnComponent" << std::endl;
 		outputFile << "{" << std::endl;
-		outputFile << "	IMGN_GENERATE(" << s << ")" << std::endl;
-		outputFile << "	\\\\Use IMGN_PROPERTY(var_name) to have variable appear in editor" << std::endl;
-		outputFile << "	\\\\IMGN_PROPERTY(gravity, 9.8)" << std::endl;
-		outputFile << "	\\\\..." << std::endl;
-		outputFile << "	IMGN_END(" << s << ")" << std::endl;
+		outputFile << "	IMGN_GENERATE(" << local_ClassName << ")" << std::endl;
+		outputFile << "	////Use IMGN_PROPERTY(var_name) to have variable appear in editor" << std::endl;
+		outputFile << "	////IMGN_PROPERTY(gravity, 9.8)" << std::endl;
+		outputFile << "	////..." << std::endl;
+		outputFile << "	IMGN_END(" << local_ClassName << ")" << std::endl;
 		outputFile << "public:" << std::endl;
 		outputFile << "};" << std::endl;
 
 		outputFile.close(); 
-		outputFile.open(s + ".cpp");
+		outputFile.open(ImgnToolBar::classesToCompile[0] + ".cpp");
 
-		outputFile << "#include \"" << s << ".h\"" << std::endl << std::endl;
-		outputFile << s << "::~" << s << "()" << std::endl;
+		outputFile << "#include \"" << local_ClassName << ".h\"" << std::endl << std::endl;
+		outputFile << local_ClassName << "::~" << local_ClassName << "()" << std::endl;
 		outputFile << "{" << std::endl << std::endl;
 		outputFile << "}" << std::endl;
 
 		outputFile.close();
-		system((s + ".h").c_str());
-		system((s + ".cpp").c_str());
+		system((ImgnToolBar::classesToCompile[0] + ".h").c_str());
+		system((ImgnToolBar::classesToCompile[0] + ".cpp").c_str());
 		this->close();
 		
 	}

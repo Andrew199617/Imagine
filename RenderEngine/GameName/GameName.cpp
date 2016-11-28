@@ -2,14 +2,14 @@
 //
 
 #include "stdafx.h"
-#include "Test.h"
+#include "Pickup.h"
 
-Test* test = new Test();
+Pickup* test = new Pickup();
 
 extern "C" ImgnComponent* AddActionToDetailsLayout(string* s);
 
 extern "C" ImgnComponent* AddActionToDetailsLayout(string* s)
 {
-	*s = typeid(Test).name();
+	*s = typeid(Pickup).name();
 	return test;
 }

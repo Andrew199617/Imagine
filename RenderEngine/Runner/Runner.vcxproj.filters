@@ -25,4 +25,9 @@
     <None Include="CSS\ContentBrowser.qss" />
     <None Include="CSS\Hierarchy.qss" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ImagineStates.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>

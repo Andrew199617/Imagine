@@ -128,6 +128,7 @@ void SaveLogger::Open(const char* filename)
 	}
 
 	meInput.close();
+	buffer.clear();
 	GameLogger::log("Save Logger file loaded");
 }
 
@@ -214,6 +215,7 @@ void SaveLogger::DeleteData()
 		numUniqueComponents = 0;
 		uniqueComponentNames.clear();
 		currentFilename = "";
+		
 		memset(componentNames, 0, sizeof(componentNames));
 		memset(entities, 0, sizeof(entities));
 		memset(componentsData, 0, sizeof(componentsData));

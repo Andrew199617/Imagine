@@ -44,24 +44,8 @@ void ImgnToolBar::AddTool(ImgnTool * Tool)
 
 void ImgnToolBar::Compile()
 {
-	/*std::ofstream outputFile;
-	outputFile.open("ProjectName\\ProjectComponents.hpp");
-	outputFile << "#pragma once" << "\n";
-	outputFile << "#include \"..\\" << classesToCompile[0] << ".h\"" << "\n\n";
-	outputFile << "#define ADDABLECOMPONENTS() ";
-	outputFile << "CreateAction<" << classesToCompile[0] << ">();";
-	outputFile.close();
 
-	string laguage = "g++ ";
-	string hfile = classesToCompile[0] + ".h";
-	string cppfile = classesToCompile[0] + ".cpp";
-	string idk2 = " output";
-	string idk1 = " -o ";
-	system((laguage + cppfile).c_str());
-	system((laguage + "ProjectComponents.hpp").c_str());
-	system((laguage + "DetailsLayout.cpp").c_str());*/
-
-	//DetailsLayout::Instance()->CreateMenu();
+	DetailsLayout::Instance()->CreateMenu();
 }
 
 std::string ImgnToolBar::classesToCompile[] = { "" };

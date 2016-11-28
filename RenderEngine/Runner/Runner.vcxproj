@@ -159,6 +159,9 @@
     <None Include="CSS\ImgnToolBar.qss" />
     <None Include="CSS\QMenu.qss" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ImagineStates.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
