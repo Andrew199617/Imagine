@@ -7,8 +7,13 @@ class Pickup :
 	public ImgnComponent
 {
 	IMGN_GENERATE(Pickup)
-	IMGN_PROPERTY(timeBeforeDelete, 1.0f)
+	IMGN_PROPERTY(rotationSpeed, 2)
 	IMGN_END(Pickup)
 public:
-	float timeBeforeDelete;
+	float rotationSpeed;
+	int Score;
+
+	virtual void Update(float) override;
+
+
 };

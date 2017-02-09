@@ -31,7 +31,7 @@ void ImgnToolBar::Initialize()
 	connect(buttons[Imgn::COMPILE_BUTTON], SIGNAL(pressed()), this, SLOT(Compile()));
 	
 	//should calculate width depending on if buttons have ExtraOptions.
-	this->setFixedSize(Imgn::NUM_TOOLS * 79,55);
+	this->setFixedSize(Imgn::NUM_TOOLS * 60,55);
 }
 
 void ImgnToolBar::AddTool(ImgnTool * Tool)

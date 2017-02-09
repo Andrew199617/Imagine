@@ -84,7 +84,7 @@ namespace Imgn
 	void ImgnCreateComponent::CreateClass()
 	{
 		std::string local_ClassName = className->text().toLocal8Bit().constData();
-		std::string outputDir = "C:/Users/Andrew/Documents/Neumont/Imagine/RenderEngine/GameName/";
+		std::string outputDir = "../GameName/";
 		ImgnToolBar::classesToCompile[0] = outputDir + local_ClassName;
 		std::ofstream outputFile(ImgnToolBar::classesToCompile[0] + ".h");
 

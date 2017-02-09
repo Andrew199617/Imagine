@@ -90,6 +90,7 @@
   <ItemGroup>
     <ClCompile Include="AIEntity.cpp" />
     <ClCompile Include="ArrivalComponent.cpp" />
+    <ClCompile Include="CBFolderDataHolder.cpp" />
     <ClCompile Include="CBDirectory.cpp" />
     <ClCompile Include="CBDirectory_moc.cpp" />
     <ClCompile Include="CBFile.cpp" />
@@ -124,8 +125,11 @@
     <ClCompile Include="ImgnCreateComponent_moc.cpp" />
     <ClCompile Include="ImgnFolder.cpp" />
     <ClCompile Include="ImgnFolder_moc.cpp" />
+    <ClCompile Include="ImgnLabel.cpp" />
     <ClCompile Include="ImgnLineEdit.cpp" />
     <ClCompile Include="ImgnMainWindow_moc.cpp" />
+    <ClCompile Include="ImgnMimeData.cpp" />
+    <ClCompile Include="ImgnMimeData_moc.cpp" />
     <ClCompile Include="ImgnProperties.cpp" />
     <ClCompile Include="ImgnTool.cpp" />
     <ClCompile Include="ImgnToolBar.cpp" />
@@ -188,6 +192,7 @@
     <ClInclude Include="AIEntity.h" />
     <ClInclude Include="Area.h" />
     <ClInclude Include="ArrivalComponent.h" />
+    <ClInclude Include="CBFolderDataHolder.h" />
     <ClInclude Include="CBDirectory.h" />
     <ClInclude Include="CBFile.h" />
     <ClInclude Include="CBFilesButton.h" />
@@ -221,7 +226,9 @@
     <ClInclude Include="ImgnFolder.h" />
     <ClInclude Include="ImgnFrame.h" />
     <ClInclude Include="ImgnFwd.hpp" />
+    <ClInclude Include="ImgnLabel.h" />
     <ClInclude Include="ImgnLineEdit.h" />
+    <ClInclude Include="ImgnMimeData.h" />
     <ClInclude Include="ImgnProperties.h" />
     <ClInclude Include="ImgnTool.h" />
     <ClInclude Include="ImgnToolBar.h" />

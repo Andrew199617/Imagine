@@ -18,11 +18,16 @@ namespace Imgn
 
 	bool RigidBody::Initialize()
 	{
+		motion = 0;
 		SpatialComponent* spatial = GetSiblingComponent<SpatialComponent>();
 		if (spatial)
 		{
 			position = spatial->GetPosition();
 			rotation = glm::eulerAngles(spatial->GetRotate());
+		}
+		if (useGravity)
+		{
+			SetVelocity(gravity);
 		}
 		return true;
 	}
@@ -37,8 +42,10 @@ namespace Imgn
 		}
 		if (useGravity)
 		{
-			AddForce(Gravity());
+			AddForce(Gravity()); 
+			//acceleration += gravity;
 		}
+		
 		Integrate(dt);
 	}
 
@@ -78,16 +85,21 @@ namespace Imgn
 
 		// Update the kinetic energy store, and possibly put the body to
 		// sleep.
-		/*if (canSleep) {
-			real currentMotion = velocity.scalarProduct(velocity) +
-				rotation.scalarProduct(rotation);
+		//if (canSleep) {
+		real currentMotion = velocity.scalarProduct(velocity) + rotation.scalarProduct(rotation);
 
-			real bias = real_pow(0.5, duration);
-			motion = bias*motion + (1 - bias)*currentMotion;
-
-			if (motion < sleepEpsilon) Component::Disable();
-			else if (motion > 10 * sleepEpsilon) motion = 10 * sleepEpsilon;
-		}*/
+		real bias = real_pow(0.5, duration);
+		motion = bias*motion + (1 - bias)*currentMotion;
+		float sleepEpsilon = .1f;
+		if (motion < sleepEpsilon)
+		{
+			Component::Disable();
+		}
+		else if (motion > 10 * sleepEpsilon)
+		{
+			motion = 10 * sleepEpsilon;
+		}
+		//}
 	}
 
 	bool RigidBody::HasFiniteMass()
@@ -124,7 +136,7 @@ namespace Imgn
 	void RigidBody::AddForce(const Vector3 &force)
 	{
 		forceAccum += force;
-		//Enable();
+		Enable();
 	}
 
 	void RigidBody::addForceAtPoint(const Vector3 &force, const Vector3 &point)

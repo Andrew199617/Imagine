@@ -3,6 +3,7 @@
 #include "Entity.h"
 class HierarchyButton;
 class QVBoxLayout;
+class ImgnLabel;
 #define MAX_OBJS 500
 
 class Hierarchy : public ImgnFrame
@@ -30,6 +31,7 @@ protected:
 private:
 	static Hierarchy* instance;
 
+	ImgnLabel* label;
 	QVBoxLayout* m_Layout;
 	HierarchyButton* objectsInScene[MAX_OBJS];
 

@@ -9,7 +9,7 @@ class CBFile : public ImgnWidget
 {
 public:
 	CBFile();
-	CBFile(dirent* Entry);
+	CBFile(dirent* Entry,std::string FilePath);
 	~CBFile();
 
 protected:
@@ -18,9 +18,10 @@ protected:
 private:
 	QVBoxLayout* m_layout;
 	std::string name;
+	std::string filePath;
 
 	CBFilesButton* button;
-	QLabel* fileName;
+	QLabel* fileNameLabel;
 	dirent* entry;
 
 };

@@ -9,6 +9,7 @@
 #include "gtc\matrix_transform.hpp"
 #include "gtx\transform.hpp"
 #include "RenderEngine\RenderEngine.h"
+#include "ImgnViewport.h"
 #define Q 81
 #define W 87
 #define R 82
@@ -70,46 +71,65 @@ void ObjectSelectorComponent::ProcessMousePress(QMouseEvent * qme,EntityManager*
 {
 	if (qme->button() & Qt::RightButton)
 	{
-		if (numMeshes > 0)
+		int _objectSelectedLocal = -1;
+		_objectSelectedLocal = SelectObject(qme->pos());
+		if (_objectSelectedLocal != -1)
 		{
-			CameraComponent* camera = GetSiblingComponent<CameraComponent>();
-			SpatialComponent* spatial = GetSiblingComponent<SpatialComponent>();
-			Imgn::Vector3 direction = camera->viewDirection;
-			position = spatial->GetPosition();
-
-			mouseX = qme->pos().x();
-			mouseY = 0 - (qme->pos().y() - screenHeight);
-			mouseX = mouseX / screenWidth * 2 - 1.0f;
-			mouseY = mouseY / screenHeight * 2 - 1.0f;
-
-			Imgn::Vector3 screenHoritzontally = glm::cross(direction, glm::vec3(0, 1, 0));
-			screenHoritzontally.normalize();
-			Imgn::Vector3 screenVertically = glm::cross(screenHoritzontally, direction);
-			screenVertically.normalize();
-
-			SetFovAndNear(90, 1.0f);
-
-			screenVertically *= halfHeight;
-			screenHoritzontally *= halfScaledAspectRatio;
-
-			Imgn::Vector3 pos = position + direction;
-			pos += (screenVertically*mouseY + screenHoritzontally*mouseX);
-			dir = pos - position;
-
-			if (drawRay)
+			if (entityManager->CurrentlySelectedObject() != _objectSelectedLocal)
 			{
-				renderinfo.setGeometry(ShapeGenerator::makeLine(position, dir * 100));
+				entityManager->SetCurrentlySelectedObject(_objectSelectedLocal);
 			}
 		}
-		GetVerts();
-		if (objSelected != -1)
+	}
+}
+
+int ObjectSelectorComponent::SelectObject(QPoint pos)
+{
+	int _objectSelectedLocal = -1;
+	CalculateRayDir(pos);
+	GetVerts();
+
+	if (objSelected != -1)
+	{
+		_objectSelectedLocal = objSelected;
+
+		objSelected = -1;
+		objSelectedMinT = FLT_MAX;
+	}
+	return _objectSelectedLocal;
+}
+
+void ObjectSelectorComponent::CalculateRayDir(QPoint pos)
+{
+	if (numMeshes > 0)
+	{
+		CameraComponent* camera = GetSiblingComponent<CameraComponent>();
+		SpatialComponent* spatial = GetSiblingComponent<SpatialComponent>();
+		Imgn::Vector3 direction = camera->viewDirection;
+		position = spatial->GetPosition();
+
+		mouseX = pos.x();
+		mouseY = 0 - (pos.y() - screenHeight);
+		mouseX = mouseX / screenWidth * 2 - 1.0f;
+		mouseY = mouseY / screenHeight * 2 - 1.0f;
+
+		Imgn::Vector3 screenHoritzontally = glm::cross(direction, glm::vec3(0, 1, 0));
+		screenHoritzontally.normalize();
+		Imgn::Vector3 screenVertically = glm::cross(screenHoritzontally, direction);
+		screenVertically.normalize();
+
+		SetFovAndNear(90, 1.0f);
+
+		screenVertically *= halfHeight;
+		screenHoritzontally *= halfScaledAspectRatio;
+
+		Imgn::Vector3 pos = position + direction;
+		pos += (screenVertically*mouseY + screenHoritzontally*mouseX);
+		dir = pos - position;
+
+		if (drawRay)
 		{
-			if (entityManager->CurrentlySelectedObject() != objSelected)
-			{
-				entityManager->SetCurrentlySelectedObject(objSelected);
-			}
-			objSelected = -1;
-			objSelectedMinT = FLT_MAX;
+			renderinfo.setGeometry(ShapeGenerator::makeLine(position, dir * 100));
 		}
 	}
 }

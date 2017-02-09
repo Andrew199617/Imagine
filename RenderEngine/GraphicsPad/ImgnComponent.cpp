@@ -11,7 +11,7 @@
 	ImgnLineEdit* lineEdit = new ImgnLineEdit(std::to_string(*static_cast<type*>(displayData->values[i])),this); \
 	lineEdit->setObjectName(displayData->variableNames[i].c_str()); \
 	properties[i]->addWidget(lineEdit); \
-	connect(lineEdit, SIGNAL(returnPressed()), this, SLOT(LineEdited())); \
+	connect(lineEdit, SIGNAL(editingFinished()), this, SLOT(LineEdited())); \
 } \
 
 #define UPDATEQLINEEDIT(type, Type) if (name == typeid(type*).name()) \
@@ -146,7 +146,7 @@ void ImgnComponent::DisplayInEngine()
 					ImgnLineEdit* lineEdit = new ImgnLineEdit((*static_cast<string*>(displayData->values[i])), this);
 					lineEdit->setObjectName(displayData->variableNames[i].c_str());
 					properties[i]->addWidget(lineEdit); 
-					connect(lineEdit, SIGNAL(returnPressed()), this, SLOT(LineEdited())); 
+					connect(lineEdit, SIGNAL(editingFinished()), this, SLOT(LineEdited()));
 				}
 				else if (name == typeid(char**).name())
 				{
@@ -193,9 +193,9 @@ void ImgnComponent::AddVec3(int i)
 	properties[i]->addWidget(lineEditX);
 	properties[i]->addWidget(lineEditY);
 	properties[i]->addWidget(lineEditZ);
-	connect(lineEditX, SIGNAL(returnPressed()), this, SLOT(LineEdited()));
-	connect(lineEditY, SIGNAL(returnPressed()), this, SLOT(LineEdited()));
-	connect(lineEditZ, SIGNAL(returnPressed()), this, SLOT(LineEdited()));
+	connect(lineEditX, SIGNAL(editingFinished()), this, SLOT(LineEdited()));
+	connect(lineEditY, SIGNAL(editingFinished()), this, SLOT(LineEdited()));
+	connect(lineEditZ, SIGNAL(editingFinished()), this, SLOT(LineEdited()));
 }
 
 void ImgnComponent::LineEdited()
@@ -206,6 +206,7 @@ void ImgnComponent::LineEdited()
 
 	for (int i = 0; i < displayData->numValues; i++)
 	{
+		
 		if (objectName == displayData->variableNames[i])
 		{
 			std::string name = displayData->typeName[i];

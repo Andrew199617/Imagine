@@ -25,7 +25,7 @@ public:
 	void moveDown(float dt);
 	void Jump(int time, float dt);
 
-
+	void OnCollisionEnter(Imgn::Entity*);
 	virtual void Update(float dt) override;
 
 public:

@@ -280,7 +280,7 @@ public:
     inline DataPtr &data_ptr() { return d; }
 };
 
-inline uint qHash(const QUrl &url)
+inline qtuint qHash(const QUrl &url)
 {
     return qHash(url.toEncoded(QUrl::FormattingOption(0x100)));
 }

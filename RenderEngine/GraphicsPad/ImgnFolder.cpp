@@ -34,8 +34,8 @@ ImgnFolder::~ImgnFolder()
 
 void ImgnFolder::Initialize()
 {
-	showingFolderData = 0;
-	showingDirectory = 0;
+	showingFolderData = false;
+	showingDirectory = false;
 	hasChildren = 0;
 	curFolder = 0;
 	m_Layout = new QVBoxLayout;
@@ -44,11 +44,11 @@ void ImgnFolder::Initialize()
 	m_Layout->setContentsMargins(0, 0, 0, 0);
 	this->setLayout(m_Layout);
 
-	m_Layout->addWidget(folder = new FolderButton, 0, Qt::AlignTop);
-	folder->setObjectName(objectName());
-	folder->setText(objectName());
-	connect(folder, SIGNAL(DoubleClicked()), this, SLOT(UpdateDirectory()));
-	connect(folder, SIGNAL(pressed()), this, SLOT(Pressed()));
+	m_Layout->addWidget(folderButton = new FolderButton, 0, Qt::AlignTop);
+	folderButton->setObjectName(objectName());
+	folderButton->setText(objectName());
+	connect(folderButton, SIGNAL(DoubleClicked()), this, SLOT(UpdateDirectory()));
+	connect(folderButton, SIGNAL(pressed()), this, SLOT(Pressed()));
 
 	setMinimumWidth(300);
 	sizePolicy().setHorizontalPolicy(QSizePolicy::Policy::Expanding);							
@@ -56,8 +56,9 @@ void ImgnFolder::Initialize()
 
 	std::string str = std::to_string(folderLevel * 25 + 20) + ";}";
 	std::string menuIndicatorStyle = "QPushButton::menu-indicator { left: " + std::to_string(folderLevel * 25 + 5) + ";}";
-	folder->setStyleSheet(folder->styleSheet() + ("QPushButton { padding-left: " + str + menuIndicatorStyle).c_str());
+	folderButton->setStyleSheet(folderButton->styleSheet() + ("QPushButton { padding-left: " + str + menuIndicatorStyle).c_str());
 	
+	UpdateDirectory();
 }
 
 void ImgnFolder::UpdateDirectory()
@@ -65,12 +66,12 @@ void ImgnFolder::UpdateDirectory()
 	if (!showingDirectory)
 	{
 		ShowDirectory();
-		folder->SetCheckedMenu(true);
+		folderButton->SetCheckedMenu(true);
 	}
 	else
 	{
 		HideDirectory();
-		folder->SetCheckedMenu(false);
+		folderButton->SetCheckedMenu(false);
 	}
 	showingDirectory = !showingDirectory;
 }
@@ -121,9 +122,9 @@ void ImgnFolder::Pressed(std::string objectName)
 
 void ImgnFolder::UnCheck(std::string objectName, CBFolderData* FolderData)
 {
-	if (folder->isChecked())
+	if (folderButton->isChecked())
 	{
-		folder->setChecked(false);
+		folderButton->setChecked(false);
 		UpdateFolderData(FolderData);
 	}
 	int folderDataToShow = -1;
@@ -191,7 +192,7 @@ void ImgnFolder::UpdateFolderData(CBFolderData* FolderData)
 			{
 				if (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0)
 				{
-					FolderData->AddFile(entry);
+					FolderData->AddFile(entry,location.c_str());
 				}
 			}
 			closedir(pDIR);
@@ -199,7 +200,7 @@ void ImgnFolder::UpdateFolderData(CBFolderData* FolderData)
 		showingFolderData = true;
 		curFolderData = 0;
 	}
-	else if(!folder->isChecked())
+	else if(!folderButton->isChecked())
 	{
 		FolderData->DeleteData();
 		if (curFolderData)

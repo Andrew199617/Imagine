@@ -12,7 +12,6 @@
 #pragma warning(pop)
 class ImgnViewport;
 
-
 class MeGlWindow : public QGLWidget
 {
 	Q_OBJECT
@@ -23,6 +22,9 @@ protected:
 	void mouseMoveEvent(QMouseEvent*);
 	void mousePressEvent(QMouseEvent*);
 	void resizeGL(int w, int h);
+	void dragEnterEvent(QDragEnterEvent *event);
+	void dropEvent(QDropEvent *event);
+
 public:
 	void Initialize();
 	MeGlWindow(void);

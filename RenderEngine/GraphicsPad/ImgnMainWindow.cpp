@@ -41,6 +41,7 @@ ImgnMainWindow::ImgnMainWindow(MeGlWindow* meGl)
 	this->setStyleSheet("QMainWindow {background: solid gray}");
 
 	setWindowTitle(tr("Imagine"));
+	setAcceptDrops(true);
 }
 
 void ImgnMainWindow::CreateActions()
@@ -94,6 +95,10 @@ void ImgnMainWindow::CreateActions()
 	showHierarchy->setObjectName("ShowHierarchy");
 	showHierarchy->setToolTip(tr("Show/Hide the Hierarchy panel."));
 	connect(showHierarchy, SIGNAL(triggered()), this, SLOT(WindowsShowEvent()));
+
+	showContentBrowser = new QAction(tr("&Content Browser"), this);
+	showContentBrowser->setObjectName("ShowContentBrowser");
+	connect(showContentBrowser, SIGNAL(triggered()), this, SLOT(WindowsShowEvent()));
 }
 
 void ImgnMainWindow::CreateMenus()
@@ -116,18 +121,7 @@ void ImgnMainWindow::CreateMenus()
 	windowMenu->addAction(showDetails);
 	windowMenu->addAction(showTools);
 	windowMenu->addAction(showHierarchy);
-
-	QPalette palette = fileMenu->palette();
-	palette.setColor(backgroundRole(), QColor(224, 255, 255));
-	palette.setColor(foregroundRole(), QColor(224, 255, 255));
-	fileMenu->setPalette(palette);
-	fileMenu->setAutoFillBackground(true);
-	editMenu->setPalette(palette);
-	editMenu->setAutoFillBackground(true);
-	gameObjectMenu->setPalette(palette);
-	gameObjectMenu->setAutoFillBackground(true);
-	windowMenu->setPalette(palette);
-	windowMenu->setAutoFillBackground(true);
+	windowMenu->addAction(showContentBrowser);
 
 }
 
@@ -138,9 +132,9 @@ void ImgnMainWindow::AddTools()
 	playButton = new QPushButton;
 	ImgnTool* tool = new ImgnTool(playButton,new QPushButton("^"));
 	imgnToolBar->AddTool(tool);
-	QPixmap pixmap(tr("C:/Users/Andrew/Documents/Neumont/Imagine/StaticData/Images/Play.png"));
+	QPixmap pixmap(tr("../../StaticData/Images/Play.png"));
 	playIcon = new QIcon(pixmap);
-	pixmap.load(tr("C:/Users/Andrew/Documents/Neumont/Imagine/StaticData/Images/Pause.png"));
+	pixmap.load(tr("../../StaticData/Images/Pause.png"));
 	pauseIcon = new QIcon(pixmap);
 
 	playButton->setIcon(*playIcon);
@@ -160,8 +154,8 @@ void ImgnMainWindow::AddGlWindow()
 	mainLayout->addWidget(frame, 2, 2);
 	meGlWindowLayout->setMargin(1);
 	meGlWindowLayout->addWidget(meGlWindow);
-	frame->setMinimumWidth(1280);
-	frame->setMinimumHeight(720);
+	frame->setMinimumWidth(853);
+	frame->setMinimumHeight(480);
 	frame->setMaximumWidth(1920);
 	frame->setMaximumHeight(1080);
 
@@ -193,9 +187,6 @@ void ImgnMainWindow::AddContentBrowser()
 void ImgnMainWindow::mousePressEvent(QMouseEvent *)
 {
 	DetailsLayout::Instance()->ClearFocus();
-
-	//DELETE
-	hierarchyLayout->ResetQssFile();
 
 	if (focusWidget() != meGlWindow && focusWidget() != playButton)
 	{
@@ -236,12 +227,24 @@ void ImgnMainWindow::WindowsShowEvent()
 	{
 		hierarchyLayout->SetHidden(!hierarchyLayout->IsHidden());
 	}
+	else
+	{
+		contentBrowser->SetHidden(!contentBrowser->IsHidden());
+	}
+	
+
 }
 
 void ImgnMainWindow::openingFile()
 {
 	string str = openFileDialog.GetFile();
-	saveLogger->Open(str.c_str());
+	if (meGlWindow->forceShutdown())
+	{
+		saveLogger->Open(str.c_str());
+		saveLogger->WriteToEntityManager();
+		exit(0);
+	}
+
 }
 
 void ImgnMainWindow::DuplicateObject()

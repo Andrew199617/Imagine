@@ -226,7 +226,7 @@ private:
 Q_DECLARE_OPERATORS_FOR_FLAGS(QItemSelectionModel::SelectionFlags)
 
 // dummy implentation of qHash() necessary for instantiating QList<QItemSelectionRange>::toSet() with MSVC
-inline uint qHash(const QItemSelectionRange &) { return 0; }
+inline qtuint qHash(const QItemSelectionRange &) { return 0; }
 
 class Q_GUI_EXPORT QItemSelection : public QList<QItemSelectionRange>
 {

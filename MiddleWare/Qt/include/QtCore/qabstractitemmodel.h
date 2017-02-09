@@ -133,14 +133,14 @@ public:
     bool isValid() const;
 private:
     QPersistentModelIndexData *d;
-    friend uint qHash(const QPersistentModelIndex &);
+    friend qtuint qHash(const QPersistentModelIndex &);
 #ifndef QT_NO_DEBUG_STREAM
     friend Q_CORE_EXPORT QDebug operator<<(QDebug, const QPersistentModelIndex &);
 #endif
 };
 Q_DECLARE_TYPEINFO(QPersistentModelIndex, Q_MOVABLE_TYPE);
 
-inline uint qHash(const QPersistentModelIndex &index)
+inline qtuint qHash(const QPersistentModelIndex &index)
 { return qHash(index.d); }
 
 
@@ -404,8 +404,8 @@ inline QVariant QModelIndex::data(int arole) const
 inline Qt::ItemFlags QModelIndex::flags() const
 { return m ? m->flags(*this) : Qt::ItemFlags(0); }
 
-inline uint qHash(const QModelIndex &index)
-{ return uint((index.row() << 4) + index.column() + index.internalId()); }
+inline qtuint qHash(const QModelIndex &index)
+{ return qtuint((index.row() << 4) + index.column() + index.internalId()); }
 
 QT_END_NAMESPACE
 

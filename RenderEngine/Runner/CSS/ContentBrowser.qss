@@ -29,7 +29,7 @@ QPushButton::menu-indicator {
 	subcontrol-origin: padding; 
 	left: 5 px;
 	top: 1px;
-	image: url(C:/Users/Andrew/Documents/Neumont/Imagine/StaticData/Images/Down_Arrow.png);
+	image: url(../../Images/Down_Arrow.png);
 }
 
 QFrame#Directory {

@@ -71,7 +71,7 @@ void BoxCollider::Update(float dt)
 		else if (collisionData->componentNames[iCurComponent] == typeid(SphereCollider*).name())
 		{
 			//Detect Sphere Collision.
-			for (int jCurCollider = 0; (jCurCollider < collisionData->numSameComponents[iCurComponent] && jCurCollider != GetComponentTypeNum()); ++jCurCollider)
+			for (int jCurCollider = 0; (jCurCollider < collisionData->numSameComponents[iCurComponent] /*&& jCurCollider != GetComponentTypeNum()*/); ++jCurCollider)
 			{
 				SphereCollider* sphere = reinterpret_cast<SphereCollider*>(collisionData->components[iCurComponent][jCurCollider]);
 				if (sphere->IsDisabled())
@@ -99,17 +99,44 @@ void BoxCollider::Update(float dt)
 				if (distanceSquared < (radius * radius))
 				{
 					Imgn::RigidBody* v = sphere->GetSiblingComponent<Imgn::RigidBody>();
-					if (v)
+					if (isTrigger && isGround)
 					{
-						v->SetVelocity(Imgn::Vector3());
-						Imgn::Vector3 vec = Imgn::Vector3(glm::abs(sphereCenter.x - myCenter.x), glm::abs(sphereCenter.y - myCenter.y), glm::abs(sphereCenter.z - myCenter.z));
-						v->AddForce((v->Gravity() * -1) + Imgn::Vector3(vec / dt) );
-						//v->addForceAtPoint((v->Gravity() * -1) + /*vec * 9.8f +*/ rigidBody->GetVelocity(),Imgn::Vector3(glm::abs(sphereCenter.x - myCenter.x), glm::abs(sphereCenter.y - myCenter.y), glm::abs(sphereCenter.z - myCenter.z)));
 					}
+					else if (isTrigger)
+					{
+						glm::vec3 curVelocity = glm::vec3();
+						if (abs(v->GetVelocity().x) > .25f || abs(v->GetVelocity().z) > .25f)
+						{
+							curVelocity = v->GetVelocity();
+							v->SetVelocity(glm::vec3());
+						}
+						v->AddForce(rigidBody->GetVelocity() * 2 / dt + (-2.5f * curVelocity));
+					}
+					else if (isGround)
+					{
+						
+						if (abs(v->GetVelocity().y) > 1.f)
+							v->SetVelocity(v->GetVelocity() / 2.0f);
+						else if (abs(v->GetVelocity().y) > 0.25f)
+						{
+							v->SetVelocity(glm::vec3());
+							v->SetUseGravity(false);
+						}
+						if (v->UsingGravity())
+						{
+							v->SetVelocity(v->GetVelocity() * -1.2f);
+						}
+					}
+					if(!isTrigger && !isGround)
+					{
+						Imgn::Vector3 vec = v->GetVelocity();
+						v->AddForce(vec * -2.0f / dt);
+					}
+
+					m_owner->Collided(sphere->GetOwner());
+					sphere->GetOwner()->Collided(this->m_owner);
 				}
 
-				m_owner->Collided(sphere->GetOwner());
-				sphere->GetOwner()->Collided(this->m_owner);
 			}
 		}
 	}

@@ -18,6 +18,8 @@ public:
 
 	int CurrentlySelectedObject() const { return currentlySelectedObject; }
 	void SetCurrentlySelectedObject(int ObjSelected);
+	ObjectSelectorComponent* ObjController() const { return objController; }
+	void ObjController(ObjectSelectorComponent* val) { objController = val; }
 public:
 	bool Initialize();
 	bool InitializeSaveLoggerObjects();

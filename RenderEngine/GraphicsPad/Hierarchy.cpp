@@ -7,11 +7,26 @@
 #include "Qt\qpushbutton.h"
 #include "DetailsLayout.h"
 #include "HierarchyButton.h"
+#include "ImgnLabel.h"
 
 Hierarchy* Hierarchy::instance = 0;
 
 void Hierarchy::AddEntity(Imgn::Entity entities)
 {
+
+	m_Layout->removeWidget(label);
+	for (int i = 0; i < ImgnViewport::entityManager.num_Objs - 1; ++i)
+	{
+		m_Layout->removeWidget(objectsInScene[i]);
+	}
+	delete m_Layout;
+	m_Layout = new QVBoxLayout();
+	setLayout(m_Layout);
+	m_Layout->addWidget(label);
+	for (int i = 0; i < ImgnViewport::entityManager.num_Objs - 1; ++i)
+	{
+		m_Layout->addWidget(objectsInScene[i], 0, Qt::AlignTop);
+	}
 	int i = ImgnViewport::entityManager.num_Objs - 1;
 	m_Layout->addWidget(objectsInScene[i] = new HierarchyButton(entities.GetName()),0 , Qt::AlignTop);
 	connect(objectsInScene[i], SIGNAL(pressed()), this, SLOT(OnObjectPressed()));
@@ -61,6 +76,11 @@ void Hierarchy::RemoveEntity(const char * EntityName)
 			m_Layout->removeWidget(objectsInScene[i]);
 			delete objectsInScene[i];
 			objectsInScene[i] = 0;
+			for (int j = i; j < ImgnViewport::entityManager.num_Objs; ++j)
+			{
+				objectsInScene[j] = objectsInScene[j + 1];
+				objectsInScene[j + 1] = 0;
+			}
 		}
 	}
 }
@@ -71,6 +91,7 @@ void Hierarchy::Initialize()
 
 	m_Layout = new QVBoxLayout();
 	setLayout(m_Layout);
+	m_Layout->addWidget(label = new ImgnLabel("Hierarchy"), 0 ,Qt::AlignHCenter);
 
 	setFrameShape(QFrame::Shape::Box);
 	setFrameShadow(QFrame::Shadow::Sunken);

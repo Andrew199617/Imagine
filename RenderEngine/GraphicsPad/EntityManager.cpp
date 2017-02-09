@@ -39,7 +39,7 @@ void EntityManager::SetCurrentlySelectedObject(int ObjSelected)
 	DetailsLayout::Instance()->SetEntity(&entities[ObjSelected]);
 	Hierarchy::Instance()->SetEntity(entities[ObjSelected].GetName());
 	SpatialComponent* spatial = entities[ObjSelected].GetComponentByType<SpatialComponent>();
-	objectTransformer.SetPosition(spatial->GetPosition());
+	//objectTransformer.SetPosition(spatial->GetPosition());
 }
 
 bool EntityManager::Initialize()
@@ -60,12 +60,12 @@ bool EntityManager::Initialize()
 		return false;
 	}
 
-	if (!objectTransformer.Initialize())
+	/*if (!objectTransformer.Initialize())
 	{
 		string s = ": did not initialize";
 		GameLogger::log(player.GetName() + s);
 		return false;
-	}
+	}*/
 
 	if (!InitializeSaveLoggerObjects())
 	{
@@ -76,8 +76,8 @@ bool EntityManager::Initialize()
 
 	if (num_Objs > 0)
 	{
-		currentlySelectedObject = 0;
-		DetailsLayout::Instance()->SetEntity(&entities[0]);
+		//currentlySelectedObject = 0;
+		//DetailsLayout::Instance()->SetEntity(&entities[0]);
 		objController->SetMeshs(num_Objs, entitieMeshs);
 	}
 	GameLogger::log("Imgn::Entity Manager Initialized");
@@ -220,11 +220,14 @@ void EntityManager::RemoveEntity(int EntityToRemove)
 		{
 			entitieComponents[iCurEntity][jNumComponents] = entitieComponents[iCurEntity + 1][jNumComponents];
 		}
+		numComponent[iCurEntity] = numComponent[iCurEntity + 1];
 	}
-	entities[num_Objs - 1] = Imgn::Entity();
-	entitieMeshs[num_Objs - 1] = 0; 
-	memset(entitieComponents[num_Objs - 1], 0, sizeof(entitieComponents[num_Objs - 1]));
 	num_Objs--;
+	entities[num_Objs] = Imgn::Entity();
+	entitieMeshs[num_Objs] = 0; 
+	if(entitieComponents[num_Objs])
+		memset(entitieComponents[num_Objs], 0, sizeof(entitieComponents[num_Objs]));
+	numComponent[num_Objs] = 0;
 	objController->SetMeshs(num_Objs, entitieMeshs);
 	saveLogger->RemoveEntity(EntityToRemove);
 }
@@ -237,10 +240,28 @@ void EntityManager::Update(float dt, bool isPlaying)
 
 	if (isPlaying)
 	{
+		std::string obj = "Cue_Stick";
 		for (int i = 0; i < num_Objs; i++)
 		{
 			entities[i].Update(dt);
+			bool trail = true;
+			for (int j = 0; j < obj.length(); j++)
+			{
+				if (entities[i].GetName()[j] != obj[j])
+				{
+					trail = false;
+					break;
+				}
+
+			}
+			if (trail)
+			{
+				SpatialComponent* spatial = entities[i].GetComponentByType<SpatialComponent>();
+				playerSpatial->SetPosition(spatial->GetPosition() + glm::vec3(0,5,0));
+				playerSpatial->UpdatePosition();
+			}
 		}
+		
 	}
 }
 
@@ -264,7 +285,7 @@ void EntityManager::SendDataToOpenGL()
 {
 	TransformInfo::WorldToViewMatrix = playerCamera->getWorldToViewMatrix();
 	objController->SendDataToOpenGl();
-	objectTransformer.SendDataToOpenGl();
+	//objectTransformer.SendDataToOpenGl();
 	for (int i = 0; i < num_Objs; i++)
 	{
 		entitieMeshs[i]->setRenderInfo(saveLogger->GetSceneName(i));
@@ -281,6 +302,10 @@ void EntityManager::SendNewDataToOpenGL()
 
 //DO NOT REMOVE THESE COMMENTS
 //Add Here
+#include "CollisionDetection/BoxCollider.h"
+#include "MovementComponent.h"
+#include "Physics/RigidBody.h"
+#include "CollisionDetection/SphereCollider.h"
 
 ImgnComponent ** EntityManager::GetComponents(int objNum)
 {
@@ -290,6 +315,218 @@ ImgnComponent ** EntityManager::GetComponents(int objNum)
 	Imgn::DisplayData* displayData;
 	int iVar = 0;
 
+	if (name == "Cue_Ball")
+	{																		
+		components = new ImgnComponent*[3];
+		components[numComponents] = new Imgn::RigidBody();
+		displayData = components[numComponents]->GetDisplayData();
+		if (displayData)
+		{
+			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)1;
+			iVar = 1; double* val1 = reinterpret_cast<double*>(displayData->values[iVar]); *val1 = (double)1.000000;
+			iVar = 2; float* val2 = reinterpret_cast<float*>(displayData->values[iVar]); *val2 = (float)0.700000;
+			iVar = 3; float* val3 = reinterpret_cast<float*>(displayData->values[iVar]); *val3 = (float)0.050000;
+			iVar = 4; glm::detail::tvec3<float>* val4 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val4 = glm::vec3(0.000000,-9.800000,0.000000);
+			iVar = 5; bool* val5 = reinterpret_cast<bool*>(displayData->values[iVar]); *val5 = (bool)1;
+			iVar = 6; bool* val6 = reinterpret_cast<bool*>(displayData->values[iVar]); *val6 = (bool)0;
+		}
+		numComponents++;
+		components[numComponents] = new SphereCollider();
+		displayData = components[numComponents]->GetDisplayData();
+		if (displayData)
+		{
+		}
+		numComponents++;
+	}
+	if (name == "Ball_1")
+	{																		
+		components = new ImgnComponent*[3];
+		components[numComponents] = new Imgn::RigidBody();
+		displayData = components[numComponents]->GetDisplayData();
+		if (displayData)
+		{
+			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)1;
+			iVar = 1; double* val1 = reinterpret_cast<double*>(displayData->values[iVar]); *val1 = (double)1.000000;
+			iVar = 2; float* val2 = reinterpret_cast<float*>(displayData->values[iVar]); *val2 = (float)0.700000;
+			iVar = 3; float* val3 = reinterpret_cast<float*>(displayData->values[iVar]); *val3 = (float)0.050000;
+			iVar = 4; glm::detail::tvec3<float>* val4 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val4 = glm::vec3(0.000000,-9.800000,0.000000);
+			iVar = 5; bool* val5 = reinterpret_cast<bool*>(displayData->values[iVar]); *val5 = (bool)1;
+			iVar = 6; bool* val6 = reinterpret_cast<bool*>(displayData->values[iVar]); *val6 = (bool)0;
+		}
+		numComponents++;
+		components[numComponents] = new SphereCollider();
+		displayData = components[numComponents]->GetDisplayData();
+		if (displayData)
+		{
+			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)0;
+			iVar = 1; glm::detail::tvec3<float>* val1 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val1 = glm::vec3(0.000000,0.000000,0.000000);
+			iVar = 2; float* val2 = reinterpret_cast<float*>(displayData->values[iVar]); *val2 = (float)2.000000;
+		}
+		numComponents++;
+	}
+	if (name == "Ball_2")
+	{																		
+		components = new ImgnComponent*[3];
+		components[numComponents] = new Imgn::RigidBody();
+		displayData = components[numComponents]->GetDisplayData();
+		if (displayData)
+		{
+			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)1;
+			iVar = 1; double* val1 = reinterpret_cast<double*>(displayData->values[iVar]); *val1 = (double)1.000000;
+			iVar = 2; float* val2 = reinterpret_cast<float*>(displayData->values[iVar]); *val2 = (float)0.700000;
+			iVar = 3; float* val3 = reinterpret_cast<float*>(displayData->values[iVar]); *val3 = (float)0.050000;
+			iVar = 4; glm::detail::tvec3<float>* val4 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val4 = glm::vec3(0.000000,-9.800000,0.000000);
+			iVar = 5; bool* val5 = reinterpret_cast<bool*>(displayData->values[iVar]); *val5 = (bool)1;
+			iVar = 6; bool* val6 = reinterpret_cast<bool*>(displayData->values[iVar]); *val6 = (bool)0;
+		}
+		numComponents++;
+		components[numComponents] = new SphereCollider();
+		displayData = components[numComponents]->GetDisplayData();
+		if (displayData)
+		{
+		}
+		numComponents++;
+	}
+	if (name == "Cue_Stick")
+	{																		
+		components = new ImgnComponent*[4];
+		components[numComponents] = new Imgn::RigidBody();
+		displayData = components[numComponents]->GetDisplayData();
+		if (displayData)
+		{
+			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)1;
+			iVar = 1; double* val1 = reinterpret_cast<double*>(displayData->values[iVar]); *val1 = (double)1.000000;
+			iVar = 2; float* val2 = reinterpret_cast<float*>(displayData->values[iVar]); *val2 = (float)0.050000;
+			iVar = 3; float* val3 = reinterpret_cast<float*>(displayData->values[iVar]); *val3 = (float)0.050000;
+			iVar = 4; glm::detail::tvec3<float>* val4 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val4 = glm::vec3(0.000000,-9.800000,0.000000);
+			iVar = 5; bool* val5 = reinterpret_cast<bool*>(displayData->values[iVar]); *val5 = (bool)0;
+			iVar = 6; bool* val6 = reinterpret_cast<bool*>(displayData->values[iVar]); *val6 = (bool)0;
+		}
+		numComponents++;
+		components[numComponents] = new BoxCollider();
+		displayData = components[numComponents]->GetDisplayData();
+		if (displayData)
+		{
+			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)1;
+			iVar = 1; glm::detail::tvec3<float>* val1 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val1 = glm::vec3(0.000000,-0.400000,0.000000);
+			iVar = 2; glm::detail::tvec3<float>* val2 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val2 = glm::vec3(0.600000,0.600000,66.199997);
+			iVar = 3; bool* val3 = reinterpret_cast<bool*>(displayData->values[iVar]); *val3 = (bool)0;
+		}
+		numComponents++;
+		components[numComponents] = new MovementComponent();
+		displayData = components[numComponents]->GetDisplayData();
+		if (displayData)
+		{
+			iVar = 0; float* val0 = reinterpret_cast<float*>(displayData->values[iVar]); *val0 = (float)100.000000;
+		}
+		numComponents++;
+	}
+	if (name == "Ball_3")
+	{																		
+		components = new ImgnComponent*[3];
+		components[numComponents] = new Imgn::RigidBody();
+		displayData = components[numComponents]->GetDisplayData();
+		if (displayData)
+		{
+			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)1;
+			iVar = 1; double* val1 = reinterpret_cast<double*>(displayData->values[iVar]); *val1 = (double)1.000000;
+			iVar = 2; float* val2 = reinterpret_cast<float*>(displayData->values[iVar]); *val2 = (float)0.700000;
+			iVar = 3; float* val3 = reinterpret_cast<float*>(displayData->values[iVar]); *val3 = (float)1.000000;
+			iVar = 4; glm::detail::tvec3<float>* val4 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val4 = glm::vec3(0.000000,-9.800000,0.000000);
+			iVar = 5; bool* val5 = reinterpret_cast<bool*>(displayData->values[iVar]); *val5 = (bool)1;
+			iVar = 6; bool* val6 = reinterpret_cast<bool*>(displayData->values[iVar]); *val6 = (bool)0;
+		}
+		numComponents++;
+		components[numComponents] = new SphereCollider();
+		displayData = components[numComponents]->GetDisplayData();
+		if (displayData)
+		{
+			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)0;
+			iVar = 1; glm::detail::tvec3<float>* val1 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val1 = glm::vec3(0.000000,0.000000,0.000000);
+			iVar = 2; float* val2 = reinterpret_cast<float*>(displayData->values[iVar]); *val2 = (float)1.000000;
+		}
+		numComponents++;
+	}
+	if (name == "Ball_4")
+	{																		
+		components = new ImgnComponent*[3];
+		components[numComponents] = new Imgn::RigidBody();
+		displayData = components[numComponents]->GetDisplayData();
+		if (displayData)
+		{
+			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)1;
+			iVar = 1; double* val1 = reinterpret_cast<double*>(displayData->values[iVar]); *val1 = (double)1.000000;
+			iVar = 2; float* val2 = reinterpret_cast<float*>(displayData->values[iVar]); *val2 = (float)0.700000;
+			iVar = 3; float* val3 = reinterpret_cast<float*>(displayData->values[iVar]); *val3 = (float)0.050000;
+			iVar = 4; glm::detail::tvec3<float>* val4 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val4 = glm::vec3(0.000000,-9.800000,0.000000);
+			iVar = 5; bool* val5 = reinterpret_cast<bool*>(displayData->values[iVar]); *val5 = (bool)1;
+			iVar = 6; bool* val6 = reinterpret_cast<bool*>(displayData->values[iVar]); *val6 = (bool)0;
+		}
+		numComponents++;
+		components[numComponents] = new SphereCollider();
+		displayData = components[numComponents]->GetDisplayData();
+		if (displayData)
+		{
+			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)0;
+			iVar = 1; glm::detail::tvec3<float>* val1 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val1 = glm::vec3(0.000000,0.000000,0.000000);
+			iVar = 2; float* val2 = reinterpret_cast<float*>(displayData->values[iVar]); *val2 = (float)1.000000;
+		}
+		numComponents++;
+	}
+	if (name == "Pool_Table_Collider")
+	{																		
+		components = new ImgnComponent*[3];
+		components[numComponents] = new Imgn::RigidBody();
+		displayData = components[numComponents]->GetDisplayData();
+		if (displayData)
+		{
+			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)1;
+			iVar = 1; double* val1 = reinterpret_cast<double*>(displayData->values[iVar]); *val1 = (double)1.000000;
+			iVar = 2; float* val2 = reinterpret_cast<float*>(displayData->values[iVar]); *val2 = (float)0.050000;
+			iVar = 3; float* val3 = reinterpret_cast<float*>(displayData->values[iVar]); *val3 = (float)0.050000;
+			iVar = 4; glm::detail::tvec3<float>* val4 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val4 = glm::vec3(0.000000,-9.800000,0.000000);
+			iVar = 5; bool* val5 = reinterpret_cast<bool*>(displayData->values[iVar]); *val5 = (bool)0;
+			iVar = 6; bool* val6 = reinterpret_cast<bool*>(displayData->values[iVar]); *val6 = (bool)0;
+		}
+		numComponents++;
+		components[numComponents] = new BoxCollider();
+		displayData = components[numComponents]->GetDisplayData();
+		if (displayData)
+		{
+			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)0;
+			iVar = 1; glm::detail::tvec3<float>* val1 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val1 = glm::vec3(0.000000,2.000000,0.000000);
+			iVar = 2; glm::detail::tvec3<float>* val2 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val2 = glm::vec3(45.000000,2.000000,2.000000);
+			iVar = 3; bool* val3 = reinterpret_cast<bool*>(displayData->values[iVar]); *val3 = (bool)0;
+		}
+		numComponents++;
+	}
+	if (name == "Pool_Table_Collider_2")
+	{																		
+		components = new ImgnComponent*[3];
+		components[numComponents] = new Imgn::RigidBody();
+		displayData = components[numComponents]->GetDisplayData();
+		if (displayData)
+		{
+			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)0;
+			iVar = 1; double* val1 = reinterpret_cast<double*>(displayData->values[iVar]); *val1 = (double)1.000000;
+			iVar = 2; float* val2 = reinterpret_cast<float*>(displayData->values[iVar]); *val2 = (float)0.050000;
+			iVar = 3; float* val3 = reinterpret_cast<float*>(displayData->values[iVar]); *val3 = (float)0.050000;
+			iVar = 4; glm::detail::tvec3<float>* val4 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val4 = glm::vec3(0.000000,-9.800000,0.000000);
+			iVar = 5; bool* val5 = reinterpret_cast<bool*>(displayData->values[iVar]); *val5 = (bool)0;
+			iVar = 6; bool* val6 = reinterpret_cast<bool*>(displayData->values[iVar]); *val6 = (bool)0;
+		}
+		numComponents++;
+		components[numComponents] = new BoxCollider();
+		displayData = components[numComponents]->GetDisplayData();
+		if (displayData)
+		{
+			iVar = 0; bool* val0 = reinterpret_cast<bool*>(displayData->values[iVar]); *val0 = (bool)0;
+			iVar = 1; glm::detail::tvec3<float>* val1 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val1 = glm::vec3(0.000000,2.000000,0.000000);
+			iVar = 2; glm::detail::tvec3<float>* val2 = reinterpret_cast<glm::detail::tvec3<float>*>(displayData->values[iVar]); *val2 = glm::vec3(45.000000,2.000000,2.000000);
+			iVar = 3; bool* val3 = reinterpret_cast<bool*>(displayData->values[iVar]); *val3 = (bool)0;
+		}
+		numComponents++;
+	}
 
 	if(numComponents == 1){ components = new ImgnComponent*[1]; }
 	numComponent[objNum] += numComponents;

@@ -9,6 +9,7 @@ public:
 	~FolderButton();
 
 	void SetCheckedMenu(bool checked);
+	void SetChecked();
 protected:
 	virtual void mousePressEvent(QMouseEvent *) override;
 

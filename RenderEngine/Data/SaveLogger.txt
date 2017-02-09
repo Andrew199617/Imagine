@@ -1,26 +1,28 @@
-Name DefaultObject_1
-SceneName PoolBall
+Name PoolRack
+SceneName PoolRack
 Components 2 {
     MeshComponent
     {
+        C:\Users\Andrew\Documents\Neumont\Imagine\StaticData\Texture\wood.bmp
     }
     SpatialComponent
     {
-        (0.000000,10.000000,0.000000)
+        (0.000000,0.000000,0.000000)
         (0.000000,0.000000,0.000000)
         (1.000000,1.000000,1.000000)
     }
 }
 
-Name DefaultObject_2
-SceneName PoolRack
+Name Brick_Cube
+SceneName Cube
 Components 2 {
     MeshComponent
     {
+        C:\Users\Andrew\Documents\Neumont\Imagine\StaticData\Texture\brick.bmp
     }
     SpatialComponent
     {
-        (0.000000,0.000000,0.000000)
+        (0.000000,1.000000,0.000000)
         (0.000000,0.000000,0.000000)
         (1.000000,1.000000,1.000000)
     }
@@ -34,7 +36,7 @@ Components 2 {
     }
     SpatialComponent
     {
-        (0.000000,0.000000,0.000000)
+        (0.000000,8.000000,0.000000)
         (0.000000,0.000000,0.000000)
         (1.000000,1.000000,1.000000)
     }

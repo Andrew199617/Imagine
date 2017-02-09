@@ -6,7 +6,7 @@
 #include "ImgnViewport.h"
 #include "MeGlWindow.h"
 #include "GameLogger.h"
-
+#include "SaveLogger.h"
 
 int main(int argc, char* argv[])
 {

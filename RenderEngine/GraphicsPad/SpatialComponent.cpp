@@ -50,6 +50,10 @@ void SpatialComponent::SetPosition(glm::vec3 val)
 
 void SpatialComponent::SetRotation(glm::vec3 val)
 {
+	if (val.x > 360)
+	{
+		val.x = val.x - 360;
+	}
 	rotation = val;
 }
 

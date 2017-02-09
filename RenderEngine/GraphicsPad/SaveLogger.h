@@ -29,8 +29,9 @@ class SaveLogger
 public:
 	static SaveLogger* Instance() { if (!saveLogger) { saveLogger = new SaveLogger(); } return saveLogger; }
 	
-	void Open(const char* filename = "..\\Data\\SaveLogger.txt");
+	void Open(const char* filename = "..\\Data\\Billiards.txt");
 	bool shutdownLog();
+	void WriteToEntityManager();
 
 	int GetNumObjs();
 	void SetEntityName(string oldName,string name);
@@ -60,7 +61,6 @@ private:
 	void GenerateUniqueComponents();
 	bool WriteToSaveFile();
 	void WriteComponents(ofstream* out, int i);
-	void WriteToEntityManager();
 	void WriteComponentData(std::ofstream* meOutput);
 
 private:

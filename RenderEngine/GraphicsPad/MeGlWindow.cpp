@@ -11,6 +11,14 @@
 #include "Qt\qtooltip.h"
 #include "glm.hpp"
 #include "gtx\transform.hpp"
+#include "QtGui\qevent.h"
+#include "Qt\qurl.h"
+#include "Qt\qmainwindow.h"
+#include "ImgnMimeData.h"
+#include "SceneReader.h"
+#include "FbxFileReader.h"
+#include "ObjectSelectorComponent.h"
+#include "MeshComponent.h"
 
 void MeGlWindow::Initialize()
 {
@@ -20,6 +28,7 @@ void MeGlWindow::Initialize()
 		app->exit();
 		ShutdownApp = true;
 	}
+	setAcceptDrops(true);
 }
 
 void MeGlWindow::initializeGL()
@@ -54,6 +63,40 @@ void MeGlWindow::resizeGL(int w, int h)
 	viewport->SetHeight(h);
 	glm::mat4 projectionMatrix = glm::perspective(90.0f, ((float)w) / h, 1.0f, 180.0f);
 	TransformInfo::projectionMatrix = projectionMatrix;
+}
+
+void MeGlWindow::dragEnterEvent(QDragEnterEvent *event)
+{
+	event->setDropAction(Qt::MoveAction);
+	event->accept();
+	/*if (event->mimeData()->hasFormat("text/uri-list"))
+		event->acceptProposedAction();*/
+}
+
+void MeGlWindow::dropEvent(QDropEvent *event)
+{
+	const ImgnMimeData* data = static_cast<const ImgnMimeData*>(event->mimeData());
+
+	string fullPath = data->FilePath() + "/"+ data->FileName() + "." + data->Extension();
+	if (data->Extension() == "imgnasset")
+	{
+		SceneReader* scenereader  = new SceneReader;
+		Scene* scene = scenereader->ReadSceneFile(fullPath);
+		SaveLogger::Instance()->AddObj(data->FileName());
+		delete scenereader;
+	}
+	else if (data->Extension() == "bmp")
+	{
+		int objectSelected = viewport->entityManager.ObjController()->SelectObject(event->pos());
+		if (objectSelected != -1)
+		{
+			viewport->entityManager.entitieMeshs[objectSelected]->UpdateTextureInfo(fullPath);
+		}
+	}
+	else
+	{
+		return;
+	}
 }
 
 void MeGlWindow::myUpdate()

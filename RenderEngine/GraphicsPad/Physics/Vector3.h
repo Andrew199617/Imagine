@@ -38,6 +38,10 @@ namespace Imgn
 		bool operator==(const Vector3& v) const;
 		Vector3 operator%(const Vector3 &vector) const;
 		void addScaledVector(const Vector3& vector, real scale);
+		real scalarProduct(const Vector3 &vector) const
+		{
+			return x*vector.x + y*vector.y + z*vector.z;
+		}
 		glm::vec3 toVec3();
 		void clear();
 		std::string toString();

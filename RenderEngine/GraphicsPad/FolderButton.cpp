@@ -12,7 +12,6 @@ FolderButton::FolderButton(bool hasMenu)
 	}
 }
 
-
 FolderButton::~FolderButton()
 {
 }
@@ -23,15 +22,22 @@ void FolderButton::SetCheckedMenu(bool checked)
 	if (checked)
 	{
 		std::string ch = styleSheet().toLocal8Bit().data();
-		std::string css = "image: url(C:/Users/Andrew/Documents/Neumont/Imagine/StaticData/Images/Right_Arrow.png); }";
+		std::string css = "image: url(../../StaticData/Images/Right_Arrow.png); }";
 		setStyleSheet(styleSheet() + ("QPushButton::menu-indicator {" + css).c_str());
 	}
 	else
 	{
 		std::string ch = styleSheet().toLocal8Bit().data();
-		std::string css = "image: url(C:/Users/Andrew/Documents/Neumont/Imagine/StaticData/Images/Down_Arrow.png); }";
+		std::string css = "image: url(../../StaticData/Images/Down_Arrow.png); }";
 		setStyleSheet(styleSheet() + ("QPushButton::menu-indicator {" + css).c_str());
 	}
+}
+
+void FolderButton::SetChecked()
+{
+	setFocus();
+	setChecked(true);
+	emit pressed();
 }
 
 void FolderButton::mousePressEvent(QMouseEvent *qme)

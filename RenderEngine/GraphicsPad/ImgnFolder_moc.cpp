@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ImgnFolder.h'
 **
-** Created: Wed Nov 9 21:29:51 2016
+** Created: Wed Feb 1 22:40:15 2017
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -34,9 +34,9 @@ static const qtuint qt_meta_data_ImgnFolder[] = {
       23,   12,   11,   11, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      44,   11,   11,   11, 0x08,
-      62,   11,   11,   11, 0x08,
-      72,   12,   11,   11, 0x08,
+      44,   11,   11,   11, 0x0a,
+      62,   11,   11,   11, 0x0a,
+      72,   12,   11,   11, 0x0a,
 
        0        // eod
 };

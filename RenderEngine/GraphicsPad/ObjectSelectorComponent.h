@@ -28,6 +28,10 @@ public:
 
 	void ProcessKeys();
 	void ProcessMousePress(QMouseEvent* e, EntityManager* entityManager);
+	int SelectObject(QPoint pos);
+
+	void CalculateRayDir(QPoint pos);
+
 	void GetVerts();
 	bool CastRayFromMousePosition(glm::vec3 pos0, glm::vec3 pos1, glm::vec3 pos2);
 

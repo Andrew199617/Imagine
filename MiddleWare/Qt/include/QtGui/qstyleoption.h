@@ -159,7 +159,7 @@ class Q_GUI_EXPORT QStyleOptionFrameV3 : public QStyleOptionFrameV2
 public:
     enum StyleOptionVersion { Version = 3 };
     QFrame::Shape frameShape : 4;
-    uint unused : 28;
+   qtuint unused : 28;
 
     QStyleOptionFrameV3();
     QStyleOptionFrameV3(const QStyleOptionFrameV3 &other) : QStyleOptionFrameV2(Version) { *this = other; }

@@ -48,6 +48,7 @@ public:
 
 	virtual void CreateWidgets() override;
 	virtual void DeleteWidgets() override;
+	void UpdateTextureInfo(string str);
 
 	string GetTexPath() const { return texPath; }
 	void SetTexPath(string val) { texPath = val; }
@@ -56,6 +57,7 @@ private:
 
 protected:
 	virtual bool Initialize() override;
+
 
 private slots:
 	void UpdateTextureInfo();

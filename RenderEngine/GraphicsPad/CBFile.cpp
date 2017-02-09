@@ -8,10 +8,11 @@ CBFile::CBFile()
 {
 }
 
-CBFile::CBFile(dirent* Entry)
+CBFile::CBFile(dirent* Entry, std::string FilePath)
 {
 	entry = Entry;
 	name = entry->d_name;
+	filePath = FilePath;
 	Initialize();
 }
 
@@ -24,10 +25,10 @@ void CBFile::Initialize()
 	m_layout = new QVBoxLayout;
 	setLayout(m_layout);
 
-	m_layout->addWidget(button = new CBFilesButton(entry),5, Qt::AlignCenter);
+	m_layout->addWidget(button = new CBFilesButton(entry, filePath),5, Qt::AlignCenter);
 
-	m_layout->addWidget(fileName = new QLabel, 1, Qt::AlignBottom | Qt::AlignHCenter);
-	fileName->setText(name.c_str());
+	m_layout->addWidget(fileNameLabel = new QLabel, 1, Qt::AlignBottom | Qt::AlignHCenter);
+	fileNameLabel->setText(name.c_str());
 
 	this->setObjectName("File");
 

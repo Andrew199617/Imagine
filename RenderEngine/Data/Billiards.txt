@@ -1,39 +1,9 @@
-Name Cue_Stick
-SceneName PollCue
-Components 2 {
-    MeshComponent
-    {
-        C:\Users\Andrew\Documents\Neumont\Imagine\StaticData\Texture\Cue_Stick.bmp
-    }
-    SpatialComponent
-    {
-        (0.000000,10.000000,0.000000)
-        (0.000000,0.000000,0.000000)
-        (1.000000,1.000000,1.000000)
-    }
-}
-
-Name Cue_Stick_2
-SceneName PollCue
-Components 2 {
-    MeshComponent
-    {
-        C:\Users\Andrew\Documents\Neumont\Imagine\StaticData\Texture\Cue_Stick_2.bmp
-    }
-    SpatialComponent
-    {
-        (5.000000,10.000000,0.000000)
-        (0.000000,0.000000,0.000000)
-        (1.000000,1.000000,1.000000)
-    }
-}
-
 Name Cue_Ball
 SceneName PoolBall
-Components 2 {
+Components 4 {
     MeshComponent
     {
-        C:\Users\Andrew\Documents\Neumont\Imagine\StaticData\Texture\Cue_Ball.bmp
+        ../../StaticData/Texture/PoolBalls/pool_balls_4.bmp
     }
     SpatialComponent
     {
@@ -41,48 +11,250 @@ Components 2 {
         (0.000000,0.000000,0.000000)
         (1.000000,1.000000,1.000000)
     }
+    RigidBody
+    {
+        1
+        1.000000
+        0.700000
+        0.050000
+        (0.000000,-9.800000,0.000000)
+        1
+        0
+    }
+    SphereCollider
+    {
+    }
 }
 
 Name Ball_1
 SceneName PoolBall
-Components 2 {
+Components 4 {
     MeshComponent
     {
-        C:\Users\Andrew\Documents\Neumont\Imagine\StaticData\Texture\Cue_Ball_1.bmp
+        ../../StaticData/Texture/PoolBalls/pool_balls_5.bmp
     }
     SpatialComponent
     {
-        (-10.000000,10.000000,0.000000)
+        (-10.000000,11.000000,0.000000)
         (0.000000,0.000000,0.000000)
         (1.000000,1.000000,1.000000)
+    }
+    RigidBody
+    {
+        1
+        1.000000
+        0.700000
+        0.050000
+        (0.000000,-9.800000,0.000000)
+        1
+        0
+    }
+    SphereCollider
+    {
+        0
+        (0.000000,0.000000,0.000000)
+        2.000000
     }
 }
 
 Name Ball_2
 SceneName PoolBall
-Components 2 {
+Components 4 {
     MeshComponent
     {
-        C:\Users\Andrew\Documents\Neumont\Imagine\StaticData\Texture\PoolBalls\pool_balls_2.bmp
+        ../../StaticData/Texture/PoolBalls/pool_balls_6.bmp
     }
     SpatialComponent
     {
-        (-15.000000,10.000000,0.000000)
+        (-15.000000,12.000000,0.000000)
         (0.000000,0.000000,0.000000)
         (1.000000,1.000000,1.000000)
     }
+    RigidBody
+    {
+        1
+        1.000000
+        0.700000
+        0.050000
+        (0.000000,-9.800000,0.000000)
+        1
+        0
+    }
+    SphereCollider
+    {
+    }
 }
 
-Name PoolTable
+Name Cue_Stick
+SceneName PollCue
+Components 5 {
+    MeshComponent
+    {
+        ../../StaticData/Texture/Cue_Stick.bmp
+    }
+    SpatialComponent
+    {
+        (0.000000,10.000000,40.813591)
+        (0.000000,14.999988,0.000000)
+        (1.000000,1.000000,1.000000)
+    }
+    RigidBody
+    {
+        1
+        1.000000
+        0.050000
+        0.050000
+        (0.000000,-9.800000,0.000000)
+        0
+        0
+    }
+    BoxCollider
+    {
+        1
+        (0.000000,-0.400000,0.000000)
+        (0.600000,0.600000,66.199997)
+        0
+    }
+    MovementComponent
+    {
+        100.000000
+    }
+}
+
+Name Ball_3
+SceneName PoolBall
+Components 4 {
+    MeshComponent
+    {
+        ../../StaticData/Texture/PoolBalls/pool_balls_3.bmp
+    }
+    SpatialComponent
+    {
+        (0.130157,9.116428,0.000000)
+        (0.000000,0.000000,0.000000)
+        (1.000000,1.000000,1.000000)
+    }
+    RigidBody
+    {
+        1
+        1.000000
+        0.700000
+        1.000000
+        (0.000000,-9.800000,0.000000)
+        1
+        0
+    }
+    SphereCollider
+    {
+        0
+        (0.000000,0.000000,0.000000)
+        1.000000
+    }
+}
+
+Name Ball_4
+SceneName PoolBall
+Components 4 {
+    MeshComponent
+    {
+        ../../StaticData/Texture/PoolBalls/pool_balls_2.bmp
+    }
+    SpatialComponent
+    {
+        (5.000000,10.000000,0.000000)
+        (0.000000,0.000000,0.000000)
+        (1.000000,1.000000,1.000000)
+    }
+    RigidBody
+    {
+        1
+        1.000000
+        0.700000
+        0.050000
+        (0.000000,-9.800000,0.000000)
+        1
+        0
+    }
+    SphereCollider
+    {
+        0
+        (0.000000,0.000000,0.000000)
+        1.000000
+    }
+}
+
+Name Pool_Table_Collider
+SceneName Cube
+Components 4 {
+    MeshComponent
+    {
+    }
+    SpatialComponent
+    {
+        (0.000000,6.000000,-53.500000)
+        (0.000000,0.000000,0.000000)
+        (1.000000,1.000000,1.000000)
+    }
+    RigidBody
+    {
+        1
+        1.000000
+        0.050000
+        0.050000
+        (0.000000,-9.800000,0.000000)
+        0
+        0
+    }
+    BoxCollider
+    {
+        0
+        (0.000000,2.000000,0.000000)
+        (45.000000,2.000000,2.000000)
+        0
+    }
+}
+
+Name Pool_Table_Collider_2
+SceneName Cube
+Components 4 {
+    MeshComponent
+    {
+    }
+    SpatialComponent
+    {
+        (0.000000,5.997800,53.500000)
+        (0.000000,0.000000,0.000000)
+        (1.000000,1.000000,1.000000)
+    }
+    RigidBody
+    {
+        0
+        1.000000
+        0.050000
+        0.050000
+        (0.000000,-9.800000,0.000000)
+        0
+        0
+    }
+    BoxCollider
+    {
+        0
+        (0.000000,2.000000,0.000000)
+        (45.000000,2.000000,2.000000)
+        0
+    }
+}
+
+Name Pool_Table
 SceneName PoolTable
 Components 2 {
     MeshComponent
     {
-        C:\Users\Andrew\Documents\Neumont\Imagine\StaticData\Texture\PoolTable_Tex_D.bmp
+        ../../StaticData/Texture/PoolTable_Tex_D.bmp
     }
     SpatialComponent
     {
-        (0.000000,0.000000,0.000000)
+        (0.000000,-15.000000,0.000000)
         (0.000000,0.000000,0.000000)
         (1.000000,1.000000,1.000000)
     }

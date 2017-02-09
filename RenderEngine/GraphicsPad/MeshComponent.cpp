@@ -193,6 +193,14 @@ bool MeshComponent::Initialize()
 	return true;
 }
 
+void MeshComponent::UpdateTextureInfo(string str)
+{
+	texPath = str.c_str();
+	renderinfo.getTextureInfo()->loadBMP_customFile(str);
+	renderinfo.getTextureInfo()->SendData();
+	SetSaved(false);
+}
+
 void MeshComponent::UpdateTextureInfo()
 {
 	OpenFileDialog openFileDialog;

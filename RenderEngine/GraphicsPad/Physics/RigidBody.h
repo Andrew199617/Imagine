@@ -10,14 +10,14 @@ namespace Imgn
 		public ImgnComponent
 	{
 		IMGN_GENERATE(RigidBody)
-			IMGN_PROPERTY(m_enabled, true)
-			IMGN_PROPERTY(mass, 1)
-			IMGN_PROPERTY(linearDamping, 0.05f)
-			IMGN_PROPERTY(angularDamping, 0.05f)
-			IMGN_PROPERTY(gravity, glm::vec3(0.0,9.8f,0.0f))
-			IMGN_PROPERTY(useGravity, true)
-			IMGN_PROPERTY(isKinematic, false)
-			IMGN_END(RigidBody)
+		IMGN_PROPERTY(m_enabled, true)
+		IMGN_PROPERTY(mass, 1)
+		IMGN_PROPERTY(linearDamping, 0.05f)
+		IMGN_PROPERTY(angularDamping, 0.05f)
+		IMGN_PROPERTY(gravity, glm::vec3(0.0, -9.8f, 0.0f))
+		IMGN_PROPERTY(useGravity, true)
+		IMGN_PROPERTY(isKinematic, false)
+		IMGN_END(RigidBody)
 	public:
 		virtual void Awake() override;
 		virtual bool Initialize() override;

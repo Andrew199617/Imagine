@@ -19,6 +19,7 @@
 #include "Qt\qlineedit.h"
 #include "SaveLogger.h"
 #include "Hierarchy.h"
+#include "ImgnLabel.h"
 typedef void* (*ADDCOMPONENTS)(string*);
 
 using std::cout;
@@ -46,6 +47,8 @@ void DetailsLayout::Initialize()
 	m_Layout = new QVBoxLayout(scrollArea);
 	//m_Layout->setSpacing(0);
 	m_Layout->setContentsMargins(14,25,14,25);
+	m_Layout->addWidget(new ImgnLabel("Details"), 0, Qt::AlignHCenter);
+	m_Layout->addSpacing(15);
 
 	addComponentButton = new QPushButton("Add Component",this);
 	componentMenu = new QMenu();

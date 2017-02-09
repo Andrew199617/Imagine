@@ -7,11 +7,14 @@ class BoxCollider : public ImgnCollider
 	IMGN_PROPERTY(isTrigger, false)
 	IMGN_PROPERTY(center, glm::vec3())
 	IMGN_PROPERTY(size,glm::vec3(1,1,1))
+	IMGN_PROPERTY(isGround, false)
 	IMGN_END(BoxCollider)
 private:
 	bool Initialize() override;
 	void Update(float) override;
 	void Draw(float) override;
+
+	bool isGround;
 
 protected:
 	void OnValueChange(std::string VariableName) override;	

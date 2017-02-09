@@ -17,6 +17,8 @@ CBDirectory::~CBDirectory()
 void CBDirectory::SetCBFolderData(CBFolderData* FolderData)
 {
 	folderData = FolderData;
+	ShowFolderData(folder->objectName().toLocal8Bit().data());
+	folder->GetFolderButton()->SetChecked();
 }
 
 void CBDirectory::Initialize()

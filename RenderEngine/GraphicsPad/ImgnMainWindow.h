@@ -49,6 +49,7 @@ class ImgnMainWindow : public QMainWindow
 	QAction* showDetails;
 	QAction* showTools;
 	QAction* showHierarchy;
+	QAction* showContentBrowser;
 
 	OpenFileDialog openFileDialog;
 	MeGlWindow* meGlWindow;

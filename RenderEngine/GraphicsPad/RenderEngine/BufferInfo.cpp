@@ -44,6 +44,7 @@ void BufferInfo::remove(RenderInfo * info)
 	if (top == info)
 	{
 		top = top->Next();
+		return;
 	}
 	RenderInfo* tempTop = top;
 	while (tempTop->Next())

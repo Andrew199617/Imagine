@@ -3,9 +3,23 @@
 #include "CBFilesButton.h"
 #include "dirent.h"
 #include "CBFile.h"
+#include "Qt\qscrollarea.h"
+#include "QtGui\QDialog"
 
-CBFolderData::CBFolderData()
+CBFolderData::CBFolderData(QWidget* parent)
 {
+	QScrollArea *scrollArea = new QScrollArea(parent);
+	scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+	scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+	QSizePolicy policy;
+	policy.setHorizontalPolicy(QSizePolicy::Expanding);
+	policy.setVerticalPolicy(QSizePolicy::Expanding);
+	scrollArea->setSizePolicy(policy);
+	
+	scrollArea->setWidget(this);
+	scrollArea->setWidgetResizable(true);
+
+
 	Initialize();
 }
 
@@ -14,7 +28,7 @@ CBFolderData::~CBFolderData()
 {
 }
 
-void CBFolderData::AddFile(struct dirent * Entry)
+void CBFolderData::AddFile(struct dirent * Entry,std::string filePath)
 {
 	if (curFile == Imgn::MAX_FILES_ROW * numLayouts)
 	{
@@ -23,8 +37,10 @@ void CBFolderData::AddFile(struct dirent * Entry)
 		filesLayout[numLayouts]->setContentsMargins(0, 0, 0, 0);
 		numLayouts++;
 	}
-	filesLayout[numLayouts-1]->addWidget(files[curFile] = new CBFile(Entry), 0, Qt::AlignLeft);
+	filesLayout[numLayouts-1]->addWidget(files[curFile] = new CBFile(Entry, filePath), 0, Qt::AlignLeft);
 	curFile++;
+
+
 }
 
 int CBFolderData::CurFile()
@@ -36,14 +52,12 @@ void CBFolderData::Initialize()
 {
 	numLayouts = 0;
 	curFile = 0;
+
 	filesLayoutHolder = new QVBoxLayout;
 	filesLayoutHolder->setSpacing(0);
 	filesLayoutHolder->setContentsMargins(0, 0, 0, 0);
-	
 	setLayout(filesLayoutHolder);
 
-	sizePolicy().setHorizontalPolicy(QSizePolicy::Expanding);
-	sizePolicy().setVerticalPolicy(QSizePolicy::Expanding);
 	setObjectName("FolderData");
 	filesLayoutHolder->setObjectName("FolderData");
 }

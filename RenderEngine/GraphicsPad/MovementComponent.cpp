@@ -159,14 +159,45 @@ void MovementComponent::Jump(int time, float dt)
 	}
 }
 
-void MovementComponent::Update(float)
+void MovementComponent::OnCollisionEnter(Imgn::Entity *)
 {
 	Imgn::RigidBody* rigidBody = GetSiblingComponent<Imgn::RigidBody>();
+	rigidBody->AddForce(rigidBody->GetVelocity() * -2.0f * 120.f);
+}
+
+void MovementComponent::Update(float dt)
+{
+	static float m_dt = 0;
+	m_dt += dt;
+	Imgn::RigidBody* rigidBody = GetSiblingComponent<Imgn::RigidBody>();
+	SpatialComponent* spatial = GetSiblingComponent<SpatialComponent>();
 	if (rigidBody)
 	{
-		if (GetAsyncKeyState(Qt::Key::Key_M) & 0x8000)
+		if (GetAsyncKeyState(VK_UP) & 0x8000)
 		{
-			rigidBody->AddForce(Imgn::Vector3(0, strafeSpeed, 0));
+			rigidBody->AddForce(Imgn::Vector3(0, 0, -strafeSpeed));
+		}
+		else if (GetAsyncKeyState(VK_DOWN) & 0x8000)
+		{
+			rigidBody->AddForce(Imgn::Vector3(0, 0, strafeSpeed));
+		}
+		else if (GetAsyncKeyState(VK_LEFT) & 0x8000)
+		{
+			if (m_dt > .4)
+			{
+				spatial->SetPosition(spatial->GetPosition() + glm::vec3(-5, 0, 0));
+				spatial->UpdatePosition();
+				m_dt = 0;
+			}
+		}
+		else if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
+		{
+			if (m_dt > .4)
+			{
+				spatial->SetPosition(spatial->GetPosition() + glm::vec3(5, 0, 0));
+				spatial->UpdatePosition();
+				m_dt = 0;
+			}
 		}
 	}
 }
